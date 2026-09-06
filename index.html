@@ -1,318 +1,241 @@
-<!DOCTYPE html>
-<html lang="bn" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUET Adventure Society (CAS)</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        forest: '#0f291e',
-                        mountain: '#1b4332',
-                        trail: '#2d6a4f',
-                        accent: '#e76f51',
-                        sand: '#f4f1de'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-accent selection:text-white">
-
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-forest/90 backdrop-blur-md border-b border-white/10 text-white transition-all">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-3">
-                <i class="fa-solid fa-compass text-accent text-2xl"></i>
-                <span class="font-black text-xl tracking-wider">CUET ADVENTURE SOCIETY</span>
-            </a>
-            
-            <div class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#about" class="hover:text-accent transition-colors">আমাদের কথা</a>
-                <a href="#wings" class="hover:text-accent transition-colors">কমিটি উইংস</a>
-                <a href="#safety" class="hover:text-accent transition-colors">নিরাপত্তা নীতি</a>
-                <a href="#women" class="hover:text-accent transition-colors">উইমেন্স কর্নার</a>
-                <a href="#contact" class="hover:text-accent transition-colors">যোগাযোগ</a>
-            </div>
-
-            <a href="#contact" class="hidden sm:inline-block bg-accent hover:bg-orange-600 px-5 py-2 rounded-full font-semibold text-xs tracking-wide uppercase transition-all shadow-md hover:shadow-accent/30">
-                কানেক্ট হন
-            </a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative h-screen flex items-center justify-center bg-forest text-white overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1920" 
-                 alt="Mountain" 
-                 class="w-full h-full object-cover opacity-30 scale-105 filter brightness-75">
-        </div>
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-accent font-medium text-sm mb-6 tracking-wide backdrop-blur-sm">
-                পুনর্জাগরণ • ২০২৬-২০২৭ সেশন
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-black leading-tight tracking-tight mb-6">
-                পাহাড়, ট্রেইল আর অদম্য সাহসের চুয়েটিয়ান ঠিকানা
-            </h1>
-            <p class="text-lg sm:text-xl text-gray-300 font-light mb-10 max-w-2xl mx-auto leading-relaxed">
-                ২০১৫ সাল থেকে গড়ে ওঠা ঐতিহ্যকে সাথে নিয়ে আমরা আবার প্রস্তুত নতুন ট্রেইল এক্সপ্লোর করতে। সমমর্যাদা এবং দায়িত্বশীল অ্যাডভেঞ্চারের অঙ্গীকার।
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#wings" class="bg-accent hover:bg-orange-600 px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg hover:shadow-accent/40 flex items-center justify-center gap-2">
-                    টিম স্ট্রাকচার দেখুন <i class="fa-solid fa-arrow-right text-xs"></i>
-                </a>
-                <a href="#safety" class="bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-sm px-8 py-3.5 rounded-xl font-semibold transition-all">
-                    আমাদের সেফটি প্রটোকল
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-24 max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="text-accent font-bold uppercase tracking-widest text-xs">আমাদের মূল ভাবনা</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-forest mt-2 mb-6 leading-tight">
-                    লিডারশিপ নয়, এখানে প্রত্যেকেই একেকজন ট্রেইল লিডার
-                </h2>
-                <p class="text-gray-600 mb-4 leading-relaxed">
-                    চুয়েট অ্যাডভেঞ্চার সোসাইটিতে কোনো একক সভাপতি বা সাধারণ সম্পাদক নেই। আমরা একটি আধুনিক <strong>ফ্ল্যাট হায়ারার্কি (Flat Hierarchy)</strong> মডেলে বিশ্বাস করি, যেখানে প্রতিটি ডিপার্টমেন্টের লিডারের সিদ্ধান্ত নেওয়ার সমান অধিকার রয়েছে।
-                </p>
-                <p class="text-gray-600 leading-relaxed">
-                    সীতাকুণ্ডের খাঁদ থেকে শুরু করে বান্দরবানের দুর্গম চূড়া—আমাদের লক্ষ্য প্রতিটি ট্রেইলে টেকসই ট্রেকিং নিশ্চিত করা এবং চুয়েটের প্রতিটি ব্যাচের মধ্যে অ্যাডভেঞ্চারের স্পিরিট ছড়িয়ে দেওয়া।
-                </p>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                    <i class="fa-solid fa-mountain-sun text-3xl text-trail mb-4"></i>
-                    <h3 class="font-bold text-xl text-gray-800 mb-1">অফ-বিট রুট</h3>
-                    <p class="text-sm text-gray-500">অনাবিষ্কৃত পাহাড়ি ট্রেইল ও ক্যাম্পিং গ্রাউন্ডের সন্ধান।</p>
-                </div>
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                    <i class="fa-solid fa-shield-heart text-3xl text-accent mb-4"></i>
-                    <h3 class="font-bold text-xl text-gray-800 mb-1">কঠোর নিরাপত্তা</h3>
-                    <p class="text-sm text-gray-500">প্রতিটি লিডার ফার্স্ট এইড ও ইমার্জেন্সি রেসপন্সে ট্রেইন্ড।</p>
-                </div>
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                    <i class="fa-solid fa-scale-balanced text-3xl text-trail mb-4"></i>
-                    <h3 class="font-bold text-xl text-gray-800 mb-1">স্বচ্ছ বাজেট</h3>
-                    <p class="text-sm text-gray-500">সর্বনিম্ন খরচে নিখুঁত হিসাব ও ভাউচারভিত্তিক অডিট।</p>
-                </div>
-                <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                    <i class="fa-solid fa-person-hiking text-3xl text-accent mb-4"></i>
-                    <h3 class="font-bold text-xl text-gray-800 mb-1">ইনক্লুসিভ ট্যুর</h3>
-                    <p class="text-sm text-gray-500">নারী ও নতুন ট্রেকারদের জন্য নির্ভরযোগ্য সাপোর্ট সিস্টেম।</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Leadership Wings Section -->
     <section id="wings" class="py-24 bg-gray-100 border-y border-gray-200">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-accent font-bold uppercase tracking-widest text-xs">অর্গানাইজেশনাল কাঠামো</span>
                 <h2 class="text-3xl sm:text-4xl font-black text-forest mt-2 mb-4">৯টি কার্যকর লিডারশিপ উইং</h2>
-                <p class="text-gray-600 text-sm sm:text-base">ক্লাবের কার্যক্রমকে নিখুঁত ও জবাবদিহিতামূলক রাখতে প্রতিটি পদের দায়িত্ব সুনির্দিষ্ট করা হয়েছে।</p>
+                <p class="text-gray-600 text-sm sm:text-base">ক্লাবের কার্যক্রমকে পেশাদার, সুসংগঠিত ও জবাবদিহিতামূলক রাখতে প্রতিটি পদের সুনির্দিষ্ট দায়িত্ব ও কর্মপরিধি।</p>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Wing 1 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-calendar-check"></i>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-calendar-check text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">১. Leader of Event Planning</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>বাৎসরিক ও মৌসুমী ক্যালেন্ডার প্রণয়ন:</strong> আবহাওয়া, একাডেমিক ক্যালেন্ডার ও ছুটির দিন বিবেচনা করে কখন, কোথায় ইভেন্ট করা সম্ভব তার আগাম রূপরেখা তৈরি করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ধারণক্ষমতা ও যোগ্যতা নির্ধারণ:</strong> প্রতিটি ট্রেইলের কাঠিন্য অনুযায়ী সর্বোচ্চ কতজন অংশগ্রহণকারী নেওয়া যাবে এবং ইভেন্টটি নতুনদের উপযোগী নাকি অভিজ্ঞদের জন্য, তা সংজ্ঞায়িত করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ফিজিবিলিটি ও প্রাথমিক তথ্য সংগ্রহ:</strong> ডেস্টিনেশনের বর্তমান পরিস্থিতি, আনুমানিক খরচ ও সম্ভাব্য বাধা বিশ্লেষণ করে ইভেন্ট ম্যানেজমেন্ট টিমের জন্য একটি পূর্ণাঙ্গ রোডম্যাপ প্রস্তুত করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Event Planning</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">বাৎসরিক ক্যালেন্ডার প্রণয়ন, ট্রেইলের ধারণক্ষমতা নির্ধারণ ও ইভেন্টের সম্পূর্ণ ব্লুপ্রিন্ট তৈরি করা।</p>
                 </div>
 
-                <!-- Wing 2 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-people-group"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-people-group text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">২. Leader of Event Management</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>অংশগ্রহণকারী ট্র্যাকিং ও ড্রপআউট রোধ:</strong> রেজিস্ট্রেশনের পর কনফার্মেশন কল, ব্যাকআপ লিস্ট প্রস্তুত রাখা এবং ইভেন্টের আগের দিন পর্যন্ত যোগাযোগ সমন্বয় করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>অন-গ্রাউন্ড এক্সিকিউশন ও সময় নিয়ন্ত্রণ:</strong> ইভেন্টের দিন রিপোর্টিং টাইম, ট্রাভেল শিডিউল ও ট্রেইলের গতিবেগ কঠোরভাবে তদারকি করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>লজিস্টিক চেক:</strong> ফিল্ডে যাওয়ার আগে প্রতিটি সদস্যের প্রয়োজনীয় ব্যক্তিগত সরঞ্জাম ঠিক আছে কিনা এবং লজিস্টিক টিম সব গিয়ার সময়মতো সরবরাহ করতে পেরেছে কিনা তা যাচাই করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Event Management</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">অন-গ্রাউন্ড সময় নিয়ন্ত্রণ, নো-শো রোধে ট্র্যাকিং এবং ট্রেইলে নিরাপত্তা ও শৃঙ্খলা নিশ্চিতকরণ।</p>
                 </div>
 
-                <!-- Wing 3 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-gavel"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-scale-balanced text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৩. Leader of Administration & Compliance</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ক্ষমতার ভারসাম্য বজায় রাখা:</strong> ক্লাবে কোনো একক কর্তৃত্ব যেন তৈরি না হয় তা নিশ্চিত করা; লিডারদের সম্মিলিত মতামতের ভিত্তিতে ডিসিশন মেকিং সেশন পরিচালনা করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ক্লাব অফিশিয়ালাইজেশন প্রক্রিয়া সমন্বয়:</strong> বর্তমান রানিং ব্যাচের আগ্রহ অনুযায়ী ক্লাবটিকে বিশ্ববিদ্যালয় প্রশাসনের অধীনে অফিশিয়াল করা যাবে কিনা সেটি যাচাই করা, যদি সম্ভব হয় তাহলে তার জন্য প্রয়োজনীয় তথ্য, পলিসি ড্রাফট ও ডকুমেন্টেশন প্রস্তুত করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>অভ্যন্তরীণ সমন্বয় ও নথিপত্র সংরক্ষণ:</strong> লিডারদের মিটিং কল করা, সিদ্ধান্তের রেজোলিউশন সংরক্ষণ এবং সামগ্রিক সমন্বয়কের ভূমিকা পালন করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Administration & Compliance</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">ফ্ল্যাট হায়ারার্কি বজায় রাখা, ইন্টারনাল মিটিং সমন্বয় এবং ক্লাবের প্রাতিষ্ঠানিক পলিসি নির্ধারণ।</p>
                 </div>
 
-                <!-- Wing 4 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-map-location-dot"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-map-location-dot text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৪. Leader of Route Exploration & Mapping</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>নতুন ট্রেইল অনুসন্ধান ও স্ক্রিনিং:</strong> পরিচিত ট্রেইলের বাইরে সীতাকুণ্ড, বান্দরবান, রাঙ্গামাটি সহ পুরো বাংলাদেশের বিভিন্ন জায়গায় পরবর্তী ইভেন্টের জন্য আদর্শ লোকেশনগুলো ট্রেস করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ম্যাপিং ও লোকাল ইন্টেলিজেন্স:</strong> জিপিএস ট্র্যাকিং, অল্টারনেটিভ এক্সিট রুট চিহ্নিত করা এবং লোকাল গাইডদের সাথে সরাসরি যোগাযোগ রক্ষা করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>প্ল্যানিং টিমের সাথে সমন্বয়:</strong> নতুন ট্রেইলের নিরাপত্তা ও ভৌগোলিক তথ্য সরাসরি ইভেন্ট প্ল্যানিং টিমের কাছে হস্তান্তর করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Route Exploration & Mapping</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">নতুন ও অফ-বিট ট্রেইল ট্রেস করা, জিপিএস ম্যাপিং এবং বিশ্বস্ত লোকাল গাইডের ডেটাবেস সংরক্ষণ।</p>
                 </div>
 
-                <!-- Wing 5 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-campground"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-campground text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৫. Leader of Logistics & Equipment</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>গিয়ার ইনভেন্টরি ও রক্ষণাবেক্ষণ:</strong> ক্লাবের মালিকানাধীন তাঁবু, স্লিপিং ব্যাগ, রোপ, ট্রেইল লাইট ইত্যাদি সংরক্ষণ, পরিষ্কার রাখা এবং ব্যবহার উপযোগী রাখা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>নতুন সরঞ্জাম সংযোজন:</strong> বাজারে আসা কার্যকর আউটডোর ইকুইপমেন্টের ওপর গবেষণা করা এবং ক্লাবের প্রয়োজনে নতুন গিয়ার ক্রয়ের প্রস্তাব ফাইন্যান্স টিমের কাছে উপস্থাপন করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ফিল্ড সাপোর্ট:</strong> ইভেন্ট ম্যানেজমেন্ট টিমের চাহিদা অনুযায়ী সঠিক সময়ে গিয়ার প্যাকিং, হস্তান্তর এবং ইভেন্ট শেষে পুনরায় গুনে বুঝে নেওয়া।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Logistics & Equipment</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">তাবু, স্লিপিং ব্যাগ ইত্যাদি গিয়ার সংরক্ষণ, মেইনটেন্যান্স এবং টেকসই নতুন সরঞ্জামের রিকুইজিশন।</p>
                 </div>
 
-                <!-- Wing 6 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-receipt"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-receipt text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৬. Leader of Finance & Budget Optimization</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>স্বচ্ছ বাজেট প্রণয়ন:</strong> প্ল্যানিং টিমের সাথে সমন্বয় করে ট্রান্সপোর্ট, ফুডিং ও গাইডের বাল্ক বুকিংয়ের মাধ্যমে ব্যয় সংকোচনমূলক (Cost-effective) বাজেট তৈরি করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ফান্ড ও ক্যাশ-ফ্লো ম্যানেজমেন্ট:</strong> মেম্বারশিপ ফি, ইভেন্ট ফি সংগ্রহ এবং ইমার্জেন্সি ট্রাভেল ফান্ডের ব্যবস্থাপনা করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>হিসাবরক্ষণ ও অডিট:</strong> প্রতিটি ইভেন্ট শেষ হওয়ার নির্দিষ্ট সময়ের মধ্যে আয়-ব্যয়ের পূর্ণাঙ্গ হিসাব প্রকাশ করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Finance & Budget Optimization</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">কম খরচে নিখুঁত বাজেট প্রণয়ন, ইমার্জেন্সি রিজার্ভ ফান্ড তৈরি এবং ভাউচারভিত্তিক অডিট প্রদান।</p>
                 </div>
 
-                <!-- Wing 7 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-handshake"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-handshake text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৭. Leader of Communication</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>ইন্ট্রা-ক্যাম্পাস কোলাবোরেশন:</strong> ক্যাম্পাসের অন্যান্য ক্লাব যেমন ফিটনেস ক্লাব, কালচারাল ক্লাব, ফটোগ্রাফিক সোসাইটি এদের সাথে সমন্বয় করে যৌথ ইভেন্ট ডিজাইন করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>আন্তঃবিশ্ববিদ্যালয় নেটওয়ার্কিং:</strong> দেশের অন্যান্য বিশ্ববিদ্যালয়ভিত্তিক অ্যাডভেঞ্চার ক্লাবগুলোর সাথে যোগাযোগ স্থাপন, যৌথ ট্যুর প্রস্তাবনা এবং ট্রেইল-তথ্য বিনিময় করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Communication</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">চুয়েটের অভ্যন্তরীণ ক্লাব ও দেশের বিভিন্ন বিশ্ববিদ্যালয়ের অ্যাডভেঞ্চার ক্লাবের সাথে পার্টনারশিপ।</p>
                 </div>
 
-                <!-- Wing 8 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-person-shelter"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-person-shelter text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৮. Leader of Women's Engagement & Welfare</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>লেডিস হল অ্যাম্বাসেডরশিপ:</strong> আবাসিক হলগুলোতে ক্লাবের উপস্থিতি বাড়ানো এবং সরাসরি আলোচনার মাধ্যমে মেয়েদের আউটডোর ট্রাভেলের মানসিক জড়তা দূর করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>নিরাপত্তা ও কমফোর্ট এনভায়রনমেন্ট:</strong> "আর কোনো মেয়ে যাচ্ছে কিনা" সংক্রান্ত দ্বিধা কাটাতে ফিমেল পার্টিসিপেন্টদের একটি সুসংগঠিত নেটওয়ার্ক তৈরি করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-accent text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>হাইজিন ও ট্রেইল সাপোর্ট:</strong> নারী অংশগ্রহণকারীদের জন্য ট্রেইলে ব্যক্তিগত নিরাপত্তা, স্যানিটেশন সচেতনতা ও সহায়ক পরিবেশ নিশ্চিত করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Women's Engagement & Welfare</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">লেডিস হলে প্রতিনিধিত্ব, মেয়েদের জড়তা দূরীকরণ এবং ট্রেইলে হাইজিন ও নিরাপত্তা নিশ্চিতকরণ।</p>
                 </div>
 
-                <!-- Wing 9 -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-200/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
-                        <i class="fa-solid fa-hashtag"></i>
+                <div class="bg-white p-7 rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-lg bg-trail/10 text-trail flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-hashtag text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-3 border-b border-gray-100 pb-2">৯. Leader of Social Media & Documentation</h3>
+                        <ul class="text-xs text-gray-600 space-y-2.5 leading-relaxed">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>কন্টেন্ট ও আর্কাইভ ম্যানেজমেন্ট:</strong> ট্রেইল স্টোরিটেলিং, শিক্ষণীয় আউটডোর গাইডলাইন লেখা এবং মিডিয়া টিমের সংগৃহীত হাই-রেজোলিউশন ফুটেজ প্রফেশনালি পাবলিশ ও সংরক্ষণ করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>মাল্টি-প্ল্যাটফর্ম উপস্থিতি:</strong> ফেসবুকের বাইরেও ইনস্টাগ্রাম, এক্স (টুইটার) এবং থ্রেডসে ক্লাবের ব্র্যান্ড প্রোফাইল তৈরি ও গ্রোথ ড্রাইভ পরিচালনা করা।</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-trail text-[10px] mt-1 shrink-0"></i>
+                                <span><strong>কমিউনিটি ব্রিজিং:</strong> পুরনো গ্র্যাজুয়েট ও বর্তমান রানিং ব্যাচের শিক্ষার্থীদের মধ্যে সক্রিয় এনগেজমেন্ট তৈরি করতে নিয়মিত অ্যাডভেঞ্চার সম্পর্কিত কন্টেন্ট প্রকাশ করা।</span>
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">Social Media & Documentation</h3>
-                    <p class="text-xs text-gray-500 leading-relaxed">মাল্টি-প্ল্যাটফর্ম পরিচালনা, ট্রেইল ব্লগিং, মেম্বার এনগেজমেন্ট এবং ফটোগ্রাফিক আর্কাইভ তৈরি।</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Safety Banner (Universal Mandate) -->
     <section id="safety" class="py-20 bg-forest text-white">
-        <div class="max-w-5xl mx-auto px-6 text-center">
+        <div class="max-w-4xl mx-auto px-6 text-center">
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/20 text-accent text-2xl mb-6">
                 <i class="fa-solid fa-kit-medical"></i>
             </div>
-            <h2 class="text-3xl sm:text-4xl font-black mb-6">নিরাপত্তা আমাদের যৌথ দায়বদ্ধতা</h2>
-            <p class="text-gray-300 max-w-3xl mx-auto text-base sm:text-lg leading-relaxed mb-8">
-                আমরা বিশ্বাস করি নিরাপত্তা কোনো একক টিমের কাজ নয়। চুয়েট অ্যাডভেঞ্চার সোসাইটির <strong>প্রতিটি লিডার</strong> বেসিক ফার্স্ট এইড, ডিহাইড্রেশন ম্যানেজমেন্ট, ফ্র্যাকচার হ্যান্ডলিং এবং ইমার্জেন্সি ইভ্যাকুয়েশন প্রোটোকলে দায়িত্বপ্রাপ্ত।
-            </p>
-            <div class="flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-300">
-                <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> নো লিভ নো ট্রেস (LNT) নীতি</span>
-                <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> ব্যাকআপ স্যাটেলাইট/অফলাইন ম্যাপ</span>
-                <span class="flex items-center gap-2"><i class="fa-solid fa-check text-accent"></i> ইমার্জেন্সি ফার্স্ট এইড কিট ম্যান্ডেটরি</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Women's Corner -->
-    <section id="women" class="py-24 max-w-7xl mx-auto px-6">
-        <div class="bg-gradient-to-r from-orange-50 to-emerald-50 rounded-3xl p-8 sm:p-14 border border-gray-200/80 flex flex-col md:flex-row items-center gap-10">
-            <div class="flex-1">
-                <span class="text-accent font-bold uppercase tracking-widest text-xs">বিশেষ উদ্যোগ</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-forest mt-2 mb-4 leading-tight">
-                    নিরাপদ ও জড়তাহীন আউটডোর অভিজ্ঞতা
-                </h2>
-                <p class="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">
-                    "আর কোনো মেয়ে কি এই ট্রেইলে যাবে?"—এই সংকোচ কাটাতে কাজ করছে আমাদের <em>Women's Engagement & Welfare Wing</em>। লেডিস হলের ডেডিকেটেড অ্যাম্বাসেডরদের মাধ্যমে সম্পূর্ণ তথ্য ও কমফোর্ট এনভায়রনমেন্ট প্রদান করাই আমাদের অঙ্গীকার।
-                </p>
-                <div class="space-y-3 text-sm text-gray-700">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-trail"></i>
-                        <span>পৃথক ও নিরাপদ তাবু/আবাসন ব্যবস্থা</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-trail"></i>
-                        <span>ট্রেইলে স্যানিটেশন ও হাইজিন সাপোর্ট</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-trail"></i>
-                        <span>সরাসরি নারী কো-অর্ডিনেটরদের সাথে যোগাযোগের সুযোগ</span>
-                    </div>
+            <h2 class="text-3xl sm:text-4xl font-black mb-4">সেফটি ও ইমার্জেন্সি রেসপন্স নীতি</h2>
+            <span class="inline-block px-4 py-1 rounded-full bg-white/10 border border-white/20 text-accent font-semibold text-xs tracking-wider uppercase mb-8">সার্বজনীন দায়িত্ব</span>
+            
+            <div class="grid sm:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
+                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-sm">
+                    <i class="fa-solid fa-user-shield text-accent text-xl mb-3"></i>
+                    <h3 class="font-bold text-white text-base mb-2">সার্বজনীন প্রস্তুতি</h3>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        কোনো পৃথক টিম থাকবে না; প্রতিটি লিডারকে ফার্স্ট এইড, ট্রেইল সেফটি ও ইমার্জেন্সি এসকেপ প্রোটোকল জানতে হবে।
+                    </p>
                 </div>
-            </div>
-            <div class="w-full md:w-1/3 flex justify-center">
-                <div class="p-8 bg-white rounded-2xl shadow-sm border border-gray-100 text-center w-full max-w-sm">
-                    <i class="fa-solid fa-hand-holding-heart text-4xl text-accent mb-4"></i>
-                    <h3 class="font-bold text-gray-800 mb-2">সাহসী হোন, পথ দেখাবে পাহাড়ে</h3>
-                    <p class="text-xs text-gray-500 mb-6">পরবর্তী ডে-ট্যুর বা বিগিনার ট্রেইল নিয়ে যেকোনো প্রশ্নে কথা বলুন হল প্রতিনিধিদের সাথে।</p>
-                    <a href="#contact" class="block w-full py-2.5 bg-forest text-white rounded-xl text-xs font-semibold hover:bg-mountain transition-colors">
-                        হল প্রতিনিধির সাথে যোগাযোগ
-                    </a>
+                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-sm">
+                    <i class="fa-solid fa-hand-holding-hand text-trail text-xl mb-3"></i>
+                    <h3 class="font-bold text-white text-base mb-2">যৌথ ফিল্ড রেসপন্স</h3>
+                    <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        যেকোনো ইভেন্টে যেকোনো অনাকাঙ্ক্ষিত পরিস্থিতিতে অন-গ্রাউন্ড থাকা প্রতিটি লিডার যৌথভাবে রেসকিউ ও সেফটি ম্যানেজমেন্টে সক্রিয় থাকবে।
+                    </p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer / Contact -->
-    <footer id="contact" class="bg-forest text-white py-16 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
-            <div>
-                <div class="flex items-center gap-2 mb-4">
-                    <i class="fa-solid fa-compass text-accent text-xl"></i>
-                    <span class="font-black text-lg">CUET AS</span>
-                </div>
-                <p class="text-xs text-gray-400 leading-relaxed">
-                    চুয়েট অ্যাডভেঞ্চার সোসাইটি শিক্ষার্থীদের মাঝে অ্যাডভেঞ্চার স্পোর্টস, পরিবেশ সচেতনতা এবং লিডারশিপ বিকাশে একটি মুক্ত প্ল্যাটফর্ম।
-                </p>
-            </div>
-
-            <div>
-                <h4 class="font-bold text-sm mb-4 text-gray-200">কুইক লিংক</h4>
-                <ul class="text-xs space-y-2 text-gray-400">
-                    <li><a href="#about" class="hover:text-accent">আমাদের উদ্দেশ্য</a></li>
-                    <li><a href="#wings" class="hover:text-accent">লিডারশিপ উইংস</a></li>
-                    <li><a href="#safety" class="hover:text-accent">সেফটি ও ফার্স্ট এইড</a></li>
-                    <li><a href="#women" class="hover:text-accent">নারী সদস্য ফোরাম</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="font-bold text-sm mb-4 text-gray-200">যোগাযোগ ও ঠিকানা</h4>
-                <p class="text-xs text-gray-400 leading-relaxed mb-2">
-                    চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট), রাউজান, চট্টগ্রাম।
-                </p>
-                <p class="text-xs text-gray-400">Email: adventure@cuet.ac.bd (Proposed)</p>
-            </div>
-
-            <div>
-                <h4 class="font-bold text-sm mb-4 text-gray-200">সোশ্যাল চ্যানেলসমূহ</h4>
-                <div class="flex space-x-3 text-lg">
-                    <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors"><i class="fa-brands fa-threads"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6 pt-6 border-t border-white/5 text-center text-xs text-gray-500">
-            © ২০২৬ CUET Adventure Society. সর্বস্বত্ব সংরক্ষিত। Flat-Hierarchy মডেল অনুসৃত।
-        </div>
-    </footer>
-
-</body>
-</html>
