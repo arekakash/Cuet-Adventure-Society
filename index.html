@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="bn" class="scroll-smooth">
 <head>
+    <!-- ========================================== -->
+    <!-- 1. হেড (HEAD) সেকশন: ওয়েবসাইটের প্রাথমিক সেটআপ -->
+    <!-- ========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ওয়েবসাইটের টাইটেল (ব্রাউজারের ট্যাবে যা দেখাবে) -->
     <title>CUET Adventure Society (CAS)</title>
-    <!-- Tailwind CSS CDN -->
+    
+    <!-- টেইলউইন্ড সিএসএস (Tailwind CSS) - ওয়েবসাইটের ডিজাইনের জন্য -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // এখানে ওয়েবসাইটের মূল কালার বা রংগুলো সেট করা হয়েছে। চাইলে কোড (যেমন: #0f291e) পরিবর্তন করে রং বদলানো যাবে।
         tailwind.config = {
             theme: {
                 extend: {
@@ -21,19 +28,25 @@
             }
         }
     </script>
-    <!-- Font Awesome for Icons -->
+    <!-- ফন্ট অসাম (Font Awesome) - ওয়েবসাইটের বিভিন্ন আইকন (যেমন: ফেসবুক, কম্পাস) দেখানোর জন্য -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-accent selection:text-white">
 
-    <!-- Navigation -->
+    <!-- ========================================== -->
+    <!-- 2. ন্যাভিগেশন বার (Navbar): উপরের মেনু অংশ -->
+    <!-- ========================================== -->
     <nav class="fixed w-full z-50 bg-forest/95 backdrop-blur-md border-b border-white/10 text-white transition-all">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <!-- লোগো এবং ক্লাবের নাম -->
             <a href="#" class="flex items-center gap-3">
                 <i class="fa-solid fa-compass text-accent text-2xl"></i>
                 <span class="font-black text-xl tracking-wider">CUET ADVENTURE SOCIETY</span>
             </a>
             
+            <!-- ডেস্কটপ মেনু (কম্পিউটারে যা দেখাবে) -->
             <div class="hidden md:flex space-x-8 text-sm font-medium">
                 <a href="#about" class="hover:text-accent transition-colors">আমাদের কথা</a>
                 <a href="#wings" class="hover:text-accent transition-colors">লিডারশিপ উইংস</a>
@@ -43,16 +56,18 @@
             </div>
 
             <div class="flex items-center gap-4">
+                <!-- 'কানেক্ট হন' বাটন -->
                 <a href="#contact" class="hidden sm:inline-block bg-accent hover:bg-orange-600 px-5 py-2 rounded-full font-semibold text-xs tracking-wide uppercase transition-all shadow-md hover:shadow-accent/30">
                     কানেক্ট হন
                 </a>
+                <!-- মোবাইলের জন্য হ্যামবার্গার (তিন দাগের) মেনু বাটন -->
                 <button id="menu-btn" class="md:hidden text-white text-xl focus:outline-none" aria-label="Toggle Menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Dropdown Menu -->
+        <!-- মোবাইল ড্রপডাউন মেনু (মোবাইলে মেনু বাটনে ক্লিক করলে এটি নামবে) -->
         <div id="mobile-menu" class="hidden md:hidden bg-forest border-t border-white/10 px-6 py-4 space-y-3 text-sm">
             <a href="#about" class="block hover:text-accent transition-colors">আমাদের কথা</a>
             <a href="#wings" class="block hover:text-accent transition-colors">লিডারশিপ উইংস</a>
@@ -62,23 +77,34 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ========================================== -->
+    <!-- 3. হিরো সেকশন (Hero Section): ওয়েবসাইটের প্রধান ব্যানার -->
+    <!-- ========================================== -->
     <section class="relative h-screen flex items-center justify-center bg-forest text-white overflow-hidden">
+        <!-- ব্যাকগ্রাউন্ড ছবি (src এর ভেতরের লিংক পরিবর্তন করে ছবি পাল্টাতে পারবেন) -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1920" 
                  alt="Mountain" 
                  class="w-full h-full object-cover opacity-30 scale-105 filter brightness-75">
         </div>
+        
+        <!-- ব্যানারের ভেতরের লেখাগুলো -->
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
             <div class="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-accent font-medium text-sm mb-6 tracking-wide backdrop-blur-sm">
                 পুনর্জাগরণ • ২০২৬-২০২৭ সেশন
             </div>
+            
+            <!-- প্রধান হেডলাইন -->
             <h1 class="text-4xl sm:text-6xl font-black leading-tight tracking-tight mb-6">
                 পাহাড়, ট্রেইল আর অদম্য সাহসের চুয়েটিয়ান ঠিকানা
             </h1>
+            
+            <!-- সাব-হেডলাইন বা ছোট লেখা -->
             <p class="text-lg sm:text-xl text-gray-300 font-light mb-10 max-w-2xl mx-auto leading-relaxed">
                 ২০১৫ সাল থেকে গড়ে ওঠা ঐতিহ্যকে সাথে নিয়ে আমরা আবার প্রস্তুত নতুন ট্রেইল এক্সপ্লোর করতে। সমমর্যাদা এবং দায়িত্বশীল অ্যাডভেঞ্চারের অঙ্গীকার।
             </p>
+            
+            <!-- ব্যানারের দুটি বাটন -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#wings" class="bg-accent hover:bg-orange-600 px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg hover:shadow-accent/40 flex items-center justify-center gap-2">
                     টিম স্ট্রাকচার দেখুন <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -90,9 +116,13 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ========================================== -->
+    <!-- 4. আমাদের কথা (About Section): মূল ভাবনা ও চারিত্রিক বৈশিষ্ট্য -->
+    <!-- ========================================== -->
     <section id="about" class="py-24 max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
+            
+            <!-- বাম দিকের লেখা -->
             <div>
                 <span class="text-accent font-bold uppercase tracking-widest text-xs">আমাদের মূল ভাবনা</span>
                 <h2 class="text-3xl sm:text-4xl font-black text-forest mt-2 mb-6 leading-tight">
@@ -105,22 +135,28 @@
                     সীতাকুণ্ডের খাঁদ থেকে শুরু করে বান্দরবানের দুর্গম চূড়া—আমাদের লক্ষ্য প্রতিটি ট্রেইলে টেকসই ট্রেকিং নিশ্চিত করা এবং চুয়েটের প্রতিটি ব্যাচের মধ্যে অ্যাডভেঞ্চারের স্পিরিট ছড়িয়ে দেওয়া।
                 </p>
             </div>
+            
+            <!-- ডান দিকের ৪টি ছোট কার্ড -->
             <div class="grid grid-cols-2 gap-4">
+                <!-- কার্ড ১ -->
                 <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <i class="fa-solid fa-mountain-sun text-3xl text-trail mb-4"></i>
                     <h3 class="font-bold text-xl text-gray-800 mb-1">অফ-বিট রুট</h3>
                     <p class="text-sm text-gray-500">অনাবিষ্কৃত পাহাড়ি ট্রেইল ও ক্যাম্পিং গ্রাউন্ডের সন্ধান।</p>
                 </div>
+                <!-- কার্ড ২ -->
                 <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <i class="fa-solid fa-shield-heart text-3xl text-accent mb-4"></i>
                     <h3 class="font-bold text-xl text-gray-800 mb-1">কঠোর নিরাপত্তা</h3>
                     <p class="text-sm text-gray-500">প্রতিটি লিডার ফার্স্ট এইড ও ইমার্জেন্সি রেসপন্সে ট্রেইন্ড।</p>
                 </div>
+                <!-- কার্ড ৩ -->
                 <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <i class="fa-solid fa-scale-balanced text-3xl text-trail mb-4"></i>
                     <h3 class="font-bold text-xl text-gray-800 mb-1">স্বচ্ছ বাজেট</h3>
                     <p class="text-sm text-gray-500">সর্বনিম্ন খরচে নিখুঁত হিসাব ও ভাউচারভিত্তিক অডিট।</p>
                 </div>
+                <!-- কার্ড ৪ -->
                 <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                     <i class="fa-solid fa-person-hiking text-3xl text-accent mb-4"></i>
                     <h3 class="font-bold text-xl text-gray-800 mb-1">ইনক্লুসিভ ট্যুর</h3>
@@ -130,9 +166,13 @@
         </div>
     </section>
 
-    <!-- Leadership Wings Section -->
+    <!-- ========================================== -->
+    <!-- 5. লিডারশিপ উইংস (Wings Section): ৯টি ডিপার্টমেন্টের বর্ণনা -->
+    <!-- ========================================== -->
     <section id="wings" class="py-24 bg-gradient-to-b from-gray-100 via-gray-50 to-gray-100 border-y border-gray-200">
         <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- এই সেকশনের শিরোনাম -->
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="inline-block px-4 py-1 rounded-full bg-accent/10 text-accent font-bold uppercase tracking-widest text-xs mb-3">
                     অর্গানাইজেশনাল গভর্ন্যান্স
@@ -143,8 +183,10 @@
                 </p>
             </div>
 
+            <!-- ৯টি কার্ডের গ্রিড শুরু -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Wing 1 -->
+                
+                <!-- উইং ১: Event Planning -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -156,11 +198,13 @@
                                 <h3 class="font-bold text-lg text-gray-900 leading-snug">Leader of Event Planning</h3>
                             </div>
                         </div>
+                        <!-- উইং ১ এর কাজের তালিকা -->
                         <ul class="space-y-3.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
                             <li class="flex items-start gap-2.5">
                                 <i class="fa-solid fa-circle-check text-trail mt-1 text-xs shrink-0"></i>
                                 <span><strong class="text-gray-800">বাৎসরিক ও মৌসুমী ক্যালেন্ডার প্রণয়ন:</strong> আবহাওয়া, একাডেমিক ক্যালেন্ডার ও ছুটির দিন বিবেচনা করে কখন, কোথায় ইভেন্ট করা সম্ভব তার আগাম রূপরেখা তৈরি করা।</span>
                             </li>
+                            <!-- আরো পয়েন্ট যোগ করতে চাইলে এরকম <li>...</li> ট্যাগ কপি করে নিচে বসাতে হবে -->
                             <li class="flex items-start gap-2.5">
                                 <i class="fa-solid fa-circle-check text-trail mt-1 text-xs shrink-0"></i>
                                 <span><strong class="text-gray-800">ধারণক্ষমতা ও যোগ্যতা নির্ধারণ:</strong> প্রতিটি ট্রেইলের কাঠিন্য অনুযায়ী সর্বোচ্চ কতজন অংশগ্রহণকারী নেওয়া যাবে এবং ইভেন্টটি নতুনদের উপযোগী নাকি অভিজ্ঞদের জন্য, তা সংজ্ঞায়িত করা।</span>
@@ -173,7 +217,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 2 -->
+                <!-- উইং ২: Event Management -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -202,7 +246,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 3 -->
+                <!-- উইং ৩: Administration -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -231,7 +275,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 4 -->
+                <!-- উইং ৪: Route & Mapping -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -260,7 +304,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 5 -->
+                <!-- উইং ৫: Logistics & Equipment -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -289,7 +333,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 6 -->
+                <!-- উইং ৬: Finance -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -318,7 +362,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 7 -->
+                <!-- উইং ৭: Communication -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -343,7 +387,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 8 -->
+                <!-- উইং ৮: Women's Wing -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -372,7 +416,7 @@
                     </div>
                 </div>
 
-                <!-- Wing 9 -->
+                <!-- উইং ৯: Storytelling -->
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center gap-3.5 mb-5">
@@ -401,12 +445,18 @@
                     </div>
                 </div>
             </div>
+            <!-- ৯টি কার্ডের গ্রিড শেষ -->
+
         </div>
     </section>
 
-    <!-- Safety & Emergency Response (Universal Mandate) -->
+    <!-- ========================================== -->
+    <!-- 6. নিরাপত্তা নীতি (Safety Section): সেফটি প্রটোকল -->
+    <!-- ========================================== -->
     <section id="safety" class="py-24 bg-forest text-white relative overflow-hidden">
+        <!-- ব্যাকগ্রাউন্ডের গ্লো ইফেক্ট -->
         <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-trail/20 blur-3xl pointer-events-none"></div>
+        
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/20 text-accent text-2xl mb-6 shadow-inner">
                 <i class="fa-solid fa-kit-medical"></i>
@@ -437,6 +487,7 @@
                 </div>
             </div>
 
+            <!-- নিচে ছোট করে ৩টি রুলস দেওয়া আছে -->
             <div class="flex flex-wrap justify-center gap-6 text-xs sm:text-sm font-medium text-gray-300">
                 <span class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-accent"></i> নো লিভ নো ট্রেস (LNT) নীতি</span>
                 <span class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-accent"></i> ব্যাকআপ স্যাটেলাইট/অফলাইন ম্যাপ</span>
@@ -445,9 +496,13 @@
         </div>
     </section>
 
-    <!-- Women's Corner -->
+    <!-- ========================================== -->
+    <!-- 7. উইমেন্স কর্নার (Women's Section) -->
+    <!-- ========================================== -->
     <section id="women" class="py-24 max-w-7xl mx-auto px-6">
         <div class="bg-gradient-to-r from-orange-50 to-emerald-50 rounded-3xl p-8 sm:p-14 border border-gray-200/80 flex flex-col md:flex-row items-center gap-10">
+            
+            <!-- বাম দিকের লেখা -->
             <div class="flex-1">
                 <span class="text-accent font-bold uppercase tracking-widest text-xs">বিশেষ উদ্যোগ</span>
                 <h2 class="text-3xl sm:text-4xl font-black text-forest mt-2 mb-4 leading-tight">
@@ -456,6 +511,7 @@
                 <p class="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">
                     "আর কোনো মেয়ে কি এই ট্রেইলে যাবে?"—এই দ্বিধা কাটাতে কাজ করছে আমাদের <em>Leader of Women's Wing</em>। লেডিস হলের সুসংগঠিত নেটওয়ার্কের মাধ্যমে সম্পূর্ণ নিরাপদ, প্রাইভেট এবং বন্ধুত্বপূর্ণ ট্রাভেল পরিবেশ গড়ে তোলাই আমাদের লক্ষ্য।
                 </p>
+                
                 <div class="space-y-3 text-sm text-gray-700">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-circle-check text-trail"></i>
@@ -471,6 +527,8 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- ডান দিকের ছোট কন্টাক্ট বক্স -->
             <div class="w-full md:w-1/3 flex justify-center">
                 <div class="p-8 bg-white rounded-2xl shadow-sm border border-gray-100 text-center w-full max-w-sm">
                     <i class="fa-solid fa-hand-holding-heart text-4xl text-accent mb-4"></i>
@@ -484,9 +542,13 @@
         </div>
     </section>
 
-    <!-- Footer / Contact -->
+    <!-- ========================================== -->
+    <!-- 8. ফুটার (Footer / Contact Section): একদম নিচের অংশ -->
+    <!-- ========================================== -->
     <footer id="contact" class="bg-forest text-white py-16 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+            
+            <!-- কলাম ১: ক্লাবের নাম ও বর্ণনা -->
             <div>
                 <div class="flex items-center gap-2 mb-4">
                     <i class="fa-solid fa-compass text-accent text-xl"></i>
@@ -497,6 +559,7 @@
                 </p>
             </div>
 
+            <!-- কলাম ২: কুইক লিংক (অন্যান্য সেকশনে যাওয়ার শর্টকাট) -->
             <div>
                 <h4 class="font-bold text-sm mb-4 text-gray-200">কুইক লিংক</h4>
                 <ul class="text-xs space-y-2 text-gray-400">
@@ -507,17 +570,21 @@
                 </ul>
             </div>
 
+            <!-- কলাম ৩: ঠিকানা ও ইমেইল -->
             <div>
                 <h4 class="font-bold text-sm mb-4 text-gray-200">যোগাযোগ ও ঠিকানা</h4>
                 <p class="text-xs text-gray-400 leading-relaxed mb-2">
                     চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট), রাউজান, চট্টগ্রাম।
                 </p>
+                <!-- এখানে আপনাদের আসল ইমেইল বসিয়ে নিতে পারবেন -->
                 <p class="text-xs text-gray-400">Email: adventure@cuet.ac.bd (Proposed)</p>
             </div>
 
+            <!-- কলাম ৪: সোশ্যাল মিডিয়া লিংক -->
             <div>
                 <h4 class="font-bold text-sm mb-4 text-gray-200">সোশ্যাল চ্যানেলসমূহ</h4>
                 <div class="flex space-x-3 text-lg">
+                    <!-- href="#" এর জায়গায় আপনাদের ফেসবুক পেজের লিংক বসাতে হবে -->
                     <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                     <a href="#" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
@@ -526,21 +593,27 @@
             </div>
         </div>
 
+        <!-- কপিরাইট অংশ -->
         <div class="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500">
             <p>&copy; ২০২৬ CUET Adventure Society (CAS)। সর্বস্বত্ব সংরক্ষিত।</p>
             <p class="mt-4 sm:mt-0">Design &amp; Developed with Flat Hierarchy Core Team</p>
         </div>
     </footer>
 
-    <!-- Mobile Navigation Script -->
+    <!-- ========================================== -->
+    <!-- 9. জাভাস্ক্রিপ্ট (JavaScript): মোবাইল মেনু কাজ করার জন্য -->
+    <!-- ========================================== -->
     <script>
+        // মেনু বাটন এবং মোবাইল মেনুর অংশটি সিলেক্ট করা হচ্ছে
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
+        // মেনু বাটনে ক্লিক করলে মেনুটি খুলবে বা বন্ধ হবে
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
+        // মেনুর কোনো লিংকে ক্লিক করলে মেনুটি নিজে থেকেই বন্ধ হয়ে যাবে
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
