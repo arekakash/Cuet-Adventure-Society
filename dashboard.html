@@ -40,15 +40,15 @@
             
             <div class="flex items-center gap-4">
                 <div class="text-right hidden sm:block pr-3 border-r border-white/20">
-                    <p class="text-xs font-bold text-gray-200">Osman Gani</p>
+                    <!-- ID Added -->
+                    <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
                     <p class="text-[10px] text-accent uppercase tracking-widest">Active Member</p>
                 </div>
-                <!-- Profile Avatar -->
                 <div class="w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 cursor-pointer hover:border-white transition-colors">
-                    <img src="https://ui-avatars.com/api/?name=Osman+Gani&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                 </div>
-                <!-- Logout Button -->
-                <a href="index.html" class="ml-2 text-gray-300 hover:text-accent transition-colors" title="Log Out">
+                <!-- Logout Button with ID -->
+                <a href="#" id="logout-btn" class="ml-2 text-gray-300 hover:text-accent transition-colors" title="Log Out">
                     <i class="fa-solid fa-right-from-bracket text-lg"></i>
                 </a>
             </div>
@@ -68,17 +68,18 @@
                 <div class="h-24 bg-gradient-to-r from-mountain to-trail"></div>
                 <div class="px-6 pb-6 relative">
                     <div class="w-20 h-20 rounded-2xl border-4 border-white shadow-md overflow-hidden bg-white absolute -top-10 left-6">
-                        <img src="https://ui-avatars.com/api/?name=Osman+Gani&background=0f291e&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
+                        <img src="https://ui-avatars.com/api/?name=User&background=0f291e&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div class="mt-12">
-                        <h2 class="text-2xl font-black text-gray-900">Osman Gani</h2>
+                        <!-- Dynamic IDs Added -->
+                        <h2 id="display-name" class="text-2xl font-black text-gray-900">Loading...</h2>
                         <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
-                            <i class="fa-solid fa-graduation-cap text-trail"></i>
-                            Mechanical Engineering
+                            <i class="fa-solid fa-building-user text-trail"></i>
+                            <span id="display-hall">Loading...</span>
                         </div>
                         <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
                             <i class="fa-solid fa-id-card text-trail"></i>
-                            ID: 1303063
+                            ID: <span id="display-id">...</span>
                         </div>
                         
                         <div class="mt-4 pt-4 border-t border-gray-100 flex gap-2">
@@ -97,20 +98,17 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Blood Group</p>
-                        <p class="font-black text-accent flex items-center gap-2"><i class="fa-solid fa-droplet"></i> O+</p>
+                        <p class="font-black text-accent flex items-center gap-2"><i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span></p>
                     </div>
                     <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">T-Shirt Size</p>
-                        <p class="font-black text-forest flex items-center gap-2"><i class="fa-solid fa-shirt"></i> M</p>
+                        <p class="font-black text-forest flex items-center gap-2"><i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span></p>
                     </div>
                     <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 col-span-2">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Emergency Contact</p>
-                        <p class="font-black text-gray-700 flex items-center gap-2"><i class="fa-solid fa-phone"></i> +880 1XXX-XXXXXX</p>
+                        <p class="font-black text-gray-700 flex items-center gap-2"><i class="fa-solid fa-phone"></i> <span id="display-emergency">...</span></p>
                     </div>
                 </div>
-                <button class="w-full mt-4 text-xs font-bold text-forest hover:text-accent transition-colors flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-pen-to-square"></i> Edit Information
-                </button>
             </div>
         </div>
 
@@ -121,22 +119,22 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 rounded-full bg-trail/10 text-trail flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-route"></i></div>
-                    <p class="text-2xl font-black text-gray-900">03</p>
+                    <p class="text-2xl font-black text-gray-900">00</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-fire"></i></div>
-                    <p class="text-2xl font-black text-gray-900">14</p>
+                    <p class="text-2xl font-black text-gray-900">00</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 rounded-full bg-forest/10 text-forest flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shoe-prints"></i></div>
-                    <p class="text-2xl font-black text-gray-900">45<span class="text-sm font-medium text-gray-500">km</span></p>
+                    <p class="text-2xl font-black text-gray-900">00<span class="text-sm font-medium text-gray-500">km</span></p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shield-halved"></i></div>
-                    <p class="text-2xl font-black text-gray-900">98<span class="text-sm font-medium text-gray-500">%</span></p>
+                    <p class="text-2xl font-black text-gray-900">N/A</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Safety Index</p>
                 </div>
             </div>
@@ -147,54 +145,81 @@
                     <h3 class="text-lg font-black text-forest">My Trail History</h3>
                     <a href="#" class="text-xs font-bold text-accent hover:underline">View All</a>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-50 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
-                                <th class="p-4">Event Name</th>
-                                <th class="p-4">Date</th>
-                                <th class="p-4">Difficulty</th>
-                                <th class="p-4">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm text-gray-700">
-                            <!-- Data Row 1 -->
-                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
-                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-trail/10 text-trail flex items-center justify-center"><i class="fa-solid fa-water"></i></div>
-                                    Kaptai Lake Camping & Kayaking
-                                </td>
-                                <td class="p-4 text-gray-500">Dec 15, 2023</td>
-                                <td class="p-4"><span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-md text-[10px] font-bold border border-green-100">Beginner</span></td>
-                                <td class="p-4"><span class="text-gray-400 font-bold text-xs"><i class="fa-solid fa-check text-trail"></i> Completed</span></td>
-                            </tr>
-                            <!-- Data Row 2 -->
-                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
-                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-mountain/10 text-mountain flex items-center justify-center"><i class="fa-solid fa-cloud"></i></div>
-                                    Sajek Valley Cloud Trek
-                                </td>
-                                <td class="p-4 text-gray-500">Jan 16, 2021</td>
-                                <td class="p-4"><span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 rounded-md text-[10px] font-bold border border-yellow-100">Moderate</span></td>
-                                <td class="p-4"><span class="text-gray-400 font-bold text-xs"><i class="fa-solid fa-check text-trail"></i> Completed</span></td>
-                            </tr>
-                            <!-- Data Row 3 (Upcoming) -->
-                            <tr class="hover:bg-gray-50/50 transition-colors">
-                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center"><i class="fa-solid fa-mountain"></i></div>
-                                    Sitakunda Extreme Trail
-                                </td>
-                                <td class="p-4 text-accent font-bold">Oct 12, 2026</td>
-                                <td class="p-4"><span class="px-2.5 py-1 bg-red-50 text-red-700 rounded-md text-[10px] font-bold border border-red-100">Hard</span></td>
-                                <td class="p-4"><span class="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-bold shadow-sm animate-pulse">Upcoming</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="p-8 text-center text-gray-500">
+                    <i class="fa-solid fa-person-hiking text-4xl text-gray-300 mb-3"></i>
+                    <p class="text-sm font-medium">আপনি এখনও কোনো ট্রেইলে অংশগ্রহণ করেননি।</p>
                 </div>
             </div>
             
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- FIREBASE INTEGRATION ENGINE                -->
+    <!-- ========================================== -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // 1. Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as",
+            storageBucket: "cuet-as.firebasestorage.app",
+            messagingSenderId: "869959746091",
+            appId: "1:869959746091:web:fa2c086441fc429a14606e",
+            measurementId: "G-WNJBJT9K5K"
+        };
+
+        // Initialize Engine
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // 2. State Management & Data Fetching
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, fetch their data from Firestore
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        
+                        // Inject Data into UI dynamically
+                        document.getElementById('nav-user-name').innerText = userData.fullName || "Member";
+                        document.getElementById('display-name').innerText = userData.fullName || "Member";
+                        document.getElementById('display-id').innerText = userData.studentId || "N/A";
+                        document.getElementById('display-hall').innerText = userData.hall || "N/A";
+                        document.getElementById('display-blood').innerText = userData.bloodGroup || "N/A";
+                        document.getElementById('display-tshirt').innerText = userData.tshirtSize || "N/A";
+                        document.getElementById('display-emergency').innerText = userData.emergencyContact || "N/A";
+                        
+                    } else {
+                        console.log("No such document!");
+                    }
+                }).catch((error) => {
+                    console.log("Error getting document:", error);
+                });
+            } else {
+                // User is NOT signed in, kick them back to index.html (Security)
+                window.location.href = "index.html";
+            }
+        });
+
+        // 3. Secure Logout Logic
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => {
+                // Sign-out successful, redirect to home
+                window.location.href = "index.html";
+            }).catch((error) => {
+                alert("লগ-আউট করতে সমস্যা হয়েছে!");
+            });
+        });
+    </script>
 </body>
 </html>
