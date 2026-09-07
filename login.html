@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Adventure Account - CUET AS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0f291e',
+                        mountain: '#1b4332',
+                        trail: '#2d6a4f',
+                        accent: '#e76f51',
+                        facebook: '#0866FF'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS for advanced input transitions -->
+    <style>
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(231, 111, 81, 0.1), 0 4px 6px -2px rgba(231, 111, 81, 0.05);
+        }
+        /* Animation delays for sequential loading */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+    </style>
+</head>
+
+<!-- এখানে overflow-hidden পরিবর্তন করে overflow-x-hidden এবং md:items-center করা হয়েছে -->
+<body class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex md:items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden">
+
+    <!-- Dynamic Background Elements -->
+    <div class="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-accent/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
+        <div class="absolute top-40 -right-20 w-80 h-80 bg-trail/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow delay-1000"></div>
+    </div>
+
+    <!-- Main Card (Glassmorphism effect) -->
+    <div class="max-w-6xl w-full bg-white/90 backdrop-blur-xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/50">
+        
+        <!-- ========================================== -->
+        <!-- Left Side: Hero, Branding & Animations     -->
+        <!-- ========================================== -->
+        <div class="w-full md:w-5/12 bg-forest text-white flex flex-col justify-between relative overflow-hidden group">
+            
+            <!-- Background Image with Parallax-like scale -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?auto=format&fit=crop&q=80&w=800" 
+                     alt="Camping" class="w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-1000 ease-in-out">
+                <div class="absolute inset-0 bg-gradient-to-br from-forest/90 to-mountain/80"></div>
+            </div>
+
+            <!-- Huge Watermark Logo (White Logo) -->
+            <div class="absolute -bottom-20 -left-20 w-[150%] opacity-5 pointer-events-none transform -rotate-12 mix-blend-screen">
+                <img src="https://i.ibb.co.com/RTsXRhrL/FB-IMG-1788798212734.jpg" alt="Watermark">
+            </div>
+            
+            <div class="relative z-10 p-10 lg:p-14 flex flex-col h-full justify-between">
+                <div class="animate-fade-in-up">
+                    <a href="index.html" class="inline-flex items-center gap-2 text-accent/80 mb-12 hover:text-accent transition-colors backdrop-blur-sm bg-white/5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10 hover:bg-white/10">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home
+                    </a>
+                    
+                    <!-- Floating White Logo -->
+                    <div class="mb-8 animate-float">
+                        <img src="https://i.ibb.co.com/RTsXRhrL/FB-IMG-1788798212734.jpg" alt="CUET AS White Logo" class="h-24 sm:h-28 w-auto object-contain mix-blend-screen drop-shadow-2xl">
+                    </div>
+
+                    <h2 class="text-4xl lg:text-5xl font-black leading-tight mb-5 tracking-tight drop-shadow-lg">
+                        আপনার অ্যাডভেঞ্চার শুরু হোক এখান থেকেই।
+                    </h2>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed border-l-2 border-accent pl-4">
+                        একটি প্রোফাইল, অসংখ্য ট্রেইল। ক্লাবের ইভেন্ট বুকিং, ট্রেইল হিস্ট্রি এবং সেফটি ইনডেক্স ম্যানেজ করতে আজই অ্যাকাউন্ট তৈরি করুন।
+                    </p>
+                </div>
+                
+                <div class="mt-12 flex items-center gap-3 animate-fade-in-up delay-200">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md">
+                        <i class="fa-solid fa-campground text-accent"></i>
+                    </div>
+                    <span class="font-bold text-sm tracking-widest uppercase text-gray-300">Sustainable Travel</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- Right Side: Registration Form              -->
+        <!-- ========================================== -->
+        <div class="w-full md:w-7/12 p-8 sm:p-12 lg:p-16 bg-white relative">
+            
+            <!-- Animated Header with Color Logo -->
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 text-center sm:text-left animate-fade-in-up">
+                <div class="p-2 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm">
+                    <img src="https://i.ibb.co.com/N26wGXTh/FB-IMG-1788800145010.jpg" alt="CUET AS Color Logo" class="h-14 sm:h-16 w-auto object-contain mix-blend-multiply">
+                </div>
+                <div class="mt-1">
+                    <h3 class="text-2xl lg:text-3xl font-black text-gray-900 mb-1 tracking-tight">অ্যাকাউন্ট তৈরি করুন</h3>
+                    <p class="text-sm text-gray-500 font-medium">সবচেয়ে দ্রুত যুক্ত হতে গুগলের মাধ্যমে সাইন-আপ করুন।</p>
+                </div>
+            </div>
+
+            <!-- Google Sign Up Button -->
+            <div class="animate-fade-in-up delay-100">
+                <button class="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group">
+                    <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-gray-100 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+                    <svg class="w-5 h-5 relative z-10" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.58c2.08-1.92 3.27-4.74 3.27-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.58-2.77c-.98.66-2.23 1.06-3.7 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span class="relative z-10">Continue with Google</span>
+                </button>
+            </div>
+
+            <div class="relative flex items-center py-4 mb-6 animate-fade-in-up delay-200">
+                <div class="flex-grow border-t border-gray-200"></div>
+                <span class="flex-shrink-0 mx-4 text-gray-400 text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-white px-2">অথবা ম্যানুয়ালি ফর্ম পূরণ করুন</span>
+                <div class="flex-grow border-t border-gray-200"></div>
+            </div>
+
+            <!-- Manual Form -->
+            <form action="#" class="space-y-5">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 animate-fade-in-up delay-300">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">আপনার নাম</label>
+                        <input type="text" placeholder="Full Name" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">স্টুডেন্ট আইডি</label>
+                        <input type="text" placeholder="e.g. 2101001" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div class="animate-fade-in-up delay-300">
+                    <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">ইমেইল অ্যাড্রেস</label>
+                    <input type="email" placeholder="example@cuet.ac.bd" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 animate-fade-in-up delay-400">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">আবাসিক হল</label>
+                        <select class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected>নির্বাচন করুন</option>
+                            <option value="muktijoddha">Muktijoddha Hall</option>
+                            <option value="shahid_mohammad_shah">Shahid Mohammad Shah Hall</option>
+                            <option value="qudrat_e_khuda">Dr. Qudrat-E-Khuda Hall</option>
+                            <option value="nazrul_islam">Kabi Kazi Nazrul Islam Hall</option>
+                            <option value="tareq_huda">Shaheed Tareq Huda Hall</option>
+                            <option value="abu_sayed">Shaheed Abu Sayed Hall</option>
+                            <option value="sufia_kamal">Sufia kamal Hall</option>
+                            <option value="shamsennahar_khan">Begum Shamsennahar Khan Hall</option>
+                            <option value="tapashi_rabeya">Tapashi Rabeya Hall</option>
+                            <option value="non_residential">অ্যাটাচড/অনাবাসিক</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">রক্তের গ্রুপ</label>
+                        <select class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected>নির্বাচন করুন</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 animate-fade-in-up delay-400">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">নিজের ফোন নম্বর</label>
+                        <input type="tel" placeholder="01XXXXXXXXX" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">জরুরি কন্টাক্ট (পরিবার)</label>
+                        <input type="tel" placeholder="01XXXXXXXXX" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 animate-fade-in-up delay-500">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">পাসওয়ার্ড</label>
+                        <input type="password" placeholder="••••••••" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">পুনরায় পাসওয়ার্ড দিন</label>
+                        <input type="password" placeholder="••••••••" class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div class="animate-fade-in-up delay-500">
+                    <label class="block text-[11px] font-bold text-gray-500 mb-1.5 uppercase tracking-wider">টি-শার্ট সাইজ</label>
+                    <select class="input-field w-full bg-gray-50/50 border border-gray-200 text-gray-800 text-sm rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent block p-3.5 outline-none appearance-none cursor-pointer">
+                        <option value="" disabled selected>নির্বাচন করুন</option>
+                        <option value="S">S (Small)</option>
+                        <option value="M">M (Medium)</option>
+                        <option value="L">L (Large)</option>
+                        <option value="XL">XL (Extra Large)</option>
+                        <option value="XXL">XXL (Double XL)</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 animate-fade-in-up delay-500">
+                    <button type="submit" class="w-full bg-forest hover:bg-mountain text-white font-bold py-4 px-4 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-1">
+                        Create Adventure Account
+                    </button>
+                </div>
+            </form>
+
+            <p class="text-center text-sm text-gray-500 mt-8 animate-fade-in-up delay-500">
+                Already have an account? <a href="#" class="text-accent font-bold hover:text-orange-600 transition-colors">Log in here</a>
+            </p>
+
+        </div>
+    </div>
+
+</body>
+</html>
