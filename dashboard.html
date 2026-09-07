@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - CUET AS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#0f291e',
+                        mountain: '#1b4332',
+                        trail: '#2d6a4f',
+                        accent: '#e76f51',
+                        sand: '#f4f1de'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- ========================================== -->
+    <!-- Top Navigation (Logged-in State)           -->
+    <!-- ========================================== -->
+    <nav class="sticky top-0 z-50 bg-forest text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <i class="fa-solid fa-compass text-accent text-2xl"></i>
+                <span class="font-black text-lg tracking-wider hidden sm:block">CUET AS DASHBOARD</span>
+            </a>
+            
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block pr-3 border-r border-white/20">
+                    <p class="text-xs font-bold text-gray-200">Osman Gani</p>
+                    <p class="text-[10px] text-accent uppercase tracking-widest">Active Member</p>
+                </div>
+                <!-- Profile Avatar -->
+                <div class="w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 cursor-pointer hover:border-white transition-colors">
+                    <img src="https://ui-avatars.com/api/?name=Osman+Gani&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                </div>
+                <!-- Logout Button -->
+                <a href="index.html" class="ml-2 text-gray-300 hover:text-accent transition-colors" title="Log Out">
+                    <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- Main Dashboard Container                   -->
+    <!-- ========================================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Column: Identity & Personal Info -->
+        <div class="space-y-6">
+            
+            <!-- Identity Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                <div class="h-24 bg-gradient-to-r from-mountain to-trail"></div>
+                <div class="px-6 pb-6 relative">
+                    <div class="w-20 h-20 rounded-2xl border-4 border-white shadow-md overflow-hidden bg-white absolute -top-10 left-6">
+                        <img src="https://ui-avatars.com/api/?name=Osman+Gani&background=0f291e&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <div class="mt-12">
+                        <h2 class="text-2xl font-black text-gray-900">Osman Gani</h2>
+                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
+                            <i class="fa-solid fa-graduation-cap text-trail"></i>
+                            Mechanical Engineering
+                        </div>
+                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
+                            <i class="fa-solid fa-id-card text-trail"></i>
+                            ID: 1303063
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-green-50 text-green-700 text-xs font-bold border border-green-100">
+                                <i class="fa-solid fa-check-circle"></i> Profile Complete
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vital Info Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h3 class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-5 border-b border-gray-100 pb-2">Vital Information</h3>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Blood Group</p>
+                        <p class="font-black text-accent flex items-center gap-2"><i class="fa-solid fa-droplet"></i> O+</p>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">T-Shirt Size</p>
+                        <p class="font-black text-forest flex items-center gap-2"><i class="fa-solid fa-shirt"></i> M</p>
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 col-span-2">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Emergency Contact</p>
+                        <p class="font-black text-gray-700 flex items-center gap-2"><i class="fa-solid fa-phone"></i> +880 1XXX-XXXXXX</p>
+                    </div>
+                </div>
+                <button class="w-full mt-4 text-xs font-bold text-forest hover:text-accent transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Information
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Analytics & Trail History -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Quick Analytics (Metrics) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 rounded-full bg-trail/10 text-trail flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-route"></i></div>
+                    <p class="text-2xl font-black text-gray-900">03</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-fire"></i></div>
+                    <p class="text-2xl font-black text-gray-900">14</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 rounded-full bg-forest/10 text-forest flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shoe-prints"></i></div>
+                    <p class="text-2xl font-black text-gray-900">45<span class="text-sm font-medium text-gray-500">km</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shield-halved"></i></div>
+                    <p class="text-2xl font-black text-gray-900">98<span class="text-sm font-medium text-gray-500">%</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Safety Index</p>
+                </div>
+            </div>
+
+            <!-- Trail History Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="text-lg font-black text-forest">My Trail History</h3>
+                    <a href="#" class="text-xs font-bold text-accent hover:underline">View All</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">
+                                <th class="p-4">Event Name</th>
+                                <th class="p-4">Date</th>
+                                <th class="p-4">Difficulty</th>
+                                <th class="p-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-700">
+                            <!-- Data Row 1 -->
+                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-trail/10 text-trail flex items-center justify-center"><i class="fa-solid fa-water"></i></div>
+                                    Kaptai Lake Camping & Kayaking
+                                </td>
+                                <td class="p-4 text-gray-500">Dec 15, 2023</td>
+                                <td class="p-4"><span class="px-2.5 py-1 bg-green-50 text-green-700 rounded-md text-[10px] font-bold border border-green-100">Beginner</span></td>
+                                <td class="p-4"><span class="text-gray-400 font-bold text-xs"><i class="fa-solid fa-check text-trail"></i> Completed</span></td>
+                            </tr>
+                            <!-- Data Row 2 -->
+                            <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-mountain/10 text-mountain flex items-center justify-center"><i class="fa-solid fa-cloud"></i></div>
+                                    Sajek Valley Cloud Trek
+                                </td>
+                                <td class="p-4 text-gray-500">Jan 16, 2021</td>
+                                <td class="p-4"><span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 rounded-md text-[10px] font-bold border border-yellow-100">Moderate</span></td>
+                                <td class="p-4"><span class="text-gray-400 font-bold text-xs"><i class="fa-solid fa-check text-trail"></i> Completed</span></td>
+                            </tr>
+                            <!-- Data Row 3 (Upcoming) -->
+                            <tr class="hover:bg-gray-50/50 transition-colors">
+                                <td class="p-4 font-bold text-gray-900 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center"><i class="fa-solid fa-mountain"></i></div>
+                                    Sitakunda Extreme Trail
+                                </td>
+                                <td class="p-4 text-accent font-bold">Oct 12, 2026</td>
+                                <td class="p-4"><span class="px-2.5 py-1 bg-red-50 text-red-700 rounded-md text-[10px] font-bold border border-red-100">Hard</span></td>
+                                <td class="p-4"><span class="px-3 py-1.5 bg-accent text-white rounded-lg text-xs font-bold shadow-sm animate-pulse">Upcoming</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>
