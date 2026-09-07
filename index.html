@@ -2,13 +2,12 @@
 <html lang="bn" class="scroll-smooth">
 <head>
     <!-- ========================================== -->
-    <!-- 1. হেড (HEAD) সেকশন: ওয়েবসাইটের প্রাথমিক সেটআপ -->
+    <!-- 1. হেড (HEAD) সেকশন -->
     <!-- ========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CUET Adventure Society (CAS)</title>
     
-    <!-- টেইলউইন্ড সিএসএস (Tailwind CSS) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,20 +19,19 @@
                         trail: '#2d6a4f',
                         accent: '#e76f51',
                         sand: '#f4f1de',
-                        facebook: '#0866FF' // ফেসবুকের অরিজিনাল ব্লু কালার যুক্ত করা হলো
+                        facebook: '#0866FF'
                     }
                 }
             }
         }
     </script>
-    <!-- ফন্ট অসাম (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-accent selection:text-white">
 
     <!-- ========================================== -->
-    <!-- 2. ন্যাভিগেশন বার (Navbar): উপরের মেনু অংশ -->
+    <!-- 2. ন্যাভিগেশন বার (Navbar) -->
     <!-- ========================================== -->
     <nav class="fixed w-full z-50 bg-forest/95 backdrop-blur-md border-b border-white/10 text-white transition-all">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -43,18 +41,17 @@
                 <span class="font-black text-xl tracking-wider">CUET ADVENTURE SOCIETY</span>
             </a>
             
-            <div class="hidden md:flex space-x-8 text-sm font-medium">
+            <div class="hidden md:flex space-x-8 text-sm font-medium items-center">
                 <a href="#about" class="hover:text-accent transition-colors">আমাদের কথা</a>
                 <a href="#wings" class="hover:text-accent transition-colors">লিডারশিপ উইংস</a>
                 <a href="#safety" class="hover:text-accent transition-colors">নিরাপত্তা নীতি</a>
-                <a href="#women" class="hover:text-accent transition-colors">উইমেন্স কর্নার</a>
-                <a href="#contact" class="hover:text-accent transition-colors">যোগাযোগ</a>
+                <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="hover:text-facebook transition-colors"><i class="fa-brands fa-facebook"></i> গ্রুপ</a>
             </div>
 
             <div class="flex items-center gap-4">
-                <!-- 'কানেক্ট হন' বাটন - এখানে ফেসবুক গ্রুপের লিংক দেওয়া হলো -->
-                <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="hidden sm:inline-flex items-center gap-2 bg-facebook hover:bg-blue-700 px-5 py-2 rounded-full font-semibold text-xs tracking-wide uppercase transition-all shadow-md">
-                    <i class="fa-brands fa-facebook"></i> গ্রুপে যুক্ত হোন
+                <!-- লিংকিং: signup.html ফাইলে যাওয়ার বাটন -->
+                <a href="signup.html" class="hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-orange-600 px-5 py-2 rounded-full font-semibold text-xs tracking-wide uppercase transition-all shadow-md">
+                    <i class="fa-solid fa-user-plus"></i> অ্যাকাউন্ট খুলুন
                 </a>
                 <button id="menu-btn" class="md:hidden text-white text-xl focus:outline-none" aria-label="Toggle Menu">
                     <i class="fa-solid fa-bars"></i>
@@ -67,9 +64,12 @@
             <a href="#about" class="block hover:text-accent transition-colors">আমাদের কথা</a>
             <a href="#wings" class="block hover:text-accent transition-colors">লিডারশিপ উইংস</a>
             <a href="#safety" class="block hover:text-accent transition-colors">নিরাপত্তা নীতি</a>
-            <a href="#women" class="block hover:text-accent transition-colors">উইমেন্স কর্নার</a>
-            <a href="#contact" class="block hover:text-accent transition-colors">যোগাযোগ</a>
-            <!-- মোবাইলেও যেন ফেসবুক লিংক থাকে -->
+            
+            <!-- লিংকিং: signup.html ফাইলে যাওয়ার বাটন (মোবাইলের জন্য) -->
+            <a href="signup.html" class="block text-accent font-bold mt-2 border-b border-white/10 pb-2">
+                <i class="fa-solid fa-user-plus"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট খুলুন
+            </a>
+            
             <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="block text-facebook font-bold mt-2">
                 <i class="fa-brands fa-facebook"></i> ফেসবুক গ্রুপ
             </a>
@@ -80,7 +80,7 @@
     </nav>
 
     <!-- ========================================== -->
-    <!-- 3. হিরো সেকশন (Hero Section): ওয়েবসাইটের প্রধান ব্যানার -->
+    <!-- 3. হিরো সেকশন (Hero Section) -->
     <!-- ========================================== -->
     <section class="relative h-screen flex items-center justify-center bg-forest text-white overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -89,7 +89,7 @@
                  class="w-full h-full object-cover opacity-30 scale-105 filter brightness-75">
         </div>
         
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-10">
             <div class="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-accent font-medium text-sm mb-6 tracking-wide backdrop-blur-sm">
                 পুনর্জাগরণ • ২০২৬-২০২৭ সেশন
             </div>
@@ -102,26 +102,22 @@
                 ২০১৫ সাল থেকে গড়ে ওঠা ঐতিহ্যকে সাথে নিয়ে আমরা আবার প্রস্তুত নতুন ট্রেইল এক্সপ্লোর করতে। সমমর্যাদা এবং দায়িত্বশীল অ্যাডভেঞ্চারের অঙ্গীকার।
             </p>
             
-            <!-- মূল বাটনসমূহ -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                <a href="#wings" class="bg-accent hover:bg-orange-600 px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg hover:shadow-accent/40 flex items-center justify-center gap-2">
-                    টিম স্ট্রাকচার দেখুন <i class="fa-solid fa-arrow-right text-xs"></i>
-                </a>
-                <a href="#safety" class="bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-sm px-8 py-3.5 rounded-xl font-semibold transition-all">
-                    আমাদের সেফটি প্রটোকল
+            <!-- লিংকিং: হিরো সেকশনের মূল কল-টু-অ্যাকশন বাটন -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <a href="signup.html" class="bg-accent hover:bg-orange-600 px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-accent/40 flex items-center justify-center gap-2 text-lg">
+                    <i class="fa-solid fa-user-astronaut"></i> Create Adventure Account
                 </a>
             </div>
 
-            <!-- নতুন যুক্ত করা ফেসবুক পেইজ ও গ্রুপ বাটন -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-2 border-t border-white/10 pt-6 max-w-lg mx-auto">
-                <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="flex-1 bg-facebook hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg flex items-center justify-center gap-2 text-sm">
+            <!-- অন্যান্য বাটন -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center border-t border-white/10 pt-6 max-w-xl mx-auto">
+                <a href="#wings" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 text-sm backdrop-blur-sm">
+                    টিম স্ট্রাকচার দেখুন
+                </a>
+                <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="flex-1 bg-facebook/20 hover:bg-facebook/40 border border-facebook/50 text-white px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 text-sm backdrop-blur-sm">
                     <i class="fa-brands fa-facebook text-lg"></i> অফিসিয়াল গ্রুপ
                 </a>
-                <a href="https://www.facebook.com/share/1Bqy9ZGdSa/" target="_blank" class="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 text-sm backdrop-blur-sm">
-                    <i class="fa-solid fa-flag text-lg"></i> ফেসবুক পেইজ
-                </a>
             </div>
-
         </div>
     </section>
 
@@ -464,7 +460,7 @@
                         <h3>যৌথ লিডারশিপ স্কিল</h3>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        কোনো পৃথক রেসকিউ টিম থাকবেবিধা থাকবে না; চুয়েট অ্যাডভেঞ্চার সোসাইটির <strong>প্রতিটি লিডারকে</strong> বেসিক ফার্স্ট এইড, ট্রেইল সেফটি ও ইমার্জেন্সি এসকেপ প্রোটোকল জানা বাধ্যতামূলক।
+                        কোনো পৃথক রেসকিউ টিম থাকবে না; চুয়েট অ্যাডভেঞ্চার সোসাইটির <strong>প্রতিটি লিডারকে</strong> বেসিক ফার্স্ট এইড, ট্রেইল সেফটি ও ইমার্জেন্সি এসকেপ প্রোটোকল জানা বাধ্যতামূলক।
                     </p>
                 </div>
 
@@ -568,7 +564,6 @@
             <div>
                 <h4 class="font-bold text-sm mb-4 text-gray-200">সোশ্যাল চ্যানেলসমূহ</h4>
                 <div class="flex space-x-3 text-lg">
-                    <!-- ফুটারের ফেসবুক আইকনে ফেসবুক পেইজের লিংক আপডেট করা হলো -->
                     <a href="https://www.facebook.com/share/1Bqy9ZGdSa/" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-facebook transition-colors" aria-label="Facebook">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
