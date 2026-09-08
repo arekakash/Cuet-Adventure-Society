@@ -38,19 +38,45 @@
                 <span class="font-black text-lg tracking-wider hidden sm:block">CUET AS DASHBOARD</span>
             </a>
             
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 relative">
+                <!-- Desktop User Info -->
                 <div class="text-right hidden sm:block pr-3 border-r border-white/20">
-                    <!-- ID Added -->
                     <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
                     <p class="text-[10px] text-accent uppercase tracking-widest">Active Member</p>
                 </div>
-                <div class="w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 cursor-pointer hover:border-white transition-colors">
-                    <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                
+                <!-- Profile Dropdown Wrapper -->
+                <div class="relative">
+                    <!-- Avatar Button -->
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 focus:outline-none hover:border-white transition-colors">
+                        <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </button>
+
+                    <!-- Dropdown Menu Box -->
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-gray-100 transform transition-all duration-200 z-50 origin-top-right">
+                        
+                        <!-- Mobile User Info (Shows only on small screens inside dropdown) -->
+                        <div class="px-4 py-3 border-b border-gray-100 sm:hidden">
+                            <p id="dropdown-user-name" class="text-sm font-bold text-gray-800 truncate">Loading...</p>
+                            <p class="text-[10px] text-accent uppercase tracking-widest mt-0.5">Active Member</p>
+                        </div>
+
+                        <!-- Menu Links -->
+                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-accent transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-user-pen w-4 text-center"></i> এডিট প্রোফাইল
+                        </a>
+                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-accent transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-gear w-4 text-center"></i> সেটিংস
+                        </a>
+                        
+                        <div class="border-t border-gray-100 my-1"></div>
+                        
+                        <!-- Logout Button -->
+                        <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-600 font-bold hover:bg-red-50 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-right-from-bracket w-4 text-center"></i> লগ-আউট
+                        </a>
+                    </div>
                 </div>
-                <!-- Logout Button with ID -->
-                <a href="#" id="logout-btn" class="ml-2 text-gray-300 hover:text-accent transition-colors" title="Log Out">
-                    <i class="fa-solid fa-right-from-bracket text-lg"></i>
-                </a>
             </div>
         </div>
     </nav>
@@ -71,7 +97,6 @@
                         <img src="https://ui-avatars.com/api/?name=User&background=0f291e&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div class="mt-12">
-                        <!-- Dynamic IDs Added -->
                         <h2 id="display-name" class="text-2xl font-black text-gray-900">Loading...</h2>
                         <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
                             <i class="fa-solid fa-building-user text-trail"></i>
@@ -162,7 +187,34 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. Firebase Configuration
+        // -----------------------------------------
+        // 1. Dropdown Menu Toggle Logic
+        // -----------------------------------------
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        // Toggle dropdown on avatar click
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents click from instantly bubbling up to window
+            profileDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking anywhere else on the screen
+        window.addEventListener('click', () => {
+            if (!profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        profileDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+
+        // -----------------------------------------
+        // 2. Firebase Configuration
+        // -----------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -173,23 +225,24 @@
             measurementId: "G-WNJBJT9K5K"
         };
 
-        // Initialize Engine
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // 2. State Management & Data Fetching
+        // -----------------------------------------
+        // 3. State Management & Data Fetching
+        // -----------------------------------------
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in, fetch their data from Firestore
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
                         
                         // Inject Data into UI dynamically
                         document.getElementById('nav-user-name').innerText = userData.fullName || "Member";
+                        document.getElementById('dropdown-user-name').innerText = userData.fullName || "Member";
                         document.getElementById('display-name').innerText = userData.fullName || "Member";
                         document.getElementById('display-id').innerText = userData.studentId || "N/A";
                         document.getElementById('display-hall').innerText = userData.hall || "N/A";
@@ -204,17 +257,17 @@
                     console.log("Error getting document:", error);
                 });
             } else {
-                // User is NOT signed in, kick them back to index.html (Security)
                 window.location.href = "index.html";
             }
         });
 
-        // 3. Secure Logout Logic
+        // -----------------------------------------
+        // 4. Secure Logout Logic
+        // -----------------------------------------
         const logoutBtn = document.getElementById('logout-btn');
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
             auth.signOut().then(() => {
-                // Sign-out successful, redirect to home
                 window.location.href = "index.html";
             }).catch((error) => {
                 alert("লগ-আউট করতে সমস্যা হয়েছে!");
