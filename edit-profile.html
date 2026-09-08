@@ -58,7 +58,7 @@
 
 <body class="bg-darkForest text-gray-300 font-sans antialiased min-h-screen flex md:items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden selection:bg-campfire selection:text-white">
 
-    <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 z-0 pointer-events-none">
         <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1920" alt="Dark Campfire" class="w-full h-full object-cover opacity-20 filter brightness-50 contrast-125">
         <div class="absolute inset-0 bg-gradient-to-br from-darkForest/90 via-moss/80 to-darkForest/90"></div>
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_6s_ease-in-out_infinite]"></div>
@@ -175,13 +175,17 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script> AOS.init({ once: true, offset: 50 }); </script>
 
-    <!-- FIREBASE (Storage included) -->
+    <!-- FIREBASE (Storage Removed) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
 
     <script>
+        // -----------------------------------------------------
+        // ImgBB API Key Automatically Set
+        // -----------------------------------------------------
+        const imgbbApiKey = "c8e142b508f46f59807dbb6a3a2ccb23"; 
+
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -195,7 +199,6 @@
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const storage = firebase.storage();
 
         let currentUserUid = null;
         let existingPhotoURL = '';
@@ -241,7 +244,7 @@
             }
         });
 
-        // 3. Update Logic (Firestore + Storage)
+        // 3. Update Logic (ImgBB + Firestore)
         document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('submit-btn');
@@ -251,13 +254,28 @@
             try {
                 let newPhotoURL = existingPhotoURL;
 
-                // If user selected a new photo, upload it to Storage first
+                // If user selected a new photo, upload it to ImgBB first
                 if (selectedFile) {
-                    const storageRef = storage.ref();
-                    const fileRef = storageRef.child(`avatars/${currentUserUid}_${Date.now()}`);
-                    await fileRef.put(selectedFile);
-                    newPhotoURL = await fileRef.getDownloadURL();
+                    submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ছবি আপলোড হচ্ছে...';
+                    
+                    const formData = new FormData();
+                    formData.append('image', selectedFile);
+
+                    const response = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const imgbbData = await response.json();
+                    
+                    if (imgbbData.success) {
+                        newPhotoURL = imgbbData.data.url; // Save the direct link from ImgBB
+                    } else {
+                        throw new Error("ImgBB-তে ছবি আপলোড ব্যর্থ হয়েছে!");
+                    }
                 }
+
+                submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ডেটাবেস আপডেট হচ্ছে...';
 
                 // Update Firestore Data
                 await db.collection("users").doc(currentUserUid).update({
