@@ -93,8 +93,9 @@
             
             <div class="relative z-10 flex flex-col h-full justify-between">
                 <div data-aos="fade-right" data-aos-delay="200">
+                    <!-- Correction 1: Back to home -->
                     <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 mb-12 hover:text-campfire transition-colors backdrop-blur-sm bg-white/5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10 hover:border-campfire/50 hover:bg-campfire/10">
-                        <i class="fa-solid fa-arrow-left"></i> জঙ্গলে ফিরে যান
+                        <i class="fa-solid fa-arrow-left"></i> হোমপেজে ফিরে যান
                     </a>
                     
                     <div class="mb-8 transform transition-transform duration-700 hover:rotate-12">
@@ -119,8 +120,10 @@
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <div class="mt-1">
-                    <h3 class="text-2xl lg:text-3xl font-black text-white mb-1 tracking-tight">পরিচয়পত্র তৈরি করুন</h3>
-                    <p class="text-sm text-gray-400 font-medium">ক্যাম্পফায়ারে যুক্ত হতে গুগলের মাধ্যমে সাইন-আপ করুন।</p>
+                    <!-- Correction 2: Form Header -->
+                    <h3 class="text-2xl lg:text-3xl font-black text-white mb-1 tracking-tight">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
+                    <!-- Correction 3: Form Sub-header -->
+                    <p class="text-sm text-gray-400 font-medium">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
                 </div>
             </div>
 
@@ -269,7 +272,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        let isGoogleSignupFlow = false; // Track the current flow
+        let isGoogleSignupFlow = false; 
 
         // 1. Google Smart Checker Logic
         const googleBtn = document.getElementById('google-login-btn');
@@ -281,34 +284,26 @@
             auth.signInWithPopup(provider)
                 .then((result) => {
                     const user = result.user;
-                    // Check if Firestore document already exists
                     db.collection("users").doc(user.uid).get().then((doc) => {
                         if (doc.exists) {
-                            // Old User -> Straight to Dashboard
                             window.location.href = "dashboard.html";
                         } else {
-                            // New User -> Complete Profile Flow
                             isGoogleSignupFlow = true;
                             
-                            // Hide Unnecessary Elements
                             document.getElementById('social-login-section').classList.add('hidden');
                             document.getElementById('divider-section').classList.add('hidden');
                             
-                            // Hide Passwords & remove required attribute so form can submit
                             document.getElementById('password-section').classList.add('hidden');
                             document.getElementById('password').removeAttribute('required');
                             document.getElementById('confirmPassword').removeAttribute('required');
 
-                            // Show Success Alert
                             document.getElementById('google-alert-box').classList.remove('hidden');
 
-                            // Pre-fill and lock inputs
                             document.getElementById('fullName').value = user.displayName || '';
                             document.getElementById('email').value = user.email || '';
                             document.getElementById('email').readOnly = true;
                             document.getElementById('email').classList.add('opacity-50', 'cursor-not-allowed');
 
-                            // Update Button Text
                             document.getElementById('submit-text').innerText = "প্রোফাইল সেভ করুন";
                         }
                     }).catch((err) => {
@@ -322,7 +317,7 @@
                 });
         });
 
-        // 2. Form Submission Logic (Handles both Manual & Google Flow)
+        // 2. Form Submission Logic
         const signupForm = document.getElementById('signup-form');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -341,7 +336,6 @@
             submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> প্রোফাইল তৈরি হচ্ছে...';
             submitBtn.disabled = true;
 
-            // Scenario A: User came through Google Log in
             if (isGoogleSignupFlow) {
                 const user = auth.currentUser;
                 db.collection("users").doc(user.uid).set({
@@ -361,10 +355,9 @@
                     submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> প্রোফাইল সেভ করুন';
                     submitBtn.disabled = false;
                 });
-                return; // Stop execution here
+                return;
             }
 
-            // Scenario B: User is doing a Manual Log in
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
