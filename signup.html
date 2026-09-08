@@ -114,13 +114,20 @@
         <!-- Right Side: The Form -->
         <div class="w-full md:w-7/12 p-8 sm:p-12 lg:p-16 relative">
             
-            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 text-center sm:text-left" data-aos="fade-down" data-aos-delay="300">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-8 text-center sm:text-left" data-aos="fade-down" data-aos-delay="300">
                 <div class="p-4 bg-white/5 rounded-2xl border border-white/10 shadow-sm backdrop-blur-md text-campfire text-3xl">
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <div class="mt-1">
-                    <h3 class="text-2xl lg:text-3xl font-black text-white mb-1 tracking-tight">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
-                    <p class="text-sm text-gray-400 font-medium">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
+                    <h3 class="text-2xl lg:text-3xl font-black text-white mb-2 tracking-tight">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
+                    
+                    <!-- NEW LOGIN LINK POSITIONED HERE -->
+                    <p class="text-sm text-gray-300 mb-2">
+                        ইতোমধ্যে কি অ্যাকাউন্ট আছে? 
+                        <a href="login.html" class="text-campfire font-bold hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">এখানে লগইন করুন</a>
+                    </p>
+                    
+                    <p class="text-xs text-gray-500 font-medium">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
                 </div>
             </div>
 
@@ -242,16 +249,6 @@
                     </button>
                 </div>
             </form>
-
-            <!-- ========================================== -->
-            <!-- NEW LOGIN LINK ADDED HERE                  -->
-            <!-- ========================================== -->
-            <div class="mt-8 text-center" data-aos="fade-up" data-aos-delay="1050">
-                <p class="text-sm text-gray-400">
-                    ইতোমধ্যে কি আপনার অ্যাকাউন্ট আছে? 
-                    <a href="login.html" class="text-campfire font-bold hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">এখানে লগইন করুন</a>
-                </p>
-            </div>
             
         </div>
     </div>
@@ -281,7 +278,6 @@
 
         let isGoogleSignupFlow = false; 
 
-        // 1. Google Smart Checker Logic
         const googleBtn = document.getElementById('google-login-btn');
         const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -324,7 +320,6 @@
                 });
         });
 
-        // 2. Form Submission Logic
         const signupForm = document.getElementById('signup-form');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -369,7 +364,7 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (password !== confirmPassword) {
-                alert("পাসওয়ার্ড দুটি মিলছোগত না! দয়া করে আবার চেক করুন।");
+                alert("পাসওয়ার্ড দুটি মিলছে না! দয়া করে আবার চেক করুন।");
                 submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন';
                 submitBtn.disabled = false;
                 return;
