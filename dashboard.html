@@ -62,7 +62,7 @@
         <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[120px] animate-[pulse_8s_ease-in-out_infinite]"></div>
     </div>
 
-    <!-- 1. Universal Sidebar -->
+    <!-- 1. ইউনিভার্সাল সাইডবার (FIXED) -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
     <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss border-r border-white/5 shadow-2xl flex flex-col h-full overflow-y-auto">
@@ -76,16 +76,40 @@
 
         <div class="px-6 py-8 flex-grow space-y-2">
             <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4">আমাদের কার্যক্রম</p>
+            
             <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
                 <span class="font-bold text-sm">আপকামিং ইভেন্ট</span>
             </a>
-            <!-- অন্যান্য মেনু অপশনগুলো আগের মতোই থাকবে -->
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <span class="font-bold text-sm">পূর্ববর্তী ইভেন্ট</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
+                <span class="font-bold text-sm">অ্যাডভেঞ্চারের গল্প</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                <span class="font-bold text-sm">অ্যাডভেঞ্চার স্টোর</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
+                <span class="font-bold text-sm">বিগিনার গাইড</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
+                <span class="font-bold text-sm">নেপথ্যে যারা</span>
+            </a>
         </div>
 
-        <div class="p-6 border-t border-white/5 glass-dark">
-            <a href="index.html" class="w-full flex items-center justify-center gap-2 bg-campfire hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition-all shadow-glow">
-                <i class="fa-solid fa-house"></i> হোমপেইজে ফিরে যান
+        <!-- Dashboard Specific Sidebar Footer -->
+        <div class="p-6 border-t border-white/5 glass-dark space-y-3">
+            <a href="index.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
+                <i class="fa-solid fa-house"></i> হোমপেজে ফিরে যান
+            </a>
+            <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
+                <i class="fa-solid fa-right-from-bracket"></i> লগ-আউট
             </a>
         </div>
     </div>
@@ -202,7 +226,30 @@
 
         <!-- Right Column -->
         <div class="lg:col-span-2 space-y-6">
-            <!-- Analytics Cards (আগের মতোই থাকবে) -->
+            <!-- Analytics Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-10 h-10 rounded-full bg-campfire/20 text-campfire flex items-center justify-center text-lg mb-2 group-hover:shadow-glow transition-shadow"><i class="fa-solid fa-fire"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00<span class="text-sm font-medium text-gray-500">km</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-shadow"><i class="fa-solid fa-shield-halved"></i></div>
+                    <p class="text-3xl font-black text-gray-600">N/A</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Safety Index</p>
+                </div>
+            </div>
+
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="500">
                 <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
                     <h3 class="text-sm font-bold text-white tracking-widest uppercase flex items-center gap-2">
@@ -296,7 +343,6 @@
                         document.getElementById('display-emergency').innerText = userData.emergencyContact || "N/A";
 
                         // AVATAR RENDERING LOGIC
-                        // If user has an uploaded or Google photoURL in database, use it. Otherwise generate initials.
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         
                         document.getElementById('nav-profile-img').src = finalAvatarUrl;
@@ -314,6 +360,11 @@
         });
 
         document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => { window.location.href = "index.html"; });
+        });
+        
+        document.getElementById('mobile-logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             auth.signOut().then(() => { window.location.href = "index.html"; });
         });
