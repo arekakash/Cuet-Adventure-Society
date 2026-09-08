@@ -73,10 +73,13 @@
             <!-- ডানপাশ: ইউজার কন্ট্রোল (Firebase IDs Kept Intact) -->
             <div class="flex items-center gap-4 relative">
                 
-                <!-- State 1: Logged Out -->
-                <a href="signup.html" id="nav-auth-btn" class="inline-flex items-center gap-2 bg-campfire/90 hover:bg-campfire text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-105">
-                    <i class="fa-solid fa-fire"></i> অ্যাকাউন্ট খুলুন
-                </a>
+                <!-- State 1: Logged Out (লগইন + সাইন আপ) -->
+                <div id="nav-auth-wrap" class="flex items-center gap-4">
+                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">লগইন</a>
+                    <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire/90 hover:bg-campfire text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-105">
+                        <i class="fa-solid fa-fire"></i> অ্যাকাউন্ট খুলুন
+                    </a>
+                </div>
 
                 <!-- State 2: Logged In (Profile Avatar) -->
                 <div id="nav-user-profile" class="hidden flex items-center gap-3 sm:gap-4">
@@ -155,11 +158,15 @@
 
         <div class="p-6 border-t border-white/5 glass-dark">
             <!-- Firebase Auth States for Mobile/Sidebar -->
-            <div id="mobile-auth-section">
+            <div id="mobile-auth-section" class="space-y-3">
                 <a href="signup.html" class="w-full flex items-center justify-center gap-2 bg-campfire hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition-all shadow-glow">
-                    <i class="fa-solid fa-user-astronaut"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট
+                    <i class="fa-solid fa-user-astronaut"></i> অ্যাকাউন্ট খুলুন
+                </a>
+                <a href="login.html" class="w-full flex items-center justify-center gap-2 border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white py-3 rounded-xl font-bold transition-all">
+                    <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
                 </a>
             </div>
+            
             <div id="mobile-user-section" class="hidden space-y-3">
                 <a href="dashboard.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-gauge"></i> ড্যাশবোর্ডে যান
@@ -196,9 +203,14 @@
                 পাহাড়ের গহীনে, মেঘের চূড়ায় কিংবা অরণ্যের গভীরে—চুয়েটিয়ানদের পদচারণায় জেগে উঠুক নতুন ট্রেইল।
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-5 justify-center">
-                <a href="signup.html" id="hero-auth-btn" class="bg-campfire hover:bg-orange-600 px-8 py-4 sm:py-5 rounded-2xl font-black transition-all shadow-glow flex items-center justify-center gap-3 text-lg sm:text-xl hover:-translate-y-1">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="signup.html" id="hero-auth-btn" class="w-full sm:w-auto bg-campfire hover:bg-orange-600 px-8 py-4 sm:py-5 rounded-2xl font-black transition-all shadow-glow flex items-center justify-center gap-3 text-lg sm:text-xl hover:-translate-y-1">
                     <i class="fa-solid fa-shoe-prints"></i> এক্সপ্লোর শুরু করুন
+                </a>
+                
+                <!-- NEW LOGIN BUTTON FOR HERO SECTION -->
+                <a href="login.html" id="hero-login-btn" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 sm:py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 text-lg sm:text-xl backdrop-blur-sm hover:-translate-y-1">
+                    <i class="fa-solid fa-right-to-bracket text-gray-400"></i> লগইন
                 </a>
             </div>
         </div>
@@ -255,7 +267,7 @@
                     <div class="glass-dark p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
                         <i class="fa-solid fa-map-location-dot text-4xl text-campfire mb-6"></i>
                         <h4 class="font-bold text-white mb-3">হিডেন স্পট শেয়ারিং</h4>
-                        <p class="text-sm">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে না!</p>
+                        <p class="text-sm">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে পণ্ডিত না!</p>
                     </div>
                     <div class="glass-dark p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
                         <i class="fa-solid fa-people-group text-4xl text-blue-400 mb-6"></i>
@@ -269,9 +281,14 @@
                 <p class="font-black text-3xl sm:text-5xl text-white mb-10 drop-shadow-lg">প্রস্তুত তো পরবর্তী রোমাঞ্চের জন্য?</p>
                 <p class="text-base sm:text-xl mb-12 max-w-2xl mx-auto">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
                 
-                <a href="signup.html" class="inline-flex items-center justify-center gap-3 bg-campfire hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-glow hover:scale-105 transition-all">
-                    <i class="fa-solid fa-compass"></i> জয়েন করুন / পরবর্তী ট্যুর দেখুন
-                </a>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="signup.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-campfire hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-glow hover:scale-105 transition-all">
+                        <i class="fa-solid fa-compass"></i> জয়েন করুন
+                    </a>
+                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all">
+                        <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
+                    </a>
+                </div>
             </div>
 
         </div>
@@ -417,15 +434,19 @@
             if (user) {
                 // USER IS LOGGED IN
                 
-                // Desktop Navbar UI Swap
-                document.getElementById('nav-auth-btn').classList.add('hidden');
-                document.getElementById('nav-user-profile').classList.remove('hidden');
-                
-                // Mobile/Sidebar UI Swap
+                // Hide Auth Buttons (Login & Signup)
+                document.getElementById('nav-auth-wrap').classList.add('hidden');
                 document.getElementById('mobile-auth-section').classList.add('hidden');
+                
+                // Hide Hero Login Button
+                const heroLoginBtn = document.getElementById('hero-login-btn');
+                if(heroLoginBtn) heroLoginBtn.classList.add('hidden');
+                
+                // Show Profile & Dashboard Sections
+                document.getElementById('nav-user-profile').classList.remove('hidden');
                 document.getElementById('mobile-user-section').classList.remove('hidden');
                 
-                // Hero Button Update
+                // Update Hero Signup Button to Dashboard
                 const heroAuthBtn = document.getElementById('hero-auth-btn');
                 heroAuthBtn.innerHTML = '<i class="fa-solid fa-gauge"></i> ড্যাশবোর্ডে প্রবেশ করুন';
                 heroAuthBtn.href = 'dashboard.html';
@@ -444,12 +465,15 @@
             } else {
                 // USER IS LOGGED OUT
                 
-                // Desktop Navbar UI Swap
-                document.getElementById('nav-auth-btn').classList.remove('hidden');
-                document.getElementById('nav-user-profile').classList.add('hidden');
-                
-                // Mobile/Sidebar UI Swap
+                // Show Auth Buttons
+                document.getElementById('nav-auth-wrap').classList.remove('hidden');
                 document.getElementById('mobile-auth-section').classList.remove('hidden');
+                
+                const heroLoginBtn = document.getElementById('hero-login-btn');
+                if(heroLoginBtn) heroLoginBtn.classList.remove('hidden');
+                
+                // Hide Profile Sections
+                document.getElementById('nav-user-profile').classList.add('hidden');
                 document.getElementById('mobile-user-section').classList.add('hidden');
             }
         });
