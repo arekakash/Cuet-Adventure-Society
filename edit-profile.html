@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
+                        'glow-sm': '0 0 10px rgba(231, 111, 81, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050b08; }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f3f4f6; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+        }
+        .glass-input:focus {
+            background: rgba(10, 28, 19, 0.8);
+            border-color: #e76f51;
+            box-shadow: 0 0 15px rgba(231, 111, 81, 0.3);
+            transform: translateY(-3px) scale(1.01);
+        }
+        select.glass-input option { background-color: #0a1c13; color: #f3f4f6; }
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 font-sans antialiased min-h-screen flex md:items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden selection:bg-campfire selection:text-white">
+
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1920" alt="Dark Campfire" class="w-full h-full object-cover opacity-20 filter brightness-50 contrast-125">
+        <div class="absolute inset-0 bg-gradient-to-br from-darkForest/90 via-moss/80 to-darkForest/90"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_6s_ease-in-out_infinite]"></div>
+    </div>
+
+    <div class="max-w-4xl w-full glass-panel rounded-[2rem] shadow-2xl overflow-hidden flex flex-col relative z-10 border border-white/10" data-aos="zoom-in" data-aos-duration="800">
+        
+        <!-- Header -->
+        <div class="p-8 sm:p-10 border-b border-white/10 flex justify-between items-center bg-black/20">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                    <i class="fa-solid fa-user-pen text-campfire"></i> প্রোফাইল এডিট
+                </h2>
+                <p class="text-sm text-gray-400 mt-1">আপনার প্রয়োজনীয় তথ্য আপডেট করুন</p>
+            </div>
+            <a href="dashboard.html" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-gray-300 px-4 py-2 rounded-xl text-sm font-bold transition-colors border border-white/10">
+                <i class="fa-solid fa-arrow-left"></i> ড্যাশবোর্ড
+            </a>
+        </div>
+
+        <div class="p-8 sm:p-10">
+            <form id="edit-profile-form" class="space-y-6">
+                
+                <!-- Profile Picture Section -->
+                <div class="flex items-center gap-6 mb-8 p-6 bg-white/5 rounded-2xl border border-white/5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-campfire shadow-glow group">
+                        <img id="preview-img" src="https://ui-avatars.com/api/?name=U&background=0a1c13&color=fff" alt="Profile" class="w-full h-full object-cover">
+                        <label for="profilePic" class="absolute inset-0 bg-black/60 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fa-solid fa-camera text-white text-xl"></i>
+                        </label>
+                        <input type="file" id="profilePic" accept="image/*" class="hidden">
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-white mb-1">অ্যাভাটার আপডেট</p>
+                        <p class="text-xs text-gray-400 mb-2">ক্যামেরা আইকনে ক্লিক করে নতুন ছবি দিন</p>
+                        <label for="profilePic" class="text-xs font-bold text-campfire cursor-pointer hover:underline">ছবি আপলোড করুন</label>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="150">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">আপনার নাম *</label>
+                        <input type="text" id="fullName" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">স্টুডেন্ট আইডি *</label>
+                        <input type="text" id="studentId" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="250">
+                    <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">ইমেইল অ্যাড্রেস (পরিবর্তনযোগ্য নয়)</label>
+                    <input type="email" id="email" readonly class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none opacity-50 cursor-not-allowed bg-black/50">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">আবাসিক হল *</label>
+                        <select id="hall" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="Muktijoddha Hall">Muktijoddha Hall</option>
+                            <option value="Shahid Mohammad Shah Hall">Shahid Mohammad Shah Hall</option>
+                            <option value="Dr. Qudrat-E-Khuda Hall">Dr. Qudrat-E-Khuda Hall</option>
+                            <option value="Kabi Kazi Nazrul Islam Hall">Kabi Kazi Nazrul Islam Hall</option>
+                            <option value="Shaheed Tareq Huda Hall">Shaheed Tareq Huda Hall</option>
+                            <option value="Shaheed Abu Sayed Hall">Shaheed Abu Sayed Hall</option>
+                            <option value="Sufia kamal Hall">Sufia kamal Hall</option>
+                            <option value="Begum Shamsennahar Khan Hall">Begum Shamsennahar Khan Hall</option>
+                            <option value="Tapashi Rabeya Hall">Tapashi Rabeya Hall</option>
+                            <option value="Attached/Non-residential">অ্যাটাচড/অনাবাসিক</option>
+                        </select>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="350">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">রক্তের গ্রুপ *</label>
+                        <select id="bloodGroup" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="A+">A+</option><option value="A-">A-</option>
+                            <option value="B+">B+</option><option value="B-">B-</option>
+                            <option value="O+">O+</option><option value="O-">O-</option>
+                            <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="400">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">নিজের ফোন নম্বর *</label>
+                        <input type="tel" id="phone" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="450">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">জরুরি কন্টাক্ট (পরিবার) *</label>
+                        <input type="tel" id="emergencyContact" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="500">
+                    <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">টি-শার্ট সাইজ *</label>
+                    <select id="tshirtSize" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                        <option value="S">S (Small)</option>
+                        <option value="M">M (Medium)</option>
+                        <option value="L">L (Large)</option>
+                        <option value="XL">XL (Extra Large)</option>
+                        <option value="XXL">XXL (Double XL)</option>
+                    </select>
+                </div>
+
+                <div class="pt-6" data-aos="zoom-in" data-aos-delay="600">
+                    <button type="submit" id="submit-btn" class="w-full bg-trail hover:bg-mountain text-white font-black text-lg py-4 px-4 rounded-xl transition-all shadow-glow hover:-translate-y-1 flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> <span id="submit-text">পরিবর্তন সেভ করুন</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script> AOS.init({ once: true, offset: 50 }); </script>
+
+    <!-- FIREBASE (Storage included) -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as",
+            storageBucket: "cuet-as.firebasestorage.app",
+            messagingSenderId: "869959746091",
+            appId: "1:869959746091:web:fa2c086441fc429a14606e",
+            measurementId: "G-WNJBJT9K5K"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        let currentUserUid = null;
+        let existingPhotoURL = '';
+
+        // 1. Data Fetch & Autofill
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById('fullName').value = data.fullName || '';
+                        document.getElementById('studentId').value = data.studentId || '';
+                        document.getElementById('email').value = data.email || '';
+                        document.getElementById('hall').value = data.hall || 'Muktijoddha Hall';
+                        document.getElementById('bloodGroup').value = data.bloodGroup || 'A+';
+                        document.getElementById('phone').value = data.phone || '';
+                        document.getElementById('emergencyContact').value = data.emergencyContact || '';
+                        document.getElementById('tshirtSize').value = data.tshirtSize || 'M';
+                        
+                        existingPhotoURL = data.photoURL || '';
+                        const avatarUrl = existingPhotoURL ? existingPhotoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
+                        document.getElementById('preview-img').src = avatarUrl;
+                    }
+                });
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // 2. Image Preview Logic
+        const profilePicInput = document.getElementById('profilePic');
+        let selectedFile = null;
+
+        profilePicInput.addEventListener('change', function(e) {
+            selectedFile = e.target.files[0];
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('preview-img').src = event.target.result;
+                }
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+
+        // 3. Update Logic (Firestore + Storage)
+        document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> সেভ হচ্ছে...';
+            submitBtn.disabled = true;
+
+            try {
+                let newPhotoURL = existingPhotoURL;
+
+                // If user selected a new photo, upload it to Storage first
+                if (selectedFile) {
+                    const storageRef = storage.ref();
+                    const fileRef = storageRef.child(`avatars/${currentUserUid}_${Date.now()}`);
+                    await fileRef.put(selectedFile);
+                    newPhotoURL = await fileRef.getDownloadURL();
+                }
+
+                // Update Firestore Data
+                await db.collection("users").doc(currentUserUid).update({
+                    fullName: document.getElementById('fullName').value,
+                    studentId: document.getElementById('studentId').value,
+                    hall: document.getElementById('hall').value,
+                    bloodGroup: document.getElementById('bloodGroup').value,
+                    phone: document.getElementById('phone').value,
+                    emergencyContact: document.getElementById('emergencyContact').value,
+                    tshirtSize: document.getElementById('tshirtSize').value,
+                    photoURL: newPhotoURL
+                });
+
+                alert("প্রোফাইল সফলভাবে আপডেট হয়েছে!");
+                window.location.href = "dashboard.html";
+
+            } catch (error) {
+                alert("আপডেট করতে সমস্যা হয়েছে: " + error.message);
+                submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> পরিবর্তন সেভ করুন';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
