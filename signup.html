@@ -53,7 +53,6 @@
             transform: translateY(-3px) scale(1.01);
         }
         
-        /* Select Dropdown Dark Styling */
         select.glass-input option {
             background-color: #0a1c13;
             color: #f3f4f6;
@@ -65,7 +64,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* Auto-fill dark fix */
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
         input:-webkit-autofill:focus, 
@@ -80,11 +78,9 @@
 
     <!-- Thematic Background -->
     <div class="absolute inset-0 z-0">
-        <!-- Background Image (Campfire/Dark woods) -->
         <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1920" alt="Dark Campfire" class="w-full h-full object-cover opacity-30 filter brightness-50 contrast-125">
         <div class="absolute inset-0 bg-gradient-to-br from-darkForest/90 via-moss/80 to-darkForest/90"></div>
         
-        <!-- Glowing Orbs representing fireflies/embers -->
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-campfire/10 rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_4s_ease-in-out_infinite]"></div>
         <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-trail/10 rounded-full mix-blend-screen filter blur-[80px] animate-[pulse_6s_ease-in-out_infinite]"></div>
     </div>
@@ -118,7 +114,6 @@
         <!-- Right Side: The Form -->
         <div class="w-full md:w-7/12 p-8 sm:p-12 lg:p-16 relative">
             
-            <!-- Header -->
             <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 text-center sm:text-left" data-aos="fade-down" data-aos-delay="300">
                 <div class="p-4 bg-white/5 rounded-2xl border border-white/10 shadow-sm backdrop-blur-md text-campfire text-3xl">
                     <i class="fa-solid fa-user-shield"></i>
@@ -129,8 +124,14 @@
                 </div>
             </div>
 
-            <!-- Google Login (Dark Mode) -->
-            <div data-aos="fade-up" data-aos-delay="400">
+            <!-- Dynamic Alert Box for Google Signup -->
+            <div id="google-alert-box" class="hidden p-4 mb-6 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm font-bold flex items-center gap-3 backdrop-blur-sm" data-aos="fade-in">
+                <i class="fa-solid fa-check-circle text-xl"></i>
+                <span>গুগল অ্যাকাউন্ট সংযুক্ত হয়েছে! দয়া করে নিচের তথ্যগুলো দিয়ে প্রোফাইল সম্পূর্ণ করুন।</span>
+            </div>
+
+            <!-- Google Login Section -->
+            <div id="social-login-section" data-aos="fade-up" data-aos-delay="400">
                 <button id="google-login-btn" type="button" class="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-gray-200 hover:bg-white/10 hover:border-campfire/50 hover:shadow-glow-sm font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group backdrop-blur-sm">
                     <svg class="w-5 h-5 relative z-10" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.58c2.08-1.92 3.27-4.74 3.27-8.09z"/>
@@ -142,13 +143,13 @@
                 </button>
             </div>
 
-            <div class="relative flex items-center py-4 mb-6" data-aos="fade-up" data-aos-delay="450">
+            <div id="divider-section" class="relative flex items-center py-4 mb-6" data-aos="fade-up" data-aos-delay="450">
                 <div class="flex-grow border-t border-white/10"></div>
                 <span class="flex-shrink-0 mx-4 text-gray-500 text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-transparent px-2">অথবা ম্যানুয়ালি লিখুন</span>
                 <div class="flex-grow border-t border-white/10"></div>
             </div>
 
-            <!-- Manual Form -->
+            <!-- Form starts -->
             <form id="signup-form" class="space-y-5">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -164,7 +165,7 @@
 
                 <div data-aos="fade-up" data-aos-delay="600">
                     <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">ইমেইল অ্যাড্রেস *</label>
-                    <input type="email" id="email" required placeholder="example@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    <input type="email" id="email" required placeholder="example@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none transition-opacity">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -211,7 +212,8 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Password Section (Can be hidden during Google Signup) -->
+                <div id="password-section" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div data-aos="fade-up" data-aos-delay="850">
                         <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">পাসওয়ার্ড *</label>
                         <input type="password" id="password" required placeholder="••••••••" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
@@ -236,7 +238,7 @@
 
                 <div class="pt-6" data-aos="zoom-in" data-aos-delay="1000">
                     <button type="submit" id="submit-btn" class="w-full bg-campfire hover:bg-orange-600 text-white font-black text-lg py-4 px-4 rounded-xl transition-all shadow-glow hover:shadow-[0_0_30px_rgba(231,111,81,0.6)] hover:-translate-y-1 flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-compass"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন
+                        <i class="fa-solid fa-compass"></i> <span id="submit-text">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</span>
                     </button>
                 </div>
             </form>
@@ -244,28 +246,15 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- SCRIPTS (AOS & FIREBASE)                   -->
-    <!-- ========================================== -->
-    
-    <!-- AOS Animation Engine -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            once: true,
-            offset: 50,
-        });
-    </script>
+    <script> AOS.init({ once: true, offset: 50 }); </script>
 
-    <!-- Firebase Core Libraries (DO NOT CHANGE) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // -----------------------------------------
-        // Firebase Configuration & Logic
-        // -----------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -276,27 +265,64 @@
             measurementId: "G-WNJBJT9K5K"
         };
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // 1. Google Login Logic
+        let isGoogleSignupFlow = false; // Track the current flow
+
+        // 1. Google Smart Checker Logic
         const googleBtn = document.getElementById('google-login-btn');
         const provider = new firebase.auth.GoogleAuthProvider();
 
         googleBtn.addEventListener('click', () => {
-            googleBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Connecting...';
+            googleBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Checking Database...';
+            
             auth.signInWithPopup(provider)
-                .then((result) => { window.location.href = "dashboard.html"; })
+                .then((result) => {
+                    const user = result.user;
+                    // Check if Firestore document already exists
+                    db.collection("users").doc(user.uid).get().then((doc) => {
+                        if (doc.exists) {
+                            // Old User -> Straight to Dashboard
+                            window.location.href = "dashboard.html";
+                        } else {
+                            // New User -> Complete Profile Flow
+                            isGoogleSignupFlow = true;
+                            
+                            // Hide Unnecessary Elements
+                            document.getElementById('social-login-section').classList.add('hidden');
+                            document.getElementById('divider-section').classList.add('hidden');
+                            
+                            // Hide Passwords & remove required attribute so form can submit
+                            document.getElementById('password-section').classList.add('hidden');
+                            document.getElementById('password').removeAttribute('required');
+                            document.getElementById('confirmPassword').removeAttribute('required');
+
+                            // Show Success Alert
+                            document.getElementById('google-alert-box').classList.remove('hidden');
+
+                            // Pre-fill and lock inputs
+                            document.getElementById('fullName').value = user.displayName || '';
+                            document.getElementById('email').value = user.email || '';
+                            document.getElementById('email').readOnly = true;
+                            document.getElementById('email').classList.add('opacity-50', 'cursor-not-allowed');
+
+                            // Update Button Text
+                            document.getElementById('submit-text').innerText = "প্রোফাইল সেভ করুন";
+                        }
+                    }).catch((err) => {
+                        console.error(err);
+                        googleBtn.innerHTML = 'গুগল দিয়ে কন্টিনিউ করুন';
+                    });
+                })
                 .catch((error) => {
                     alert("লগইন করা যায়নি: " + error.message);
                     googleBtn.innerHTML = 'গুগল দিয়ে কন্টিনিউ করুন';
                 });
         });
 
-        // 2. Manual Form Submission Logic
+        // 2. Form Submission Logic (Handles both Manual & Google Flow)
         const signupForm = document.getElementById('signup-form');
         const submitBtn = document.getElementById('submit-btn');
 
@@ -310,27 +336,54 @@
             const bloodGroup = document.getElementById('bloodGroup').value;
             const phone = document.getElementById('phone').value;
             const emergencyContact = document.getElementById('emergencyContact').value;
+            const tshirtSize = document.getElementById('tshirtSize').value;
+
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> প্রোফাইল তৈরি হচ্ছে...';
+            submitBtn.disabled = true;
+
+            // Scenario A: User came through Google Log in
+            if (isGoogleSignupFlow) {
+                const user = auth.currentUser;
+                db.collection("users").doc(user.uid).set({
+                    fullName: fullName,
+                    studentId: studentId,
+                    email: email,
+                    hall: hall,
+                    bloodGroup: bloodGroup,
+                    phone: phone,
+                    emergencyContact: emergencyContact,
+                    tshirtSize: tshirtSize,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    window.location.href = "dashboard.html";
+                }).catch((error) => {
+                    alert("সমস্যা হয়েছে: " + error.message);
+                    submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> প্রোফাইল সেভ করুন';
+                    submitBtn.disabled = false;
+                });
+                return; // Stop execution here
+            }
+
+            // Scenario B: User is doing a Manual Log in
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            const tshirtSize = document.getElementById('tshirtSize').value;
 
             if (password !== confirmPassword) {
                 alert("পাসওয়ার্ড দুটি মিলছে না! দয়া করে আবার চেক করুন।");
+                submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন';
+                submitBtn.disabled = false;
                 return;
             }
-
             if (password.length < 6) {
                 alert("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।");
+                submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন';
+                submitBtn.disabled = false;
                 return;
             }
-
-            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> অ্যাকাউন্ট তৈরি হচ্ছে...';
-            submitBtn.disabled = true;
 
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // Saving data to Firestore perfectly
                     return db.collection("users").doc(user.uid).set({
                         fullName: fullName,
                         studentId: studentId,
@@ -344,7 +397,6 @@
                     });
                 })
                 .then(() => {
-                    alert("অভিনন্দন! আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।");
                     window.location.href = "dashboard.html";
                 })
                 .catch((error) => {
@@ -354,7 +406,5 @@
                 });
         });
     </script>
-</body>
-</html>
 </body>
 </html>
