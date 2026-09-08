@@ -103,7 +103,6 @@
                     
                     <div class="relative">
                         <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow">
-                            <!-- FIX: Added ID to update the image -->
                             <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </button>
 
@@ -112,8 +111,9 @@
                                 <p id="dropdown-user-name" class="text-sm font-bold text-white truncate">Loading...</p>
                                 <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Explorer</p>
                             </div>
+                            <!-- CHANGE 1: "আমার ড্যাশবোর্ড" to "আমার প্রোফাইল" -->
                             <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 hover:text-white transition-colors flex items-center gap-3">
-                                <i class="fa-solid fa-gauge w-5 text-center text-trail"></i> আমার ড্যাশবোর্ড
+                                <i class="fa-solid fa-user w-5 text-center text-trail"></i> আমার প্রোফাইল
                             </a>
                             <div class="border-t border-white/10 my-1"></div>
                             <a href="#" id="logout-btn" class="block px-4 py-3 text-sm text-red-400 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
@@ -181,7 +181,7 @@
             
             <div id="mobile-user-section" class="hidden space-y-3">
                 <a href="dashboard.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
-                    <i class="fa-solid fa-gauge"></i> ড্যাশবোর্ডে যান
+                    <i class="fa-solid fa-user"></i> আমার প্রোফাইল
                 </a>
                 <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-right-from-bracket"></i> লগ-আউট
@@ -202,8 +202,9 @@
         </div>
         
         <div class="relative z-10 text-center px-6 max-w-5xl mx-auto" data-aos="zoom-out" data-aos-duration="1500">
+            <!-- CHANGE 2: "পুনর্জাগরণ • ২০২৬-২০২৭ সেশন" to "২০১৫ সাল থেকে পথচলা" -->
             <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse">
-                <i class="fa-solid fa-fire mr-2"></i> পুনর্জাগরণ • ২০২৬-২০২৭ সেশন
+                <i class="fa-solid fa-fire mr-2"></i> ২০১৫ সাল থেকে পথচলা
             </div>
             
             <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-white text-glow-futuristic">
@@ -431,8 +432,9 @@
                 document.getElementById('nav-user-profile').classList.remove('hidden');
                 document.getElementById('mobile-user-section').classList.remove('hidden');
                 
+                // CHANGE 3: "ড্যাশবোর্ডে প্রবেশ করুন" to "আমার অ্যাডভেঞ্চার অ্যাকাউন্ট"
                 const heroAuthBtn = document.getElementById('hero-auth-btn');
-                heroAuthBtn.innerHTML = '<i class="fa-solid fa-gauge"></i> ড্যাশবোর্ডে প্রবেশ করুন';
+                heroAuthBtn.innerHTML = '<i class="fa-solid fa-user-astronaut"></i> আমার অ্যাডভেঞ্চার অ্যাকাউন্ট';
                 heroAuthBtn.href = 'dashboard.html';
                 heroAuthBtn.classList.replace('bg-campfire', 'bg-trail');
                 heroAuthBtn.classList.replace('hover:bg-orange-600', 'hover:bg-mountain');
@@ -443,7 +445,6 @@
                         document.getElementById('nav-user-name').innerText = userData.fullName || "Explorer";
                         document.getElementById('dropdown-user-name').innerText = userData.fullName || "Explorer";
 
-                        // FIX: ADDED DYNAMIC AVATAR RENDERING FOR INDEX PAGE
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         const navProfileImg = document.getElementById('nav-profile-img');
                         if (navProfileImg) navProfileImg.src = finalAvatarUrl;
