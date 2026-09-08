@@ -103,7 +103,8 @@
                     
                     <div class="relative">
                         <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow">
-                            <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                            <!-- FIX: Added ID to update the image -->
+                            <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </button>
 
                         <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss border border-white/10 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300">
@@ -205,7 +206,6 @@
                 <i class="fa-solid fa-fire mr-2"></i> পুনর্জাগরণ • ২০২৬-২০২৭ সেশন
             </div>
             
-            <!-- NEW FUTURISTIC GLOWING TITLE -->
             <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-white text-glow-futuristic">
                 চুয়েট অ্যাডভেঞ্চার <br>সোসাইটি
             </h1>
@@ -442,6 +442,12 @@
                         const userData = doc.data();
                         document.getElementById('nav-user-name').innerText = userData.fullName || "Explorer";
                         document.getElementById('dropdown-user-name').innerText = userData.fullName || "Explorer";
+
+                        // FIX: ADDED DYNAMIC AVATAR RENDERING FOR INDEX PAGE
+                        const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
+                        const navProfileImg = document.getElementById('nav-profile-img');
+                        if (navProfileImg) navProfileImg.src = finalAvatarUrl;
+                        
                     }
                 }).catch((error) => { console.error("Error:", error); });
 
