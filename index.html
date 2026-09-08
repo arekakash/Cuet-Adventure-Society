@@ -48,33 +48,77 @@
                 <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="hover:text-facebook transition-colors"><i class="fa-brands fa-facebook"></i> গ্রুপ</a>
             </div>
 
-            <div class="flex items-center gap-4">
-                <!-- ID Added: nav-auth-btn -->
+            <!-- ডানপাশের কন্ট্রোল প্যানেল (ডাইনামিক) -->
+            <div class="flex items-center gap-4 relative">
+                
+                <!-- State 1: Logged Out (অ্যাকাউন্ট খুলুন) -->
                 <a href="signup.html" id="nav-auth-btn" class="hidden sm:inline-flex items-center gap-2 bg-accent hover:bg-orange-600 px-5 py-2 rounded-full font-semibold text-xs tracking-wide uppercase transition-all shadow-md">
                     <i class="fa-solid fa-user-plus"></i> অ্যাকাউন্ট খুলুন
                 </a>
+
+                <!-- State 2: Logged In (প্রোফাইল অ্যাভাটার ও ড্রপডাউন) -->
+                <div id="nav-user-profile" class="hidden flex items-center gap-4">
+                    <div class="text-right hidden sm:block pr-3 border-r border-white/20">
+                        <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
+                        <p class="text-[10px] text-accent uppercase tracking-widest">Active Member</p>
+                    </div>
+                    
+                    <div class="relative">
+                        <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 focus:outline-none hover:border-white transition-colors">
+                            <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                        </button>
+
+                        <!-- ড্রপডাউন মেনু -->
+                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-gray-100 transform transition-all duration-200 z-50 origin-top-right text-gray-800">
+                            <div class="px-4 py-3 border-b border-gray-100 sm:hidden">
+                                <p id="dropdown-user-name" class="text-sm font-bold text-gray-800 truncate">Loading...</p>
+                                <p class="text-[10px] text-accent uppercase tracking-widest mt-0.5">Active Member</p>
+                            </div>
+                            <a href="dashboard.html" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-trail transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-gauge w-4 text-center"></i> আমার ড্যাশবোর্ড
+                            </a>
+                            <div class="border-t border-gray-100 my-1"></div>
+                            <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-600 font-bold hover:bg-red-50 transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-right-from-bracket w-4 text-center"></i> লগ-আউট
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- মোবাইল হ্যামবার্গার মেনু বাটন -->
                 <button id="menu-btn" class="md:hidden text-white text-xl focus:outline-none" aria-label="Toggle Menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- মোবাইল ড্রপডাউন মেনু -->
+        <!-- মোবাইল ড্রপডাউন মেনু (ডাইনামিক) -->
         <div id="mobile-menu" class="hidden md:hidden bg-forest border-t border-white/10 px-6 py-4 space-y-3 text-sm">
             <a href="#about" class="block hover:text-accent transition-colors">আমাদের কথা</a>
             <a href="#wings" class="block hover:text-accent transition-colors">লিডারশিপ উইংস</a>
             <a href="#safety" class="block hover:text-accent transition-colors">নিরাপত্তা নীতি</a>
             
-            <!-- ID Added: mobile-auth-btn -->
-            <a href="signup.html" id="mobile-auth-btn" class="block text-accent font-bold mt-2 border-b border-white/10 pb-2">
-                <i class="fa-solid fa-user-plus"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট খুলুন
-            </a>
+            <div class="border-t border-white/10 my-2"></div>
+
+            <!-- State 1: Mobile Logged Out -->
+            <div id="mobile-auth-section">
+                <a href="signup.html" class="block text-accent font-bold mt-2 pb-2">
+                    <i class="fa-solid fa-user-plus"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট খুলুন
+                </a>
+            </div>
+
+            <!-- State 2: Mobile Logged In -->
+            <div id="mobile-user-section" class="hidden pb-2 mb-2">
+                <a href="dashboard.html" class="block text-trail font-bold mt-2">
+                    <i class="fa-solid fa-gauge"></i> আমার ড্যাশবোর্ড
+                </a>
+                <a href="#" id="mobile-logout-btn" class="block text-red-400 font-bold mt-3">
+                    <i class="fa-solid fa-right-from-bracket"></i> লগ-আউট
+                </a>
+            </div>
             
-            <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="block text-facebook font-bold mt-2">
+            <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="block text-facebook font-bold mt-2 border-t border-white/10 pt-3">
                 <i class="fa-brands fa-facebook"></i> ফেসবুক গ্রুপ
-            </a>
-            <a href="https://www.facebook.com/share/1Bqy9ZGdSa/" target="_blank" class="block text-blue-400 font-bold">
-                <i class="fa-solid fa-flag"></i> ফেসবুক পেইজ
             </a>
         </div>
     </nav>
@@ -460,7 +504,7 @@
                         <h3>যৌথ লিডারশিপ স্কিল</h3>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        কোনো পৃথক রেসকিউ টিম থাকবেবিধা নেই; চুয়েট অ্যাডভেঞ্চার সোসাইটির <strong>প্রতিটি লিডারকে</strong> বেসিক ফার্স্ট এইড, ট্রেইল সেফটি ও ইমার্জেন্সি এসকেপ প্রোটোকল জানা বাধ্যতামূলক।
+                        কোনো পৃথক রেসকিউ টিম থাকবে না; চুয়েট অ্যাডভেঞ্চার সোসাইটির <strong>প্রতিটি লিডারকে</strong> বেসিক ফার্স্ট এইড, ট্রেইল সেফটি ও ইমার্জেন্সি এসকেপ প্রোটোকল জানা বাধ্যতামূলক।
                     </p>
                 </div>
 
@@ -588,22 +632,35 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // মোবাইল মেনু লজিক
+        // -----------------------------------------
+        // UI & Dropdown Logic
+        // -----------------------------------------
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
 
+        // Mobile Menu Toggle
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
+        // Desktop Dropdown Toggle
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('hidden');
         });
 
+        // Close dropdown when clicking outside
+        window.addEventListener('click', () => {
+            if (!profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+        profileDropdown.addEventListener('click', (e) => { e.stopPropagation(); });
+
         // -----------------------------------------
-        // State Management Logic (Firebase)
+        // Firebase Configuration
         // -----------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -615,43 +672,67 @@
             measurementId: "G-WNJBJT9K5K"
         };
 
-        // Initialize Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
+        const db = firebase.firestore();
 
-        // UI Button Elements
-        const navAuthBtn = document.getElementById('nav-auth-btn');
-        const mobileAuthBtn = document.getElementById('mobile-auth-btn');
-        const heroAuthBtn = document.getElementById('hero-auth-btn');
-
-        // Observer: Check User State on Page Load
+        // -----------------------------------------
+        // Auth State Observer
+        // -----------------------------------------
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // User IS logged in: Change buttons to redirect to Dashboard
+                // User IS logged in
+                // 1. Swap Desktop Navbar UI
+                document.getElementById('nav-auth-btn').classList.add('hidden');
+                document.getElementById('nav-user-profile').classList.remove('hidden');
                 
-                // 1. Navbar Button Update
-                navAuthBtn.innerHTML = '<i class="fa-solid fa-user-check"></i> আমার ড্যাশবোর্ড';
-                navAuthBtn.href = 'dashboard.html';
-                navAuthBtn.classList.replace('bg-accent', 'bg-trail'); // Change color to indicate active state
-                navAuthBtn.classList.replace('hover:bg-orange-600', 'hover:bg-mountain');
-
-                // 2. Mobile Menu Button Update
-                mobileAuthBtn.innerHTML = '<i class="fa-solid fa-user-check"></i> আমার ড্যাশবোর্ড';
-                mobileAuthBtn.href = 'dashboard.html';
-                mobileAuthBtn.classList.replace('text-accent', 'text-trail');
-
-                // 3. Hero Section Button Update
+                // 2. Swap Mobile Menu UI
+                document.getElementById('mobile-auth-section').classList.add('hidden');
+                document.getElementById('mobile-user-section').classList.remove('hidden');
+                
+                // 3. Update Hero Button
+                const heroAuthBtn = document.getElementById('hero-auth-btn');
                 heroAuthBtn.innerHTML = '<i class="fa-solid fa-rocket"></i> Go to Dashboard';
                 heroAuthBtn.href = 'dashboard.html';
                 heroAuthBtn.classList.replace('bg-accent', 'bg-trail');
                 heroAuthBtn.classList.replace('hover:bg-orange-600', 'hover:bg-mountain');
+
+                // 4. Fetch User Data from Firestore
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        document.getElementById('nav-user-name').innerText = userData.fullName || "Member";
+                        document.getElementById('dropdown-user-name').innerText = userData.fullName || "Member";
+                    }
+                }).catch((error) => { console.error("Error fetching user data:", error); });
+
             } else {
-                // User is NOT logged in: Buttons remain as "Create Account"
-                console.log("No user is currently logged in.");
+                // User is NOT logged in
+                document.getElementById('nav-auth-btn').classList.remove('hidden');
+                document.getElementById('nav-user-profile').classList.add('hidden');
+                
+                document.getElementById('mobile-auth-section').classList.remove('hidden');
+                document.getElementById('mobile-user-section').classList.add('hidden');
             }
         });
+
+        // -----------------------------------------
+        // Secure Logout Logic
+        // -----------------------------------------
+        const handleLogout = (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => {
+                window.location.reload(); // রিলোড দিলে পেজ আগের অবস্থায় ফিরে যাবে
+            }).catch((error) => {
+                alert("লগ-আউট করতে সমস্যা হয়েছে!");
+            });
+        };
+
+        // Attach logout event to both desktop and mobile buttons
+        document.getElementById('logout-btn').addEventListener('click', handleLogout);
+        document.getElementById('mobile-logout-btn').addEventListener('click', handleLogout);
     </script>
 </body>
 </html>
