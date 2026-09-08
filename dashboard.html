@@ -283,7 +283,7 @@
         });
 
         // -----------------------------------------
-        // 2. Firebase Configuration (Kept Intact)
+        // 2. Firebase Configuration
         // -----------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -302,7 +302,7 @@
         const db = firebase.firestore();
 
         // -----------------------------------------
-        // 3. State Management & Data Fetching (Kept Intact)
+        // 3. State Management & Data Fetching (FAIL-SAFE ADDED)
         // -----------------------------------------
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -321,7 +321,9 @@
                         document.getElementById('display-emergency').innerText = userData.emergencyContact || "N/A";
                         
                     } else {
-                        console.log("No such document!");
+                        // User exists in Auth, but no data in Firestore!
+                        console.log("No such document! Profile is incomplete.");
+                        window.location.href = "signup.html"; // Send them back to complete the profile
                     }
                 }).catch((error) => {
                     console.log("Error getting document:", error);
@@ -332,7 +334,7 @@
         });
 
         // -----------------------------------------
-        // 4. Secure Logout Logic (Kept Intact)
+        // 4. Secure Logout Logic
         // -----------------------------------------
         const logoutBtn = document.getElementById('logout-btn');
         logoutBtn.addEventListener('click', (e) => {
