@@ -12,68 +12,109 @@
             theme: {
                 extend: {
                     colors: {
-                        forest: '#0f291e',
-                        mountain: '#1b4332',
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
                         trail: '#2d6a4f',
-                        accent: '#e76f51',
-                        sand: '#f4f1de'
+                        campfire: '#e76f51',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
+                        'glow-sm': '0 0 10px rgba(231, 111, 81, 0.2)',
+                        'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
                     }
                 }
             }
         }
     </script>
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050b08; }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        /* Tactical Glass Panels */
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-dark {
+            background: rgba(5, 11, 8, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .data-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body class="bg-darkForest text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white">
+
+    <!-- Thematic Background (Subtle for Dashboard) -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="w-full h-full object-cover opacity-10 filter brightness-50 contrast-125">
+        <div class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90"></div>
+        <!-- Subtle Glowing Orbs -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[120px] animate-[pulse_8s_ease-in-out_infinite]"></div>
+    </div>
 
     <!-- ========================================== -->
-    <!-- Top Navigation (Logged-in State)           -->
+    <!-- Top Navigation (Tactical Dark Mode)        -->
     <!-- ========================================== -->
-    <nav class="sticky top-0 z-50 bg-forest text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <i class="fa-solid fa-compass text-accent text-2xl"></i>
-                <span class="font-black text-lg tracking-wider hidden sm:block">CUET AS DASHBOARD</span>
+    <nav class="sticky top-0 z-50 glass-dark text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center relative z-10">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity group">
+                <i class="fa-solid fa-compass text-campfire text-2xl group-hover:rotate-45 transition-transform duration-500"></i>
+                <span class="font-black text-lg tracking-wider hidden sm:block text-gray-100">COMMAND CENTER</span>
             </a>
             
             <div class="flex items-center gap-4 relative">
                 <!-- Desktop User Info -->
-                <div class="text-right hidden sm:block pr-3 border-r border-white/20">
+                <div class="text-right hidden sm:block pr-3 border-r border-white/10">
                     <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
-                    <p class="text-[10px] text-accent uppercase tracking-widest">Active Member</p>
+                    <p class="text-[10px] text-campfire uppercase tracking-widest animate-pulse">Active Explorer</p>
                 </div>
                 
                 <!-- Profile Dropdown Wrapper -->
                 <div class="relative">
                     <!-- Avatar Button -->
-                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-accent p-0.5 overflow-hidden bg-white/10 focus:outline-none hover:border-white transition-colors">
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow-sm">
                         <img src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
 
-                    <!-- Dropdown Menu Box -->
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-2xl py-2 border border-gray-100 transform transition-all duration-200 z-50 origin-top-right">
+                    <!-- Tactical Dropdown Menu Box -->
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss border border-white/10 rounded-xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right">
                         
-                        <!-- Mobile User Info (Shows only on small screens inside dropdown) -->
-                        <div class="px-4 py-3 border-b border-gray-100 sm:hidden">
-                            <p id="dropdown-user-name" class="text-sm font-bold text-gray-800 truncate">Loading...</p>
-                            <p class="text-[10px] text-accent uppercase tracking-widest mt-0.5">Active Member</p>
+                        <!-- Mobile User Info -->
+                        <div class="px-4 py-3 border-b border-white/10 sm:hidden">
+                            <p id="dropdown-user-name" class="text-sm font-bold text-gray-200 truncate">Loading...</p>
+                            <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Active Explorer</p>
                         </div>
 
                         <!-- Menu Links -->
-                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-accent transition-colors flex items-center gap-2">
+                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-400 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2">
                             <i class="fa-solid fa-user-pen w-4 text-center"></i> এডিট প্রোফাইল
                         </a>
-                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-accent transition-colors flex items-center gap-2">
+                        <a href="#" class="block px-4 py-2.5 text-sm text-gray-400 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2">
                             <i class="fa-solid fa-gear w-4 text-center"></i> সেটিংস
                         </a>
                         
-                        <div class="border-t border-gray-100 my-1"></div>
+                        <div class="border-t border-white/10 my-1"></div>
                         
                         <!-- Logout Button -->
-                        <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-600 font-bold hover:bg-red-50 transition-colors flex items-center gap-2">
-                            <i class="fa-solid fa-right-from-bracket w-4 text-center"></i> লগ-আউট
+                        <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-500 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-power-off w-4 text-center"></i> সিস্টেম লগ-আউট
                         </a>
                     </div>
                 </div>
@@ -84,32 +125,35 @@
     <!-- ========================================== -->
     <!-- Main Dashboard Container                   -->
     <!-- ========================================== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
         
         <!-- Left Column: Identity & Personal Info -->
         <div class="space-y-6">
             
-            <!-- Identity Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-                <div class="h-24 bg-gradient-to-r from-mountain to-trail"></div>
+            <!-- Tactical Identity Card -->
+            <div class="glass-panel rounded-2xl shadow-xl overflow-hidden relative" data-aos="fade-right" data-aos-delay="100">
+                <!-- Glowing Header Banner -->
+                <div class="h-24 bg-gradient-to-r from-moss via-trail/40 to-moss border-b border-white/5"></div>
                 <div class="px-6 pb-6 relative">
-                    <div class="w-20 h-20 rounded-2xl border-4 border-white shadow-md overflow-hidden bg-white absolute -top-10 left-6">
-                        <img src="https://ui-avatars.com/api/?name=User&background=0f291e&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
+                    <!-- Floating Avatar -->
+                    <div class="w-20 h-20 rounded-2xl border-2 border-darkForest shadow-glow overflow-hidden bg-moss absolute -top-10 left-6">
+                        <img src="https://ui-avatars.com/api/?name=User&background=0a1c13&color=fff&size=128" alt="Profile" class="w-full h-full object-cover filter contrast-125">
                     </div>
+                    
                     <div class="mt-12">
-                        <h2 id="display-name" class="text-2xl font-black text-gray-900">Loading...</h2>
-                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
+                        <h2 id="display-name" class="text-2xl font-black text-white drop-shadow-md">Loading...</h2>
+                        <div class="flex items-center gap-2 mt-2 text-sm text-gray-400 font-medium">
                             <i class="fa-solid fa-building-user text-trail"></i>
                             <span id="display-hall">Loading...</span>
                         </div>
-                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 font-medium">
-                            <i class="fa-solid fa-id-card text-trail"></i>
-                            ID: <span id="display-id">...</span>
+                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-400 font-medium">
+                            <i class="fa-solid fa-fingerprint text-trail"></i>
+                            ID: <span id="display-id" class="text-gray-300 font-bold tracking-widest">...</span>
                         </div>
                         
-                        <div class="mt-4 pt-4 border-t border-gray-100 flex gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-green-50 text-green-700 text-xs font-bold border border-green-100">
-                                <i class="fa-solid fa-check-circle"></i> Profile Complete
+                        <div class="mt-5 pt-4 border-t border-white/10 flex gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                                <i class="fa-solid fa-shield-check"></i> Identity Verified
                             </span>
                         </div>
                     </div>
@@ -117,21 +161,29 @@
             </div>
 
             <!-- Vital Info Card -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h3 class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-5 border-b border-gray-100 pb-2">Vital Information</h3>
+            <div class="glass-panel rounded-2xl shadow-xl p-6" data-aos="fade-right" data-aos-delay="200">
+                <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-5 border-b border-white/10 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-microchip text-campfire"></i> ট্যাকটিক্যাল ডেটা
+                </h3>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                    <div class="p-3 data-box rounded-xl hover:border-campfire/30 transition-colors">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Blood Group</p>
-                        <p class="font-black text-accent flex items-center gap-2"><i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span></p>
+                        <p class="font-black text-red-500 text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
+                            <i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span>
+                        </p>
                     </div>
-                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">T-Shirt Size</p>
-                        <p class="font-black text-forest flex items-center gap-2"><i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span></p>
+                    <div class="p-3 data-box rounded-xl hover:border-trail/50 transition-colors">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Combat Gear Size</p>
+                        <p class="font-black text-trail text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(45,106,79,0.5)]">
+                            <i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span>
+                        </p>
                     </div>
-                    <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 col-span-2">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Emergency Contact</p>
-                        <p class="font-black text-gray-700 flex items-center gap-2"><i class="fa-solid fa-phone"></i> <span id="display-emergency">...</span></p>
+                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-white/20 transition-colors">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">SOS Contact</p>
+                        <p class="font-black text-gray-300 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-satellite-dish text-blue-400 animate-pulse"></i> <span id="display-emergency">...</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -140,39 +192,50 @@
         <!-- Right Column: Analytics & Trail History -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- Quick Analytics (Metrics) -->
+            <!-- Holographic Quick Analytics -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 rounded-full bg-trail/10 text-trail flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-route"></i></div>
-                    <p class="text-2xl font-black text-gray-900">00</p>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-fire"></i></div>
-                    <p class="text-2xl font-black text-gray-900">00</p>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-10 h-10 rounded-full bg-campfire/20 text-campfire flex items-center justify-center text-lg mb-2 group-hover:shadow-glow transition-shadow"><i class="fa-solid fa-fire"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 rounded-full bg-forest/10 text-forest flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shoe-prints"></i></div>
-                    <p class="text-2xl font-black text-gray-900">00<span class="text-sm font-medium text-gray-500">km</span></p>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
+                    <p class="text-3xl font-black text-white drop-shadow-md">00<span class="text-sm font-medium text-gray-500">km</span></p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-lg mb-2"><i class="fa-solid fa-shield-halved"></i></div>
-                    <p class="text-2xl font-black text-gray-900">N/A</p>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-shadow"><i class="fa-solid fa-shield-halved"></i></div>
+                    <p class="text-3xl font-black text-gray-600">N/A</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Safety Index</p>
                 </div>
             </div>
 
-            <!-- Trail History Table -->
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                    <h3 class="text-lg font-black text-forest">My Trail History</h3>
-                    <a href="#" class="text-xs font-bold text-accent hover:underline">View All</a>
+            <!-- Tactical Trail History Terminal -->
+            <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+                    <h3 class="text-sm font-bold text-white tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-satellite text-campfire"></i> ট্রেইল লগ হিস্ট্রি
+                    </h3>
+                    <a href="#" class="text-xs font-bold text-trail hover:text-white transition-colors uppercase tracking-wider">View Log</a>
                 </div>
-                <div class="p-8 text-center text-gray-500">
-                    <i class="fa-solid fa-person-hiking text-4xl text-gray-300 mb-3"></i>
-                    <p class="text-sm font-medium">আপনি এখনও কোনো ট্রেইলে অংশগ্রহণ করেননি।</p>
+                
+                <!-- Empty State (Dark Themed) -->
+                <div class="p-12 text-center flex flex-col items-center justify-center">
+                    <div class="relative mb-6">
+                        <div class="absolute inset-0 bg-campfire/20 rounded-full blur-xl animate-pulse"></div>
+                        <i class="fa-solid fa-compass text-5xl text-gray-600 relative z-10"></i>
+                    </div>
+                    <p class="text-sm font-medium text-gray-400 tracking-wide">আপনার ট্র্যাকিং রাডার এখন ফাঁকা।<br>নতুন কোনো ট্রেইলে যুক্ত হলে এখানে ডেটা শো করবে।</p>
+                    
+                    <a href="index.html" class="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 text-xs font-bold text-gray-300 hover:bg-white/5 hover:text-campfire transition-colors">
+                        <i class="fa-solid fa-binoculars"></i> এক্সপ্লোর আপকামিং ইভেন্ট
+                    </a>
                 </div>
             </div>
             
@@ -180,40 +243,47 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- FIREBASE INTEGRATION ENGINE                -->
+    <!-- SCRIPTS (AOS & FIREBASE)                   -->
     <!-- ========================================== -->
+    
+    <!-- AOS Animation Engine -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+        });
+    </script>
+
+    <!-- Firebase Core Libraries (DO NOT CHANGE) -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
         // -----------------------------------------
-        // 1. Dropdown Menu Toggle Logic
+        // 1. Tactical Dropdown Menu Toggle Logic
         // -----------------------------------------
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
 
-        // Toggle dropdown on avatar click
         profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents click from instantly bubbling up to window
+            e.stopPropagation(); 
             profileDropdown.classList.toggle('hidden');
         });
 
-        // Close dropdown when clicking anywhere else on the screen
         window.addEventListener('click', () => {
             if (!profileDropdown.classList.contains('hidden')) {
                 profileDropdown.classList.add('hidden');
             }
         });
 
-        // Prevent dropdown from closing when clicking inside it
         profileDropdown.addEventListener('click', (e) => {
             e.stopPropagation();
         });
 
-
         // -----------------------------------------
-        // 2. Firebase Configuration
+        // 2. Firebase Configuration (Kept Intact)
         // -----------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -232,7 +302,7 @@
         const db = firebase.firestore();
 
         // -----------------------------------------
-        // 3. State Management & Data Fetching
+        // 3. State Management & Data Fetching (Kept Intact)
         // -----------------------------------------
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -240,10 +310,10 @@
                     if (doc.exists) {
                         const userData = doc.data();
                         
-                        // Inject Data into UI dynamically
-                        document.getElementById('nav-user-name').innerText = userData.fullName || "Member";
-                        document.getElementById('dropdown-user-name').innerText = userData.fullName || "Member";
-                        document.getElementById('display-name').innerText = userData.fullName || "Member";
+                        // Injecting Real Data into UI dynamically
+                        document.getElementById('nav-user-name').innerText = userData.fullName || "Explorer";
+                        document.getElementById('dropdown-user-name').innerText = userData.fullName || "Explorer";
+                        document.getElementById('display-name').innerText = userData.fullName || "Explorer";
                         document.getElementById('display-id').innerText = userData.studentId || "N/A";
                         document.getElementById('display-hall').innerText = userData.hall || "N/A";
                         document.getElementById('display-blood').innerText = userData.bloodGroup || "N/A";
@@ -257,12 +327,12 @@
                     console.log("Error getting document:", error);
                 });
             } else {
-                window.location.href = "index.html";
+                window.location.href = "index.html"; // Secure Routing
             }
         });
 
         // -----------------------------------------
-        // 4. Secure Logout Logic
+        // 4. Secure Logout Logic (Kept Intact)
         // -----------------------------------------
         const logoutBtn = document.getElementById('logout-btn');
         logoutBtn.addEventListener('click', (e) => {
