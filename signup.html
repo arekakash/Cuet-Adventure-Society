@@ -42,7 +42,7 @@
         .glass-input {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #f3f4f6; /* gray-100 */
+            color: #f3f4f6; 
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(8px);
         }
@@ -121,7 +121,7 @@
                 <div class="mt-1">
                     <h3 class="text-2xl lg:text-3xl font-black text-white mb-2 tracking-tight">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
                     
-                    <!-- NEW LOGIN LINK POSITIONED HERE -->
+                    <!-- LOGIN LINK POSITIONED AT THE TOP -->
                     <p class="text-sm text-gray-300 mb-2">
                         ইতোমধ্যে কি অ্যাকাউন্ট আছে? 
                         <a href="login.html" class="text-campfire font-bold hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">এখানে লগইন করুন</a>
@@ -277,6 +277,7 @@
         const db = firebase.firestore();
 
         let isGoogleSignupFlow = false; 
+        let googleUserPhoto = ''; // Variable to store Google Profile Picture
 
         const googleBtn = document.getElementById('google-login-btn');
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -287,6 +288,8 @@
             auth.signInWithPopup(provider)
                 .then((result) => {
                     const user = result.user;
+                    googleUserPhoto = user.photoURL || ''; // Capture Google Profile Picture
+
                     db.collection("users").doc(user.uid).get().then((doc) => {
                         if (doc.exists) {
                             window.location.href = "dashboard.html";
@@ -349,6 +352,7 @@
                     phone: phone,
                     emergencyContact: emergencyContact,
                     tshirtSize: tshirtSize,
+                    photoURL: googleUserPhoto, // Saving Google Profile Photo URL
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
                     window.location.href = "dashboard.html";
@@ -388,6 +392,7 @@
                         phone: phone,
                         emergencyContact: emergencyContact,
                         tshirtSize: tshirtSize,
+                        photoURL: '', // Empty string for manual signup (can be updated later)
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 })
