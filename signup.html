@@ -93,7 +93,6 @@
             
             <div class="relative z-10 flex flex-col h-full justify-between">
                 <div data-aos="fade-right" data-aos-delay="200">
-                    <!-- Correction 1: Back to home -->
                     <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 mb-12 hover:text-campfire transition-colors backdrop-blur-sm bg-white/5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10 hover:border-campfire/50 hover:bg-campfire/10">
                         <i class="fa-solid fa-arrow-left"></i> হোমপেজে ফিরে যান
                     </a>
@@ -120,9 +119,7 @@
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <div class="mt-1">
-                    <!-- Correction 2: Form Header -->
                     <h3 class="text-2xl lg:text-3xl font-black text-white mb-1 tracking-tight">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
-                    <!-- Correction 3: Form Sub-header -->
                     <p class="text-sm text-gray-400 font-medium">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
                 </div>
             </div>
@@ -215,7 +212,7 @@
                     </div>
                 </div>
 
-                <!-- Password Section (Can be hidden during Google Signup) -->
+                <!-- Password Section -->
                 <div id="password-section" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div data-aos="fade-up" data-aos-delay="850">
                         <label class="block text-[11px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">পাসওয়ার্ড *</label>
@@ -245,6 +242,16 @@
                     </button>
                 </div>
             </form>
+
+            <!-- ========================================== -->
+            <!-- NEW LOGIN LINK ADDED HERE                  -->
+            <!-- ========================================== -->
+            <div class="mt-8 text-center" data-aos="fade-up" data-aos-delay="1050">
+                <p class="text-sm text-gray-400">
+                    ইতোমধ্যে কি আপনার অ্যাকাউন্ট আছে? 
+                    <a href="login.html" class="text-campfire font-bold hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">এখানে লগইন করুন</a>
+                </p>
+            </div>
             
         </div>
     </div>
@@ -362,7 +369,7 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (password !== confirmPassword) {
-                alert("পাসওয়ার্ড দুটি মিলছে না! দয়া করে আবার চেক করুন।");
+                alert("পাসওয়ার্ড দুটি মিলছোগত না! দয়া করে আবার চেক করুন।");
                 submitBtn.innerHTML = '<i class="fa-solid fa-compass"></i> অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন';
                 submitBtn.disabled = false;
                 return;
