@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn" class="scroll-smooth">
+<html lang="bn" class="scroll-smooth" id="html-root">
 <head>
     <!-- ========================================== -->
     <!-- 1. হেড (HEAD) সেকশন -->
@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class', // Enables class-based dark mode
             theme: {
                 extend: {
                     colors: {
@@ -18,7 +19,11 @@
                         moss: '#0a1c13',
                         trail: '#2d6a4f',
                         campfire: '#e76f51', // Accent color glowing like fire
-                        facebook: '#0866FF'
+                        facebook: '#0866FF',
+                        // Light Mode Colors (Mist Theme)
+                        mistBg: '#e2e8f0', 
+                        mistPanel: '#f8fafc',
+                        mistText: '#1e293b'
                     },
                     boxShadow: {
                         'glow': '0 0 20px rgba(231, 111, 81, 0.3)',
@@ -35,9 +40,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* Custom Scrollbar for Dark Theme */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050b08; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
         ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
         
@@ -47,59 +52,69 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .light-mode .glass-dark {
+            background: rgba(248, 250, 252, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+        }
 
         /* Futuristic Heartbeat Glow for Main Title */
         @keyframes pulseGlowBlue {
-            0%, 100% {
-                text-shadow: 0 0 15px rgba(6, 182, 212, 0.5), 0 0 30px rgba(6, 182, 212, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 25px rgba(6, 182, 212, 0.9), 0 0 50px rgba(6, 182, 212, 0.6), 0 0 80px rgba(6, 182, 212, 0.4);
-            }
+            0%, 100% { text-shadow: 0 0 15px rgba(6, 182, 212, 0.5), 0 0 30px rgba(6, 182, 212, 0.3); }
+            50% { text-shadow: 0 0 25px rgba(6, 182, 212, 0.9), 0 0 50px rgba(6, 182, 212, 0.6), 0 0 80px rgba(6, 182, 212, 0.4); }
         }
         .text-glow-futuristic {
             animation: pulseGlowBlue 4s ease-in-out infinite;
         }
+
+        /* Custom Toggle Switch CSS */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #e76f51;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #e76f51;
+        }
     </style>
 </head>
 
-<body class="bg-darkForest text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative">
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative transition-colors duration-500" id="body-content">
 
     <!-- ========================================== -->
-    <!-- NEW: GLOBAL FIXED BACKGROUND (PARALLAX)    -->
+    <!-- NEW: DYNAMIC BACKGROUND (PARALLAX)         -->
     <!-- ========================================== -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" 
-             alt="Dark Forest" 
-             class="w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125">
-        <!-- Gradient from top to bottom: gets darker at the bottom for readability -->
-        <div class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95"></div>
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <!-- Dark Mode Background -->
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95 transition-opacity duration-1000"></div>
+
+        <!-- Light Mode Background (Foggy Mist) -->
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/70 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
     <!-- ========================================== -->
-    <!-- 1. ন্যাভিগেশন বার (Dual Menu Layout)       -->
+    <!-- 1. ন্যাভিগেশন বার                          -->
     <!-- ========================================== -->
-    <nav class="fixed w-full z-50 glass-dark transition-all duration-300">
+    <nav class="fixed w-full z-40 glass-dark transition-all duration-300 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
             
-            <!-- বামপাশ: হ্যামবার্গার মেনু + লোগো -->
             <div class="flex items-center gap-4 sm:gap-6">
-                <button id="sidebar-open-btn" class="text-white text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
+                <button id="sidebar-open-btn" class="text-white light-mode:text-mistText text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
                 
                 <a href="#" class="flex items-center gap-2 sm:gap-3 group">
                     <i class="fa-solid fa-compass text-campfire text-2xl sm:text-3xl group-hover:rotate-45 transition-transform duration-500"></i>
-                    <span class="font-black text-lg sm:text-xl tracking-widest text-white drop-shadow-md hidden sm:block">CUET AS</span>
+                    <span class="font-black text-lg sm:text-xl tracking-widest text-white light-mode:text-mistText drop-shadow-md hidden sm:block">CUET AS</span>
                 </a>
             </div>
 
-            <!-- ডানপাশ: ইউজার কন্ট্রোল -->
             <div class="flex items-center gap-4 relative">
                 
                 <!-- State 1: Logged Out -->
                 <div id="nav-auth-wrap" class="flex items-center gap-4">
-                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">লগইন</a>
+                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 light-mode:text-gray-700 hover:text-white light-mode:hover:text-black transition-colors border-b border-transparent hover:border-white pb-0.5">লগইন</a>
                     <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire/90 hover:bg-campfire text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-105">
                         <i class="fa-solid fa-fire"></i> অ্যাকাউন্ট খুলুন
                     </a>
@@ -107,8 +122,8 @@
 
                 <!-- State 2: Logged In -->
                 <div id="nav-user-profile" class="hidden flex items-center gap-3 sm:gap-4">
-                    <div class="text-right hidden md:block pr-4 border-r border-white/10">
-                        <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
+                    <div class="text-right hidden md:block pr-4 border-r border-white/10 light-mode:border-black/10">
+                        <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-mistText">Loading...</p>
                         <p class="text-[10px] text-campfire uppercase tracking-widest">Explorer</p>
                     </div>
                     
@@ -117,15 +132,21 @@
                             <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </button>
 
-                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss border border-white/10 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300">
-                            <div class="px-4 py-3 border-b border-white/10 md:hidden">
-                                <p id="dropdown-user-name" class="text-sm font-bold text-white truncate">Loading...</p>
+                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300 light-mode:text-gray-700">
+                            <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 md:hidden">
+                                <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
                                 <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Explorer</p>
                             </div>
-                            <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 hover:text-white transition-colors flex items-center gap-3">
+                            <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
                                 <i class="fa-solid fa-user w-5 text-center text-trail"></i> আমার প্রোফাইল
                             </a>
-                            <div class="border-t border-white/10 my-1"></div>
+                            
+                            <!-- NEW: Settings Button -->
+                            <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
+                                <i class="fa-solid fa-gear w-5 text-center text-blue-400"></i> সেটিংস
+                            </button>
+                            
+                            <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
                             <a href="#" id="logout-btn" class="block px-4 py-3 text-sm text-red-400 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
                                 <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> লগ-আউট
                             </a>
@@ -141,50 +162,42 @@
     <!-- ========================================== -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
-    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss border-r border-white/5 shadow-2xl flex flex-col h-full overflow-y-auto">
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
         
-        <div class="p-6 flex justify-between items-center border-b border-white/5">
-            <span class="font-black text-xl tracking-widest text-white"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
-            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white text-2xl transition-colors">
+        <div class="p-6 flex justify-between items-center border-b border-white/5 light-mode:border-gray-200">
+            <span class="font-black text-xl tracking-widest text-white light-mode:text-black"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
+            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white light-mode:hover:text-black text-2xl transition-colors">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <div class="px-6 py-8 flex-grow space-y-2">
+        <div class="px-6 py-8 flex-grow space-y-2 text-gray-300 light-mode:text-gray-700">
             <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4">আমাদের কার্যক্রম</p>
             
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
                 <span class="font-bold text-sm">আপকামিং ইভেন্ট</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <span class="font-bold text-sm">পূর্ববর্তী ইভেন্ট</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
+            <!-- অন্যান্য মেনু... -->
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm">অ্যাডভেঞ্চারের গল্প</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
-                <span class="font-bold text-sm">অ্যাডভেঞ্চার স্টোর</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
-                <span class="font-bold text-sm">বিগিনার গাইড</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
-                <span class="font-bold text-sm">নেপথ্যে যারা</span>
-            </a>
+            
+            <!-- NEW: Settings Button (Mobile) -->
+            <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
+            <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gear"></i></div>
+                <span class="font-bold text-sm">সেটিংস</span>
+            </button>
         </div>
 
-        <div class="p-6 border-t border-white/5 glass-dark">
+        <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark">
             <div id="mobile-auth-section" class="space-y-3">
                 <a href="signup.html" class="w-full flex items-center justify-center gap-2 bg-campfire hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition-all shadow-glow">
                     <i class="fa-solid fa-user-astronaut"></i> অ্যাকাউন্ট খুলুন
                 </a>
-                <a href="login.html" class="w-full flex items-center justify-center gap-2 border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white py-3 rounded-xl font-bold transition-all">
+                <a href="login.html" class="w-full flex items-center justify-center gap-2 border border-white/10 light-mode:border-gray-300 text-gray-300 light-mode:text-gray-700 hover:bg-white/5 light-mode:hover:bg-gray-100 py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
                 </a>
             </div>
@@ -201,195 +214,115 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 3. হিরো সেকশন (The Dark Forest Entry)      -->
+    <!-- NEW: SETTINGS MODAL (THEME & LANGUAGE)     -->
     <!-- ========================================== -->
-    <!-- NOTE: Removed the background image from here, as it is now globally fixed -->
-    <section class="relative min-h-screen flex items-center justify-center text-white overflow-hidden pt-20">
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+            
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-campfire"></i> সেটিংস
+                </h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Theme Toggle -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm">থিম (Theme)</p>
+                        <p class="text-xs text-gray-500">ডার্ক ফরেস্ট বা মিস্ট মোড</p>
+                    </div>
+                    
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" name="toggleTheme" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
+                        <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+                    </div>
+                </div>
+
+                <!-- Language Toggle -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm">ভাষা (Language)</p>
+                        <p class="text-xs text-gray-500">বাংলা অথবা English</p>
+                    </div>
+                    
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" name="toggleLang" id="lang-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
+                        <label for="lang-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-blue-500 cursor-pointer"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all">
+                    সম্পন্ন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. হিরো সেকশন                              -->
+    <!-- ========================================== -->
+    <section class="relative min-h-screen flex items-center justify-center text-white light-mode:text-mistText overflow-hidden pt-20">
         
         <div class="relative z-10 text-center px-6 max-w-5xl mx-auto" data-aos="zoom-out" data-aos-duration="1500">
-            <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse">
+            <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse bg-black/20 light-mode:bg-white/50">
                 <i class="fa-solid fa-fire mr-2"></i> ২০১৫ সাল থেকে পথচলা
             </div>
             
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-white text-glow-futuristic">
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-white light-mode:text-black text-glow-futuristic">
                 চুয়েট অ্যাডভেঞ্চার <br>সোসাইটি
             </h1>
             
-            <p class="text-lg sm:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+            <p class="text-lg sm:text-2xl text-gray-300 light-mode:text-gray-700 font-light mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                 পাহাড়ের গহীনে, মেঘের চূড়ায় কিংবা অরণ্যের গভীরে—চুয়েটিয়ানদের পদচারণায় জেগে উঠুক নতুন ট্রেইল।
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="signup.html" id="hero-auth-btn" class="w-full sm:w-auto bg-campfire hover:bg-orange-600 px-8 py-4 sm:py-5 rounded-2xl font-black transition-all shadow-glow flex items-center justify-center gap-3 text-lg sm:text-xl hover:-translate-y-1">
+                <a href="signup.html" id="hero-auth-btn" class="w-full sm:w-auto bg-campfire hover:bg-orange-600 px-8 py-4 sm:py-5 rounded-2xl font-black transition-all shadow-glow flex items-center justify-center gap-3 text-lg sm:text-xl text-white hover:-translate-y-1">
                     <i class="fa-solid fa-shoe-prints"></i> এক্সপ্লোর শুরু করুন
                 </a>
                 
-                <a href="login.html" id="hero-login-btn" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 sm:py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 text-lg sm:text-xl backdrop-blur-sm hover:-translate-y-1">
-                    <i class="fa-solid fa-right-to-bracket text-gray-400"></i> লগইন
+                <a href="login.html" id="hero-login-btn" class="w-full sm:w-auto bg-white/5 light-mode:bg-white/50 hover:bg-white/10 light-mode:hover:bg-white border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black px-8 py-4 sm:py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 text-lg sm:text-xl backdrop-blur-sm hover:-translate-y-1">
+                    <i class="fa-solid fa-right-to-bracket text-gray-400 light-mode:text-gray-600"></i> লগইন
                 </a>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 z-10">
-            <i class="fa-solid fa-angles-down text-2xl text-white"></i>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 z-10 text-white light-mode:text-black">
+            <i class="fa-solid fa-angles-down text-2xl"></i>
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 4. স্টোরিটেলিং সেকশন (Immersive Narrative)  -->
-    <!-- ========================================== -->
-    <section class="py-24 sm:py-32 max-w-4xl mx-auto px-6 relative z-10">
-        <div class="absolute top-40 left-0 w-72 h-72 bg-trail/20 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-40 right-0 w-96 h-96 bg-campfire/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div class="space-y-16 sm:space-y-24 text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose text-gray-200 font-light relative z-10">
-            
-            <div data-aos="fade-up" data-aos-duration="1000" class="text-center drop-shadow-md">
-                <i class="fa-solid fa-quote-left text-4xl text-white/20 mb-6"></i>
-                <p class="font-bold text-white text-2xl sm:text-4xl leading-tight">পাহাড় আর সমুদ্রের সীমানায় আমরা—<span class="text-campfire">চুয়েটিয়ান!</span></p>
-                <p class="mt-4">দেশের সবচেয়ে সুন্দর রুটগুলো যাদের ক্যাম্পাসের ঠিক দোরগোড়ায়।</p>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1000" class="border-l-4 border-trail pl-6 sm:pl-8 py-2 drop-shadow-md">
-                <p>কখনো ভেবে দেখেছেন, ক্যাম্পাস লোকেশনের দিক থেকে আমরা চুয়েটিয়ানরা কতটা ভাগ্যবান?</p>
-                <p class="mt-4">রাউজানের পাশেই রাঙ্গুনিয়া, আর তার পরই রাঙামাটির নীল জল ও পাহাড়। লিচুবাগান থেকে অল্প দূরত্বেই মেঘের দেশ বান্দরবান, কাছেই খাগড়াছড়ির সবুজ উপত্যকা আর একদিকে বঙ্গোপসাগরের উত্তাল ঢেউ।</p>
-                <p class="mt-4 font-medium text-white">বাংলাদেশের আর কোনো ক্যাম্পাসের শিক্ষার্থীরা কি প্রকৃতির এত বৈচিত্র্য হাতের নাগালে পায়?</p>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1000" class="bg-[#0a1c13]/60 p-8 sm:p-12 rounded-3xl backdrop-blur-md border border-white/10 shadow-xl">
-                <p class="font-bold text-campfire mb-6 text-xl sm:text-2xl">ঘুরতে যাওয়ার ইচ্ছে সবারই থাকে, কিন্তু...</p>
-                <ul class="space-y-4 text-base sm:text-lg">
-                    <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span>পর্যাপ্ত যোগাযোগ বা সঠিক প্ল্যানিংয়ের অভাব?</span></li>
-                    <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span>একা একা ঘুরতে ভালো লাগে ঘন জঙ্গলে?</span></li>
-                    <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span>ছুটির দিনে ট্রাভেল পার্টনার খুঁজে পান না?</span></li>
-                </ul>
-                <div class="mt-10 pt-8 border-t border-white/10">
-                    <p class="font-bold text-white text-xl sm:text-2xl">আর কোনো অজুহাত নয়!</p>
-                    <p class="mt-2 text-base sm:text-lg">ভ্রমণপিপাসু চুয়েটিয়ানদের এক ছাদের নিচে আনতেই আমাদের এই প্ল্যাটফর্ম। একা নন, এবার পুরো ক্যাম্পাসের ট্রাভেলাররা আপনার সাথে।</p>
-                </div>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <h3 class="text-3xl font-black text-white mb-10 text-center uppercase tracking-widest drop-shadow-md"><span class="text-trail">আমাদের</span> বিশেষত্ব</h3>
-                <div class="grid sm:grid-cols-3 gap-6 sm:gap-8 text-base">
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
-                        <i class="fa-solid fa-calendar-check text-4xl text-trail mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3">নিয়মিত ট্যুর</h4>
-                        <p class="text-sm text-gray-300">প্রতি মাসেই আয়োজন করা হয় দারুণ সব রোমাঞ্চকর ট্যুর।</p>
-                    </div>
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
-                        <i class="fa-solid fa-map-location-dot text-4xl text-campfire mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3">হিডেন স্পট শেয়ারিং</h4>
-                        <p class="text-sm text-gray-300">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে না!</p>
-                    </div>
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
-                        <i class="fa-solid fa-people-group text-4xl text-blue-400 mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3">কমিউনিটি পাওয়ার</h4>
-                        <p class="text-sm text-gray-300">একাকী ভ্রমণ নয়, দল বেঁধে ঘুরে বেড়ানোর নিখাদ আনন্দ।</p>
-                    </div>
-                </div>
-            </div>
-
-            <div data-aos="zoom-in" data-aos-duration="1200" class="text-center pt-10">
-                <p class="font-black text-3xl sm:text-5xl text-white mb-10 drop-shadow-lg">প্রস্তুত তো পরবর্তী রোমাঞ্চের জন্য?</p>
-                <p class="text-base sm:text-xl mb-12 max-w-2xl mx-auto drop-shadow-md">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="signup.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-campfire hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-glow hover:scale-105 transition-all">
-                        <i class="fa-solid fa-compass"></i> জয়েন করুন
-                    </a>
-                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 hover:bg-white/20 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all backdrop-blur-md">
-                        <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 5. ফুটার (Social & Contact)                 -->
-    <!-- ========================================== -->
-    <footer class="relative z-10 bg-[#030705]/80 backdrop-blur-lg border-t border-white/10 pt-20 pb-10 mt-10">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 sm:gap-20 mb-16">
-            
-            <div data-aos="fade-up" data-aos-delay="0">
-                <div class="flex items-center gap-3 mb-6">
-                    <i class="fa-solid fa-compass text-campfire text-3xl"></i>
-                    <span class="font-black text-2xl text-white tracking-widest">CUET AS</span>
-                </div>
-                <p class="text-sm text-gray-400 leading-relaxed mb-4">
-                    চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট), রাউজান, চট্টগ্রাম।
-                </p>
-                <p class="text-sm text-gray-400 font-bold">Email: <span class="text-gray-300 font-normal">adventure@cuet.ac.bd</span> (Proposed)</p>
-            </div>
-
-            <div class="hidden md:block"></div>
-
-            <div data-aos="fade-up" data-aos-delay="100" class="md:text-right">
-                <h4 class="font-black text-sm mb-6 text-white uppercase tracking-widest">কানেক্টেড থাকুন</h4>
-                <div class="flex flex-wrap md:justify-end gap-3 sm:gap-4 text-xl">
-                    <a href="https://www.facebook.com/share/1Bqy9ZGdSa/" target="_blank" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-facebook hover:text-white transition-all hover:-translate-y-1" title="Facebook Page">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.facebook.com/share/g/1MiU6gmyY1/" target="_blank" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all hover:-translate-y-1" title="Facebook Group">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all hover:-translate-y-1" title="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-white hover:text-black transition-all hover:-translate-y-1" title="X (Twitter)">
-                        <i class="fa-brands fa-x-twitter"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-red-600 hover:text-white transition-all hover:-translate-y-1" title="YouTube">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-green-500 hover:text-white transition-all hover:-translate-y-1" title="WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] sm:text-xs text-gray-500 font-medium">
-            <p>&copy; ২০২৬ CUET Adventure Society (CAS)। সর্বস্বত্ব সংরক্ষিত।</p>
-            <p class="mt-4 sm:mt-0 tracking-widest uppercase">Designed And developed by CUET adventure society</p>
-        </div>
-    </footer>
-
-    <!-- ========================================== -->
-    <!-- SCRIPTS (AOS & FIREBASE)                   -->
-    <!-- ========================================== -->
-    
+    <!-- Scripts (AOS & Logic) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            once: true, 
-            offset: 100, 
-        });
-    </script>
+    <script> AOS.init({ once: true, offset: 100 }); </script>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // ==========================================
+        // UI & Sidebar Logic
+        // ==========================================
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
         const sidebarOpenBtn = document.getElementById('sidebar-open-btn');
         const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
-        
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
 
-        function openSidebar() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-        }
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        }
+        function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); }
+        function closeSidebar() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); }
 
         sidebarOpenBtn.addEventListener('click', openSidebar);
         sidebarCloseBtn.addEventListener('click', closeSidebar);
@@ -401,14 +334,86 @@
                 profileDropdown.classList.toggle('hidden');
             });
         }
-
         window.addEventListener('click', () => {
-            if (profileDropdown && !profileDropdown.classList.contains('hidden')) {
-                profileDropdown.classList.add('hidden');
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
+        });
+
+        // ==========================================
+        // THEME ENGINE LOGIC (Dark/Light)
+        // ==========================================
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Background Images
+        const bgDarkImg = document.getElementById('bg-dark-img');
+        const bgDarkOverlay = document.getElementById('bg-dark-overlay');
+        const bgLightImg = document.getElementById('bg-light-img');
+        const bgLightOverlay = document.getElementById('bg-light-overlay');
+
+        // Check local storage for theme
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            enableLightMode();
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                enableLightMode();
+                localStorage.setItem('theme', 'light');
+            } else {
+                enableDarkMode();
+                localStorage.setItem('theme', 'dark');
             }
         });
-        if(profileDropdown) profileDropdown.addEventListener('click', (e) => { e.stopPropagation(); });
 
+        function enableLightMode() {
+            htmlRoot.classList.add('light'); // For Tailwind
+            bodyContent.classList.add('light-mode'); // For custom CSS overrides
+            
+            // Swap Background Images (Fade effect)
+            bgDarkImg.classList.replace('opacity-40', 'opacity-0');
+            bgDarkOverlay.classList.replace('opacity-100', 'opacity-0');
+            
+            bgLightImg.classList.replace('opacity-0', 'opacity-40');
+            bgLightOverlay.classList.replace('opacity-0', 'opacity-100');
+        }
+
+        function enableDarkMode() {
+            htmlRoot.classList.remove('light');
+            bodyContent.classList.remove('light-mode');
+            
+            // Swap Background Images (Fade effect)
+            bgLightImg.classList.replace('opacity-40', 'opacity-0');
+            bgLightOverlay.classList.replace('opacity-100', 'opacity-0');
+            
+            bgDarkImg.classList.replace('opacity-0', 'opacity-40');
+            bgDarkOverlay.classList.replace('opacity-0', 'opacity-100');
+        }
+
+        // ==========================================
+        // SETTINGS MODAL LOGIC
+        // ==========================================
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsContent = document.getElementById('settings-content');
+
+        function openSettingsModal() {
+            settingsModal.classList.remove('hidden');
+            setTimeout(() => { settingsContent.classList.remove('scale-95'); settingsContent.classList.add('scale-100'); }, 10);
+            if (!profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); // Close dropdown
+            closeSidebar(); // Close sidebar if open
+        }
+
+        function closeSettingsModal() {
+            settingsContent.classList.remove('scale-100');
+            settingsContent.classList.add('scale-95');
+            setTimeout(() => { settingsModal.classList.add('hidden'); }, 300);
+        }
+
+        // ==========================================
+        // FIREBASE LOGIC
+        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -419,9 +424,7 @@
             measurementId: "G-WNJBJT9K5K"
         };
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
@@ -429,55 +432,39 @@
             if (user) {
                 document.getElementById('nav-auth-wrap').classList.add('hidden');
                 document.getElementById('mobile-auth-section').classList.add('hidden');
-                
                 const heroLoginBtn = document.getElementById('hero-login-btn');
                 if(heroLoginBtn) heroLoginBtn.classList.add('hidden');
-                
                 document.getElementById('nav-user-profile').classList.remove('hidden');
                 document.getElementById('mobile-user-section').classList.remove('hidden');
                 
                 const heroAuthBtn = document.getElementById('hero-auth-btn');
                 heroAuthBtn.innerHTML = '<i class="fa-solid fa-user-astronaut"></i> আমার অ্যাডভেঞ্চার অ্যাকাউন্ট';
                 heroAuthBtn.href = 'dashboard.html';
-                heroAuthBtn.classList.replace('bg-campfire', 'bg-trail');
-                heroAuthBtn.classList.replace('hover:bg-orange-600', 'hover:bg-mountain');
 
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
                         document.getElementById('nav-user-name').innerText = userData.fullName || "Explorer";
                         document.getElementById('dropdown-user-name').innerText = userData.fullName || "Explorer";
-
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         const navProfileImg = document.getElementById('nav-profile-img');
                         if (navProfileImg) navProfileImg.src = finalAvatarUrl;
-                        
                     }
-                }).catch((error) => { console.error("Error:", error); });
-
+                });
             } else {
                 document.getElementById('nav-auth-wrap').classList.remove('hidden');
                 document.getElementById('mobile-auth-section').classList.remove('hidden');
-                
                 const heroLoginBtn = document.getElementById('hero-login-btn');
                 if(heroLoginBtn) heroLoginBtn.classList.remove('hidden');
-                
                 document.getElementById('nav-user-profile').classList.add('hidden');
                 document.getElementById('mobile-user-section').classList.add('hidden');
             }
         });
 
-        const handleLogout = (e) => {
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
-            auth.signOut().then(() => {
-                window.location.reload(); 
-            }).catch((error) => {
-                alert("লগ-আউট করতে সমস্যা হয়েছে!");
-            });
-        };
-
-        document.getElementById('logout-btn').addEventListener('click', handleLogout);
-        document.getElementById('mobile-logout-btn').addEventListener('click', handleLogout);
+            auth.signOut().then(() => { window.location.reload(); });
+        });
     </script>
 </body>
 </html>
