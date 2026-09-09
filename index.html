@@ -26,7 +26,6 @@
                     }
                 }
             },
-            // NEW: Plugin to activate light-mode specific classes easily
             plugins: [
                 tailwind.plugin(function({ addVariant }) {
                     addVariant('light-mode', '.light-mode &');
@@ -62,7 +61,6 @@
             animation: pulseGlowBlue 4s ease-in-out infinite;
         }
 
-        /* NEW: Disable Glow in Light Mode for readability */
         .light-mode .text-glow-futuristic {
             animation: none !important;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
@@ -81,13 +79,12 @@
     <!-- DYNAMIC BACKGROUND (PARALLAX)              -->
     <!-- ========================================== -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-        <!-- Dark Mode Background -->
-        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <!-- Dark Mode Background (Opacity and Brightness slightly increased) -->
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-50 scale-105 filter brightness-75 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95 transition-opacity duration-1000"></div>
 
-        <!-- NEW: Light Mode Background (Dense Foggy Forest) -->
+        <!-- Light Mode Background -->
         <img id="bg-light-img" src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&q=80&w=1920" alt="Dense Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <!-- Stronger white gradient for text readability -->
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
@@ -201,7 +198,7 @@
                 <a href="dashboard.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-user"></i> <span data-i18n="nav_profile">আমার প্রোফাইল</span>
                 </a>
-                <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-500 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
+                <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="nav_logout">লগ-আউট</span>
                 </a>
             </div>
@@ -546,7 +543,7 @@
         function enableLightMode() {
             htmlRoot.classList.add('light'); 
             bodyContent.classList.add('light-mode'); 
-            bgDarkImg.classList.replace('opacity-40', 'opacity-0');
+            bgDarkImg.classList.replace('opacity-50', 'opacity-0');
             bgDarkOverlay.classList.replace('opacity-100', 'opacity-0');
             bgLightImg.classList.replace('opacity-0', 'opacity-40');
             bgLightOverlay.classList.replace('opacity-0', 'opacity-100');
@@ -557,7 +554,7 @@
             bodyContent.classList.remove('light-mode');
             bgLightImg.classList.replace('opacity-40', 'opacity-0');
             bgLightOverlay.classList.replace('opacity-100', 'opacity-0');
-            bgDarkImg.classList.replace('opacity-0', 'opacity-40');
+            bgDarkImg.classList.replace('opacity-0', 'opacity-50');
             bgDarkOverlay.classList.replace('opacity-0', 'opacity-100');
         }
 
