@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn" class="scroll-smooth">
+<html lang="bn" class="scroll-smooth" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class', 
             theme: {
                 extend: {
                     colors: {
@@ -15,6 +16,9 @@
                         moss: '#0a1c13',
                         trail: '#2d6a4f',
                         campfire: '#e76f51',
+                        mistBg: '#e2e8f0', 
+                        mistPanel: '#f8fafc',
+                        mistText: '#1e293b'
                     },
                     boxShadow: {
                         'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
@@ -31,7 +35,7 @@
 
     <style>
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050b08; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
         ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
 
@@ -40,76 +44,105 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
         
         .glass-dark {
             background: rgba(5, 11, 8, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .light-mode .glass-dark {
+            background: rgba(248, 250, 252, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
         
         .data-box {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .light-mode .data-box {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom Toggle Switch CSS */
+        .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
     </style>
 </head>
 
-<body class="bg-darkForest text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden">
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
 
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="w-full h-full object-cover opacity-10 filter brightness-50 contrast-125">
-        <div class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90"></div>
+    <!-- ========================================== -->
+    <!-- DYNAMIC BACKGROUND (PARALLAX)              -->
+    <!-- ========================================== -->
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        
         <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[120px] animate-[pulse_8s_ease-in-out_infinite]"></div>
     </div>
 
     <!-- 1. ইউনিভার্সাল সাইডবার (FIXED) -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
-    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss border-r border-white/5 shadow-2xl flex flex-col h-full overflow-y-auto">
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
         
-        <div class="p-6 flex justify-between items-center border-b border-white/5">
-            <span class="font-black text-xl tracking-widest text-white"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
-            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white text-2xl transition-colors">
+        <div class="p-6 flex justify-between items-center border-b border-white/5 light-mode:border-gray-200">
+            <span class="font-black text-xl tracking-widest text-white light-mode:text-black"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
+            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white light-mode:hover:text-black text-2xl transition-colors">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <div class="px-6 py-8 flex-grow space-y-2">
-            <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4">আমাদের কার্যক্রম</p>
+        <div class="px-6 py-8 flex-grow space-y-2 text-gray-300 light-mode:text-gray-700">
+            <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4" data-i18n="sidebar_activities">আমাদের কার্যক্রম</p>
             
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
-                <span class="font-bold text-sm">আপকামিং ইভেন্ট</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_upcoming">আপকামিং ইভেন্ট</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <span class="font-bold text-sm">পূর্ববর্তী ইভেন্ট</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_past">পূর্ববর্তী ইভেন্ট</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
-                <span class="font-bold text-sm">অ্যাডভেঞ্চারের গল্প</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
-                <span class="font-bold text-sm">অ্যাডভেঞ্চার স্টোর</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
-                <span class="font-bold text-sm">বিগিনার গাইড</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_guide">বিগিনার গাইড</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 hover:text-white transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
-                <span class="font-bold text-sm">নেপথ্যে যারা</span>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_crew">নেপথ্যে যারা</span>
             </a>
+
+            <!-- SETTINGS BUTTON IN SIDEBAR -->
+            <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
+            <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gear"></i></div>
+                <span class="font-bold text-sm" data-i18n="nav_settings">সেটিংস</span>
+            </button>
         </div>
 
-        <!-- Dashboard Specific Sidebar Footer -->
-        <div class="p-6 border-t border-white/5 glass-dark space-y-3">
+        <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark space-y-3">
             <a href="index.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
-                <i class="fa-solid fa-house"></i> হোমপেজে ফিরে যান
+                <i class="fa-solid fa-house"></i> <span data-i18n="sidebar_home">হোমপেজে ফিরে যান</span>
             </a>
             <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
-                <i class="fa-solid fa-right-from-bracket"></i> লগ-আউট
+                <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="nav_logout">লগ-আউট</span>
             </a>
         </div>
     </div>
@@ -119,38 +152,41 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center relative z-10">
             
             <div class="flex items-center gap-4">
-                <button id="sidebar-open-btn" class="text-white text-xl hover:text-campfire transition-colors focus:outline-none">
+                <button id="sidebar-open-btn" class="text-white light-mode:text-mistText text-xl hover:text-campfire transition-colors focus:outline-none">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
                 <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity group">
                     <i class="fa-solid fa-compass text-campfire text-2xl group-hover:rotate-45 transition-transform duration-500"></i>
-                    <span class="font-black text-lg tracking-wider hidden sm:block text-gray-100">COMMAND CENTER</span>
+                    <span class="font-black text-lg tracking-wider hidden sm:block text-gray-100 light-mode:text-mistText">COMMAND CENTER</span>
                 </a>
             </div>
             
             <div class="flex items-center gap-4 relative">
-                <div class="text-right hidden sm:block pr-3 border-r border-white/10">
-                    <p id="nav-user-name" class="text-xs font-bold text-gray-200">Loading...</p>
+                <div class="text-right hidden sm:block pr-3 border-r border-white/10 light-mode:border-gray-300">
+                    <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-mistText">Loading...</p>
                     <p class="text-[10px] text-campfire uppercase tracking-widest animate-pulse">Active Explorer</p>
                 </div>
                 
                 <div class="relative">
                     <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow-sm">
-                        <!-- ID added for dynamic nav avatar -->
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
 
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss border border-white/10 rounded-xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right">
-                        <div class="px-4 py-3 border-b border-white/10 sm:hidden">
-                            <p id="dropdown-user-name" class="text-sm font-bold text-gray-200 truncate">Loading...</p>
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300 light-mode:text-gray-700">
+                        <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 sm:hidden">
+                            <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
                             <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Active Explorer</p>
                         </div>
-                        <a href="edit-profile.html" class="block px-4 py-2.5 text-sm text-gray-400 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-2">
-                            <i class="fa-solid fa-user-pen w-4 text-center"></i> এডিট প্রোফাইল
+                        <a href="edit-profile.html" class="block px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-user-pen w-4 text-center"></i> <span data-i18n="dash_edit">এডিট করুন</span>
                         </a>
-                        <div class="border-t border-white/10 my-1"></div>
+                        <!-- SETTINGS BUTTON IN DROPDOWN -->
+                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-2">
+                            <i class="fa-solid fa-gear w-4 text-center text-blue-400"></i> <span data-i18n="nav_settings">সেটিংস</span>
+                        </button>
+                        <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
                         <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-500 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-2">
-                            <i class="fa-solid fa-power-off w-4 text-center"></i> সিস্টেম লগ-আউট
+                            <i class="fa-solid fa-power-off w-4 text-center"></i> <span data-i18n="nav_logout">সিস্টেম লগ-আউট</span>
                         </a>
                     </div>
                 </div>
@@ -164,28 +200,26 @@
         <!-- Left Column -->
         <div class="space-y-6">
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden relative" data-aos="fade-right" data-aos-delay="100">
-                <div class="h-24 bg-gradient-to-r from-moss via-trail/40 to-moss border-b border-white/5"></div>
-                <!-- OVERLAP FIX: Added pt-12 to push text down -->
+                <div class="h-24 bg-gradient-to-r from-moss via-trail/40 to-moss light-mode:from-gray-200 light-mode:via-trail/20 light-mode:to-gray-200 border-b border-white/5 light-mode:border-gray-200"></div>
                 <div class="px-6 pb-6 relative pt-12"> 
-                    <div class="w-20 h-20 rounded-2xl border-2 border-darkForest shadow-glow overflow-hidden bg-moss absolute -top-10 left-6">
-                        <!-- ID added for dynamic dashboard avatar -->
+                    <div class="w-20 h-20 rounded-2xl border-2 border-darkForest light-mode:border-white shadow-glow overflow-hidden bg-moss absolute -top-10 left-6">
                         <img id="dash-profile-img" src="https://ui-avatars.com/api/?name=User&background=0a1c13&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     
                     <div class="mt-4">
-                        <h2 id="display-name" class="text-2xl font-black text-white drop-shadow-md leading-tight">Loading...</h2>
-                        <div class="flex items-center gap-2 mt-2 text-sm text-gray-400 font-medium">
+                        <h2 id="display-name" class="text-2xl font-black text-white light-mode:text-black drop-shadow-md leading-tight">Loading...</h2>
+                        <div class="flex items-center gap-2 mt-2 text-sm text-gray-400 light-mode:text-gray-600 font-medium">
                             <i class="fa-solid fa-building-user text-trail"></i>
                             <span id="display-hall">Loading...</span>
                         </div>
-                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-400 font-medium">
+                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-400 light-mode:text-gray-600 font-medium">
                             <i class="fa-solid fa-fingerprint text-trail"></i>
-                            ID: <span id="display-id" class="text-gray-300 font-bold tracking-widest">...</span>
+                            ID: <span id="display-id" class="text-gray-300 light-mode:text-gray-800 font-bold tracking-widest">...</span>
                         </div>
                         
-                        <div class="mt-5 pt-4 border-t border-white/10 flex gap-2">
+                        <div class="mt-5 pt-4 border-t border-white/10 light-mode:border-gray-200 flex gap-2">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
-                                <i class="fa-solid fa-shield-check"></i> Identity Verified
+                                <i class="fa-solid fa-shield-check"></i> <span data-i18n="dash_verified">Identity Verified</span>
                             </span>
                         </div>
                     </div>
@@ -194,29 +228,29 @@
 
             <!-- Vital Info Card -->
             <div class="glass-panel rounded-2xl shadow-xl p-6" data-aos="fade-right" data-aos-delay="200">
-                <div class="flex justify-between items-center mb-5 border-b border-white/10 pb-3">
-                    <h3 class="text-xs font-bold tracking-widest text-gray-500 uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-microchip text-campfire"></i> ট্যাকটিক্যাল ডেটা
+                <div class="flex justify-between items-center mb-5 border-b border-white/10 light-mode:border-gray-200 pb-3">
+                    <h3 class="text-xs font-bold tracking-widest text-gray-500 light-mode:text-gray-600 uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-campfire"></i> <span data-i18n="dash_tactical">ট্যাকটিক্যাল ডেটা</span>
                     </h3>
-                    <a href="edit-profile.html" class="text-xs font-bold text-trail hover:text-white transition-colors">এডিট করুন</a>
+                    <a href="edit-profile.html" class="text-xs font-bold text-trail hover:text-white light-mode:hover:text-black transition-colors" data-i18n="dash_edit">এডিট করুন</a>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="p-3 data-box rounded-xl hover:border-campfire/30 transition-colors">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Blood Group</p>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 light-mode:text-gray-500 mb-1" data-i18n="dash_blood">Blood Group</p>
                         <p class="font-black text-red-500 text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
                             <i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span>
                         </p>
                     </div>
                     <div class="p-3 data-box rounded-xl hover:border-trail/50 transition-colors">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Combat Gear Size</p>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 light-mode:text-gray-500 mb-1" data-i18n="dash_gear">Combat Gear Size</p>
                         <p class="font-black text-trail text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(45,106,79,0.5)]">
                             <i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span>
                         </p>
                     </div>
-                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-white/20 transition-colors">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">SOS Contact</p>
-                        <p class="font-black text-gray-300 tracking-wider flex items-center gap-2">
+                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-white/20 light-mode:hover:border-gray-300 transition-colors">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 light-mode:text-gray-500 mb-1" data-i18n="dash_sos">SOS Contact</p>
+                        <p class="font-black text-gray-300 light-mode:text-gray-800 tracking-wider flex items-center gap-2">
                             <i class="fa-solid fa-satellite-dish text-blue-400 animate-pulse"></i> <span id="display-emergency">...</span>
                         </p>
                     </div>
@@ -230,43 +264,94 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
                     <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
-                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
+                    <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md">00</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat1">Total Treks</p>
                 </div>
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
                     <div class="w-10 h-10 rounded-full bg-campfire/20 text-campfire flex items-center justify-center text-lg mb-2 group-hover:shadow-glow transition-shadow"><i class="fa-solid fa-fire"></i></div>
-                    <p class="text-3xl font-black text-white drop-shadow-md">00</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
+                    <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md">00</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat2">Nights Camped</p>
                 </div>
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
                     <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
-                    <p class="text-3xl font-black text-white drop-shadow-md">00<span class="text-sm font-medium text-gray-500">km</span></p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
+                    <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md">00<span class="text-sm font-medium text-gray-500">km</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat3">Distance</p>
                 </div>
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
                     <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-shadow"><i class="fa-solid fa-shield-halved"></i></div>
-                    <p class="text-3xl font-black text-gray-600">N/A</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Safety Index</p>
+                    <p class="text-3xl font-black text-gray-600 light-mode:text-gray-400">N/A</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat4">Safety Index</p>
                 </div>
             </div>
 
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="500">
-                <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
-                    <h3 class="text-sm font-bold text-white tracking-widest uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-satellite text-campfire"></i> ট্রেইল লগ হিস্ট্রি
+                <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/50">
+                    <h3 class="text-sm font-bold text-white light-mode:text-black tracking-widest uppercase flex items-center gap-2">
+                        <i class="fa-solid fa-satellite text-campfire"></i> <span data-i18n="dash_history">ট্রেইল লগ হিস্ট্রি</span>
                     </h3>
                 </div>
                 
                 <div class="p-12 text-center flex flex-col items-center justify-center">
                     <div class="relative mb-6">
                         <div class="absolute inset-0 bg-campfire/20 rounded-full blur-xl animate-pulse"></div>
-                        <i class="fa-solid fa-compass text-5xl text-gray-600 relative z-10"></i>
+                        <i class="fa-solid fa-compass text-5xl text-gray-600 light-mode:text-gray-400 relative z-10"></i>
                     </div>
-                    <p class="text-sm font-medium text-gray-400 tracking-wide">আপনার ট্র্যাকিং রাডার এখন ফাঁকা।<br>নতুন কোনো ট্রেইলে যুক্ত হলে এখানে ডেটা শো করবে।</p>
-                    <a href="index.html" class="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 text-xs font-bold text-gray-300 hover:bg-white/5 hover:text-campfire transition-colors">
-                        <i class="fa-solid fa-binoculars"></i> এক্সপ্লোর আপকামিং ইভেন্ট
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500 tracking-wide" data-i18n="dash_empty">আপনার ট্র্যাকিং রাডার এখন ফাঁকা।<br>নতুন কোনো ট্রেইলে যুক্ত হলে এখানে ডেটা শো করবে।</p>
+                    <a href="index.html" class="mt-6 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 light-mode:border-gray-300 text-xs font-bold text-gray-300 light-mode:text-gray-700 hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-campfire transition-colors">
+                        <i class="fa-solid fa-binoculars"></i> <span data-i18n="dash_explore">এক্সপ্লোর আপকামিং ইভেন্ট</span>
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SETTINGS MODAL (THEME & LANGUAGE)          -->
+    <!-- ========================================== -->
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
+        
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+            
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
+                </h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Theme Toggle -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_theme">থিম (Theme)</p>
+                        <p class="text-xs text-gray-500" data-i18n="modal_theme_desc">ডার্ক ফরেস্ট বা মিস্ট মোড</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
+                        <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+                    </div>
+                </div>
+
+                <!-- Language Toggle -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
+                        <p class="text-xs text-gray-500" data-i18n="modal_lang_desc">বাংলা অথবা English</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" id="lang-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
+                        <label for="lang-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-blue-500 cursor-pointer"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">
+                    সম্পন্ন
+                </button>
             </div>
         </div>
     </div>
@@ -280,38 +365,154 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Sidebar & Dropdown Logic
+        // ==========================================
+        // 1. I18N DICTIONARY & LANGUAGE ENGINE
+        // ==========================================
+        const translations = {
+            "nav_title": { bn: "CUET AS", en: "CUET AS" },
+            "nav_profile": { bn: "আমার প্রোফাইল", en: "My Profile" },
+            "nav_settings": { bn: "সেটিংস", en: "Settings" },
+            "nav_logout": { bn: "লগ-আউট", en: "Logout" },
+            "sidebar_activities": { bn: "আমাদের কার্যক্রম", en: "OUR ACTIVITIES" },
+            "menu_upcoming": { bn: "আপকামিং ইভেন্ট", en: "Upcoming Events" },
+            "menu_past": { bn: "পূর্ববর্তী ইভেন্ট", en: "Past Events" },
+            "menu_stories": { bn: "অ্যাডভেঞ্চারের গল্প", en: "Adventure Stories" },
+            "menu_store": { bn: "অ্যাডভেঞ্চার স্টোর", en: "Adventure Store" },
+            "menu_guide": { bn: "বিগিনার গাইড", en: "Beginner's Guide" },
+            "menu_crew": { bn: "নেপথ্যে যারা", en: "Behind the Scenes" },
+            "modal_settings": { bn: "সেটিংস", en: "Settings" },
+            "modal_theme": { bn: "থিম (Theme)", en: "Theme" },
+            "modal_theme_desc": { bn: "ডার্ক ফরেস্ট বা মিস্ট মোড", en: "Dark Forest or Mist Mode" },
+            "modal_lang": { bn: "ভাষা (Language)", en: "Language" },
+            "modal_lang_desc": { bn: "বাংলা অথবা English", en: "Bangla or English" },
+            "modal_done": { bn: "সম্পন্ন", en: "Done" },
+            "sidebar_home": { bn: "হোমপেজে ফিরে যান", en: "Back to Home" },
+            "dash_verified": { bn: "Identity Verified", en: "Identity Verified" },
+            "dash_tactical": { bn: "ট্যাকটিক্যাল ডেটা", en: "Tactical Data" },
+            "dash_edit": { bn: "এডিট করুন", en: "Edit" },
+            "dash_blood": { bn: "Blood Group", en: "Blood Group" },
+            "dash_gear": { bn: "Combat Gear Size", en: "Combat Gear Size" },
+            "dash_sos": { bn: "SOS Contact", en: "SOS Contact" },
+            "dash_stat1": { bn: "Total Treks", en: "Total Treks" },
+            "dash_stat2": { bn: "Nights Camped", en: "Nights Camped" },
+            "dash_stat3": { bn: "Distance", en: "Distance" },
+            "dash_stat4": { bn: "Safety Index", en: "Safety Index" },
+            "dash_history": { bn: "ট্রেইল লগ হিস্ট্রি", en: "Trail Log History" },
+            "dash_empty": { bn: "আপনার ট্র্যাকিং রাডার এখন ফাঁকা।<br>নতুন কোনো ট্রেইলে যুক্ত হলে এখানে ডেটা শো করবে।", en: "Your tracking radar is currently empty.<br>Data will appear here when you join a new trail." },
+            "dash_explore": { bn: "এক্সপ্লোর আপকামিং ইভেন্ট", en: "Explore Upcoming Events" }
+        };
+
+        const langToggle = document.getElementById('lang-toggle');
+        let currentLang = localStorage.getItem('lang') || 'bn';
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[key] && translations[key][lang]) {
+                    el.innerHTML = translations[key][lang];
+                }
+            });
+        }
+
+        langToggle.addEventListener('change', function() {
+            currentLang = this.checked ? 'en' : 'bn';
+            localStorage.setItem('lang', currentLang);
+            applyTranslations(currentLang);
+            
+            // FIREBASE SYNC (Language)
+            if (currentUserUid) {
+                db.collection("users").doc(currentUserUid).update({ lang: currentLang }).catch(console.error);
+            }
+        });
+
+        // ==========================================
+        // 2. THEME ENGINE LOGIC (Dark/Light)
+        // ==========================================
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        const bgDarkImg = document.getElementById('bg-dark-img');
+        const bgDarkOverlay = document.getElementById('bg-dark-overlay');
+        const bgLightImg = document.getElementById('bg-light-img');
+        const bgLightOverlay = document.getElementById('bg-light-overlay');
+
+        function enableLightMode() {
+            htmlRoot.classList.add('light'); 
+            bodyContent.classList.add('light-mode'); 
+            bgDarkImg.classList.replace('opacity-10', 'opacity-0');
+            bgDarkOverlay.classList.replace('opacity-100', 'opacity-0');
+            bgLightImg.classList.replace('opacity-0', 'opacity-40');
+            bgLightOverlay.classList.replace('opacity-0', 'opacity-100');
+        }
+
+        function enableDarkMode() {
+            htmlRoot.classList.remove('light');
+            bodyContent.classList.remove('light-mode');
+            bgLightImg.classList.replace('opacity-40', 'opacity-0');
+            bgLightOverlay.classList.replace('opacity-100', 'opacity-0');
+            bgDarkImg.classList.replace('opacity-0', 'opacity-10');
+            bgDarkOverlay.classList.replace('opacity-0', 'opacity-100');
+        }
+
+        themeToggle.addEventListener('change', function() {
+            const newTheme = this.checked ? 'light' : 'dark';
+            if (this.checked) enableLightMode(); else enableDarkMode();
+            localStorage.setItem('theme', newTheme);
+            
+            // FIREBASE SYNC (Theme)
+            if (currentUserUid) {
+                db.collection("users").doc(currentUserUid).update({ theme: newTheme }).catch(console.error);
+            }
+        });
+
+        // ==========================================
+        // UI & Modal Logic
+        // ==========================================
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
         const sidebarOpenBtn = document.getElementById('sidebar-open-btn');
         const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
 
-        function openSidebar() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-        }
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-        }
+        function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); }
+        function closeSidebar() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); }
 
         sidebarOpenBtn.addEventListener('click', openSidebar);
         sidebarCloseBtn.addEventListener('click', closeSidebar);
         sidebarOverlay.addEventListener('click', closeSidebar);
 
-        const profileBtn = document.getElementById('profile-btn');
-        const profileDropdown = document.getElementById('profile-dropdown');
-
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            profileDropdown.classList.toggle('hidden');
-        });
+        if(profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                profileDropdown.classList.toggle('hidden');
+            });
+        }
         window.addEventListener('click', () => {
             if (!profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
         });
         profileDropdown.addEventListener('click', (e) => { e.stopPropagation(); });
 
-        // Firebase Configuration
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsContent = document.getElementById('settings-content');
+
+        function openSettingsModal() {
+            settingsModal.classList.remove('hidden');
+            setTimeout(() => { settingsContent.classList.remove('scale-95'); settingsContent.classList.add('scale-100'); }, 10);
+            if (!profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden'); 
+            closeSidebar(); 
+        }
+
+        function closeSettingsModal() {
+            settingsContent.classList.remove('scale-100');
+            settingsContent.classList.add('scale-95');
+            setTimeout(() => { settingsModal.classList.add('hidden'); }, 300);
+        }
+
+        // ==========================================
+        // FIREBASE LOGIC & SYNC
+        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -325,10 +526,12 @@
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        
+        let currentUserUid = null;
 
-        // Fetch Data & Dynamic Avatar Logic
         auth.onAuthStateChanged((user) => {
             if (user) {
+                currentUserUid = user.uid;
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
@@ -342,11 +545,30 @@
                         document.getElementById('display-tshirt').innerText = userData.tshirtSize || "N/A";
                         document.getElementById('display-emergency').innerText = userData.emergencyContact || "N/A";
 
-                        // AVATAR RENDERING LOGIC
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
-                        
                         document.getElementById('nav-profile-img').src = finalAvatarUrl;
                         document.getElementById('dash-profile-img').src = finalAvatarUrl;
+
+                        // CLOUD SYNC: THEME
+                        if(userData.theme) {
+                            localStorage.setItem('theme', userData.theme);
+                            if(userData.theme === 'light') { enableLightMode(); themeToggle.checked = true; }
+                            else { enableDarkMode(); themeToggle.checked = false; }
+                        } else {
+                            const localTheme = localStorage.getItem('theme');
+                            if (localTheme === 'light') { enableLightMode(); themeToggle.checked = true; }
+                        }
+
+                        // CLOUD SYNC: LANGUAGE
+                        if(userData.lang) {
+                            localStorage.setItem('lang', userData.lang);
+                            currentLang = userData.lang;
+                            langToggle.checked = (userData.lang === 'en');
+                            applyTranslations(currentLang);
+                        } else {
+                            langToggle.checked = (currentLang === 'en');
+                            applyTranslations(currentLang);
+                        }
 
                     } else {
                         window.location.href = "signup.html";
