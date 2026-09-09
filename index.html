@@ -25,7 +25,13 @@
                         'glow': '0 0 20px rgba(231, 111, 81, 0.3)',
                     }
                 }
-            }
+            },
+            // NEW: Plugin to activate light-mode specific classes easily
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
         }
     </script>
     
@@ -44,9 +50,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .light-mode .glass-dark {
-            background: rgba(248, 250, 252, 0.7);
+            background: rgba(248, 250, 252, 0.85);
             border: 1px solid rgba(0, 0, 0, 0.1);
-            color: #1e293b;
         }
 
         @keyframes pulseGlowBlue {
@@ -56,6 +61,14 @@
         .text-glow-futuristic {
             animation: pulseGlowBlue 4s ease-in-out infinite;
         }
+
+        /* NEW: Disable Glow in Light Mode for readability */
+        .light-mode .text-glow-futuristic {
+            animation: none !important;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+            color: #0f172a !important; 
+        }
+        .light-mode .bg-campfire { color: #ffffff !important; }
 
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
@@ -68,11 +81,14 @@
     <!-- DYNAMIC BACKGROUND (PARALLAX)              -->
     <!-- ========================================== -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <!-- Dark Mode Background -->
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95 transition-opacity duration-1000"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/70 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <!-- NEW: Light Mode Background (Dense Foggy Forest) -->
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&q=80&w=1920" alt="Dense Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
+        <!-- Stronger white gradient for text readability -->
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
     <!-- ========================================== -->
@@ -82,30 +98,28 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
             
             <div class="flex items-center gap-4 sm:gap-6">
-                <button id="sidebar-open-btn" class="text-white light-mode:text-mistText text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
+                <button id="sidebar-open-btn" class="text-white light-mode:text-gray-800 text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
                 
                 <a href="#" class="flex items-center gap-2 sm:gap-3 group">
                     <i class="fa-solid fa-compass text-campfire text-2xl sm:text-3xl group-hover:rotate-45 transition-transform duration-500"></i>
-                    <span class="font-black text-lg sm:text-xl tracking-widest text-white light-mode:text-mistText drop-shadow-md hidden sm:block" data-i18n="nav_title">CUET AS</span>
+                    <span class="font-black text-lg sm:text-xl tracking-widest text-white light-mode:text-gray-900 drop-shadow-md hidden sm:block" data-i18n="nav_title">CUET AS</span>
                 </a>
             </div>
 
             <div class="flex items-center gap-4 relative">
                 
-                <!-- State 1: Logged Out -->
                 <div id="nav-auth-wrap" class="flex items-center gap-4">
-                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 light-mode:text-gray-700 hover:text-white light-mode:hover:text-black transition-colors border-b border-transparent hover:border-white pb-0.5" data-i18n="nav_login">লগইন</a>
-                    <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire/90 hover:bg-campfire text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-105">
+                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 light-mode:text-gray-800 hover:text-white light-mode:hover:text-black transition-colors border-b border-transparent hover:border-white pb-0.5" data-i18n="nav_login">লগইন</a>
+                    <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm tracking-wide shadow-glow transition-all hover:scale-105">
                         <i class="fa-solid fa-fire"></i> <span data-i18n="nav_create_acc">অ্যাকাউন্ট খুলুন</span>
                     </a>
                 </div>
 
-                <!-- State 2: Logged In -->
                 <div id="nav-user-profile" class="hidden flex items-center gap-3 sm:gap-4">
-                    <div class="text-right hidden md:block pr-4 border-r border-white/10 light-mode:border-black/10">
-                        <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-mistText">Loading...</p>
+                    <div class="text-right hidden md:block pr-4 border-r border-white/10 light-mode:border-gray-400">
+                        <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-gray-900">Loading...</p>
                         <p class="text-[10px] text-campfire uppercase tracking-widest">Explorer</p>
                     </div>
                     
@@ -165,18 +179,6 @@
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
-                <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
-                <span class="font-bold text-sm" data-i18n="menu_guide">বিগিনার গাইড</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
-                <span class="font-bold text-sm" data-i18n="menu_crew">নেপথ্যে যারা</span>
-            </a>
             
             <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
             <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
@@ -190,7 +192,7 @@
                 <a href="signup.html" class="w-full flex items-center justify-center gap-2 bg-campfire hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition-all shadow-glow">
                     <i class="fa-solid fa-user-astronaut"></i> <span data-i18n="nav_create_acc">অ্যাকাউন্ট খুলুন</span>
                 </a>
-                <a href="login.html" class="w-full flex items-center justify-center gap-2 border border-white/10 light-mode:border-gray-300 text-gray-300 light-mode:text-gray-700 hover:bg-white/5 light-mode:hover:bg-gray-100 py-3 rounded-xl font-bold transition-all">
+                <a href="login.html" class="w-full flex items-center justify-center gap-2 border border-white/10 light-mode:border-gray-400 text-gray-300 light-mode:text-gray-800 hover:bg-white/5 light-mode:hover:bg-gray-100 py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="nav_login">লগইন করুন</span>
                 </a>
             </div>
@@ -199,7 +201,7 @@
                 <a href="dashboard.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-user"></i> <span data-i18n="nav_profile">আমার প্রোফাইল</span>
                 </a>
-                <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
+                <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-500 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
                     <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="nav_logout">লগ-আউট</span>
                 </a>
             </div>
@@ -207,7 +209,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- SETTINGS MODAL (THEME & LANGUAGE)          -->
+    <!-- SETTINGS MODAL                             -->
     <!-- ========================================== -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
@@ -260,18 +262,18 @@
     <!-- ========================================== -->
     <!-- 3. হিরো সেকশন                              -->
     <!-- ========================================== -->
-    <section class="relative min-h-screen flex items-center justify-center text-white light-mode:text-mistText overflow-hidden pt-20">
+    <section class="relative min-h-screen flex items-center justify-center text-white light-mode:text-gray-900 overflow-hidden pt-20">
         
         <div class="relative z-10 text-center px-6 max-w-5xl mx-auto" data-aos="zoom-out" data-aos-duration="1500">
-            <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse bg-black/20 light-mode:bg-white/50">
+            <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 light-mode:border-campfire/60 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse bg-black/20 light-mode:bg-white/60">
                 <i class="fa-solid fa-fire mr-2"></i> <span data-i18n="hero_badge">২০১৫ সাল থেকে পথচলা</span>
             </div>
             
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-white light-mode:text-black text-glow-futuristic" data-i18n="hero_title">
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tighter mb-8 text-glow-futuristic" data-i18n="hero_title">
                 চুয়েট অ্যাডভেঞ্চার <br>সোসাইটি
             </h1>
             
-            <p class="text-lg sm:text-2xl text-gray-300 light-mode:text-gray-700 font-light mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md" data-i18n="hero_desc">
+            <p class="text-lg sm:text-2xl text-gray-300 light-mode:text-gray-700 font-medium mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md" data-i18n="hero_desc">
                 পাহাড়ের গহীনে, মেঘের চূড়ায় কিংবা অরণ্যের গভীরে—চুয়েটিয়ানদের পদচারণায় জেগে উঠুক নতুন ট্রেইল।
             </p>
             
@@ -280,81 +282,81 @@
                     <i id="hero-auth-icon" class="fa-solid fa-shoe-prints"></i> <span id="hero-auth-text" data-i18n="hero_explore">এক্সপ্লোর শুরু করুন</span>
                 </a>
                 
-                <a href="login.html" id="hero-login-btn" class="w-full sm:w-auto bg-white/5 light-mode:bg-white/50 hover:bg-white/10 light-mode:hover:bg-white border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black px-8 py-4 sm:py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 text-lg sm:text-xl backdrop-blur-sm hover:-translate-y-1">
+                <a href="login.html" id="hero-login-btn" class="w-full sm:w-auto bg-white/5 light-mode:bg-white/80 hover:bg-white/10 light-mode:hover:bg-white border border-white/10 light-mode:border-gray-400 text-white light-mode:text-gray-900 px-8 py-4 sm:py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 text-lg sm:text-xl backdrop-blur-sm hover:-translate-y-1 shadow-lg">
                     <i class="fa-solid fa-right-to-bracket text-gray-400 light-mode:text-gray-600"></i> <span data-i18n="hero_login">লগইন</span>
                 </a>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 z-10 text-white light-mode:text-black">
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 z-10 text-white light-mode:text-gray-800">
             <i class="fa-solid fa-angles-down text-2xl"></i>
         </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- 4. স্টোরিটেলিং সেকশন (Immersive Narrative)  -->
+    <!-- 4. স্টোরিটেলিং সেকশন                        -->
     <!-- ========================================== -->
     <section class="py-24 sm:py-32 max-w-4xl mx-auto px-6 relative z-10">
         <div class="absolute top-40 left-0 w-72 h-72 bg-trail/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-40 right-0 w-96 h-96 bg-campfire/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div class="space-y-16 sm:space-y-24 text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose text-gray-200 font-light relative z-10">
+        <div class="space-y-16 sm:space-y-24 text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose text-gray-200 light-mode:text-gray-800 font-light relative z-10">
             
             <div data-aos="fade-up" data-aos-duration="1000" class="text-center drop-shadow-md">
-                <i class="fa-solid fa-quote-left text-4xl text-white/20 mb-6"></i>
-                <p class="font-bold text-white text-2xl sm:text-4xl leading-tight" data-i18n="story_q1">পাহাড় আর সমুদ্রের সীমানায় আমরা—<span class="text-campfire">চুয়েটিয়ান!</span></p>
-                <p class="mt-4" data-i18n="story_q2">দেশের সবচেয়ে সুন্দর রুটগুলো যাদের ক্যাম্পাসের ঠিক দোরগোড়ায়।</p>
+                <i class="fa-solid fa-quote-left text-4xl text-white/20 light-mode:text-black/20 mb-6"></i>
+                <p class="font-bold text-white light-mode:text-black text-2xl sm:text-4xl leading-tight" data-i18n="story_q1">পাহাড় আর সমুদ্রের সীমানায় আমরা—<span class="text-campfire">চুয়েটিয়ান!</span></p>
+                <p class="mt-4 font-medium" data-i18n="story_q2">দেশের সবচেয়ে সুন্দর রুটগুলো যাদের ক্যাম্পাসের ঠিক দোরগোড়ায়।</p>
             </div>
 
             <div data-aos="fade-up" data-aos-duration="1000" class="border-l-4 border-trail pl-6 sm:pl-8 py-2 drop-shadow-md">
-                <p data-i18n="story_p1">কখনো ভেবে দেখেছেন, ক্যাম্পাস লোকেশনের দিক থেকে আমরা চুয়েটিয়ানরা কতটা ভাগ্যবান?</p>
+                <p class="font-medium" data-i18n="story_p1">কখনো ভেবে দেখেছেন, ক্যাম্পাস লোকেশনের দিক থেকে আমরা চুয়েটিয়ানরা কতটা ভাগ্যবান?</p>
                 <p class="mt-4" data-i18n="story_p2">রাউজানের পাশেই রাঙ্গুনিয়া, আর তার পরই রাঙামাটির নীল জল ও পাহাড়। লিচুবাগান থেকে অল্প দূরত্বেই মেঘের দেশ বান্দরবান, কাছেই খাগড়াছড়ির সবুজ উপত্যকা আর একদিকে বঙ্গোপসাগরের উত্তাল ঢেউ।</p>
-                <p class="mt-4 font-medium text-white" data-i18n="story_p3">বাংলাদেশের আর কোনো ক্যাম্পাসের শিক্ষার্থীরা কি প্রকৃতির এত বৈচিত্র্য হাতের নাগালে পায়?</p>
+                <p class="mt-4 font-bold text-white light-mode:text-black" data-i18n="story_p3">বাংলাদেশের আর কোনো ক্যাম্পাসের শিক্ষার্থীরা কি প্রকৃতির এত বৈচিত্র্য হাতের নাগালে পায়?</p>
             </div>
 
-            <div data-aos="fade-up" data-aos-duration="1000" class="bg-[#0a1c13]/60 p-8 sm:p-12 rounded-3xl backdrop-blur-md border border-white/10 shadow-xl">
+            <div data-aos="fade-up" data-aos-duration="1000" class="bg-[#0a1c13]/60 light-mode:bg-white/80 p-8 sm:p-12 rounded-3xl backdrop-blur-md border border-white/10 light-mode:border-gray-300 shadow-xl">
                 <p class="font-bold text-campfire mb-6 text-xl sm:text-2xl" data-i18n="story_box_title">ঘুরতে যাওয়ার ইচ্ছে সবারই থাকে, কিন্তু...</p>
-                <ul class="space-y-4 text-base sm:text-lg">
+                <ul class="space-y-4 text-base sm:text-lg font-medium">
                     <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span data-i18n="story_li1">পর্যাপ্ত যোগাযোগ বা সঠিক প্ল্যানিংয়ের অভাব?</span></li>
                     <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span data-i18n="story_li2">একা একা ঘুরতে ভালো লাগে ঘন জঙ্গলে?</span></li>
                     <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span data-i18n="story_li3">ছুটির দিনে ট্রাভেল পার্টনার খুঁজে পান না?</span></li>
                 </ul>
-                <div class="mt-10 pt-8 border-t border-white/10">
-                    <p class="font-bold text-white text-xl sm:text-2xl" data-i18n="story_box_conc1">আর কোনো অজুহাত নয়!</p>
-                    <p class="mt-2 text-base sm:text-lg" data-i18n="story_box_conc2">ভ্রমণপিপাসু চুয়েটিয়ানদের এক ছাদের নিচে আনতেই আমাদের এই প্ল্যাটফর্ম। একা নন, এবার পুরো ক্যাম্পাসের ট্রাভেলাররা আপনার সাথে।</p>
+                <div class="mt-10 pt-8 border-t border-white/10 light-mode:border-gray-300">
+                    <p class="font-bold text-white light-mode:text-black text-xl sm:text-2xl" data-i18n="story_box_conc1">আর কোনো অজুহাত নয়!</p>
+                    <p class="mt-2 text-base sm:text-lg font-medium" data-i18n="story_box_conc2">ভ্রমণপিপাসু চুয়েটিয়ানদের এক ছাদের নিচে আনতেই আমাদের এই প্ল্যাটফর্ম। একা নন, এবার পুরো ক্যাম্পাসের ট্রাভেলাররা আপনার সাথে।</p>
                 </div>
             </div>
 
             <div data-aos="fade-up" data-aos-duration="1000">
-                <h3 class="text-3xl font-black text-white mb-10 text-center uppercase tracking-widest drop-shadow-md" data-i18n="spec_title"><span class="text-trail">আমাদের</span> বিশেষত্ব</h3>
+                <h3 class="text-3xl font-black text-white light-mode:text-black mb-10 text-center uppercase tracking-widest drop-shadow-md" data-i18n="spec_title"><span class="text-trail">আমাদের</span> বিশেষত্ব</h3>
                 <div class="grid sm:grid-cols-3 gap-6 sm:gap-8 text-base">
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <div class="bg-[#0a1c13]/60 light-mode:bg-white/80 p-8 rounded-2xl backdrop-blur-md border border-white/5 light-mode:border-gray-300 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
                         <i class="fa-solid fa-calendar-check text-4xl text-trail mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3" data-i18n="spec_1_title">নিয়মিত ট্যুর</h4>
-                        <p class="text-sm text-gray-300" data-i18n="spec_1_desc">প্রতি মাসেই আয়োজন করা হয় দারুণ সব রোমাঞ্চকর ট্যুর।</p>
+                        <h4 class="font-bold text-white light-mode:text-black mb-3" data-i18n="spec_1_title">নিয়মিত ট্যুর</h4>
+                        <p class="text-sm text-gray-300 light-mode:text-gray-700 font-medium" data-i18n="spec_1_desc">প্রতি মাসেই আয়োজন করা হয় দারুণ সব রোমাঞ্চকর ট্যুর।</p>
                     </div>
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <div class="bg-[#0a1c13]/60 light-mode:bg-white/80 p-8 rounded-2xl backdrop-blur-md border border-white/5 light-mode:border-gray-300 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
                         <i class="fa-solid fa-map-location-dot text-4xl text-campfire mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3" data-i18n="spec_2_title">হিডেন স্পট শেয়ারিং</h4>
-                        <p class="text-sm text-gray-300" data-i18n="spec_2_desc">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে না!</p>
+                        <h4 class="font-bold text-white light-mode:text-black mb-3" data-i18n="spec_2_title">হিডেন স্পট শেয়ারিং</h4>
+                        <p class="text-sm text-gray-300 light-mode:text-gray-700 font-medium" data-i18n="spec_2_desc">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে না!</p>
                     </div>
-                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <div class="bg-[#0a1c13]/60 light-mode:bg-white/80 p-8 rounded-2xl backdrop-blur-md border border-white/5 light-mode:border-gray-300 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
                         <i class="fa-solid fa-people-group text-4xl text-blue-400 mb-6 drop-shadow-md"></i>
-                        <h4 class="font-bold text-white mb-3" data-i18n="spec_3_title">কমিউনিটি পাওয়ার</h4>
-                        <p class="text-sm text-gray-300" data-i18n="spec_3_desc">একাকী ভ্রমণ নয়, দল বেঁধে ঘুরে বেড়ানোর নিখাদ আনন্দ।</p>
+                        <h4 class="font-bold text-white light-mode:text-black mb-3" data-i18n="spec_3_title">কমিউনিটি পাওয়ার</h4>
+                        <p class="text-sm text-gray-300 light-mode:text-gray-700 font-medium" data-i18n="spec_3_desc">একাকী ভ্রমণ নয়, দল বেঁধে ঘুরে বেড়ানোর নিখাদ আনন্দ।</p>
                     </div>
                 </div>
             </div>
 
             <div data-aos="zoom-in" data-aos-duration="1200" class="text-center pt-10">
-                <p class="font-black text-3xl sm:text-5xl text-white mb-10 drop-shadow-lg" data-i18n="call_title">প্রস্তুত তো পরবর্তী রোমাঞ্চের জন্য?</p>
-                <p class="text-base sm:text-xl mb-12 max-w-2xl mx-auto drop-shadow-md" data-i18n="call_desc">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
+                <p class="font-black text-3xl sm:text-5xl text-white light-mode:text-black mb-10 drop-shadow-lg" data-i18n="call_title">প্রস্তুত তো পরবর্তী রোমাঞ্চের জন্য?</p>
+                <p class="text-base sm:text-xl font-medium mb-12 max-w-2xl mx-auto drop-shadow-md" data-i18n="call_desc">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="signup.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-campfire hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-glow hover:scale-105 transition-all">
                         <i class="fa-solid fa-compass"></i> <span data-i18n="call_join">জয়েন করুন</span>
                     </a>
-                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 hover:bg-white/20 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all backdrop-blur-md">
+                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/10 light-mode:bg-white/80 border border-white/20 light-mode:border-gray-400 hover:bg-white/20 light-mode:hover:bg-white text-white light-mode:text-gray-900 px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all backdrop-blur-md shadow-lg">
                         <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="call_login">লগইন করুন</span>
                     </a>
                 </div>
@@ -366,21 +368,21 @@
     <!-- ========================================== -->
     <!-- 5. ফুটার                                   -->
     <!-- ========================================== -->
-    <footer class="relative z-10 bg-[#030705]/80 backdrop-blur-lg border-t border-white/10 pt-20 pb-10 mt-10">
+    <footer class="relative z-10 bg-[#030705]/80 light-mode:bg-white/95 backdrop-blur-lg border-t border-white/10 light-mode:border-gray-200 pt-20 pb-10 mt-10">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 sm:gap-20 mb-16">
             <div data-aos="fade-up" data-aos-delay="0">
                 <div class="flex items-center gap-3 mb-6">
                     <i class="fa-solid fa-compass text-campfire text-3xl"></i>
-                    <span class="font-black text-2xl text-white tracking-widest" data-i18n="nav_title">CUET AS</span>
+                    <span class="font-black text-2xl text-white light-mode:text-black tracking-widest" data-i18n="nav_title">CUET AS</span>
                 </div>
-                <p class="text-sm text-gray-400 leading-relaxed mb-4" data-i18n="footer_addr">
+                <p class="text-sm text-gray-400 light-mode:text-gray-600 leading-relaxed mb-4 font-medium" data-i18n="footer_addr">
                     চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট), রাউজান, চট্টগ্রাম।
                 </p>
-                <p class="text-sm text-gray-400 font-bold">Email: <span class="text-gray-300 font-normal">adventure@cuet.ac.bd</span></p>
+                <p class="text-sm text-gray-400 light-mode:text-gray-600 font-bold">Email: <span class="text-gray-300 light-mode:text-gray-800 font-normal">adventure@cuet.ac.bd</span></p>
             </div>
             <div class="hidden md:block"></div>
             <div data-aos="fade-up" data-aos-delay="100" class="md:text-right">
-                <h4 class="font-black text-sm mb-6 text-white uppercase tracking-widest" data-i18n="footer_conn">কানেক্টেড থাকুন</h4>
+                <h4 class="font-black text-sm mb-6 text-white light-mode:text-black uppercase tracking-widest" data-i18n="footer_conn">কানেক্টেড থাকুন</h4>
                 <div class="flex flex-wrap md:justify-end gap-3 sm:gap-4 text-xl">
                     <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-facebook hover:text-white transition-all hover:-translate-y-1"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="w-12 h-12 rounded-full glass-dark flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all hover:-translate-y-1"><i class="fa-solid fa-users"></i></a>
@@ -389,7 +391,7 @@
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] sm:text-xs text-gray-500 font-medium">
+        <div class="max-w-7xl mx-auto px-6 border-t border-white/10 light-mode:border-gray-200 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] sm:text-xs text-gray-500 light-mode:text-gray-600 font-bold">
             <p data-i18n="footer_copy">&copy; ২০২৬ CUET Adventure Society (CAS)। সর্বস্বত্ব সংরক্ষিত।</p>
             <p class="mt-4 sm:mt-0 tracking-widest uppercase">Designed And developed by CUET adventure society</p>
         </div>
