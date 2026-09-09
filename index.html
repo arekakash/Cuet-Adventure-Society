@@ -63,7 +63,18 @@
     </style>
 </head>
 
-<body class="bg-darkForest text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden">
+<body class="bg-darkForest text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative">
+
+    <!-- ========================================== -->
+    <!-- NEW: GLOBAL FIXED BACKGROUND (PARALLAX)    -->
+    <!-- ========================================== -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" 
+             alt="Dark Forest" 
+             class="w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125">
+        <!-- Gradient from top to bottom: gets darker at the bottom for readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95"></div>
+    </div>
 
     <!-- ========================================== -->
     <!-- 1. ন্যাভিগেশন বার (Dual Menu Layout)       -->
@@ -111,7 +122,6 @@
                                 <p id="dropdown-user-name" class="text-sm font-bold text-white truncate">Loading...</p>
                                 <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Explorer</p>
                             </div>
-                            <!-- CHANGE 1: "আমার ড্যাশবোর্ড" to "আমার প্রোফাইল" -->
                             <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 hover:text-white transition-colors flex items-center gap-3">
                                 <i class="fa-solid fa-user w-5 text-center text-trail"></i> আমার প্রোফাইল
                             </a>
@@ -193,16 +203,10 @@
     <!-- ========================================== -->
     <!-- 3. হিরো সেকশন (The Dark Forest Entry)      -->
     <!-- ========================================== -->
+    <!-- NOTE: Removed the background image from here, as it is now globally fixed -->
     <section class="relative min-h-screen flex items-center justify-center text-white overflow-hidden pt-20">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" 
-                 alt="Dark Forest" 
-                 class="w-full h-full object-cover opacity-40 scale-105 filter brightness-50 contrast-125">
-            <div class="absolute inset-0 bg-gradient-to-t from-darkForest via-darkForest/60 to-transparent"></div>
-        </div>
         
         <div class="relative z-10 text-center px-6 max-w-5xl mx-auto" data-aos="zoom-out" data-aos-duration="1500">
-            <!-- CHANGE 2: "পুনর্জাগরণ • ২০২৬-২০২৭ সেশন" to "২০১৫ সাল থেকে পথচলা" -->
             <div class="inline-block px-5 py-2 rounded-full border border-campfire/30 text-campfire font-bold text-xs sm:text-sm mb-8 tracking-widest backdrop-blur-md shadow-glow animate-pulse">
                 <i class="fa-solid fa-fire mr-2"></i> ২০১৫ সাল থেকে পথচলা
             </div>
@@ -211,7 +215,7 @@
                 চুয়েট অ্যাডভেঞ্চার <br>সোসাইটি
             </h1>
             
-            <p class="text-lg sm:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-lg sm:text-2xl text-gray-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                 পাহাড়ের গহীনে, মেঘের চূড়ায় কিংবা অরণ্যের গভীরে—চুয়েটিয়ানদের পদচারণায় জেগে উঠুক নতুন ট্রেইল।
             </p>
             
@@ -226,7 +230,7 @@
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50 z-10">
             <i class="fa-solid fa-angles-down text-2xl text-white"></i>
         </div>
     </section>
@@ -234,25 +238,25 @@
     <!-- ========================================== -->
     <!-- 4. স্টোরিটেলিং সেকশন (Immersive Narrative)  -->
     <!-- ========================================== -->
-    <section class="py-24 sm:py-32 max-w-4xl mx-auto px-6 relative">
+    <section class="py-24 sm:py-32 max-w-4xl mx-auto px-6 relative z-10">
         <div class="absolute top-40 left-0 w-72 h-72 bg-trail/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-40 right-0 w-96 h-96 bg-campfire/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div class="space-y-16 sm:space-y-24 text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose text-gray-300 font-light relative z-10">
+        <div class="space-y-16 sm:space-y-24 text-lg sm:text-xl md:text-2xl leading-relaxed sm:leading-loose text-gray-200 font-light relative z-10">
             
-            <div data-aos="fade-up" data-aos-duration="1000" class="text-center">
-                <i class="fa-solid fa-quote-left text-4xl text-white/10 mb-6"></i>
+            <div data-aos="fade-up" data-aos-duration="1000" class="text-center drop-shadow-md">
+                <i class="fa-solid fa-quote-left text-4xl text-white/20 mb-6"></i>
                 <p class="font-bold text-white text-2xl sm:text-4xl leading-tight">পাহাড় আর সমুদ্রের সীমানায় আমরা—<span class="text-campfire">চুয়েটিয়ান!</span></p>
                 <p class="mt-4">দেশের সবচেয়ে সুন্দর রুটগুলো যাদের ক্যাম্পাসের ঠিক দোরগোড়ায়।</p>
             </div>
 
-            <div data-aos="fade-up" data-aos-duration="1000" class="border-l-4 border-trail pl-6 sm:pl-8 py-2">
+            <div data-aos="fade-up" data-aos-duration="1000" class="border-l-4 border-trail pl-6 sm:pl-8 py-2 drop-shadow-md">
                 <p>কখনো ভেবে দেখেছেন, ক্যাম্পাস লোকেশনের দিক থেকে আমরা চুয়েটিয়ানরা কতটা ভাগ্যবান?</p>
                 <p class="mt-4">রাউজানের পাশেই রাঙ্গুনিয়া, আর তার পরই রাঙামাটির নীল জল ও পাহাড়। লিচুবাগান থেকে অল্প দূরত্বেই মেঘের দেশ বান্দরবান, কাছেই খাগড়াছড়ির সবুজ উপত্যকা আর একদিকে বঙ্গোপসাগরের উত্তাল ঢেউ।</p>
                 <p class="mt-4 font-medium text-white">বাংলাদেশের আর কোনো ক্যাম্পাসের শিক্ষার্থীরা কি প্রকৃতির এত বৈচিত্র্য হাতের নাগালে পায়?</p>
             </div>
 
-            <div data-aos="fade-up" data-aos-duration="1000" class="bg-white/5 p-8 sm:p-12 rounded-3xl backdrop-blur-sm border border-white/5 shadow-xl">
+            <div data-aos="fade-up" data-aos-duration="1000" class="bg-[#0a1c13]/60 p-8 sm:p-12 rounded-3xl backdrop-blur-md border border-white/10 shadow-xl">
                 <p class="font-bold text-campfire mb-6 text-xl sm:text-2xl">ঘুরতে যাওয়ার ইচ্ছে সবারই থাকে, কিন্তু...</p>
                 <ul class="space-y-4 text-base sm:text-lg">
                     <li class="flex items-start gap-4"><i class="fa-solid fa-circle-xmark text-red-500 mt-1.5 opacity-70"></i> <span>পর্যাপ্ত যোগাযোগ বা সঠিক প্ল্যানিংয়ের অভাব?</span></li>
@@ -266,35 +270,35 @@
             </div>
 
             <div data-aos="fade-up" data-aos-duration="1000">
-                <h3 class="text-3xl font-black text-white mb-10 text-center uppercase tracking-widest"><span class="text-trail">আমাদের</span> বিশেষত্ব</h3>
+                <h3 class="text-3xl font-black text-white mb-10 text-center uppercase tracking-widest drop-shadow-md"><span class="text-trail">আমাদের</span> বিশেষত্ব</h3>
                 <div class="grid sm:grid-cols-3 gap-6 sm:gap-8 text-base">
-                    <div class="glass-dark p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                        <i class="fa-solid fa-calendar-check text-4xl text-trail mb-6"></i>
+                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <i class="fa-solid fa-calendar-check text-4xl text-trail mb-6 drop-shadow-md"></i>
                         <h4 class="font-bold text-white mb-3">নিয়মিত ট্যুর</h4>
-                        <p class="text-sm">প্রতি মাসেই আয়োজন করা হয় দারুণ সব রোমাঞ্চকর ট্যুর।</p>
+                        <p class="text-sm text-gray-300">প্রতি মাসেই আয়োজন করা হয় দারুণ সব রোমাঞ্চকর ট্যুর।</p>
                     </div>
-                    <div class="glass-dark p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                        <i class="fa-solid fa-map-location-dot text-4xl text-campfire mb-6"></i>
+                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <i class="fa-solid fa-map-location-dot text-4xl text-campfire mb-6 drop-shadow-md"></i>
                         <h4 class="font-bold text-white mb-3">হিডেন স্পট শেয়ারিং</h4>
-                        <p class="text-sm">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে পণ্ডিত না!</p>
+                        <p class="text-sm text-gray-300">ক্যাম্পাসের আশপাশের অজানা ঝিরি বা পাহাড় খুঁজে পেলে শেয়ার করুন। সঙ্গী পেতে দেরি হবে না!</p>
                     </div>
-                    <div class="glass-dark p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                        <i class="fa-solid fa-people-group text-4xl text-blue-400 mb-6"></i>
+                    <div class="bg-[#0a1c13]/60 p-8 rounded-2xl backdrop-blur-md border border-white/5 hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <i class="fa-solid fa-people-group text-4xl text-blue-400 mb-6 drop-shadow-md"></i>
                         <h4 class="font-bold text-white mb-3">কমিউনিটি পাওয়ার</h4>
-                        <p class="text-sm">একাকী ভ্রমণ নয়, দল বেঁধে ঘুরে বেড়ানোর নিখাদ আনন্দ।</p>
+                        <p class="text-sm text-gray-300">একাকী ভ্রমণ নয়, দল বেঁধে ঘুরে বেড়ানোর নিখাদ আনন্দ।</p>
                     </div>
                 </div>
             </div>
 
             <div data-aos="zoom-in" data-aos-duration="1200" class="text-center pt-10">
                 <p class="font-black text-3xl sm:text-5xl text-white mb-10 drop-shadow-lg">প্রস্তুত তো পরবর্তী রোমাঞ্চের জন্য?</p>
-                <p class="text-base sm:text-xl mb-12 max-w-2xl mx-auto">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
+                <p class="text-base sm:text-xl mb-12 max-w-2xl mx-auto drop-shadow-md">যুক্ত হোন আমাদের কমিউনিটিতে, অংশ নিন আগামী ট্যুরে এবং উপভোগ করুন বাংলার সেরা প্রাকৃতিক সৌন্দর্য।</p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="signup.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-campfire hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-glow hover:scale-105 transition-all">
                         <i class="fa-solid fa-compass"></i> জয়েন করুন
                     </a>
-                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all">
+                    <a href="login.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 hover:bg-white/20 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all backdrop-blur-md">
                         <i class="fa-solid fa-right-to-bracket"></i> লগইন করুন
                     </a>
                 </div>
@@ -306,7 +310,7 @@
     <!-- ========================================== -->
     <!-- 5. ফুটার (Social & Contact)                 -->
     <!-- ========================================== -->
-    <footer class="bg-[#030705] border-t border-white/5 pt-20 pb-10 mt-10">
+    <footer class="relative z-10 bg-[#030705]/80 backdrop-blur-lg border-t border-white/10 pt-20 pb-10 mt-10">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 sm:gap-20 mb-16">
             
             <div data-aos="fade-up" data-aos-delay="0">
@@ -314,10 +318,10 @@
                     <i class="fa-solid fa-compass text-campfire text-3xl"></i>
                     <span class="font-black text-2xl text-white tracking-widest">CUET AS</span>
                 </div>
-                <p class="text-sm text-gray-500 leading-relaxed mb-4">
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">
                     চট্টগ্রাম প্রকৌশল ও প্রযুক্তি বিশ্ববিদ্যালয় (চুয়েট), রাউজান, চট্টগ্রাম।
                 </p>
-                <p class="text-sm text-gray-500 font-bold">Email: <span class="text-gray-400 font-normal">adventure@cuet.ac.bd</span> (Proposed)</p>
+                <p class="text-sm text-gray-400 font-bold">Email: <span class="text-gray-300 font-normal">adventure@cuet.ac.bd</span> (Proposed)</p>
             </div>
 
             <div class="hidden md:block"></div>
@@ -347,7 +351,7 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] sm:text-xs text-gray-600 font-medium">
+        <div class="max-w-7xl mx-auto px-6 border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] sm:text-xs text-gray-500 font-medium">
             <p>&copy; ২০২৬ CUET Adventure Society (CAS)। সর্বস্বত্ব সংরক্ষিত।</p>
             <p class="mt-4 sm:mt-0 tracking-widest uppercase">Designed And developed by CUET adventure society</p>
         </div>
@@ -432,7 +436,6 @@
                 document.getElementById('nav-user-profile').classList.remove('hidden');
                 document.getElementById('mobile-user-section').classList.remove('hidden');
                 
-                // CHANGE 3: "ড্যাশবোর্ডে প্রবেশ করুন" to "আমার অ্যাডভেঞ্চার অ্যাকাউন্ট"
                 const heroAuthBtn = document.getElementById('hero-auth-btn');
                 heroAuthBtn.innerHTML = '<i class="fa-solid fa-user-astronaut"></i> আমার অ্যাডভেঞ্চার অ্যাকাউন্ট';
                 heroAuthBtn.href = 'dashboard.html';
