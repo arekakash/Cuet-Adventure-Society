@@ -26,7 +26,6 @@
                     }
                 }
             },
-            // NEW: Plugin to activate light-mode specific classes easily
             plugins: [
                 tailwind.plugin(function({ addVariant }) {
                     addVariant('light-mode', '.light-mode &');
@@ -63,7 +62,6 @@
             animation: pulseGlowBlue 4s ease-in-out infinite;
         }
 
-        /* NEW: Disable Glow in Light Mode for readability */
         .light-mode .text-glow-futuristic {
             animation: none !important;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
@@ -78,23 +76,14 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative transition-colors duration-500" id="body-content">
 
-    <!-- ========================================== -->
-    <!-- DYNAMIC BACKGROUND (PARALLAX)              -->
-    <!-- ========================================== -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-        <!-- Dark Mode Background: Opacity changed from 40 to 50, Brightness from 50 to 75 -->
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-50 scale-105 filter brightness-75 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest/40 via-darkForest/80 to-[#030705]/95 transition-opacity duration-1000"></div>
 
-        <!-- Light Mode Background (Dense Foggy Forest) -->
         <img id="bg-light-img" src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&q=80&w=1920" alt="Dense Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <!-- Stronger white gradient for text readability -->
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 1. ন্যাভিগেশন বার                          -->
-    <!-- ========================================== -->
     <nav class="fixed w-full z-40 glass-dark transition-all duration-300 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
             
@@ -151,9 +140,6 @@
         </div>
     </nav>
 
-    <!-- ========================================== -->
-    <!-- 2. সাইডবার (Left Off-canvas Menu)          -->
-    <!-- ========================================== -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
     <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
@@ -177,7 +163,6 @@
                 <span class="font-bold text-sm" data-i18n="menu_past">পূর্ববর্তী ইভেন্ট</span>
             </a>
             
-            <!-- UPDATE: Linked to stories.html -->
             <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
@@ -202,7 +187,6 @@
                 <span class="font-bold text-sm" data-i18n="nav_settings">সেটিংস</span>
             </button>
 
-            <!-- UPDATE: SECRET ADMIN PANEL LINK -->
             <a href="admin.html" id="sidebar-admin-link" class="hidden py-3 px-4 rounded-xl hover:bg-red-500/10 border border-transparent hover:border-red-500/30 text-red-400 transition-all group flex items-center gap-4 mt-2">
                 <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
                 <span class="font-bold text-sm uppercase tracking-widest">Admin Panel</span>
@@ -230,9 +214,6 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- SETTINGS MODAL                             -->
-    <!-- ========================================== -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
         
@@ -248,7 +229,6 @@
             </div>
 
             <div class="space-y-6">
-                <!-- Theme Toggle -->
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_theme">থিম (Theme)</p>
@@ -260,7 +240,6 @@
                     </div>
                 </div>
 
-                <!-- Language Toggle -->
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
@@ -281,9 +260,6 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 3. হিরো সেকশন                              -->
-    <!-- ========================================== -->
     <section class="relative min-h-screen flex items-center justify-center text-white light-mode:text-gray-900 overflow-hidden pt-20">
         
         <div class="relative z-10 text-center px-6 max-w-5xl mx-auto" data-aos="zoom-out" data-aos-duration="1500">
@@ -315,9 +291,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 4. স্টোরিটেলিং সেকশন                        -->
-    <!-- ========================================== -->
     <section class="py-24 sm:py-32 max-w-4xl mx-auto px-6 relative z-10">
         <div class="absolute top-40 left-0 w-72 h-72 bg-trail/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-40 right-0 w-96 h-96 bg-campfire/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -387,9 +360,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 5. ফুটার                                   -->
-    <!-- ========================================== -->
     <footer class="relative z-10 bg-[#030705]/80 light-mode:bg-white/95 backdrop-blur-lg border-t border-white/10 light-mode:border-gray-200 pt-20 pb-10 mt-10">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12 sm:gap-20 mb-16">
             <div data-aos="fade-up" data-aos-delay="0">
@@ -419,7 +389,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script> AOS.init({ once: true, offset: 100 }); </script>
 
