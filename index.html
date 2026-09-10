@@ -176,10 +176,13 @@
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_past">পূর্ববর্তী ইভেন্ট</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+            
+            <!-- UPDATE: Linked to stories.html -->
+            <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
+            
             <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
@@ -198,6 +201,12 @@
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gear"></i></div>
                 <span class="font-bold text-sm" data-i18n="nav_settings">সেটিংস</span>
             </button>
+
+            <!-- UPDATE: SECRET ADMIN PANEL LINK -->
+            <a href="admin.html" id="sidebar-admin-link" class="hidden py-3 px-4 rounded-xl hover:bg-red-500/10 border border-transparent hover:border-red-500/30 text-red-400 transition-all group flex items-center gap-4 mt-2">
+                <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                <span class="font-bold text-sm uppercase tracking-widest">Admin Panel</span>
+            </a>
         </div>
 
         <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark">
@@ -613,11 +622,16 @@
         auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('nav-auth-wrap').classList.add('hidden');
-                document.getElementById('mobile-auth-section').classList.add('hidden');
+                // UPDATE: Use a different method to check mobile auth section since it might be missing
+                const mobileAuthSection = document.getElementById('mobile-auth-section');
+                if(mobileAuthSection) mobileAuthSection.classList.add('hidden');
+                
                 const heroLoginBtn = document.getElementById('hero-login-btn');
                 if(heroLoginBtn) heroLoginBtn.classList.add('hidden');
                 document.getElementById('nav-user-profile').classList.remove('hidden');
-                document.getElementById('mobile-user-section').classList.remove('hidden');
+                
+                const mobileUserSection = document.getElementById('mobile-user-section');
+                if(mobileUserSection) mobileUserSection.classList.remove('hidden');
                 
                 // Update Hero Button for logged in user + translation sync
                 const heroAuthBtn = document.getElementById('hero-auth-btn');
@@ -637,15 +651,25 @@
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         const navProfileImg = document.getElementById('nav-profile-img');
                         if (navProfileImg) navProfileImg.src = finalAvatarUrl;
+
+                        // ADMIN CHECK: Show Admin Panel link in sidebar
+                        if(userData.role === 'admin') {
+                            const adminLink = document.getElementById('sidebar-admin-link');
+                            if(adminLink) adminLink.classList.remove('hidden');
+                        }
                     }
                 });
             } else {
                 document.getElementById('nav-auth-wrap').classList.remove('hidden');
-                document.getElementById('mobile-auth-section').classList.remove('hidden');
+                const mobileAuthSection = document.getElementById('mobile-auth-section');
+                if(mobileAuthSection) mobileAuthSection.classList.remove('hidden');
+                
                 const heroLoginBtn = document.getElementById('hero-login-btn');
                 if(heroLoginBtn) heroLoginBtn.classList.remove('hidden');
                 document.getElementById('nav-user-profile').classList.add('hidden');
-                document.getElementById('mobile-user-section').classList.add('hidden');
+                
+                const mobileUserSection = document.getElementById('mobile-user-section');
+                if(mobileUserSection) mobileUserSection.classList.add('hidden');
             }
         });
 
@@ -653,6 +677,14 @@
             e.preventDefault();
             auth.signOut().then(() => { window.location.reload(); });
         });
+
+        const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+        if(mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                auth.signOut().then(() => { window.location.reload(); });
+            });
+        }
     </script>
 </body>
 </html>
