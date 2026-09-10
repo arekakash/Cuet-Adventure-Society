@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Blog - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51', 
+                        mistBg: '#e2e8f0', 
+                    }
+                }
+            },
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f3f4f6; 
+            transition: all 0.4s;
+        }
+        .glass-input:focus {
+            background: rgba(10, 28, 19, 0.8);
+            border-color: #e76f51;
+            box-shadow: 0 0 15px rgba(231, 111, 81, 0.3);
+            outline: none;
+        }
+
+        .light-mode .glass-input {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+        }
+        .light-mode .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #e76f51;
+        }
+
+        /* Quill Editor Custom Styling */
+        .ql-toolbar.ql-snow { border-color: rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem; }
+        .ql-container.ql-snow { border-color: rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); border-bottom-left-radius: 0.75rem; border-bottom-right-radius: 0.75rem; min-height: 300px; color: #f3f4f6; font-size: 1rem;}
+        .ql-editor img { border-radius: 10px; margin: 10px auto; max-width: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .ql-snow .ql-stroke { stroke: #e5e7eb; }
+        .ql-snow .ql-fill { fill: #e5e7eb; }
+        .ql-snow.ql-toolbar button:hover .ql-stroke, .ql-snow .ql-toolbar button:hover .ql-stroke { stroke: #e76f51; }
+
+        .light-mode .ql-toolbar.ql-snow { border-color: rgba(0,0,0,0.1); background: rgba(255,255,255,0.8); }
+        .light-mode .ql-container.ql-snow { border-color: rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); color: #1e293b; }
+        .light-mode .ql-snow .ql-stroke { stroke: #334155; }
+        .light-mode .ql-snow .ql-fill { fill: #334155; }
+
+        .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative transition-colors duration-500" id="body-content">
+
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+    </div>
+
+    <div class="fixed top-0 w-full z-40 bg-black/40 light-mode:bg-white/60 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <a href="dashboard.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 light-mode:bg-white/50 px-4 py-2 rounded-full">
+                <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_dash">ড্যাশবোর্ড</span>
+            </a>
+            <h2 class="font-black text-white light-mode:text-black tracking-widest hidden sm:block"><i class="fa-solid fa-pen-nib text-campfire"></i> <span data-i18n="header_title">নতুন গল্প লিখুন</span></h2>
+            <button onclick="openSettingsModal()" class="text-gray-400 hover:text-blue-400 transition-colors w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10"><i class="fa-solid fa-gear"></i></button>
+        </div>
+    </div>
+
+    <div class="relative z-10 pt-28 pb-20 max-w-4xl mx-auto px-4 sm:px-6">
+        
+        <form id="blog-form" class="glass-panel rounded-3xl p-6 sm:p-10 shadow-2xl" data-aos="zoom-in">
+            
+            <div class="text-center mb-10 border-b border-white/10 light-mode:border-gray-200 pb-8">
+                <h1 class="text-3xl sm:text-4xl font-black text-white light-mode:text-black tracking-tight mb-2" data-i18n="form_title">আপনার অ্যাডভেঞ্চার শেয়ার করুন</h1>
+                <p class="text-sm text-gray-400 light-mode:text-gray-600" data-i18n="form_subtitle">আপনার জমা দেওয়া লেখাটি অ্যাডমিন প্যানেল থেকে অ্যাপ্রুভ হওয়ার পর পাবলিক ব্লগে দেখা যাবে।</p>
+            </div>
+
+            <div class="space-y-8">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-500 mb-2 uppercase tracking-wider" data-i18n="lbl_cover">কভার ফটো (Cover Photo) *</label>
+                    <div class="relative w-full h-48 sm:h-64 rounded-2xl border-2 border-dashed border-gray-600 light-mode:border-gray-400 overflow-hidden group hover:border-campfire transition-colors cursor-pointer bg-black/20 light-mode:bg-white/50 flex items-center justify-center">
+                        <img id="cover-preview" src="" class="absolute inset-0 w-full h-full object-cover hidden">
+                        <div id="cover-placeholder" class="text-center p-6 relative z-10 pointer-events-none">
+                            <i class="fa-solid fa-image text-4xl text-gray-500 mb-3 group-hover:text-campfire transition-colors"></i>
+                            <p class="text-sm font-bold text-gray-400 light-mode:text-gray-600 group-hover:text-white light-mode:group-hover:text-black" data-i18n="txt_upload_cover">ক্লিক করে কভার ছবি আপলোড করুন</p>
+                        </div>
+                        <input type="file" id="coverPhotoInput" accept="image/*" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-500 mb-2 uppercase tracking-wider" data-i18n="lbl_title">গল্পের শিরোনাম *</label>
+                    <input type="text" id="titleInput" required placeholder="যেমন: মেঘের দেশে তিন দিন..." class="glass-input w-full p-4 rounded-xl text-lg font-bold">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-500 mb-2 uppercase tracking-wider" data-i18n="lbl_excerpt">ছোট্ট সারাংশ (Excerpt) *</label>
+                    <textarea id="excerptInput" required rows="2" maxlength="150" placeholder="গল্পের মূল আকর্ষণটুকু ১-২ লাইনে লিখুন..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-500 mb-2 uppercase tracking-wider" data-i18n="lbl_content">মূল গল্প (মাঝে ছবি দিতে Image আইকনে ক্লিক করুন) *</label>
+                    <div id="editor-container"></div>
+                </div>
+
+                <div class="pt-6 border-t border-white/10 light-mode:border-gray-200">
+                    <h3 class="text-sm font-black text-white light-mode:text-black mb-4 uppercase tracking-widest" data-i18n="lbl_author_info">লেখকের তথ্য</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_name">আপনার নাম *</label>
+                            <input type="text" id="authorName" required class="glass-input w-full p-3 rounded-xl text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_batch">ডিপার্টমেন্ট ও ব্যাচ *</label>
+                            <input type="text" id="authorBatch" required placeholder="Ex: ME '14" class="glass-input w-full p-3 rounded-xl text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক লিংক (ঐচ্ছিক)</label>
+                            <input type="url" id="authorFb" placeholder="https://facebook.com/..." class="glass-input w-full p-3 rounded-xl text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8">
+                    <button type="submit" id="submit-btn" class="w-full bg-campfire hover:bg-orange-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-glow flex items-center justify-center gap-2 hover:-translate-y-1">
+                        <i id="submit-icon" class="fa-solid fa-paper-plane"></i> <span id="submit-text" data-i18n="btn_submit">গল্পটি সাবমিট করুন</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeSettingsModal()"></div>
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full relative z-10" id="settings-content">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <h3 class="text-xl font-black text-white light-mode:text-black">সেটিংস</h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm">থিম</p>
+                        <p class="text-xs text-gray-500">ডার্ক বা মিস্ট মোড</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none">
+                        <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform"/>
+                        <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white light-mode:text-black text-sm">ভাষা</p>
+                        <p class="text-xs text-gray-500">বাংলা / English</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none">
+                        <input type="checkbox" id="lang-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform"/>
+                        <label for="lang-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-blue-500 cursor-pointer"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all">সম্পন্ন</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // Translations & Theme (Same as other pages)
+        const translations = {
+            "back_dash": { bn: "ড্যাশবোর্ড", en: "Dashboard" },
+            "header_title": { bn: "নতুন গল্প লিখুন", en: "Write New Story" },
+            "form_title": { bn: "আপনার অ্যাডভেঞ্চার শেয়ার করুন", en: "Share Your Adventure" },
+            "form_subtitle": { bn: "আপনার জমা দেওয়া লেখাটি অ্যাডমিন প্যানেল থেকে অ্যাপ্রুভ হওয়ার পর পাবলিক ব্লগে দেখা যাবে।", en: "Your submitted post will be visible on the public blog after admin approval." },
+            "lbl_cover": { bn: "কভার ফটো (Cover Photo) *", en: "Cover Photo *" },
+            "txt_upload_cover": { bn: "ক্লিক করে কভার ছবি আপলোড করুন", en: "Click to upload cover image" },
+            "lbl_title": { bn: "গল্পের শিরোনাম *", en: "Story Title *" },
+            "lbl_excerpt": { bn: "ছোট্ট সারাংশ (Excerpt) *", en: "Short Excerpt *" },
+            "lbl_content": { bn: "মূল গল্প (মাঝে ছবি দিতে Image আইকনে ক্লিক করুন) *", en: "Main Story (Click Image icon to insert photos inline) *" },
+            "lbl_author_info": { bn: "লেখকের তথ্য", en: "Author Information" },
+            "lbl_name": { bn: "আপনার নাম *", en: "Your Name *" },
+            "lbl_batch": { bn: "ডিপার্টমেন্ট ও ব্যাচ *", en: "Department & Batch *" },
+            "lbl_fb": { bn: "ফেসবুক লিংক (ঐচ্ছিক)", en: "Facebook Link (Optional)" },
+            "btn_submit": { bn: "গল্পটি সাবমিট করুন", en: "Submit Story" },
+            "status_uploading": { bn: "ছবি আপলোড হচ্ছে...", en: "Uploading Images..." },
+            "status_saving": { bn: "ডেটাবেসে সেভ হচ্ছে...", en: "Saving to Database..." },
+            "status_success": { bn: "গল্প সফলভাবে জমা হয়েছে! অ্যাডমিন অ্যাপ্রুভ করলে লাইভ হবে।", en: "Story submitted successfully! Will be live after admin approval." }
+        };
+
+        const langToggle = document.getElementById('lang-toggle');
+        let currentLang = localStorage.getItem('lang') || 'bn';
+        if(currentLang === 'en') langToggle.checked = true;
+
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[key] && translations[key][lang]) el.innerHTML = translations[key][lang];
+            });
+        }
+        langToggle.addEventListener('change', function() { currentLang = this.checked ? 'en' : 'bn'; localStorage.setItem('lang', currentLang); applyTranslations(currentLang); });
+        applyTranslations(currentLang);
+
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') { enableLightMode(); themeToggle.checked = true; }
+        themeToggle.addEventListener('change', function() { if (this.checked) { enableLightMode(); localStorage.setItem('theme', 'light'); } else { enableDarkMode(); localStorage.setItem('theme', 'dark'); } });
+
+        function enableLightMode() { htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0'); document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40'); document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100'); }
+        function enableDarkMode() { htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode'); document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0'); document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20'); document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100'); }
+
+        const settingsModal = document.getElementById('settings-modal');
+        function openSettingsModal() { settingsModal.classList.remove('hidden'); }
+        function closeSettingsModal() { settingsModal.classList.add('hidden'); }
+
+        // ==========================================
+        // QUILL.JS RICH TEXT EDITOR SETUP
+        // ==========================================
+        const quill = new Quill('#editor-container', {
+            theme: 'snow',
+            placeholder: currentLang === 'en' ? 'Write your amazing adventure here...' : 'আপনার চমৎকার অ্যাডভেঞ্চার এখানে লিখুন...',
+            modules: {
+                toolbar: {
+                    container: [
+                        [{ 'header': [2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link', 'image'],
+                        ['clean']
+                    ],
+                    handlers: {
+                        image: imageHandler // Custom handler for inline images
+                    }
+                }
+            }
+        });
+
+        // Helper: Convert File to Base64
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        // Custom Image Handler for Quill (Uploads to Vercel/ImgBB instead of saving Base64)
+        function imageHandler() {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+
+            input.onchange = async () => {
+                const file = input.files[0];
+                if(file) {
+                    const range = this.quill.getSelection();
+                    // Show temporary loading text
+                    this.quill.insertText(range.index, " (Uploading Image...) ", "user");
+                    
+                    try {
+                        const base64Img = await toBase64(file);
+                        const res = await fetch('/api/upload', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ imageBase64: base64Img })
+                        });
+                        const data = await res.json();
+                        
+                        // Remove loading text
+                        this.quill.deleteText(range.index, 21);
+
+                        if(data.success) {
+                            this.quill.insertEmbed(range.index, 'image', data.data.url);
+                        } else {
+                            alert("Image Upload Failed!");
+                        }
+                    } catch (error) {
+                        this.quill.deleteText(range.index, 21);
+                        alert("Error: " + error.message);
+                    }
+                }
+            };
+        }
+
+        // ==========================================
+        // COVER PHOTO PREVIEW
+        // ==========================================
+        const coverInput = document.getElementById('coverPhotoInput');
+        const coverPreview = document.getElementById('cover-preview');
+        const coverPlaceholder = document.getElementById('cover-placeholder');
+        let selectedCoverFile = null;
+
+        coverInput.addEventListener('change', function(e) {
+            selectedCoverFile = e.target.files[0];
+            if (selectedCoverFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    coverPreview.src = event.target.result;
+                    coverPreview.classList.remove('hidden');
+                    coverPlaceholder.classList.add('hidden');
+                }
+                reader.readAsDataURL(selectedCoverFile);
+            }
+        });
+
+        // ==========================================
+        // FIREBASE LOGIC
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUserUid = null;
+        let currentUserPhotoUrl = '';
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        document.getElementById('authorName').value = userData.fullName || "";
+                        currentUserPhotoUrl = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName)}&background=e76f51&color=fff`;
+                    }
+                });
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // Helper: Calculate Reading Time
+        function calculateReadTime(text) {
+            const wordsPerMinute = 200;
+            const words = text.trim().split(/\s+/).length;
+            return Math.ceil(words / wordsPerMinute);
+        }
+
+        // SUBMIT FORM
+        document.getElementById('blog-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate Quill Content
+            if(quill.getText().trim().length < 20) {
+                alert("Please write a proper story content.");
+                return;
+            }
+
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const submitIcon = document.getElementById('submit-icon');
+
+            submitIcon.className = 'fa-solid fa-circle-notch fa-spin';
+            submitText.innerText = translations["status_uploading"][currentLang];
+            submitBtn.disabled = true;
+
+            try {
+                let uploadedCoverUrl = "";
+
+                // 1. Upload Cover Photo
+                if (selectedCoverFile) {
+                    const base64Cover = await toBase64(selectedCoverFile);
+                    const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageBase64: base64Cover })
+                    });
+                    const imgbbData = await res.json();
+                    if (imgbbData.success) {
+                        uploadedCoverUrl = imgbbData.data.url;
+                    } else {
+                        throw new Error("Cover Photo Upload Failed");
+                    }
+                } else {
+                    throw new Error("Cover Photo is required");
+                }
+
+                submitText.innerText = translations["status_saving"][currentLang];
+
+                // 2. Prepare Data
+                const titleVal = document.getElementById('titleInput').value;
+                const excerptVal = document.getElementById('excerptInput').value;
+                const htmlContent = quill.root.innerHTML;
+                const plainText = quill.getText();
+                const readTime = calculateReadTime(plainText);
+
+                const authorNameVal = document.getElementById('authorName').value;
+                const batchVal = document.getElementById('authorBatch').value;
+                const fbVal = document.getElementById('authorFb').value;
+
+                // 3. Save to Firestore (Status: Pending)
+                await db.collection("stories").add({
+                    title: titleVal,
+                    excerpt: excerptVal,
+                    content: htmlContent,
+                    coverPhoto: uploadedCoverUrl,
+                    authorId: currentUserUid,
+                    authorName: authorNameVal,
+                    authorBatch: batchVal,
+                    authorFb: fbVal,
+                    authorPhoto: currentUserPhotoUrl,
+                    status: "pending", // ADMIM APPROVAL REQUIRED
+                    readTime: readTime,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert(translations["status_success"][currentLang]);
+                window.location.href = "dashboard.html";
+
+            } catch (error) {
+                alert("Error: " + error.message);
+                submitIcon.className = 'fa-solid fa-paper-plane';
+                submitText.innerText = translations["btn_submit"][currentLang];
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
