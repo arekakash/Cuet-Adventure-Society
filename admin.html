@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Command Center - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51', 
+                        mistBg: '#e2e8f0', 
+                    }
+                }
+            },
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
+
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+    </div>
+
+    <div class="fixed top-0 w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 text-red-500">
+                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                <span class="font-black text-xl tracking-widest uppercase">Admin Panel</span>
+            </div>
+            <div class="flex gap-4">
+                <a href="dashboard.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-white transition-colors font-bold text-sm bg-white/5 px-4 py-2 rounded-xl">
+                    <i class="fa-solid fa-arrow-left"></i> ড্যাশবোর্ড
+                </a>
+                <button id="theme-toggle-btn" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-yellow-400 transition-colors">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="relative z-10 pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6">
+        
+        <div id="auth-loader" class="flex flex-col items-center justify-center py-32">
+            <i class="fa-solid fa-shield text-5xl text-blue-500 animate-pulse mb-4"></i>
+            <p class="text-gray-400 font-bold tracking-widest uppercase">Verifying Admin Access...</p>
+        </div>
+
+        <div id="admin-content" class="hidden space-y-8">
+            
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 flex justify-between items-center" data-aos="fade-up">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black">স্বাগতম, <span id="admin-name" class="text-campfire">Admin</span>!</h1>
+                    <p class="text-sm text-gray-400 mt-1">CUET AS সিস্টেম কন্ট্রোল সেন্টারে আপনাকে স্বাগতম।</p>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
+                        <i class="fa-solid fa-hourglass-half text-yellow-500"></i> পেন্ডিং গল্পসমূহ
+                    </h2>
+                    <span id="pending-count" class="bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-full text-xs font-bold">0</span>
+                </div>
+
+                <div id="pending-stories-list" class="space-y-4">
+                    </div>
+                
+                <div id="no-pending-msg" class="hidden text-center py-10">
+                    <i class="fa-solid fa-check-circle text-4xl text-emerald-500 mb-3 opacity-50"></i>
+                    <p class="text-gray-400 font-bold">অ্যাপ্রুভ করার মতো কোনো নতুন গল্প নেই!</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // Theme Engine
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        let isLight = localStorage.getItem('theme') === 'light';
+
+        function applyTheme() {
+            if (isLight) {
+                htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode');
+                document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
+                document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun text-yellow-500"></i>';
+            } else {
+                htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode');
+                document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0');
+                document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            }
+        }
+        applyTheme();
+
+        themeToggleBtn.addEventListener('click', () => {
+            isLight = !isLight;
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            applyTheme();
+        });
+
+        // Firebase Setup
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        const authLoader = document.getElementById('auth-loader');
+        const adminContent = document.getElementById('admin-content');
+        const pendingList = document.getElementById('pending-stories-list');
+        const noPendingMsg = document.getElementById('no-pending-msg');
+        const pendingCount = document.getElementById('pending-count');
+
+        // Check Admin Role
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists && doc.data().role === 'admin') {
+                        // User is Admin!
+                        document.getElementById('admin-name').innerText = doc.data().fullName.split(" ")[0];
+                        authLoader.classList.add('hidden');
+                        adminContent.classList.remove('hidden');
+                        loadPendingStories();
+                    } else {
+                        // Not Admin -> Kick Out
+                        alert("Access Denied! You are not an admin.");
+                        window.location.href = "index.html";
+                    }
+                }).catch(err => {
+                    alert("Error verifying admin status.");
+                    window.location.href = "index.html";
+                });
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        function formatDate(timestamp) {
+            if(!timestamp) return "N/A";
+            return timestamp.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Load Pending Stories
+        function loadPendingStories() {
+            db.collection("stories").where("status", "==", "pending")
+                .get()
+                .then((querySnapshot) => {
+                    pendingList.innerHTML = '';
+                    
+                    if (querySnapshot.empty) {
+                        noPendingMsg.classList.remove('hidden');
+                        pendingCount.innerText = "0";
+                        return;
+                    }
+
+                    noPendingMsg.classList.add('hidden');
+                    pendingCount.innerText = querySnapshot.size;
+
+                    querySnapshot.forEach((doc) => {
+                        const story = doc.data();
+                        const storyId = doc.id;
+                        
+                        const card = `
+                            <div class="bg-black/40 light-mode:bg-white/60 border border-white/5 light-mode:border-gray-200 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+                                <img src="${story.coverPhoto}" class="w-full sm:w-32 h-24 object-cover rounded-xl" alt="Cover">
+                                <div class="flex-grow">
+                                    <h3 class="text-lg font-bold text-white light-mode:text-black mb-1">${story.title}</h3>
+                                    <p class="text-xs text-gray-400 mb-2">লেখক: <span class="font-bold text-gray-300 light-mode:text-gray-700">${story.authorName}</span> | Date: ${formatDate(story.createdAt)}</p>
+                                    <a href="story-reader.html?id=${storyId}" target="_blank" class="text-xs text-blue-400 hover:underline"><i class="fa-solid fa-eye"></i> রিভিউ করুন</a>
+                                </div>
+                                <div class="flex sm:flex-col gap-2 w-full sm:w-auto">
+                                    <button onclick="approveStory('${storyId}')" class="flex-1 sm:flex-none bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                                        <i class="fa-solid fa-check"></i> Approve
+                                    </button>
+                                    <button onclick="rejectStory('${storyId}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                                        <i class="fa-solid fa-trash"></i> Reject
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        pendingList.insertAdjacentHTML('beforeend', card);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error loading pending stories: ", error);
+                    alert("Error loading data!");
+                });
+        }
+
+        // Action: Approve
+        window.approveStory = function(id) {
+            if(confirm("আপনি কি নিশ্চিত এই লেখাটি পাবলিশ করতে চান?")) {
+                db.collection("stories").doc(id).update({
+                    status: "approved"
+                }).then(() => {
+                    alert("Success! গল্পটি পাবলিক ব্লগে লাইভ হয়ে গেছে।");
+                    loadPendingStories(); // Reload list
+                }).catch(err => {
+                    console.error("Error approving: ", err);
+                    alert("Error approving story.");
+                });
+            }
+        };
+
+        // Action: Reject (Delete)
+        window.rejectStory = function(id) {
+            if(confirm("সতর্কতা: এটি ডিলিট করলে লেখাটি চিরতরে মুছে যাবে। আপনি কি নিশ্চিত?")) {
+                db.collection("stories").doc(id).delete().then(() => {
+                    alert("গল্পটি মুছে ফেলা হয়েছে।");
+                    loadPendingStories(); // Reload list
+                }).catch(err => {
+                    console.error("Error deleting: ", err);
+                    alert("Error deleting story.");
+                });
+            }
+        };
+    </script>
+</body>
+</html>
