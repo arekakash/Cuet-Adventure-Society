@@ -268,8 +268,13 @@
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
-            projectId: "cuet-as"
+            projectId: "cuet-as",
+            storageBucket: "cuet-as.firebasestorage.app",
+            messagingSenderId: "869959746091",
+            appId: "1:869959746091:web:fa2c086441fc429a14606e",
+            measurementId: "G-WNJBJT9K5K"
         };
+        
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
