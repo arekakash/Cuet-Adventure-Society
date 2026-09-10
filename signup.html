@@ -189,24 +189,70 @@
             <!-- Form starts -->
             <form id="signup-form" class="space-y-5">
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div data-aos="fade-up" data-aos-delay="500">
+                <!-- ROW 1: Name & ID -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="500">
+                    <div>
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_name">আপনার নাম *</label>
                         <input type="text" id="fullName" required placeholder="Full Name" class="glass-input w-full text-sm rounded-xl block p-3.5">
                     </div>
-                    <div data-aos="fade-up" data-aos-delay="550">
+                    <div>
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_id">স্টুডেন্ট আইডি *</label>
                         <input type="text" id="studentId" required placeholder="e.g. 2101001" class="glass-input w-full text-sm rounded-xl block p-3.5">
                     </div>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="600">
-                    <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস *</label>
-                    <input type="email" id="email" required placeholder="example@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-3.5 transition-opacity">
+                <!-- ROW 2: Email & Phone -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="550">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস *</label>
+                        <input type="email" id="email" required placeholder="example@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-3.5 transition-opacity">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_phone">নিজের ফোন নম্বর *</label>
+                        <input type="tel" id="phone" required placeholder="01XXXXXXXXX" class="glass-input w-full text-sm rounded-xl block p-3.5">
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div data-aos="fade-up" data-aos-delay="650">
+                <!-- ROW 3: Dept & Batch -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="600">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_dept">ডিপার্টমেন্ট *</label>
+                        <input type="text" id="department" required placeholder="e.g. ME, CE, CSE..." class="glass-input w-full text-sm rounded-xl block p-3.5 uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_batch">ব্যাচ (সাল) *</label>
+                        <select id="batch" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <!-- JS will inject years here -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 4: Gender & Blood Group -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="650">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_gender">জেন্ডার *</label>
+                        <select id="gender" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Male" data-i18n="opt_male">পুরুষ (Male)</option>
+                            <option value="Female" data-i18n="opt_female">নারী (Female)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_blood">রক্তের গ্রুপ *</label>
+                        <select id="bloodGroup" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="A+">A+</option><option value="A-">A-</option>
+                            <option value="B+">B+</option><option value="B-">B-</option>
+                            <option value="O+">O+</option><option value="O-">O-</option>
+                            <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 5: Hall & T-shirt -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="700">
+                    <div>
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_hall">আবাসিক হল *</label>
                         <select id="hall" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
                             <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
@@ -222,50 +268,84 @@
                             <option value="Attached/Non-residential" data-i18n="opt_attached">অ্যাটাচড/অনাবাসিক</option>
                         </select>
                     </div>
-                    <div data-aos="fade-up" data-aos-delay="700">
-                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_blood">রক্তের গ্রুপ *</label>
-                        <select id="bloodGroup" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_tshirt">টি-শার্ট সাইজ *</label>
+                        <select id="tshirtSize" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
                             <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
-                            <option value="A+">A+</option><option value="A-">A-</option>
-                            <option value="B+">B+</option><option value="B-">B-</option>
-                            <option value="O+">O+</option><option value="O-">O-</option>
-                            <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                            <option value="S">S (Small)</option><option value="M">M (Medium)</option>
+                            <option value="L">L (Large)</option><option value="XL">XL (Extra Large)</option>
+                            <option value="XXL">XXL (Double XL)</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div data-aos="fade-up" data-aos-delay="750">
-                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_phone">নিজের ফোন নম্বর *</label>
-                        <input type="tel" id="phone" required placeholder="01XXXXXXXXX" class="glass-input w-full text-sm rounded-xl block p-3.5">
-                    </div>
-                    <div data-aos="fade-up" data-aos-delay="800">
-                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emergency">জরুরি কন্টাক্ট (পরিবার) *</label>
+                <!-- ROW 6: Emergency Contact & Relation -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="750">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emergency">জরুরি কন্টাক্ট নম্বর *</label>
                         <input type="tel" id="emergencyContact" required placeholder="01XXXXXXXXX" class="glass-input w-full text-sm rounded-xl block p-3.5">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emg_rel">সম্পর্ক (যেমন: বাবা/ভাই) *</label>
+                        <input type="text" id="emergencyRelation" required placeholder="e.g. Father, Brother" class="glass-input w-full text-sm rounded-xl block p-3.5">
                     </div>
                 </div>
 
-                <div id="password-section" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div data-aos="fade-up" data-aos-delay="850">
+                <!-- ROW 7: Swimming & Bicycle -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="800">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_swimming">সাঁতার জানেন? *</label>
+                        <select id="swimmingSkill" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Yes" data-i18n="opt_yes">হ্যাঁ</option>
+                            <option value="No" data-i18n="opt_no">না</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_bicycle">নিজের সাইকেল আছে? *</label>
+                        <select id="hasBicycle" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Yes" data-i18n="opt_yes">হ্যাঁ</option>
+                            <option value="No" data-i18n="opt_no">না</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 8: Experience -->
+                <div data-aos="fade-up" data-aos-delay="850">
+                    <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_exp">অ্যাডভেঞ্চার অভিজ্ঞতা *</label>
+                    <select id="experienceLevel" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
+                        <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                        <option value="Beginner" data-i18n="opt_exp_beg">বিগিনার (Beginner)</option>
+                        <option value="Intermediate" data-i18n="opt_exp_int">ইন্টারমিডিয়েট (Intermediate)</option>
+                        <option value="Pro" data-i18n="opt_exp_pro">প্রো (Pro Trekker)</option>
+                    </select>
+                </div>
+
+                <!-- ROW 9: Social Links (Advisory Validation) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" data-aos="fade-up" data-aos-delay="900">
+                    <div class="relative">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক প্রোফাইল লিংক (ঐচ্ছিক)</label>
+                        <input type="text" id="fbLink" placeholder="e.g. facebook.com/username" class="glass-input w-full text-sm rounded-xl block p-3.5">
+                        <p id="fb-error" class="hidden absolute -bottom-5 left-1 text-yellow-500 font-bold text-[10px]" data-i18n="warn_invalid_fb"><i class="fa-solid fa-triangle-exclamation"></i> সতর্কতা: আদর্শ ফরম্যাট facebook.com/username</p>
+                    </div>
+                    <div class="relative">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_insta">ইন্সটাগ্রাম লিংক (ঐচ্ছিক)</label>
+                        <input type="text" id="instaLink" placeholder="e.g. instagram.com/username" class="glass-input w-full text-sm rounded-xl block p-3.5">
+                        <p id="insta-error" class="hidden absolute -bottom-5 left-1 text-yellow-500 font-bold text-[10px]" data-i18n="warn_invalid_insta"><i class="fa-solid fa-triangle-exclamation"></i> সতর্কতা: আদর্শ ফরম্যাট instagram.com/username</p>
+                    </div>
+                </div>
+
+                <!-- ROW 10: Password Section -->
+                <div id="password-section" class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4" data-aos="fade-up" data-aos-delay="950">
+                    <div>
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_pass">পাসওয়ার্ড *</label>
                         <input type="password" id="password" required placeholder="••••••••" class="glass-input w-full text-sm rounded-xl block p-3.5">
                     </div>
-                    <div data-aos="fade-up" data-aos-delay="900">
+                    <div>
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_pass2">পুনরায় পাসওয়ার্ড দিন *</label>
                         <input type="password" id="confirmPassword" required placeholder="••••••••" class="glass-input w-full text-sm rounded-xl block p-3.5">
                     </div>
-                </div>
-
-                <div data-aos="fade-up" data-aos-delay="950">
-                    <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_tshirt">টি-শার্ট সাইজ *</label>
-                    <select id="tshirtSize" required class="glass-input w-full text-sm rounded-xl block p-3.5 appearance-none cursor-pointer">
-                        <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
-                        <option value="S">S (Small)</option>
-                        <option value="M">M (Medium)</option>
-                        <option value="L">L (Large)</option>
-                        <option value="XL">XL (Extra Large)</option>
-                        <option value="XXL">XXL (Double XL)</option>
-                    </select>
                 </div>
 
                 <div class="pt-6" data-aos="zoom-in" data-aos-delay="1000">
@@ -278,18 +358,16 @@
         </div>
     </div>
 
-    <!-- SETTINGS MODAL (THEME & LANGUAGE) -->
+    <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
-        
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
                 <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
                 </h3>
-                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-
             <div class="space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
@@ -301,7 +379,6 @@
                         <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
                     </div>
                 </div>
-
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
@@ -313,9 +390,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">সম্পন্ন</button>
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">সম্পন্ন</button>
             </div>
         </div>
     </div>
@@ -330,7 +406,18 @@
 
     <script>
         // ==========================================
-        // 1. I18N DICTIONARY & LANGUAGE ENGINE
+        // DYNAMIC BATCH POPULATOR (1968 - 2050)
+        // ==========================================
+        const batchSelect = document.getElementById('batch');
+        for (let year = 2050; year >= 1968; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.text = year;
+            batchSelect.appendChild(option);
+        }
+
+        // ==========================================
+        // I18N DICTIONARY & LANGUAGE ENGINE
         // ==========================================
         const translations = {
             "signup_back": { bn: "হোমপেজে ফিরে যান", en: "Back to Home" },
@@ -343,6 +430,7 @@
             "signup_google_alert": { bn: "গুগল অ্যাকাউন্ট সংযুক্ত হয়েছে! দয়া করে নিচের তথ্যগুলো দিয়ে প্রোফাইল সম্পূর্ণ করুন।", en: "Google account connected! Please complete your profile with the details below." },
             "signup_google_btn": { bn: "গুগল দিয়ে কন্টিনিউ করুন", en: "Continue with Google" },
             "signup_or": { bn: "অথবা ম্যানুয়ালি লিখুন", en: "Or write manually" },
+            
             "lbl_name": { bn: "আপনার নাম *", en: "Full Name *" },
             "lbl_id": { bn: "স্টুডেন্ট আইডি *", en: "Student ID *" },
             "lbl_email": { bn: "ইমেইল অ্যাড্রেস *", en: "Email Address *" },
@@ -351,10 +439,30 @@
             "opt_attached": { bn: "অ্যাটাচড/অনাবাসিক", en: "Attached/Non-residential" },
             "lbl_blood": { bn: "রক্তের গ্রুপ *", en: "Blood Group *" },
             "lbl_phone": { bn: "নিজের ফোন নম্বর *", en: "Personal Phone *" },
-            "lbl_emergency": { bn: "জরুরি কন্টাক্ট (পরিবার) *", en: "Emergency Contact (Family) *" },
+            "lbl_emergency": { bn: "জরুরি কন্টাক্ট নম্বর *", en: "Emergency Contact No *" },
             "lbl_pass": { bn: "পাসওয়ার্ড *", en: "Password *" },
             "lbl_pass2": { bn: "পুনরায় পাসওয়ার্ড দিন *", en: "Confirm Password *" },
             "lbl_tshirt": { bn: "টি-শার্ট সাইজ *", en: "T-Shirt Size *" },
+            
+            "lbl_dept": { bn: "ডিপার্টমেন্ট *", en: "Department *" },
+            "lbl_batch": { bn: "ব্যাচ (সাল) *", en: "Batch (Year) *" },
+            "lbl_gender": { bn: "জেন্ডার *", en: "Gender *" },
+            "opt_male": { bn: "পুরুষ (Male)", en: "Male" },
+            "opt_female": { bn: "নারী (Female)", en: "Female" },
+            "lbl_emg_rel": { bn: "সম্পর্ক (যেমন: বাবা/ভাই) *", en: "Relation (e.g. Father) *" },
+            "lbl_swimming": { bn: "সাঁতার জানেন? *", en: "Know Swimming? *" },
+            "lbl_bicycle": { bn: "নিজের সাইকেল আছে? *", en: "Own a Bicycle? *" },
+            "opt_yes": { bn: "হ্যাঁ", en: "Yes" },
+            "opt_no": { bn: "না", en: "No" },
+            "lbl_exp": { bn: "অ্যাডভেঞ্চার অভিজ্ঞতা *", en: "Adventure Experience *" },
+            "opt_exp_beg": { bn: "বিগিনার (Beginner)", en: "Beginner" },
+            "opt_exp_int": { bn: "ইন্টারমিডিয়েট (Intermediate)", en: "Intermediate" },
+            "opt_exp_pro": { bn: "প্রো (Pro Trekker)", en: "Pro Trekker" },
+            "lbl_fb": { bn: "ফেসবুক প্রোফাইল লিংক (ঐচ্ছিক)", en: "Facebook Profile Link (Optional)" },
+            "lbl_insta": { bn: "ইন্সটাগ্রাম লিংক (ঐচ্ছিক)", en: "Instagram Link (Optional)" },
+            "warn_invalid_fb": { bn: "<i class='fa-solid fa-triangle-exclamation'></i> সতর্কতা: আদর্শ ফরম্যাট facebook.com/username", en: "<i class='fa-solid fa-triangle-exclamation'></i> Warning: Ideal format is facebook.com/username" },
+            "warn_invalid_insta": { bn: "<i class='fa-solid fa-triangle-exclamation'></i> সতর্কতা: আদর্শ ফরম্যাট instagram.com/username", en: "<i class='fa-solid fa-triangle-exclamation'></i> Warning: Ideal format is instagram.com/username" },
+
             "btn_create": { bn: "অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন", en: "Create Adventure Account" },
             "btn_save_profile": { bn: "প্রোফাইল সেভ করুন", en: "Save Profile" },
             "modal_settings": { bn: "সেটিংস", en: "Settings" },
@@ -366,7 +474,7 @@
             "status_google_check": { bn: "ডেটাবেস চেক করা হচ্ছে...", en: "Checking Database..." },
             "status_creating": { bn: "প্রোফাইল তৈরি হচ্ছে...", en: "Creating Profile..." },
             "err_google_login": { bn: "লগইন করা যায়নি: ", en: "Login failed: " },
-            "err_pass_mismatch": { bn: "পাসওয়ার্ড দুটি মিলছে না! দয়া করে আবার চেক করুন।", en: "Passwords do not match! Please check again." },
+            "err_pass_mismatch": { bn: "পাসওয়ার্ড দুটি মিলছে মিলিটারি না! দয়া করে আবার চেক করুন।", en: "Passwords do not match! Please check again." },
             "err_pass_length": { bn: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।", en: "Password must be at least 6 characters long." },
             "err_general": { bn: "সমস্যা হয়েছে: ", en: "An error occurred: " }
         };
@@ -394,7 +502,7 @@
         if(currentLang === 'en') langToggle.checked = true;
         
         // ==========================================
-        // 2. THEME ENGINE LOGIC
+        // THEME ENGINE LOGIC
         // ==========================================
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
@@ -418,7 +526,36 @@
         function closeSettingsModal() { settingsContent.classList.remove('scale-100'); settingsContent.classList.add('scale-95'); setTimeout(() => { settingsModal.classList.add('hidden'); }, 300); }
 
         // ==========================================
-        // FIREBASE LOGIC (Rewritten with Robust Async/Await)
+        // SMART LINK VALIDATION LOGIC (ADVISORY)
+        // ==========================================
+        const fbInput = document.getElementById('fbLink');
+        const instaInput = document.getElementById('instaLink');
+        const fbErr = document.getElementById('fb-error');
+        const instaErr = document.getElementById('insta-error');
+
+        function checkFb() {
+            const val = fbInput.value.trim();
+            if(!val) { fbErr.classList.add('hidden'); return; } 
+            const regex = /^(https?:\/\/)?(www\.)?(facebook\.com|fb\.com|fb\.me)\/.+$/i;
+            if(regex.test(val)) { fbErr.classList.add('hidden'); }
+            else { fbErr.classList.remove('hidden'); }
+        }
+        
+        function checkInsta() {
+            const val = instaInput.value.trim();
+            if(!val) { instaErr.classList.add('hidden'); return; } 
+            const regex = /^(https?:\/\/)?(www\.)?instagram\.com\/.+$/i;
+            if(regex.test(val)) { instaErr.classList.add('hidden'); }
+            else { instaErr.classList.remove('hidden'); }
+        }
+
+        fbInput.addEventListener('input', checkFb);
+        fbInput.addEventListener('blur', checkFb);
+        instaInput.addEventListener('input', checkInsta);
+        instaInput.addEventListener('blur', checkInsta);
+
+        // ==========================================
+        // FIREBASE LOGIC 
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -437,7 +574,6 @@
         let isGoogleSignupFlow = false; 
         let googleUserPhoto = ''; 
 
-        // Initial Auth State Redirect check
         auth.onAuthStateChanged((user) => {
             if (user && !isGoogleSignupFlow) { 
                 db.collection("users").doc(user.uid).get().then((doc) => {
@@ -450,12 +586,8 @@
         const googleBtnContent = document.getElementById('google-btn-content');
         const provider = new firebase.auth.GoogleAuthProvider();
 
-        // 🟢 GOOGLE SIGNUP LOGIC
         googleBtn.addEventListener('click', async () => {
-            // Securely preserve button HTML
             const originalContent = googleBtnContent.innerHTML;
-            
-            // Set Loading UI
             googleBtnContent.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-campfire"></i> <span class="relative z-10 font-bold">${translations["status_google_check"][currentLang]}</span>`;
             googleBtn.disabled = true;
 
@@ -471,7 +603,6 @@
                 } else {
                     isGoogleSignupFlow = true;
                     
-                    // UI Transitions
                     document.getElementById('social-login-section').classList.add('hidden');
                     document.getElementById('divider-section').classList.add('hidden');
                     document.getElementById('password-section').classList.add('hidden');
@@ -479,7 +610,6 @@
                     document.getElementById('confirmPassword').removeAttribute('required');
                     document.getElementById('google-alert-box').classList.remove('hidden');
 
-                    // Autofill Form
                     document.getElementById('fullName').value = user.displayName || '';
                     document.getElementById('email').value = user.email || '';
                     document.getElementById('email').readOnly = true;
@@ -491,14 +621,11 @@
             } catch (error) {
                 console.error("Google Auth Failed:", error);
                 alert(translations["err_google_login"][currentLang] + error.message);
-                
-                // Revert UI safely
                 googleBtnContent.innerHTML = originalContent;
                 googleBtn.disabled = false;
             }
         });
 
-        // 🟢 MANUAL SIGNUP & FINAL SAVE LOGIC
         const signupForm = document.getElementById('signup-form');
         const submitBtn = document.getElementById('submit-btn');
         const submitIcon = document.getElementById('submit-icon');
@@ -506,6 +633,9 @@
 
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Link validation does NOT block submission anymore
+            // We removed the return statement
 
             submitIcon.className = 'fa-solid fa-circle-notch fa-spin';
             submitText.innerText = translations["status_creating"][currentLang];
@@ -521,13 +651,23 @@
                     phone: document.getElementById('phone').value.trim(),
                     emergencyContact: document.getElementById('emergencyContact').value.trim(),
                     tshirtSize: document.getElementById('tshirtSize').value,
+                    
+                    department: document.getElementById('department').value.trim().toUpperCase(),
+                    batch: document.getElementById('batch').value,
+                    gender: document.getElementById('gender').value,
+                    emergencyRelation: document.getElementById('emergencyRelation').value.trim(),
+                    swimmingSkill: document.getElementById('swimmingSkill').value,
+                    hasBicycle: document.getElementById('hasBicycle').value,
+                    experienceLevel: document.getElementById('experienceLevel').value,
+                    fbLink: document.getElementById('fbLink').value.trim(),
+                    instaLink: document.getElementById('instaLink').value.trim(),
+
                     photoURL: isGoogleSignupFlow ? googleUserPhoto : '',
                     theme: currentTheme || 'dark',
                     lang: currentLang,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
-                // Flow 1: Saving Google User Details
                 if (isGoogleSignupFlow) {
                     const user = auth.currentUser;
                     if (!user) throw new Error("Authentication state lost. Please log in again.");
@@ -537,7 +677,6 @@
                     return;
                 }
 
-                // Flow 2: Complete Manual Signup
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -558,7 +697,6 @@
                 console.error("Submission Error:", error);
                 alert(translations["err_general"][currentLang] + error.message);
                 
-                // Revert UI safely
                 submitIcon.className = isGoogleSignupFlow ? 'fa-solid fa-cloud-arrow-up' : 'fa-solid fa-compass';
                 submitText.innerText = isGoogleSignupFlow ? translations["btn_save_profile"][currentLang] : translations["btn_create"][currentLang];
                 submitBtn.disabled = false;
