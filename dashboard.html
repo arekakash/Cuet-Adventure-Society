@@ -118,10 +118,12 @@
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_past">পূর্ববর্তী ইভেন্ট</span>
             </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+            
+            <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
+            
             <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
@@ -140,6 +142,11 @@
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gear"></i></div>
                 <span class="font-bold text-sm" data-i18n="nav_settings">সেটিংস</span>
             </button>
+
+            <a href="admin.html" id="sidebar-admin-link" class="hidden py-3 px-4 rounded-xl hover:bg-red-500/10 border border-transparent hover:border-red-500/30 text-red-400 transition-all group flex items-center gap-4 mt-2">
+                <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
+                <span class="font-bold text-sm uppercase tracking-widest">Admin Panel</span>
+            </a>
         </div>
 
         <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark space-y-3">
@@ -282,6 +289,18 @@
                 </div>
             </div>
 
+            <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="450">
+                <div class="p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-center bg-campfire/5 border-l-4 border-campfire">
+                    <div class="text-center sm:text-left mb-4 sm:mb-0">
+                        <h3 class="font-black text-white light-mode:text-black text-xl mb-1" data-i18n="dash_blog_title">আপনার অ্যাডভেঞ্চার শেয়ার করুন!</h3>
+                        <p class="text-sm text-gray-400 light-mode:text-gray-600" data-i18n="dash_blog_desc">ক্যাম্পাস বা ট্যুরের কোনো দারুণ অভিজ্ঞতা আছে? লিখে ফেলুন আমাদের কমিউনিটি ব্লগে।</p>
+                    </div>
+                    <a href="write-blog.html" class="w-full sm:w-auto text-center bg-campfire hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-glow hover:-translate-y-1 transition-transform whitespace-nowrap">
+                        <i class="fa-solid fa-pen-nib mr-2"></i> <span data-i18n="dash_blog_btn">গল্প লিখুন</span>
+                    </a>
+                </div>
+            </div>
+
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="500">
                 <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/50">
                     <h3 class="text-sm font-bold text-white light-mode:text-black tracking-widest uppercase flex items-center gap-2">
@@ -391,7 +410,11 @@
             "dash_stat4": { bn: "Safety Index", en: "Safety Index" },
             "dash_history": { bn: "ট্রেইল লগ হিস্ট্রি", en: "Trail Log History" },
             "dash_empty": { bn: "আপনার ট্র্যাকিং রাডার এখন ফাঁকা।<br>নতুন কোনো ট্রেইলে যুক্ত হলে এখানে ডেটা শো করবে।", en: "Your tracking radar is currently empty.<br>Data will appear here when you join a new trail." },
-            "dash_explore": { bn: "এক্সপ্লোর আপকামিং ইভেন্ট", en: "Explore Upcoming Events" }
+            "dash_explore": { bn: "এক্সপ্লোর আপকামিং ইভেন্ট", en: "Explore Upcoming Events" },
+            // NEW BLOG STRINGS
+            "dash_blog_title": { bn: "আপনার অ্যাডভেঞ্চার শেয়ার করুন!", en: "Share Your Adventure!" },
+            "dash_blog_desc": { bn: "ক্যাম্পাস বা ট্যুরের কোনো দারুণ অভিজ্ঞতা আছে? লিখে ফেলুন আমাদের কমিউনিটি ব্লগে।", en: "Have a great campus or tour experience? Write it on our community blog." },
+            "dash_blog_btn": { bn: "গল্প লিখুন", en: "Write Blog" }
         };
 
         const langToggle = document.getElementById('lang-toggle');
@@ -538,6 +561,12 @@
                         const finalAvatarUrl = userData.photoURL ? userData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         document.getElementById('nav-profile-img').src = finalAvatarUrl;
                         document.getElementById('dash-profile-img').src = finalAvatarUrl;
+
+                        // ADMIN CHECK: Show Admin Panel link in sidebar
+                        if(userData.role === 'admin') {
+                            const adminLink = document.getElementById('sidebar-admin-link');
+                            if(adminLink) adminLink.classList.remove('hidden');
+                        }
 
                         // CLOUD SYNC: THEME
                         if(userData.theme) {
