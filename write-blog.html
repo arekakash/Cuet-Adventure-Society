@@ -105,7 +105,10 @@
             <a href="dashboard.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 light-mode:bg-white/50 px-4 py-2 rounded-full">
                 <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_dash">ড্যাশবোর্ড</span>
             </a>
-            <h2 class="font-black text-white light-mode:text-black tracking-widest hidden sm:block"><i class="fa-solid fa-pen-nib text-campfire"></i> <span data-i18n="header_title">নতুন গল্প লিখুন</span></h2>
+            <h2 class="font-black text-white light-mode:text-black tracking-widest hidden sm:block">
+                <i class="fa-solid fa-pen-nib text-campfire"></i> 
+                <span id="nav-header-title" data-i18n="header_title">নতুন গল্প লিখুন</span>
+            </h2>
             <button onclick="openSettingsModal()" class="text-gray-400 hover:text-blue-400 transition-colors w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10"><i class="fa-solid fa-gear"></i></button>
         </div>
     </div>
@@ -115,8 +118,8 @@
         <form id="blog-form" class="glass-panel rounded-3xl p-6 sm:p-10 shadow-2xl" data-aos="zoom-in">
             
             <div class="text-center mb-10 border-b border-white/10 light-mode:border-gray-200 pb-8">
-                <h1 class="text-3xl sm:text-4xl font-black text-white light-mode:text-black tracking-tight mb-2" data-i18n="form_title">আপনার অ্যাডভেঞ্চার শেয়ার করুন</h1>
-                <p class="text-sm text-gray-400 light-mode:text-gray-600" data-i18n="form_subtitle">আপনার জমা দেওয়া লেখাটি অ্যাডমিন প্যানেল থেকে অ্যাপ্রুভ হওয়ার পর পাবলিক ব্লগে দেখা যাবে।</p>
+                <h1 id="page-main-title" class="text-3xl sm:text-4xl font-black text-white light-mode:text-black tracking-tight mb-2" data-i18n="form_title">আপনার অ্যাডভেঞ্চার শেয়ার করুন</h1>
+                <p id="page-subtitle" class="text-sm text-gray-400 light-mode:text-gray-600" data-i18n="form_subtitle">আপনার জমা দেওয়া লেখাটি অ্যাডমিন প্যানেল থেকে অ্যাপ্রুভ হওয়ার পর পাবলিক ব্লগে দেখা যাবে।</p>
             </div>
 
             <div class="space-y-8">
@@ -176,6 +179,7 @@
 
     </div>
 
+    <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeSettingsModal()"></div>
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full relative z-10" id="settings-content">
@@ -220,7 +224,7 @@
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        // Translations & Theme (Same as other pages)
+        // Translations & Theme
         const translations = {
             "back_dash": { bn: "ড্যাশবোর্ড", en: "Dashboard" },
             "header_title": { bn: "নতুন গল্প লিখুন", en: "Write New Story" },
@@ -236,9 +240,13 @@
             "lbl_batch": { bn: "ডিপার্টমেন্ট ও ব্যাচ *", en: "Department & Batch *" },
             "lbl_fb": { bn: "ফেসবুক লিংক (ঐচ্ছিক)", en: "Facebook Link (Optional)" },
             "btn_submit": { bn: "গল্পটি সাবমিট করুন", en: "Submit Story" },
+            "btn_update": { bn: "আপডেট করুন", en: "Update Story" },
             "status_uploading": { bn: "ছবি আপলোড হচ্ছে...", en: "Uploading Images..." },
             "status_saving": { bn: "ডেটাবেসে সেভ হচ্ছে...", en: "Saving to Database..." },
-            "status_success": { bn: "গল্প সফলভাবে জমা হয়েছে! অ্যাডমিন অ্যাপ্রুভ করলে লাইভ হবে।", en: "Story submitted successfully! Will be live after admin approval." }
+            "status_success": { bn: "গল্প সফলভাবে জমা হয়েছে! অ্যাডমিন অ্যাপ্রুভ করলে লাইভ হবে।", en: "Story submitted successfully! Will be live after admin approval." },
+            "status_admin_success": { bn: "অ্যাডমিন হিসেবে আপনার গল্প সরাসরি পাবলিশ হয়েছে!", en: "As an admin, your story is published directly!" },
+            "status_update_success": { bn: "গল্প সফলভাবে আপডেট হয়েছে!", en: "Story updated successfully!" },
+            "edit_header": { bn: "গল্প এডিট করুন", en: "Edit Story" }
         };
 
         const langToggle = document.getElementById('lang-toggle');
@@ -269,7 +277,7 @@
         function closeSettingsModal() { settingsModal.classList.add('hidden'); }
 
         // ==========================================
-        // QUILL.JS RICH TEXT EDITOR SETUP
+        // QUILL.JS SETUP
         // ==========================================
         const quill = new Quill('#editor-container', {
             theme: 'snow',
@@ -283,14 +291,11 @@
                         ['link', 'image'],
                         ['clean']
                     ],
-                    handlers: {
-                        image: imageHandler // Custom handler for inline images
-                    }
+                    handlers: { image: imageHandler }
                 }
             }
         });
 
-        // Helper: Convert File to Base64
         const toBase64 = file => new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -298,7 +303,6 @@
             reader.onerror = error => reject(error);
         });
 
-        // Custom Image Handler for Quill (Uploads to Vercel/ImgBB instead of saving Base64)
         function imageHandler() {
             const input = document.createElement('input');
             input.setAttribute('type', 'file');
@@ -309,9 +313,7 @@
                 const file = input.files[0];
                 if(file) {
                     const range = this.quill.getSelection();
-                    // Show temporary loading text
                     this.quill.insertText(range.index, " (Uploading Image...) ", "user");
-                    
                     try {
                         const base64Img = await toBase64(file);
                         const res = await fetch('/api/upload', {
@@ -320,15 +322,10 @@
                             body: JSON.stringify({ imageBase64: base64Img })
                         });
                         const data = await res.json();
-                        
-                        // Remove loading text
                         this.quill.deleteText(range.index, 21);
-
                         if(data.success) {
                             this.quill.insertEmbed(range.index, 'image', data.data.url);
-                        } else {
-                            alert("Image Upload Failed!");
-                        }
+                        } else alert("Image Upload Failed!");
                     } catch (error) {
                         this.quill.deleteText(range.index, 21);
                         alert("Error: " + error.message);
@@ -338,12 +335,13 @@
         }
 
         // ==========================================
-        // COVER PHOTO PREVIEW
+        // COVER PHOTO
         // ==========================================
         const coverInput = document.getElementById('coverPhotoInput');
         const coverPreview = document.getElementById('cover-preview');
         const coverPlaceholder = document.getElementById('cover-placeholder');
         let selectedCoverFile = null;
+        let existingCoverUrl = ""; // For edit mode
 
         coverInput.addEventListener('change', function(e) {
             selectedCoverFile = e.target.files[0];
@@ -359,19 +357,30 @@
         });
 
         // ==========================================
-        // FIREBASE LOGIC
+        // FIREBASE LOGIC & EDIT MODE
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
-            projectId: "cuet-as"
+            projectId: "cuet-as",
+            storageBucket: "cuet-as.firebasestorage.app",
+            messagingSenderId: "869959746091",
+            appId: "1:869959746091:web:fa2c086441fc429a14606e",
+            measurementId: "G-WNJBJT9K5K"
         };
+        
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
         let currentUserUid = null;
         let currentUserPhotoUrl = '';
+        let currentUserRole = 'user'; // Check if admin
+
+        // URL parsing for Edit mode
+        const urlParams = new URLSearchParams(window.location.search);
+        const editStoryId = urlParams.get('edit');
+        const isEditing = !!editStoryId;
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -379,8 +388,15 @@
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
-                        document.getElementById('authorName').value = userData.fullName || "";
+                        currentUserRole = userData.role || 'user';
                         currentUserPhotoUrl = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName)}&background=e76f51&color=fff`;
+                        
+                        // If not editing, pre-fill author name
+                        if(!isEditing) {
+                            document.getElementById('authorName').value = userData.fullName || "";
+                        } else {
+                            loadStoryForEdit(editStoryId);
+                        }
                     }
                 });
             } else {
@@ -388,18 +404,49 @@
             }
         });
 
-        // Helper: Calculate Reading Time
+        async function loadStoryForEdit(id) {
+            try {
+                const doc = await db.collection("stories").doc(id).get();
+                if(doc.exists) {
+                    const data = doc.data();
+                    
+                    // Populate UI
+                    document.getElementById('titleInput').value = data.title;
+                    document.getElementById('excerptInput').value = data.excerpt;
+                    quill.root.innerHTML = data.content;
+                    document.getElementById('authorName').value = data.authorName;
+                    document.getElementById('authorBatch').value = data.authorBatch || '';
+                    document.getElementById('authorFb').value = data.authorFb || '';
+                    
+                    existingCoverUrl = data.coverPhoto;
+                    if(existingCoverUrl) {
+                        coverPreview.src = existingCoverUrl;
+                        coverPreview.classList.remove('hidden');
+                        coverPlaceholder.classList.add('hidden');
+                        coverInput.removeAttribute('required'); // No longer required to upload a new one
+                    }
+                    
+                    // UI changes for Edit Mode
+                    document.getElementById('submit-text').innerText = translations["btn_update"][currentLang];
+                    document.getElementById('page-main-title').innerText = translations["edit_header"][currentLang];
+                    document.getElementById('nav-header-title').innerText = translations["edit_header"][currentLang];
+                    document.getElementById('page-subtitle').innerText = "অ্যাডমিন প্যানেল থেকে লেখাটি পুনরায় আপডেট করুন।";
+                }
+            } catch(e) {
+                console.error("Error loading story for edit", e);
+            }
+        }
+
         function calculateReadTime(text) {
             const wordsPerMinute = 200;
             const words = text.trim().split(/\s+/).length;
             return Math.ceil(words / wordsPerMinute);
         }
 
-        // SUBMIT FORM
+        // SUBMIT OR UPDATE
         document.getElementById('blog-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Validate Quill Content
             if(quill.getText().trim().length < 20) {
                 alert("Please write a proper story content.");
                 return;
@@ -414,9 +461,9 @@
             submitBtn.disabled = true;
 
             try {
-                let uploadedCoverUrl = "";
+                let finalCoverUrl = existingCoverUrl;
 
-                // 1. Upload Cover Photo
+                // Upload new cover if selected
                 if (selectedCoverFile) {
                     const base64Cover = await toBase64(selectedCoverFile);
                     const res = await fetch('/api/upload', {
@@ -426,50 +473,54 @@
                     });
                     const imgbbData = await res.json();
                     if (imgbbData.success) {
-                        uploadedCoverUrl = imgbbData.data.url;
-                    } else {
-                        throw new Error("Cover Photo Upload Failed");
-                    }
-                } else {
+                        finalCoverUrl = imgbbData.data.url;
+                    } else throw new Error("Cover Photo Upload Failed");
+                } else if (!isEditing) {
                     throw new Error("Cover Photo is required");
                 }
 
                 submitText.innerText = translations["status_saving"][currentLang];
 
-                // 2. Prepare Data
-                const titleVal = document.getElementById('titleInput').value;
-                const excerptVal = document.getElementById('excerptInput').value;
-                const htmlContent = quill.root.innerHTML;
-                const plainText = quill.getText();
-                const readTime = calculateReadTime(plainText);
+                // Auto-publish logic: If admin -> approved, else -> pending
+                const publishStatus = (currentUserRole === 'admin') ? "approved" : "pending";
 
-                const authorNameVal = document.getElementById('authorName').value;
-                const batchVal = document.getElementById('authorBatch').value;
-                const fbVal = document.getElementById('authorFb').value;
-
-                // 3. Save to Firestore (Status: Pending)
-                await db.collection("stories").add({
-                    title: titleVal,
-                    excerpt: excerptVal,
-                    content: htmlContent,
-                    coverPhoto: uploadedCoverUrl,
+                const storyData = {
+                    title: document.getElementById('titleInput').value,
+                    excerpt: document.getElementById('excerptInput').value,
+                    content: quill.root.innerHTML,
+                    coverPhoto: finalCoverUrl,
                     authorId: currentUserUid,
-                    authorName: authorNameVal,
-                    authorBatch: batchVal,
-                    authorFb: fbVal,
+                    authorName: document.getElementById('authorName').value,
+                    authorBatch: document.getElementById('authorBatch').value,
+                    authorFb: document.getElementById('authorFb').value,
                     authorPhoto: currentUserPhotoUrl,
-                    status: "pending", // ADMIM APPROVAL REQUIRED
-                    readTime: readTime,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                    status: publishStatus,
+                    readTime: calculateReadTime(quill.getText())
+                };
 
-                alert(translations["status_success"][currentLang]);
-                window.location.href = "dashboard.html";
+                if (isEditing) {
+                    storyData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection("stories").doc(editStoryId).update(storyData);
+                    
+                    alert(translations["status_update_success"][currentLang]);
+                    window.location.href = "stories.html";
+                } else {
+                    storyData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection("stories").add(storyData);
+                    
+                    if (currentUserRole === 'admin') {
+                        alert(translations["status_admin_success"][currentLang]);
+                        window.location.href = "stories.html";
+                    } else {
+                        alert(translations["status_success"][currentLang]);
+                        window.location.href = "dashboard.html";
+                    }
+                }
 
             } catch (error) {
                 alert("Error: " + error.message);
                 submitIcon.className = 'fa-solid fa-paper-plane';
-                submitText.innerText = translations["btn_submit"][currentLang];
+                submitText.innerText = isEditing ? translations["btn_update"][currentLang] : translations["btn_submit"][currentLang];
                 submitBtn.disabled = false;
             }
         });
