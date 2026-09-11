@@ -60,7 +60,7 @@
             border-color: #e76f51;
             box-shadow: 0 0 15px rgba(231, 111, 81, 0.3);
             transform: translateY(-3px) scale(1.01);
-            outline: none; /* Fixed outline issue directly as before */
+            outline: none; 
         }
         select.glass-input option { background-color: #0a1c13; color: #f3f4f6; }
 
@@ -84,7 +84,7 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased min-h-screen flex md:items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden transition-colors duration-500 selection:bg-campfire selection:text-white" id="body-content">
 
-    <!-- DYNAMIC BACKGROUND (PARALLAX) -->
+    <!-- DYNAMIC BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1920" alt="Dark Campfire" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-br from-darkForest/90 via-moss/80 to-darkForest/90 transition-opacity duration-1000"></div>
@@ -116,7 +116,14 @@
         </div>
 
         <div class="p-8 sm:p-10">
-            <form id="edit-profile-form" class="space-y-6">
+            <!-- Loader -->
+            <div id="edit-loader" class="flex flex-col items-center justify-center py-20">
+                <i class="fa-solid fa-compass text-5xl text-campfire animate-spin mb-4"></i>
+                <p class="text-gray-400 font-bold tracking-widest animate-pulse" data-i18n="loading_data">প্রোফাইল ডেটা লোড হচ্ছে...</p>
+            </div>
+
+            <!-- Form (Hidden until data is fetched to prevent empty fields showing initially) -->
+            <form id="edit-profile-form" class="space-y-6 hidden opacity-0 transition-opacity duration-700">
                 
                 <div class="flex items-center gap-6 mb-8 p-6 bg-white/5 light-mode:bg-white/50 rounded-2xl border border-white/5 light-mode:border-gray-200" data-aos="fade-up" data-aos-delay="100">
                     <div class="relative w-24 h-24 rounded-full overflow-hidden border-2 border-campfire shadow-glow group shrink-0">
@@ -149,7 +156,6 @@
                     <input type="email" id="email" readonly class="glass-input bg-black/50 w-full text-sm rounded-xl block p-3.5 outline-none opacity-60 cursor-not-allowed">
                 </div>
 
-                <!-- NEW FIELDS: Dept & Batch -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div data-aos="fade-up" data-aos-delay="300">
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_dept">ডিপার্টমেন্ট *</label>
@@ -196,12 +202,11 @@
                         <input type="tel" id="phone" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
                     </div>
                     <div data-aos="fade-up" data-aos-delay="450">
-                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emergency">জরুরি কন্টাক্ট (পরিবার) *</label>
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emergency">জরুরি কন্টাক্ট নম্বর *</label>
                         <input type="tel" id="emergencyContact" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
                     </div>
                 </div>
 
-                <!-- NEW FIELDS: Gender & Relation -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div data-aos="fade-up" data-aos-delay="500">
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_gender">জেন্ডার *</label>
@@ -228,7 +233,6 @@
                     </select>
                 </div>
 
-                <!-- NEW FIELDS: Swimming & Bicycle -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div data-aos="fade-up" data-aos-delay="600">
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_swimming">সাঁতার জানেন? *</label>
@@ -248,7 +252,6 @@
                     </div>
                 </div>
 
-                <!-- NEW FIELD: Experience Level -->
                 <div data-aos="fade-up" data-aos-delay="650">
                     <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_exp">অ্যাডভেঞ্চার অভিজ্ঞতা *</label>
                     <select id="experienceLevel" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
@@ -259,7 +262,6 @@
                     </select>
                 </div>
 
-                <!-- NEW FIELD: Social Links (With Soft Validation) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="relative" data-aos="fade-up" data-aos-delay="700">
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক প্রোফাইল লিংক (ঐচ্ছিক)</label>
@@ -285,18 +287,13 @@
     <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
-        
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
-            
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
                 <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
                 </h3>
-                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-
             <div class="space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
@@ -308,7 +305,6 @@
                         <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
                     </div>
                 </div>
-
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
@@ -320,19 +316,16 @@
                     </div>
                 </div>
             </div>
-
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">
-                    সম্পন্ন
-                </button>
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">সম্পন্ন</button>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script> AOS.init({ once: true, offset: 50 }); </script>
 
-    <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
@@ -349,6 +342,9 @@
             batchSelect.appendChild(option);
         }
 
+        // ==========================================
+        // DICTIONARY & UI LOGIC
+        // ==========================================
         const translations = {
             "nav_settings": { bn: "সেটিংস", en: "Settings" },
             "edit_title": { bn: "প্রোফাইল এডিট", en: "Edit Profile" },
@@ -363,18 +359,16 @@
             "lbl_hall": { bn: "আবাসিক হল *", en: "Residential Hall *" },
             "lbl_blood": { bn: "রক্তের গ্রুপ *", en: "Blood Group *" },
             "lbl_phone": { bn: "নিজের ফোন নম্বর *", en: "Personal Phone *" },
-            "lbl_emergency": { bn: "জরুরি কন্টাক্ট (পরিবার) *", en: "Emergency Contact (Family) *" },
+            "lbl_emergency": { bn: "জরুরি কন্টাক্ট নম্বর *", en: "Emergency Contact No *" },
             "lbl_tshirt": { bn: "টি-শার্ট সাইজ *", en: "T-Shirt Size *" },
             "opt_attached": { bn: "অ্যাটাচড/অনাবাসিক", en: "Attached/Non-residential" },
             "btn_save": { bn: "পরিবর্তন সেভ করুন", en: "Save Changes" },
-            
-            // NEW STRINGS
             "lbl_dept": { bn: "ডিপার্টমেন্ট *", en: "Department *" },
             "lbl_batch": { bn: "ব্যাচ (সাল) *", en: "Batch (Year) *" },
             "lbl_gender": { bn: "জেন্ডার *", en: "Gender *" },
             "opt_male": { bn: "পুরুষ (Male)", en: "Male" },
             "opt_female": { bn: "নারী (Female)", en: "Female" },
-            "lbl_emg_rel": { bn: "জরুরি কন্টাক্টের সাথে সম্পর্ক *", en: "Relation with Contact *" },
+            "lbl_emg_rel": { bn: "সম্পর্ক (যেমন: বাবা/ভাই) *", en: "Relation (e.g. Father) *" },
             "lbl_swimming": { bn: "সাঁতার জানেন? *", en: "Know Swimming? *" },
             "lbl_bicycle": { bn: "নিজের সাইকেল আছে? *", en: "Own a Bicycle? *" },
             "opt_yes": { bn: "হ্যাঁ", en: "Yes" },
@@ -387,13 +381,13 @@
             "lbl_insta": { bn: "ইন্সটাগ্রাম লিংক (ঐচ্ছিক)", en: "Instagram Link (Optional)" },
             "warn_invalid_fb": { bn: "সতর্কতা: আদর্শ ফরম্যাট facebook.com/...", en: "Warning: Ideal format is facebook.com/..." },
             "warn_invalid_insta": { bn: "সতর্কতা: আদর্শ ফরম্যাট instagram.com/...", en: "Warning: Ideal format is instagram.com/..." },
-
             "modal_settings": { bn: "সেটিংস", en: "Settings" },
             "modal_theme": { bn: "থিম (Theme)", en: "Theme" },
             "modal_theme_desc": { bn: "ডার্ক ফরেস্ট বা মিস্ট মোড", en: "Dark Forest or Mist Mode" },
             "modal_lang": { bn: "ভাষা (Language)", en: "Language" },
             "modal_lang_desc": { bn: "বাংলা অথবা English", en: "Bangla or English" },
             "modal_done": { bn: "সম্পন্ন", en: "Done" },
+            "loading_data": { bn: "প্রোফাইল ডেটা লোড হচ্ছে...", en: "Loading profile data..." },
             "status_uploading": { bn: "ছবি আপলোড হচ্ছে...", en: "Uploading Photo..." },
             "status_saving": { bn: "ডেটাবেস আপডেট হচ্ছে...", en: "Updating Database..." },
             "status_success": { bn: "প্রোফাইল সফলভাবে আপডেট হয়েছে!", en: "Profile updated successfully!" }
@@ -411,65 +405,33 @@
                 }
             });
         }
-
         langToggle.addEventListener('change', function() {
             currentLang = this.checked ? 'en' : 'bn';
             localStorage.setItem('lang', currentLang);
             applyTranslations(currentLang);
-            if (currentUserUid) {
-                db.collection("users").doc(currentUserUid).update({ lang: currentLang }).catch(console.error);
-            }
         });
+        if(currentLang === 'en') langToggle.checked = true;
+        applyTranslations(currentLang);
 
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
         const themeToggle = document.getElementById('theme-toggle');
-        
-        const bgDarkImg = document.getElementById('bg-dark-img');
-        const bgDarkOverlay = document.getElementById('bg-dark-overlay');
-        const bgLightImg = document.getElementById('bg-light-img');
-        const bgLightOverlay = document.getElementById('bg-light-overlay');
-
-        function enableLightMode() {
-            htmlRoot.classList.add('light'); 
-            bodyContent.classList.add('light-mode'); 
-            bgDarkImg.classList.replace('opacity-20', 'opacity-0');
-            bgDarkOverlay.classList.replace('opacity-100', 'opacity-0');
-            bgLightImg.classList.replace('opacity-0', 'opacity-30');
-            bgLightOverlay.classList.replace('opacity-0', 'opacity-100');
-        }
-
-        function enableDarkMode() {
-            htmlRoot.classList.remove('light');
-            bodyContent.classList.remove('light-mode');
-            bgLightImg.classList.replace('opacity-30', 'opacity-0');
-            bgLightOverlay.classList.replace('opacity-100', 'opacity-0');
-            bgDarkImg.classList.replace('opacity-0', 'opacity-20');
-            bgDarkOverlay.classList.replace('opacity-0', 'opacity-100');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            enableLightMode(); themeToggle.checked = true;
         }
 
         themeToggle.addEventListener('change', function() {
-            const newTheme = this.checked ? 'light' : 'dark';
             if (this.checked) enableLightMode(); else enableDarkMode();
-            localStorage.setItem('theme', newTheme);
-            if (currentUserUid) {
-                db.collection("users").doc(currentUserUid).update({ theme: newTheme }).catch(console.error);
-            }
+            localStorage.setItem('theme', this.checked ? 'light' : 'dark');
         });
 
+        function enableLightMode() { htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0'); document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40'); document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100'); }
+        function enableDarkMode() { htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode'); document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0'); document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20'); document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100'); }
+
         const settingsModal = document.getElementById('settings-modal');
-        const settingsContent = document.getElementById('settings-content');
-
-        function openSettingsModal() {
-            settingsModal.classList.remove('hidden');
-            setTimeout(() => { settingsContent.classList.remove('scale-95'); settingsContent.classList.add('scale-100'); }, 10);
-        }
-
-        function closeSettingsModal() {
-            settingsContent.classList.remove('scale-100');
-            settingsContent.classList.add('scale-95');
-            setTimeout(() => { settingsModal.classList.add('hidden'); }, 300);
-        }
+        function openSettingsModal() { settingsModal.classList.remove('hidden'); }
+        function closeSettingsModal() { settingsModal.classList.add('hidden'); }
 
         // ==========================================
         // SMART LINK VALIDATION LOGIC (ADVISORY)
@@ -502,7 +464,7 @@
 
 
         // ==========================================
-        // FIREBASE LOGIC
+        // FIREBASE LOGIC (Auto-fill existing data)
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -519,7 +481,7 @@
         const db = firebase.firestore();
 
         const loader = document.getElementById('edit-loader');
-        const form = document.getElementById('edit-form');
+        const form = document.getElementById('edit-profile-form');
 
         let currentUserUid = null;
         let existingPhotoURL = '';
@@ -527,6 +489,7 @@
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUserUid = user.uid;
+                // FETCH USER DATA TO AUTO-FILL FORM
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     loader.classList.add('hidden');
                     if (doc.exists) {
@@ -535,13 +498,13 @@
                         document.getElementById('fullName').value = data.fullName || '';
                         document.getElementById('studentId').value = data.studentId || '';
                         document.getElementById('email').value = data.email || '';
-                        document.getElementById('phone').value = data.phone || '';
                         document.getElementById('hall').value = data.hall || 'Muktijoddha Hall';
                         document.getElementById('bloodGroup').value = data.bloodGroup || 'A+';
-                        document.getElementById('tshirtSize').value = data.tshirtSize || 'M';
+                        document.getElementById('phone').value = data.phone || '';
                         document.getElementById('emergencyContact').value = data.emergencyContact || '';
+                        document.getElementById('tshirtSize').value = data.tshirtSize || 'M';
                         
-                        // Populate New Fields
+                        // NEW FIELDS MAPPING
                         document.getElementById('department').value = data.department || '';
                         document.getElementById('batch').value = data.batch || '';
                         document.getElementById('gender').value = data.gender || '';
@@ -552,28 +515,10 @@
                         document.getElementById('fbLink').value = data.fbLink || '';
                         document.getElementById('instaLink').value = data.instaLink || '';
                         
+                        // Photo handling
                         existingPhotoURL = data.photoURL || '';
                         const avatarUrl = existingPhotoURL ? existingPhotoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         document.getElementById('preview-img').src = avatarUrl;
-
-                        if(data.theme) {
-                            localStorage.setItem('theme', data.theme);
-                            if(data.theme === 'light') { enableLightMode(); themeToggle.checked = true; }
-                            else { enableDarkMode(); themeToggle.checked = false; }
-                        } else {
-                            const localTheme = localStorage.getItem('theme');
-                            if (localTheme === 'light') { enableLightMode(); themeToggle.checked = true; }
-                        }
-
-                        if(data.lang) {
-                            localStorage.setItem('lang', data.lang);
-                            currentLang = data.lang;
-                            langToggle.checked = (data.lang === 'en');
-                            applyTranslations(currentLang);
-                        } else {
-                            langToggle.checked = (currentLang === 'en');
-                            applyTranslations(currentLang);
-                        }
 
                         form.classList.remove('hidden');
                         setTimeout(() => form.classList.remove('opacity-0'), 50);
@@ -606,6 +551,7 @@
             reader.onerror = error => reject(error);
         });
 
+        // FORM SUBMISSION (UPDATE PROFILE)
         document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
@@ -641,6 +587,7 @@
 
                 submitText.innerText = translations["status_saving"][currentLang];
 
+                // SAVE UPDATED DATA TO FIRESTORE
                 await db.collection("users").doc(currentUserUid).update({
                     fullName: document.getElementById('fullName').value.trim(),
                     studentId: document.getElementById('studentId').value.trim(),
@@ -667,8 +614,9 @@
                 alert(translations["status_success"][currentLang]);
                 window.location.href = "dashboard.html";
 
-            } catch (error) {
-                alert("Error: " + error.message);
+            } catch(err) {
+                console.error(err);
+                alert("Error: " + err.message);
                 submitIcon.className = 'fa-solid fa-cloud-arrow-up';
                 submitText.innerText = translations["btn_save"][currentLang];
                 submitBtn.disabled = false;
