@@ -60,6 +60,7 @@
             border-color: #e76f51;
             box-shadow: 0 0 15px rgba(231, 111, 81, 0.3);
             transform: translateY(-3px) scale(1.01);
+            outline: none; /* Fixed outline issue directly as before */
         }
         select.glass-input option { background-color: #0a1c13; color: #f3f4f6; }
 
@@ -148,8 +149,22 @@
                     <input type="email" id="email" readonly class="glass-input bg-black/50 w-full text-sm rounded-xl block p-3.5 outline-none opacity-60 cursor-not-allowed">
                 </div>
 
+                <!-- NEW FIELDS: Dept & Batch -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div data-aos="fade-up" data-aos-delay="300">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_dept">ডিপার্টমেন্ট *</label>
+                        <input type="text" id="department" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none uppercase">
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_batch">ব্যাচ (সাল) *</label>
+                        <select id="batch" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="350">
                         <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_hall">আবাসিক হল *</label>
                         <select id="hall" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
                             <option value="Muktijoddha Hall">Muktijoddha Hall</option>
@@ -186,7 +201,23 @@
                     </div>
                 </div>
 
-                <div data-aos="fade-up" data-aos-delay="500">
+                <!-- NEW FIELDS: Gender & Relation -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="500">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_gender">জেন্ডার *</label>
+                        <select id="gender" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Male" data-i18n="opt_male">পুরুষ (Male)</option>
+                            <option value="Female" data-i18n="opt_female">নারী (Female)</option>
+                        </select>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="500">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_emg_rel">জরুরি কন্টাক্টের সাথে সম্পর্ক *</label>
+                        <input type="text" id="emergencyRelation" required placeholder="e.g. Father, Brother" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="550">
                     <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_tshirt">টি-শার্ট সাইজ *</label>
                     <select id="tshirtSize" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
                         <option value="S">S (Small)</option>
@@ -197,7 +228,52 @@
                     </select>
                 </div>
 
-                <div class="pt-6" data-aos="zoom-in" data-aos-delay="600">
+                <!-- NEW FIELDS: Swimming & Bicycle -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_swimming">সাঁতার জানেন? *</label>
+                        <select id="swimmingSkill" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Yes" data-i18n="opt_yes">হ্যাঁ</option>
+                            <option value="No" data-i18n="opt_no">না</option>
+                        </select>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_bicycle">নিজের সাইকেল আছে? *</label>
+                        <select id="hasBicycle" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                            <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                            <option value="Yes" data-i18n="opt_yes">হ্যাঁ</option>
+                            <option value="No" data-i18n="opt_no">না</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- NEW FIELD: Experience Level -->
+                <div data-aos="fade-up" data-aos-delay="650">
+                    <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_exp">অ্যাডভেঞ্চার অভিজ্ঞতা *</label>
+                    <select id="experienceLevel" required class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none appearance-none cursor-pointer">
+                        <option value="" disabled selected data-i18n="opt_select">নির্বাচন করুন</option>
+                        <option value="Beginner" data-i18n="opt_exp_beg">বিগিনার (Beginner)</option>
+                        <option value="Intermediate" data-i18n="opt_exp_int">ইন্টারমিডিয়েট (Intermediate)</option>
+                        <option value="Pro" data-i18n="opt_exp_pro">প্রো (Pro Trekker)</option>
+                    </select>
+                </div>
+
+                <!-- NEW FIELD: Social Links (With Soft Validation) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="relative" data-aos="fade-up" data-aos-delay="700">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক প্রোফাইল লিংক (ঐচ্ছিক)</label>
+                        <input type="text" id="fbLink" placeholder="facebook.com/username" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                        <p id="fb-error" class="hidden absolute -bottom-4 left-1 text-yellow-500 font-bold text-[10px]"><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="warn_invalid_fb">সতর্কতা: আদর্শ ফরম্যাট facebook.com/...</span></p>
+                    </div>
+                    <div class="relative" data-aos="fade-up" data-aos-delay="700">
+                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_insta">ইন্সটাগ্রাম লিংক (ঐচ্ছিক)</label>
+                        <input type="text" id="instaLink" placeholder="instagram.com/username" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
+                        <p id="insta-error" class="hidden absolute -bottom-4 left-1 text-yellow-500 font-bold text-[10px]"><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="warn_invalid_insta">সতর্কতা: আদর্শ ফরম্যাট instagram.com/...</span></p>
+                    </div>
+                </div>
+
+                <div class="pt-8" data-aos="zoom-in" data-aos-delay="750">
                     <button type="submit" id="submit-btn" class="w-full bg-trail hover:bg-mountain text-white font-black text-lg py-4 px-4 rounded-xl transition-all shadow-glow hover:-translate-y-1 flex justify-center items-center gap-2">
                         <i id="submit-icon" class="fa-solid fa-cloud-arrow-up"></i> <span id="submit-text" data-i18n="btn_save">পরিবর্তন সেভ করুন</span>
                     </button>
@@ -262,6 +338,17 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // ==========================================
+        // DYNAMIC BATCH POPULATOR (1968 - 2050)
+        // ==========================================
+        const batchSelect = document.getElementById('batch');
+        for (let year = 2050; year >= 1968; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.text = year;
+            batchSelect.appendChild(option);
+        }
+
         const translations = {
             "nav_settings": { bn: "সেটিংস", en: "Settings" },
             "edit_title": { bn: "প্রোফাইল এডিট", en: "Edit Profile" },
@@ -280,6 +367,27 @@
             "lbl_tshirt": { bn: "টি-শার্ট সাইজ *", en: "T-Shirt Size *" },
             "opt_attached": { bn: "অ্যাটাচড/অনাবাসিক", en: "Attached/Non-residential" },
             "btn_save": { bn: "পরিবর্তন সেভ করুন", en: "Save Changes" },
+            
+            // NEW STRINGS
+            "lbl_dept": { bn: "ডিপার্টমেন্ট *", en: "Department *" },
+            "lbl_batch": { bn: "ব্যাচ (সাল) *", en: "Batch (Year) *" },
+            "lbl_gender": { bn: "জেন্ডার *", en: "Gender *" },
+            "opt_male": { bn: "পুরুষ (Male)", en: "Male" },
+            "opt_female": { bn: "নারী (Female)", en: "Female" },
+            "lbl_emg_rel": { bn: "জরুরি কন্টাক্টের সাথে সম্পর্ক *", en: "Relation with Contact *" },
+            "lbl_swimming": { bn: "সাঁতার জানেন? *", en: "Know Swimming? *" },
+            "lbl_bicycle": { bn: "নিজের সাইকেল আছে? *", en: "Own a Bicycle? *" },
+            "opt_yes": { bn: "হ্যাঁ", en: "Yes" },
+            "opt_no": { bn: "না", en: "No" },
+            "lbl_exp": { bn: "অ্যাডভেঞ্চার অভিজ্ঞতা *", en: "Adventure Experience *" },
+            "opt_exp_beg": { bn: "বিগিনার (Beginner)", en: "Beginner" },
+            "opt_exp_int": { bn: "ইন্টারমিডিয়েট (Intermediate)", en: "Intermediate" },
+            "opt_exp_pro": { bn: "প্রো (Pro Trekker)", en: "Pro Trekker" },
+            "lbl_fb": { bn: "ফেসবুক প্রোফাইল লিংক (ঐচ্ছিক)", en: "Facebook Profile Link (Optional)" },
+            "lbl_insta": { bn: "ইন্সটাগ্রাম লিংক (ঐচ্ছিক)", en: "Instagram Link (Optional)" },
+            "warn_invalid_fb": { bn: "সতর্কতা: আদর্শ ফরম্যাট facebook.com/...", en: "Warning: Ideal format is facebook.com/..." },
+            "warn_invalid_insta": { bn: "সতর্কতা: আদর্শ ফরম্যাট instagram.com/...", en: "Warning: Ideal format is instagram.com/..." },
+
             "modal_settings": { bn: "সেটিংস", en: "Settings" },
             "modal_theme": { bn: "থিম (Theme)", en: "Theme" },
             "modal_theme_desc": { bn: "ডার্ক ফরেস্ট বা মিস্ট মোড", en: "Dark Forest or Mist Mode" },
@@ -363,6 +471,39 @@
             setTimeout(() => { settingsModal.classList.add('hidden'); }, 300);
         }
 
+        // ==========================================
+        // SMART LINK VALIDATION LOGIC (ADVISORY)
+        // ==========================================
+        const fbInput = document.getElementById('fbLink');
+        const instaInput = document.getElementById('instaLink');
+        const fbErr = document.getElementById('fb-error');
+        const instaErr = document.getElementById('insta-error');
+
+        function checkFb() {
+            const val = fbInput.value.trim();
+            if(!val) { fbErr.classList.add('hidden'); return; } 
+            const regex = /^(https?:\/\/)?(www\.)?(facebook\.com|fb\.com|fb\.me)\/.+$/i;
+            if(regex.test(val)) { fbErr.classList.add('hidden'); }
+            else { fbErr.classList.remove('hidden'); }
+        }
+        
+        function checkInsta() {
+            const val = instaInput.value.trim();
+            if(!val) { instaErr.classList.add('hidden'); return; } 
+            const regex = /^(https?:\/\/)?(www\.)?instagram\.com\/.+$/i;
+            if(regex.test(val)) { instaErr.classList.add('hidden'); }
+            else { instaErr.classList.remove('hidden'); }
+        }
+
+        fbInput.addEventListener('input', checkFb);
+        fbInput.addEventListener('blur', checkFb);
+        instaInput.addEventListener('input', checkInsta);
+        instaInput.addEventListener('blur', checkInsta);
+
+
+        // ==========================================
+        // FIREBASE LOGIC
+        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -377,6 +518,9 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
+        const loader = document.getElementById('edit-loader');
+        const form = document.getElementById('edit-form');
+
         let currentUserUid = null;
         let existingPhotoURL = '';
 
@@ -384,16 +528,29 @@
             if (user) {
                 currentUserUid = user.uid;
                 db.collection("users").doc(user.uid).get().then((doc) => {
+                    loader.classList.add('hidden');
                     if (doc.exists) {
                         const data = doc.data();
+                        
                         document.getElementById('fullName').value = data.fullName || '';
                         document.getElementById('studentId').value = data.studentId || '';
                         document.getElementById('email').value = data.email || '';
+                        document.getElementById('phone').value = data.phone || '';
                         document.getElementById('hall').value = data.hall || 'Muktijoddha Hall';
                         document.getElementById('bloodGroup').value = data.bloodGroup || 'A+';
-                        document.getElementById('phone').value = data.phone || '';
-                        document.getElementById('emergencyContact').value = data.emergencyContact || '';
                         document.getElementById('tshirtSize').value = data.tshirtSize || 'M';
+                        document.getElementById('emergencyContact').value = data.emergencyContact || '';
+                        
+                        // Populate New Fields
+                        document.getElementById('department').value = data.department || '';
+                        document.getElementById('batch').value = data.batch || '';
+                        document.getElementById('gender').value = data.gender || '';
+                        document.getElementById('emergencyRelation').value = data.emergencyRelation || '';
+                        document.getElementById('swimmingSkill').value = data.swimmingSkill || '';
+                        document.getElementById('hasBicycle').value = data.hasBicycle || '';
+                        document.getElementById('experienceLevel').value = data.experienceLevel || '';
+                        document.getElementById('fbLink').value = data.fbLink || '';
+                        document.getElementById('instaLink').value = data.instaLink || '';
                         
                         existingPhotoURL = data.photoURL || '';
                         const avatarUrl = existingPhotoURL ? existingPhotoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
@@ -417,7 +574,13 @@
                             langToggle.checked = (currentLang === 'en');
                             applyTranslations(currentLang);
                         }
+
+                        form.classList.remove('hidden');
+                        setTimeout(() => form.classList.remove('opacity-0'), 50);
                     }
+                }).catch(err => {
+                    console.error(err);
+                    loader.innerHTML = `<p class="text-red-500 font-bold">ডেটা লোড করতে সমস্যা হয়েছে!</p>`;
                 });
             } else {
                 window.location.href = "login.html";
@@ -436,7 +599,6 @@
             }
         });
 
-        // Helper function to convert file to Base64
         const toBase64 = file => new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -446,6 +608,9 @@
 
         document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const user = auth.currentUser;
+            if(!user) return;
+
             const submitBtn = document.getElementById('submit-btn');
             const submitText = document.getElementById('submit-text');
             const submitIcon = document.getElementById('submit-icon');
@@ -459,20 +624,14 @@
 
                 if (selectedFile) {
                     submitText.innerText = translations["status_uploading"][currentLang];
-                    
-                    // NEW SECURE BACKEND CALL
                     const base64Image = await toBase64(selectedFile);
-                    
                     const response = await fetch('/api/upload', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ imageBase64: base64Image })
                     });
                     
                     const imgbbData = await response.json();
-                    
                     if (imgbbData.success) {
                         newPhotoURL = imgbbData.data.url;
                     } else {
@@ -483,14 +642,26 @@
                 submitText.innerText = translations["status_saving"][currentLang];
 
                 await db.collection("users").doc(currentUserUid).update({
-                    fullName: document.getElementById('fullName').value,
-                    studentId: document.getElementById('studentId').value,
+                    fullName: document.getElementById('fullName').value.trim(),
+                    studentId: document.getElementById('studentId').value.trim(),
                     hall: document.getElementById('hall').value,
                     bloodGroup: document.getElementById('bloodGroup').value,
-                    phone: document.getElementById('phone').value,
-                    emergencyContact: document.getElementById('emergencyContact').value,
+                    phone: document.getElementById('phone').value.trim(),
+                    emergencyContact: document.getElementById('emergencyContact').value.trim(),
                     tshirtSize: document.getElementById('tshirtSize').value,
-                    photoURL: newPhotoURL
+                    
+                    department: document.getElementById('department').value.trim().toUpperCase(),
+                    batch: document.getElementById('batch').value,
+                    gender: document.getElementById('gender').value,
+                    emergencyRelation: document.getElementById('emergencyRelation').value.trim(),
+                    swimmingSkill: document.getElementById('swimmingSkill').value,
+                    hasBicycle: document.getElementById('hasBicycle').value,
+                    experienceLevel: document.getElementById('experienceLevel').value,
+                    fbLink: document.getElementById('fbLink').value.trim(),
+                    instaLink: document.getElementById('instaLink').value.trim(),
+
+                    photoURL: newPhotoURL,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
                 alert(translations["status_success"][currentLang]);
