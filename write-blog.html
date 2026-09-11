@@ -30,7 +30,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <style>
@@ -152,19 +151,19 @@
                 </div>
 
                 <div class="pt-6 border-t border-white/10 light-mode:border-gray-200">
-                    <h3 class="text-sm font-black text-white light-mode:text-black mb-4 uppercase tracking-widest" data-i18n="lbl_author_info">লেখকের তথ্য</h3>
+                    <h3 class="text-sm font-black text-white light-mode:text-black mb-4 uppercase tracking-widest" data-i18n="lbl_author_info">লেখকের তথ্য (স্বয়ংক্রিয়ভাবে সংযুক্ত)</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_name">আপনার নাম *</label>
-                            <input type="text" id="authorName" required class="glass-input w-full p-3 rounded-xl text-sm">
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_name">আপনার নাম</label>
+                            <input type="text" id="authorName" readonly class="glass-input w-full p-3 rounded-xl text-sm opacity-70 cursor-not-allowed">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_batch">ডিপার্টমেন্ট ও ব্যাচ *</label>
-                            <input type="text" id="authorBatch" required placeholder="Ex: ME '14" class="glass-input w-full p-3 rounded-xl text-sm">
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_batch">ডিপার্টমেন্ট ও ব্যাচ</label>
+                            <input type="text" id="authorBatch" readonly class="glass-input w-full p-3 rounded-xl text-sm opacity-70 cursor-not-allowed">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক লিংক (ঐচ্ছিক)</label>
-                            <input type="url" id="authorFb" placeholder="https://facebook.com/..." class="glass-input w-full p-3 rounded-xl text-sm">
+                            <label class="block text-[10px] font-bold text-gray-400 light-mode:text-gray-500 mb-1.5 uppercase tracking-wider" data-i18n="lbl_fb">ফেসবুক লিংক</label>
+                            <input type="text" id="authorFb" readonly class="glass-input w-full p-3 rounded-xl text-sm opacity-70 cursor-not-allowed">
                         </div>
                     </div>
                 </div>
@@ -235,10 +234,10 @@
             "lbl_title": { bn: "গল্পের শিরোনাম *", en: "Story Title *" },
             "lbl_excerpt": { bn: "ছোট্ট সারাংশ (Excerpt) *", en: "Short Excerpt *" },
             "lbl_content": { bn: "মূল গল্প (মাঝে ছবি দিতে Image আইকনে ক্লিক করুন) *", en: "Main Story (Click Image icon to insert photos inline) *" },
-            "lbl_author_info": { bn: "লেখকের তথ্য", en: "Author Information" },
-            "lbl_name": { bn: "আপনার নাম *", en: "Your Name *" },
-            "lbl_batch": { bn: "ডিপার্টমেন্ট ও ব্যাচ *", en: "Department & Batch *" },
-            "lbl_fb": { bn: "ফেসবুক লিংক (ঐচ্ছিক)", en: "Facebook Link (Optional)" },
+            "lbl_author_info": { bn: "লেখকের তথ্য (স্বয়ংক্রিয়ভাবে সংযুক্ত)", en: "Author Information (Auto-attached)" },
+            "lbl_name": { bn: "আপনার নাম", en: "Your Name" },
+            "lbl_batch": { bn: "ডিপার্টমেন্ট ও ব্যাচ", en: "Department & Batch" },
+            "lbl_fb": { bn: "ফেসবুক লিংক", en: "Facebook Link" },
             "btn_submit": { bn: "গল্পটি সাবমিট করুন", en: "Submit Story" },
             "btn_update": { bn: "আপডেট করুন", en: "Update Story" },
             "status_uploading": { bn: "ছবি আপলোড হচ্ছে...", en: "Uploading Images..." },
@@ -276,9 +275,6 @@
         function openSettingsModal() { settingsModal.classList.remove('hidden'); }
         function closeSettingsModal() { settingsModal.classList.add('hidden'); }
 
-        // ==========================================
-        // QUILL.JS SETUP
-        // ==========================================
         const quill = new Quill('#editor-container', {
             theme: 'snow',
             placeholder: currentLang === 'en' ? 'Write your amazing adventure here...' : 'আপনার চমৎকার অ্যাডভেঞ্চার এখানে লিখুন...',
@@ -334,14 +330,11 @@
             };
         }
 
-        // ==========================================
-        // COVER PHOTO
-        // ==========================================
         const coverInput = document.getElementById('coverPhotoInput');
         const coverPreview = document.getElementById('cover-preview');
         const coverPlaceholder = document.getElementById('cover-placeholder');
         let selectedCoverFile = null;
-        let existingCoverUrl = ""; // For edit mode
+        let existingCoverUrl = ""; 
 
         coverInput.addEventListener('change', function(e) {
             selectedCoverFile = e.target.files[0];
@@ -375,9 +368,11 @@
 
         let currentUserUid = null;
         let currentUserPhotoUrl = '';
-        let currentUserRole = 'user'; // Check if admin
+        let currentUserRole = 'user';
+        let authorFetchedName = '';
+        let authorFetchedBatch = '';
+        let authorFetchedFb = '';
 
-        // URL parsing for Edit mode
         const urlParams = new URLSearchParams(window.location.search);
         const editStoryId = urlParams.get('edit');
         const isEditing = !!editStoryId;
@@ -391,10 +386,19 @@
                         currentUserRole = userData.role || 'user';
                         currentUserPhotoUrl = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName)}&background=e76f51&color=fff`;
                         
-                        // If not editing, pre-fill author name
-                        if(!isEditing) {
-                            document.getElementById('authorName').value = userData.fullName || "";
-                        } else {
+                        // FETCH AUTHOR DETAILS
+                        authorFetchedName = userData.fullName || "";
+                        const dept = userData.department || '';
+                        const batch = userData.batch || '';
+                        authorFetchedBatch = (dept && batch) ? `${dept} '${batch.slice(-2)}` : "Explorer";
+                        authorFetchedFb = userData.fbLink || "";
+
+                        // AUTO-FILL READONLY INPUTS
+                        document.getElementById('authorName').value = authorFetchedName;
+                        document.getElementById('authorBatch').value = authorFetchedBatch;
+                        document.getElementById('authorFb').value = authorFetchedFb;
+
+                        if(isEditing) {
                             loadStoryForEdit(editStoryId);
                         }
                     }
@@ -410,23 +414,23 @@
                 if(doc.exists) {
                     const data = doc.data();
                     
-                    // Populate UI
                     document.getElementById('titleInput').value = data.title;
                     document.getElementById('excerptInput').value = data.excerpt;
                     quill.root.innerHTML = data.content;
-                    document.getElementById('authorName').value = data.authorName;
-                    document.getElementById('authorBatch').value = data.authorBatch || '';
-                    document.getElementById('authorFb').value = data.authorFb || '';
+                    
+                    // IF EDITING, PRESERVE ORIGINAL AUTHOR INFO (Optional but good practice)
+                    document.getElementById('authorName').value = data.authorName || authorFetchedName;
+                    document.getElementById('authorBatch').value = data.authorBatch || authorFetchedBatch;
+                    document.getElementById('authorFb').value = data.authorFb || authorFetchedFb;
                     
                     existingCoverUrl = data.coverPhoto;
                     if(existingCoverUrl) {
                         coverPreview.src = existingCoverUrl;
                         coverPreview.classList.remove('hidden');
                         coverPlaceholder.classList.add('hidden');
-                        coverInput.removeAttribute('required'); // No longer required to upload a new one
+                        coverInput.removeAttribute('required'); 
                     }
                     
-                    // UI changes for Edit Mode
                     document.getElementById('submit-text').innerText = translations["btn_update"][currentLang];
                     document.getElementById('page-main-title').innerText = translations["edit_header"][currentLang];
                     document.getElementById('nav-header-title').innerText = translations["edit_header"][currentLang];
@@ -443,7 +447,6 @@
             return Math.ceil(words / wordsPerMinute);
         }
 
-        // SUBMIT OR UPDATE
         document.getElementById('blog-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -463,7 +466,6 @@
             try {
                 let finalCoverUrl = existingCoverUrl;
 
-                // Upload new cover if selected
                 if (selectedCoverFile) {
                     const base64Cover = await toBase64(selectedCoverFile);
                     const res = await fetch('/api/upload', {
@@ -481,7 +483,6 @@
 
                 submitText.innerText = translations["status_saving"][currentLang];
 
-                // Auto-publish logic: If admin -> approved, else -> pending
                 const publishStatus = (currentUserRole === 'admin') ? "approved" : "pending";
 
                 const storyData = {
