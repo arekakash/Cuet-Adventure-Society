@@ -30,6 +30,9 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Cropper.js CSS for 16:9 Image Cropping -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
     <style>
         ::-webkit-scrollbar { width: 8px; }
@@ -47,7 +50,6 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        /* Forms Styling from Event Builder */
         .glass-input {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -85,7 +87,6 @@
             transform: translate(-50%, -50%); font-size: 0.75rem;
         }
 
-        /* Tab Active State */
         .tab-active { background: rgba(231, 111, 81, 0.2); border-color: rgba(231, 111, 81, 0.5); color: #e76f51; }
     </style>
 </head>
@@ -100,7 +101,7 @@
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
-    <!-- HEADER: 100% Intact from original -->
+    <!-- HEADER -->
     <div class="fixed top-0 w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 text-red-500">
@@ -120,7 +121,7 @@
 
     <div class="relative z-10 pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6">
         
-        <!-- LOADER: 100% Intact -->
+        <!-- LOADER -->
         <div id="auth-loader" class="flex flex-col items-center justify-center py-32">
             <i class="fa-solid fa-shield text-5xl text-blue-500 animate-pulse mb-4"></i>
             <p class="text-gray-400 font-bold tracking-widest uppercase">Verifying Admin Access...</p>
@@ -128,7 +129,7 @@
 
         <div id="admin-content" class="hidden space-y-8">
             
-            <!-- ADMIN WELCOME BOX: 100% Intact -->
+            <!-- ADMIN WELCOME BOX -->
             <div class="glass-panel rounded-3xl p-6 sm:p-8 flex justify-between items-center" data-aos="fade-up">
                 <div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black">স্বাগতম, <span id="admin-name" class="text-campfire">Admin</span>!</h1>
@@ -136,7 +137,7 @@
                 </div>
             </div>
 
-            <!-- 🔴 NEW FEATURE: TAB NAVIGATION -->
+            <!-- TAB NAVIGATION -->
             <div class="flex gap-4 border-b border-white/10 light-mode:border-gray-200 pb-4" data-aos="fade-up" data-aos-delay="50">
                 <button onclick="switchTab('blogTab')" id="btn-blogTab" class="tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent">
                     <i class="fa-solid fa-book-open"></i> গল্প রিভিউ
@@ -146,9 +147,7 @@
                 </button>
             </div>
 
-            <!-- ========================================== -->
-            <!-- 🟢 TAB 1: ORIGINAL PENDING STORIES SECTION  -->
-            <!-- ========================================== -->
+            <!-- TAB 1: PENDING STORIES SECTION -->
             <div id="section-blogTab" class="block glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                     <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
@@ -165,9 +164,7 @@
                 </div>
             </div>
             
-            <!-- ========================================== -->
-            <!-- 🔵 TAB 2: NEW DYNAMIC EVENT LAUNCH SECTION -->
-            <!-- ========================================== -->
+            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION -->
             <div id="section-eventTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-6">
                     <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black tracking-tight mb-2">নতুন ইভেন্ট লঞ্চ করুন</h1>
@@ -182,6 +179,20 @@
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্টের শিরোনাম *</label>
                             <input type="text" id="evTitle" required placeholder="যেমন: কেওক্রাডং এক্সপেডিশন" class="glass-input w-full p-4 rounded-xl text-lg font-bold">
                         </div>
+                        
+                        <!-- 🟢 MODIFIED: DIRECT UPLOAD & CROP (16:9) -->
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">কভার ছবি (16:9 Ratio) *</label>
+                            <div class="relative w-full h-48 sm:h-64 rounded-2xl border-2 border-dashed border-gray-600 light-mode:border-gray-400 overflow-hidden group hover:border-campfire transition-colors cursor-pointer bg-black/20 light-mode:bg-white/50 flex items-center justify-center">
+                                <img id="ev-cover-preview" src="" class="absolute inset-0 w-full h-full object-cover hidden">
+                                <div id="ev-cover-placeholder" class="text-center p-6 relative z-10 pointer-events-none">
+                                    <i class="fa-solid fa-image text-4xl text-gray-500 mb-3 group-hover:text-campfire transition-colors"></i>
+                                    <p class="text-sm font-bold text-gray-400 light-mode:text-gray-600 group-hover:text-white light-mode:group-hover:text-black">ক্লিক করে ডিভাইস থেকে ছবি নির্বাচন করুন</p>
+                                </div>
+                                <input type="file" id="evCoverInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                            </div>
+                        </div>
+
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্ট ক্যাটাগরি *</label>
                             <select id="evCategory" required class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
@@ -199,11 +210,6 @@
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টিম লিডার *</label>
                             <input type="text" id="evLeader" required placeholder="লিডারের নাম ও ব্যাচ" class="glass-input w-full p-3.5 rounded-xl">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">কভার ছবি (URL) *</label>
-                            <input type="url" id="evCover" required placeholder="https://..." class="glass-input w-full p-3.5 rounded-xl">
-                            <p class="text-[10px] text-gray-500 mt-1">ImgBB বা যেকোনো ডাইরেক্ট ইমেজ লিংক দিন।</p>
                         </div>
                     </div>
 
@@ -326,7 +332,27 @@
         </div>
     </div>
 
+    <!-- 🟢 CROPPER MODAL (NEW) -->
+    <div id="cropper-modal" class="fixed inset-0 z-[60] hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-moss light-mode:bg-white rounded-3xl p-6 w-full max-w-3xl shadow-2xl border border-white/10">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-white light-mode:text-black font-bold text-xl"><i class="fa-solid fa-crop-simple text-campfire"></i> কভার ছবি ক্রপ করুন (16:9)</h3>
+                <button type="button" id="close-cropper" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div class="w-full h-[50vh] sm:h-[60vh] bg-black rounded-xl overflow-hidden">
+                <img id="cropper-image" src="" class="max-w-full block">
+            </div>
+            <div class="mt-6 flex justify-end gap-4">
+                <button type="button" id="crop-btn" class="bg-campfire hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-bold shadow-glow transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-check"></i> Crop & Save
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Cropper.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
@@ -334,7 +360,7 @@
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        // THEME ENGINE (100% Intact)
+        // THEME ENGINE 
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -361,18 +387,16 @@
             applyTheme();
         });
 
-        // TAB SWITCHING LOGIC (NEW)
+        // TAB SWITCHING LOGIC 
         function switchTab(tabId) {
-            // Update Buttons
             document.getElementById('btn-blogTab').className = tabId === 'blogTab' ? 'tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent' : 'text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5';
             document.getElementById('btn-eventTab').className = tabId === 'eventTab' ? 'tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent' : 'text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5';
             
-            // Show/Hide Sections
             document.getElementById('section-blogTab').style.display = tabId === 'blogTab' ? 'block' : 'none';
             document.getElementById('section-eventTab').style.display = tabId === 'eventTab' ? 'block' : 'none';
         }
 
-        // FIREBASE SETUP (100% Intact)
+        // FIREBASE SETUP 
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -388,7 +412,7 @@
         const noPendingMsg = document.getElementById('no-pending-msg');
         const pendingCount = document.getElementById('pending-count');
 
-        // ADMIN ACCESS CHECK (100% Intact)
+        // ADMIN ACCESS CHECK 
         auth.onAuthStateChanged((user) => {
             if (user) {
                 db.collection("users").doc(user.uid).get().then((doc) => {
@@ -415,7 +439,7 @@
             return timestamp.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        // LOAD PENDING STORIES (100% Intact)
+        // LOAD PENDING STORIES 
         function loadPendingStories() {
             db.collection("stories").where("status", "==", "pending")
                 .get()
@@ -474,10 +498,64 @@
         };
 
         // ==========================================
-        // EVENT CREATION LOGIC (NEW FEATURE)
+        // 🟢 CROPPER.JS LOGIC FOR 16:9 IMAGE
         // ==========================================
-        
-        // 1. Dynamic Itinerary Builder
+        let cropper;
+        let croppedBase64 = null; // Store final Base64 image
+        const evCoverInput = document.getElementById('evCoverInput');
+        const cropperModal = document.getElementById('cropper-modal');
+        const cropperImage = document.getElementById('cropper-image');
+        const evCoverPreview = document.getElementById('ev-cover-preview');
+        const evCoverPlaceholder = document.getElementById('ev-cover-placeholder');
+
+        evCoverInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    cropperImage.src = event.target.result;
+                    cropperModal.classList.remove('hidden');
+                    if(cropper) cropper.destroy();
+                    
+                    // Initialize Cropper strictly at 16:9
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: 16 / 9,
+                        viewMode: 2, // Restrict crop box to not exceed the canvas
+                        autoCropArea: 1,
+                    });
+                };
+                reader.readAsDataURL(file);
+                evCoverInput.value = ''; // Reset input to allow re-selection of same file if needed
+            }
+        });
+
+        document.getElementById('close-cropper').addEventListener('click', () => {
+            cropperModal.classList.add('hidden');
+            if(cropper) cropper.destroy();
+        });
+
+        document.getElementById('crop-btn').addEventListener('click', () => {
+            // Get cropped image data
+            const canvas = cropper.getCroppedCanvas({ 
+                width: 1280, // High Res width
+                height: 720  // 16:9 Height
+            });
+            croppedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+            
+            // Show in preview
+            evCoverPreview.src = croppedBase64;
+            evCoverPreview.classList.remove('hidden');
+            evCoverPlaceholder.classList.add('hidden');
+            
+            // Close modal
+            cropperModal.classList.add('hidden');
+            cropper.destroy();
+        });
+
+
+        // ==========================================
+        // EVENT CREATION LOGIC 
+        // ==========================================
         const daysInput = document.getElementById('evTotalDays');
         const itineraryContainer = document.getElementById('itinerary-container');
 
@@ -496,27 +574,47 @@
                 itineraryContainer.insertAdjacentHTML('beforeend', dayHTML);
             }
         }
-        generateItineraryFields(1); // Default 1 day
+        generateItineraryFields(1); 
         
         daysInput.addEventListener('input', (e) => {
             let val = parseInt(e.target.value);
             if(val > 0 && val <= 20) generateItineraryFields(val);
         });
 
-        // 2. Submit Event to Firestore
+        // Submit Event to Firestore with Direct Server Upload
         document.getElementById('event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            if (!croppedBase64) {
+                alert("দয়া করে ইভেন্টের কভার ছবি আপলোড ও ক্রপ করুন!");
+                return;
+            }
 
             const submitBtn = document.getElementById('ev-submit-btn');
             const submitText = document.getElementById('ev-submit-text');
             const submitIcon = document.getElementById('ev-submit-icon');
 
             submitIcon.className = 'fa-solid fa-circle-notch fa-spin';
-            submitText.innerText = "ইভেন্ট আপলোড হচ্ছে...";
+            submitText.innerText = "ছবি সার্ভারে আপলোড হচ্ছে...";
             submitBtn.disabled = true;
 
             try {
-                // Fetch Arrays
+                // 1. UPLOAD IMAGE TO SERVER FIRST
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imageBase64: croppedBase64 })
+                });
+                
+                const imgbbData = await response.json();
+                if (!imgbbData.success) {
+                    throw new Error("ইমেজ আপলোড ফেইল করেছে!");
+                }
+                const finalCoverPhotoUrl = imgbbData.data.url;
+
+                submitText.innerText = "ডেটাবেস সিঙ্ক হচ্ছে...";
+
+                // 2. Fetch Arrays
                 const includedItems = Array.from(document.querySelectorAll('#includedChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
                 const gearItems = Array.from(document.querySelectorAll('#gearChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
 
@@ -530,13 +628,13 @@
                     });
                 }
 
-                // Compile Master Event Object
+                // 3. Compile Master Event Object
                 const newEvent = {
                     title: document.getElementById('evTitle').value,
                     category: document.getElementById('evCategory').value,
                     destination: document.getElementById('evDestination').value,
                     teamLeader: document.getElementById('evLeader').value,
-                    coverPhoto: document.getElementById('evCover').value,
+                    coverPhoto: finalCoverPhotoUrl, // 🟢 Uploaded Server URL
                     
                     startDate: document.getElementById('evStart').value,
                     endDate: document.getElementById('evEnd').value,
@@ -560,14 +658,15 @@
                         nights: parseInt(document.getElementById('metaNights').value)
                     },
                     
-                    status: "upcoming", // Auto-set as upcoming
+                    status: "upcoming", 
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
+                // 4. Save to Firestore
                 await db.collection("events").add(newEvent);
 
                 alert("মাস্টারপিস ইভেন্ট সফলভাবে লঞ্চ করা হয়েছে!");
-                window.location.reload(); // Reset form and tabs
+                window.location.reload(); 
 
             } catch (error) {
                 console.error("Error creating event: ", error);
