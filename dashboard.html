@@ -117,6 +117,57 @@
             filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.08)) !important;
         }
 
+        /* 🟢 BULLETPROOF SIDEBAR & DROPDOWN LIGHT MODE FIXES 🟢 */
+        .light-mode #sidebar,
+        .light-mode #profile-dropdown {
+            background-color: #ffffff !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .light-mode #sidebar .border-white\/5,
+        .light-mode #profile-dropdown .border-white\/10 {
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        .light-mode #sidebar .bg-white\/5 {
+            background-color: #f1f5f9 !important; /* Light mode icon backgrounds */
+        }
+        
+        /* Sidebar & Dropdown Text Colors in Light Mode */
+        .light-mode #sidebar .text-white,
+        .light-mode #profile-dropdown .text-white {
+            color: #0f172a !important; /* Dark Slate for Headings */
+        }
+        .light-mode #sidebar .text-gray-300,
+        .light-mode #profile-dropdown .text-gray-300 {
+            color: #334155 !important; /* Standard Slate for links */
+        }
+        .light-mode #sidebar .text-gray-400,
+        .light-mode #sidebar .text-gray-500 {
+            color: #64748b !important; /* Muted grays */
+        }
+        
+        /* Hover Effects */
+        .light-mode #sidebar a:hover, 
+        .light-mode #sidebar button:hover,
+        .light-mode #profile-dropdown a:hover, 
+        .light-mode #profile-dropdown button:hover {
+            background-color: #f8fafc !important;
+        }
+        
+        /* Sidebar Bottom Mobile Area */
+        .light-mode #sidebar .glass-dark {
+            background-color: #f8fafc !important;
+        }
+        
+        /* Preserve Brand / Icon Colors */
+        .light-mode #sidebar .text-campfire, .light-mode #profile-dropdown .text-campfire { color: #e76f51 !important; }
+        .light-mode #sidebar .text-red-400, .light-mode #sidebar .text-red-500, .light-mode #profile-dropdown .text-red-500 { color: #ef4444 !important; }
+        .light-mode #sidebar .text-blue-400, .light-mode #profile-dropdown .text-blue-500 { color: #3b82f6 !important; }
+        .light-mode #sidebar .text-yellow-500 { color: #eab308 !important; }
+        .light-mode #sidebar .text-emerald-400 { color: #10b981 !important; }
+        .light-mode #sidebar .text-purple-400 { color: #a855f7 !important; }
+
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
     </style>
@@ -643,5 +694,7 @@
         document.getElementById('logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.href = "index.html"; }); });
         document.getElementById('mobile-logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.href = "index.html"; }); });
     </script>
+</body>
+</html>
 </body>
 </html>
