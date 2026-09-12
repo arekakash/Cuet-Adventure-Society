@@ -84,6 +84,7 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
 
+    <!-- BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90 transition-opacity duration-1000"></div>
@@ -96,7 +97,7 @@
 
     <!-- SIDEBAR -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
-    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
         <div class="p-6 flex justify-between items-center border-b border-white/5 light-mode:border-gray-200">
             <span class="font-black text-xl tracking-widest text-white light-mode:text-black"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
             <button id="sidebar-close-btn" class="text-gray-400 hover:text-white light-mode:hover:text-black text-2xl transition-colors"><i class="fa-solid fa-xmark"></i></button>
@@ -151,6 +152,10 @@
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-xl shadow-2xl py-2 transform transition-all z-50 text-gray-300 light-mode:text-gray-700">
+                        <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 sm:hidden">
+                            <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
+                            <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Active Explorer</p>
+                        </div>
                         <a href="edit-profile.html" class="block px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-2"><i class="fa-solid fa-user-pen w-4 text-center"></i> <span data-i18n="dash_edit">এডিট করুন</span></a>
                         <button onclick="openSettingsModal()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-2"><i class="fa-solid fa-gear w-4 text-center text-blue-400"></i> <span data-i18n="nav_settings">সেটিংস</span></button>
                         <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
@@ -161,6 +166,7 @@
         </div>
     </nav>
 
+    <!-- MAIN DASHBOARD CONTENT -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
         
         <!-- LEFT COLUMN: Profile Info -->
@@ -205,7 +211,7 @@
                         <p class="font-black text-red-500 text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"><i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span></p>
                     </div>
                     <div class="p-3 data-box rounded-xl hover:border-trail/50 transition-colors">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_gear">Gear Size</p>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_gear">Combat Gear</p>
                         <p class="font-black text-trail text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(45,106,79,0.5)]"><i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span></p>
                     </div>
                     <div class="p-3 data-box rounded-xl hover:border-blue-500/30 transition-colors">
@@ -231,7 +237,7 @@
         <!-- RIGHT COLUMN: Stats & Bookings -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- 🟢 DYNAMIC GAMIFICATION STATS -->
+            <!-- 🟢 GAMIFICATION STATS (WITH PROPER IDs) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
                     <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
@@ -255,7 +261,7 @@
                 </div>
             </div>
 
-            <!-- 🟢 NEW: MY BOOKINGS SECTION -->
+            <!-- 🟢 MY BOOKINGS SECTION (WITH PROPER IDs) -->
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="450">
                 <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/50">
                     <h3 class="text-sm font-bold text-white light-mode:text-black tracking-widest uppercase flex items-center gap-2">
@@ -264,7 +270,7 @@
                 </div>
                 
                 <div id="bookings-container" class="p-6 space-y-4">
-                    <!-- Bookings injected here -->
+                    <!-- Bookings injected here via JS -->
                 </div>
 
                 <div id="bookings-empty" class="hidden p-10 text-center flex flex-col items-center justify-center">
@@ -291,13 +297,12 @@
         </div>
     </div>
 
+    <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
-                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
-                </h3>
+                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2"><i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span></h3>
                 <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-6">
@@ -330,12 +335,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script> AOS.init({ once: true, offset: 50 }); </script>
-
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // Translations Dictionary
         const translations = {
             "nav_title": { bn: "CUET AS", en: "CUET AS" },
             "nav_profile": { bn: "আমার প্রোফাইল", en: "My Profile" },
@@ -359,11 +364,11 @@
             "dash_tactical": { bn: "ট্যাকটিক্যাল ডেটা", en: "Tactical Data" },
             "dash_edit": { bn: "এডিট করুন", en: "Edit" },
             "dash_blood": { bn: "Blood Group", en: "Blood Group" },
-            "dash_gear": { bn: "Combat Gear Size", en: "Combat Gear Size" },
+            "dash_gear": { bn: "Combat Gear", en: "Combat Gear" },
             "dash_sos": { bn: "SOS Contact", en: "SOS Contact" },
-            "dash_swimming": { bn: "Swimming Skill", en: "Swimming Skill" },
-            "dash_bicycle": { bn: "Own Bicycle", en: "Own Bicycle" },
-            "dash_exp": { bn: "Experience Level", en: "Experience Level" },
+            "dash_swimming": { bn: "Swimming", en: "Swimming" },
+            "dash_bicycle": { bn: "Bicycle", en: "Bicycle" },
+            "dash_exp": { bn: "Experience", en: "Experience" },
             "dash_stat1": { bn: "Total Treks", en: "Total Treks" },
             "dash_stat2": { bn: "Nights Camped", en: "Nights Camped" },
             "dash_stat3": { bn: "Distance", en: "Distance" },
@@ -391,6 +396,7 @@
             if (currentUserUid) db.collection("users").doc(currentUserUid).update({ lang: currentLang }).catch(console.error);
         });
 
+        // Theme Engine
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
         const themeToggle = document.getElementById('theme-toggle');
@@ -405,6 +411,7 @@
             if (currentUserUid) db.collection("users").doc(currentUserUid).update({ theme: newTheme }).catch(console.error);
         });
 
+        // Modals & Sidebars
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
         function openSidebar() { sidebar.classList.remove('-translate-x-full'); sidebarOverlay.classList.remove('hidden'); }
@@ -441,80 +448,94 @@
             if (user) {
                 currentUserUid = user.uid;
                 
-                // 1. Fetch User Profile Data & Gamification Stats
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         const userData = doc.data();
                         
-                        document.getElementById('nav-user-name').innerText = userData.fullName || "Explorer";
-                        document.getElementById('dropdown-user-name').innerText = userData.fullName || "Explorer";
-                        document.getElementById('display-name').innerText = userData.fullName || "Explorer";
-                        document.getElementById('display-id').innerText = userData.studentId || "N/A";
-                        document.getElementById('display-hall').innerText = userData.hall || "N/A";
-                        document.getElementById('display-blood').innerText = userData.bloodGroup || "N/A";
-                        document.getElementById('display-tshirt').innerText = userData.tshirtSize || "N/A";
+                        // Map Text Fields Safely
+                        const safeSetText = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
+                        
+                        safeSetText('nav-user-name', userData.fullName || "Explorer");
+                        safeSetText('dropdown-user-name', userData.fullName || "Explorer");
+                        safeSetText('display-name', userData.fullName || "Explorer");
+                        safeSetText('display-id', userData.studentId || "N/A");
+                        safeSetText('display-hall', userData.hall || "N/A");
+                        safeSetText('display-blood', userData.bloodGroup || "N/A");
+                        safeSetText('display-tshirt', userData.tshirtSize || "N/A");
                         
                         const dept = userData.department || '';
                         const batch = userData.batch || '';
-                        document.getElementById('display-dept-batch').innerText = (dept && batch) ? `${dept} '${batch.slice(-2)}` : "Explorer";
-                        document.getElementById('display-swimming').innerText = userData.swimmingSkill || "N/A";
-                        document.getElementById('display-bicycle').innerText = userData.hasBicycle || "N/A";
-                        document.getElementById('display-experience').innerText = userData.experienceLevel || "N/A";
-                        document.getElementById('display-emergency').innerText = (userData.emergencyContact || "N/A") + (userData.emergencyRelation ? ` (${userData.emergencyRelation})` : '');
+                        safeSetText('display-dept-batch', (dept && batch) ? `${dept} '${String(batch).slice(-2)}` : "Explorer");
+                        
+                        safeSetText('display-swimming', userData.swimmingSkill || "N/A");
+                        safeSetText('display-bicycle', userData.hasBicycle || "N/A");
+                        safeSetText('display-experience', userData.experienceLevel || "N/A");
+                        safeSetText('display-emergency', (userData.emergencyContact || "N/A") + (userData.emergencyRelation ? ` (${userData.emergencyRelation})` : ''));
 
-                        // SOCIAL LINKS
+                        // Social Links
                         const socialContainer = document.getElementById('social-links-container');
-                        socialContainer.innerHTML = '';
-                        if(userData.fbLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.fbLink.startsWith('http') ? userData.fbLink : 'https://' + userData.fbLink}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-facebook-f"></i></a>`);
-                        if(userData.instaLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.instaLink.startsWith('http') ? userData.instaLink : 'https://' + userData.instaLink}" target="_blank" class="w-7 h-7 rounded-full bg-pink-600/20 text-pink-400 hover:bg-pink-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-instagram"></i></a>`);
+                        if(socialContainer) {
+                            socialContainer.innerHTML = '';
+                            if(userData.fbLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.fbLink.startsWith('http') ? userData.fbLink : 'https://' + userData.fbLink}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-facebook-f"></i></a>`);
+                            if(userData.instaLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.instaLink.startsWith('http') ? userData.instaLink : 'https://' + userData.instaLink}" target="_blank" class="w-7 h-7 rounded-full bg-pink-600/20 text-pink-400 hover:bg-pink-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-instagram"></i></a>`);
+                        }
 
-                        // AVATAR
-                        const finalAvatarUrl = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName)}&background=e76f51&color=fff&size=256&bold=true`;
-                        document.getElementById('nav-profile-img').src = finalAvatarUrl;
-                        document.getElementById('dash-profile-img').src = finalAvatarUrl;
+                        // Avatars
+                        const finalAvatarUrl = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
+                        const navImg = document.getElementById('nav-profile-img');
+                        const dashImg = document.getElementById('dash-profile-img');
+                        if(navImg) navImg.src = finalAvatarUrl;
+                        if(dashImg) dashImg.src = finalAvatarUrl;
 
-                        // LIVE GAMIFICATION STATS (Pulled from DB)
-                        document.getElementById('stat-treks').innerText = userData.totalTreks || 0;
-                        document.getElementById('stat-nights').innerText = userData.totalNights || 0;
-                        document.getElementById('stat-distance').innerText = userData.totalDistance || 0;
+                        // Gamification Stats
+                        safeSetText('stat-treks', userData.totalTreks || 0);
+                        safeSetText('stat-nights', userData.totalNights || 0);
+                        safeSetText('stat-distance', userData.totalDistance || 0);
 
+                        // Admin Check
                         if(userData.role === 'admin') {
                             const adminLink = document.getElementById('sidebar-admin-link');
                             if(adminLink) adminLink.classList.remove('hidden');
                         }
 
+                        // Theme/Lang Sync
                         if(userData.theme) { localStorage.setItem('theme', userData.theme); if(userData.theme === 'light') { enableLightMode(); themeToggle.checked = true; } else { enableDarkMode(); themeToggle.checked = false; } }
                         if(userData.lang) { localStorage.setItem('lang', userData.lang); currentLang = userData.lang; langToggle.checked = (userData.lang === 'en'); applyTranslations(currentLang); }
-                    } else window.location.href = "signup.html";
-                });
+                    } else {
+                        window.location.href = "signup.html";
+                    }
+                }).catch(console.error);
 
-                // 2. FETCH MY BOOKINGS
+                // Fetch My Bookings
                 db.collection("bookings").where("userId", "==", user.uid).get().then((querySnapshot) => {
                     const bookingsContainer = document.getElementById('bookings-container');
                     const emptyState = document.getElementById('bookings-empty');
                     
                     if(querySnapshot.empty) {
-                        emptyState.classList.remove('hidden');
+                        if(emptyState) emptyState.classList.remove('hidden');
                     } else {
-                        emptyState.classList.add('hidden');
-                        querySnapshot.forEach(doc => {
-                            const bData = doc.data();
-                            const isApproved = bData.paymentStatus === 'approved';
-                            const statusBadge = isApproved 
-                                ? `<span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"><i class="fa-solid fa-check mr-1"></i> Confirmed</span>`
-                                : `<span class="bg-yellow-500/20 text-yellow-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest animate-pulse"><i class="fa-solid fa-clock mr-1"></i> Pending</span>`;
-                            
-                            const card = `
-                                <div class="bg-black/30 light-mode:bg-white/60 border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-300'} p-4 rounded-xl flex justify-between items-center transition-all hover:bg-black/50">
-                                    <div>
-                                        <h4 class="font-bold text-white light-mode:text-black text-sm mb-1">${bData.eventTitle}</h4>
-                                        <p class="text-[10px] text-gray-500 uppercase tracking-widest">TrxID: ${bData.trxId}</p>
+                        if(emptyState) emptyState.classList.add('hidden');
+                        if(bookingsContainer) {
+                            bookingsContainer.innerHTML = '';
+                            querySnapshot.forEach(doc => {
+                                const bData = doc.data();
+                                const isApproved = bData.paymentStatus === 'approved';
+                                const statusBadge = isApproved 
+                                    ? `<span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"><i class="fa-solid fa-check mr-1"></i> Confirmed</span>`
+                                    : `<span class="bg-yellow-500/20 text-yellow-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest animate-pulse"><i class="fa-solid fa-clock mr-1"></i> Pending</span>`;
+                                
+                                const card = `
+                                    <div class="bg-black/30 light-mode:bg-white/60 border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-300'} p-4 rounded-xl flex justify-between items-center transition-all hover:bg-black/50">
+                                        <div>
+                                            <h4 class="font-bold text-white light-mode:text-black text-sm mb-1">${bData.eventTitle}</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase tracking-widest">TrxID: ${bData.trxId}</p>
+                                        </div>
+                                        <div>${statusBadge}</div>
                                     </div>
-                                    <div>${statusBadge}</div>
-                                </div>
-                            `;
-                            bookingsContainer.insertAdjacentHTML('beforeend', card);
-                        });
+                                `;
+                                bookingsContainer.insertAdjacentHTML('beforeend', card);
+                            });
+                        }
                     }
                 });
 
