@@ -77,10 +77,6 @@
         .light-mode .hero-panel {
             background: rgba(248, 250, 252, 0.8) !important;
         }
-        .light-mode .lm-bg-white {
-            background: #ffffff !important;
-            border-color: rgba(0, 0, 0, 0.1) !important;
-        }
         .light-mode .lm-bg-button {
             background: #f1f5f9 !important;
             border-color: rgba(0, 0, 0, 0.1) !important;
@@ -104,13 +100,13 @@
 
         /* Light Mode Input Fixes */
         .light-mode .glass-input {
-            background: #f8fafc !important;
+            background: #f8fafc !important; /* Slate 50 */
             border: 1px solid rgba(0, 0, 0, 0.15) !important;
-            color: #0f172a !important;
+            color: #0f172a !important; /* Slate 900 */
             font-weight: 600 !important;
         }
         .light-mode .glass-input::placeholder {
-            color: #94a3b8 !important;
+            color: #94a3b8 !important; /* Slate 400 */
             font-weight: 500 !important;
         }
         .light-mode .glass-input:focus {
@@ -119,11 +115,11 @@
             box-shadow: 0 0 15px rgba(231, 111, 81, 0.15) !important;
         }
         .light-mode select.glass-input option { background-color: #f8fafc !important; color: #0f172a !important; }
+        .light-mode .bg-black\/50 { background-color: rgba(0,0,0,0.05) !important; }
 
         /* Custom Toggle Switch CSS */
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
-        .modal-overlay { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         
         input:-webkit-autofill,
         input:-webkit-autofill:hover, 
@@ -143,7 +139,7 @@
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-br from-darkForest/90 via-moss/80 to-darkForest/90 transition-opacity duration-1000"></div>
         
         <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/95 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
 
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-campfire/10 rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_4s_ease-in-out_infinite]"></div>
         <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-trail/10 rounded-full mix-blend-screen filter blur-[80px] animate-[pulse_6s_ease-in-out_infinite]"></div>
@@ -169,7 +165,7 @@
                         <i class="fa-solid fa-fire-flame-curved text-6xl text-campfire drop-shadow-[0_0_15px_rgba(231,111,81,0.8)] animate-pulse"></i>
                     </div>
                     
-                    <h2 class="text-4xl lg:text-5xl font-black leading-tight mb-5 tracking-tight text-white lm-text-dark drop-shadow-lg" data-i18n="signup_hero_title">
+                    <h2 class="text-4xl lg:text-5xl font-black leading-tight mb-5 tracking-tight text-white lm-text-dark drop-shadow-lg light-mode:drop-shadow-none" data-i18n="signup_hero_title">
                         অজানার পথে <br><span class="text-campfire">প্রথম পা</span>
                     </h2>
                     <p class="text-gray-400 lm-text-muted text-sm sm:text-base leading-relaxed border-l-2 border-campfire pl-4" data-i18n="signup_hero_desc">
@@ -190,21 +186,21 @@
                     <h3 class="text-2xl lg:text-3xl font-black text-white lm-text-dark mb-2 tracking-tight" data-i18n="signup_title">অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</h3>
                     <p class="text-sm text-gray-300 lm-text-muted mb-2">
                         <span data-i18n="signup_already">ইতোমধ্যে কি অ্যাকাউন্ট আছে?</span> 
-                        <a href="login.html" class="text-campfire font-bold hover:text-white lm-text-dark transition-colors border-b border-transparent hover:border-white lm-border-light pb-0.5" data-i18n="signup_login_link">এখানে লগইন করুন</a>
+                        <a href="login.html" class="text-campfire font-bold hover:text-white lm-text-dark transition-colors border-b border-transparent hover:border-white light-mode:hover:border-black pb-0.5" data-i18n="signup_login_link">এখানে লগইন করুন</a>
                     </p>
-                    <p class="text-xs text-gray-500 font-medium" data-i18n="signup_google_subtitle">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
+                    <p class="text-xs text-gray-500 lm-text-muted font-medium" data-i18n="signup_google_subtitle">অধিক নিরাপত্তার জন্য আপনার গুগল অ্যাকাউন্ট সংযুক্ত করুন</p>
                 </div>
             </div>
 
             <!-- Dynamic Alert Box for Google Signup -->
-            <div id="google-alert-box" class="hidden p-4 mb-6 bg-emerald-500/10 light-mode:bg-emerald-50 border border-emerald-500/20 rounded-xl text-emerald-400 light-mode:text-emerald-700 text-sm font-bold flex items-center gap-3 backdrop-blur-sm" data-aos="fade-in">
+            <div id="google-alert-box" class="hidden p-4 mb-6 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 light-mode:text-emerald-700 text-sm font-bold flex items-center gap-3 backdrop-blur-sm" data-aos="fade-in">
                 <i class="fa-solid fa-check-circle text-xl shrink-0"></i>
                 <span data-i18n="signup_google_alert">গুগল অ্যাকাউন্ট সংযুক্ত হয়েছে! দয়া করে নিচের তথ্যগুলো দিয়ে প্রোফাইল সম্পূর্ণ করুন।</span>
             </div>
 
             <!-- Google Login Section -->
             <div id="social-login-section" data-aos="fade-up" data-aos-delay="400">
-                <button id="google-login-btn" type="button" class="w-full flex items-center justify-center gap-3 bg-white/5 lm-bg-button border border-white/10 lm-border-light text-gray-200 lm-text-dark hover:border-campfire/50 hover:shadow-glow-sm font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group backdrop-blur-sm cursor-pointer shadow-sm">
+                <button id="google-login-btn" type="button" class="w-full flex items-center justify-center gap-3 bg-white/5 lm-bg-button border border-white/10 lm-border-light text-gray-200 lm-text-dark hover:border-campfire/50 font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group backdrop-blur-sm cursor-pointer shadow-sm">
                     <span id="google-btn-content" class="flex items-center gap-3 relative z-10 pointer-events-none">
                         <svg class="w-5 h-5" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.58c2.08-1.92 3.27-4.74 3.27-8.09z"/>
@@ -428,7 +424,7 @@
                 </div>
             </div>
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 lm-bg-button border border-white/10 lm-border-light text-white lm-text-dark font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">সম্পন্ন</button>
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 lm-bg-button text-white lm-text-dark font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">সম্পন্ন</button>
             </div>
         </div>
     </div>
@@ -650,7 +646,7 @@
                     document.getElementById('fullName').value = user.displayName || '';
                     document.getElementById('email').value = user.email || '';
                     document.getElementById('email').readOnly = true;
-                    document.getElementById('email').classList.add('opacity-50', 'cursor-not-allowed', 'bg-black/50', 'light-mode:!bg-gray-200');
+                    document.getElementById('email').classList.add('opacity-50', 'cursor-not-allowed', 'bg-black/50');
 
                     applyTranslations(currentLang);
                     document.getElementById('submit-icon').className = 'fa-solid fa-cloud-arrow-up';
@@ -741,6 +737,3 @@
     </script>
 </body>
 </html>
-
-
-আশা করি লাইট মোডের সমস্যাটি এবার ঠিক হয়ে গেছে ।  এখন আমাদের কি কি কাজ করা বাকি আছে?
