@@ -43,8 +43,9 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .light-mode .glass-panel {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
         }
 
         .glass-input {
@@ -69,6 +70,10 @@
             border-color: #e76f51;
         }
 
+        /* 🟢 Light Mode Readability Fixes 🟢 */
+        .light-mode .lm-text-dark { color: #0f172a !important; text-shadow: none !important; }
+        .light-mode .lm-text-muted { color: #475569 !important; }
+
         /* Accordion Smooth Transition */
         .accordion-content {
             max-height: 0;
@@ -89,14 +94,14 @@
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter grayscale-[20%] transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/95 to-mistBg/95 opacity-0 backdrop-blur-[6px] transition-opacity duration-1000"></div>
     </div>
 
     <!-- NAVBAR -->
     <nav class="fixed w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
-            <a href="events.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 px-4 py-2 rounded-full border border-white/10">
+            <a href="events.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 px-4 py-2 rounded-full border border-white/10 light-mode:border-gray-300">
                 <i class="fa-solid fa-arrow-left"></i> ইভেন্ট লিস্ট
             </a>
             <div id="nav-user-profile" class="hidden flex items-center gap-3">
@@ -112,9 +117,9 @@
     </nav>
 
     <!-- LOADER -->
-    <div id="page-loader" class="fixed inset-0 z-50 bg-darkForest flex flex-col items-center justify-center">
+    <div id="page-loader" class="fixed inset-0 z-50 bg-darkForest light-mode:bg-white flex flex-col items-center justify-center">
         <i class="fa-solid fa-compass text-5xl text-campfire animate-spin mb-4 shadow-glow rounded-full"></i>
-        <p class="text-gray-400 font-bold tracking-widest animate-pulse">লোড হচ্ছে...</p>
+        <p class="text-gray-400 light-mode:text-gray-500 font-bold tracking-widest animate-pulse">লোড হচ্ছে...</p>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -122,13 +127,14 @@
         
         <!-- HERO BANNER -->
         <div class="relative w-full h-[40vh] sm:h-[50vh] overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-t from-darkForest light-mode:from-mistBg to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-darkForest light-mode:from-white to-transparent z-10"></div>
             <img id="ev-cover" src="" class="w-full h-full object-cover parallax-img" alt="Event Cover">
             <div class="absolute bottom-0 left-0 w-full z-20 px-4 sm:px-6 lg:px-8 pb-8 max-w-7xl mx-auto flex flex-col justify-end h-full">
                 <div data-aos="fade-up">
                     <span id="ev-category" class="inline-block px-3 py-1 bg-campfire/20 text-campfire border border-campfire/30 rounded-md text-xs font-bold uppercase tracking-widest mb-3 backdrop-blur-md">Category</span>
-                    <h1 id="ev-title" class="text-3xl sm:text-5xl lg:text-6xl font-black text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)] mb-2 leading-tight">Event Title</h1>
-                    <p class="text-lg sm:text-xl text-gray-200 font-medium flex items-center gap-2 drop-shadow-md">
+                    <h1 id="ev-title" class="text-3xl sm:text-5xl lg:text-6xl font-black text-white lm-text-dark drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)] light-mode:drop-shadow-none mb-2 leading-tight">Event Title</h1>
+                    <p id="ev-subtitle" class="text-sm sm:text-lg text-gray-300 lm-text-muted font-bold mb-4 hidden tracking-wide bg-black/20 light-mode:bg-gray-100/50 inline-block px-3 py-1 rounded-lg backdrop-blur-sm"></p>
+                    <p class="text-lg sm:text-xl text-gray-200 lm-text-dark font-black flex items-center gap-2 drop-shadow-md light-mode:drop-shadow-none">
                         <i class="fa-solid fa-location-dot text-campfire"></i> <span id="ev-destination">Destination</span>
                     </p>
                 </div>
@@ -140,39 +146,63 @@
             <!-- LEFT COLUMN: DETAILS -->
             <div class="lg:col-span-2 space-y-8">
                 
-                <!-- Quick Meta Cards -->
+                <!-- Quick Meta Cards (Row 1) -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" data-aos="fade-up">
                     <div class="glass-panel p-4 rounded-2xl text-center">
                         <i class="fa-regular fa-calendar-check text-2xl text-blue-400 mb-2"></i>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">যাত্রা শুরু</p>
-                        <p id="ev-start-date" class="text-sm font-black text-white light-mode:text-black">...</p>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">যাত্রা শুরু</p>
+                        <p id="ev-start-date" class="text-sm font-black text-white lm-text-dark mt-1">...</p>
                     </div>
                     <div class="glass-panel p-4 rounded-2xl text-center">
                         <i class="fa-solid fa-fire-flame-curved text-2xl text-orange-500 mb-2"></i>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">ডিফিকাল্টি</p>
-                        <p id="ev-difficulty" class="text-sm font-black text-white light-mode:text-black">...</p>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">ডিফিকাল্টি</p>
+                        <p id="ev-difficulty" class="text-sm font-black text-white lm-text-dark mt-1">...</p>
                     </div>
                     <div class="glass-panel p-4 rounded-2xl text-center">
                         <i class="fa-solid fa-users text-2xl text-emerald-400 mb-2"></i>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">টিম লিডার</p>
-                        <p id="ev-leader" class="text-sm font-black text-white light-mode:text-black">...</p>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">টিম লিডার</p>
+                        <p id="ev-leader" class="text-sm font-black text-white lm-text-dark mt-1 flex flex-col items-center gap-1">...</p>
                     </div>
-                    <div class="glass-panel p-4 rounded-2xl text-center border border-red-500/20 bg-red-500/5">
+                    <div class="glass-panel p-4 rounded-2xl text-center border border-red-500/20 bg-red-500/5 light-mode:bg-red-50">
                         <i class="fa-solid fa-hourglass-end text-2xl text-red-500 mb-2 animate-pulse"></i>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">ডেডলাইন</p>
-                        <p id="ev-deadline" class="text-sm font-black text-red-400">...</p>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">ডেডলাইন</p>
+                        <p id="ev-deadline" class="text-sm font-black text-red-400 light-mode:text-red-600 mt-1">...</p>
+                    </div>
+                </div>
+
+                <!-- 🟢 NEW: Logistics & Vibe Cards (Row 2) -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" data-aos="fade-up">
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-tent text-xl text-cyan-400 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">থাকার ব্যবস্থা</p>
+                        <p id="ev-stay" class="text-sm font-black text-white lm-text-dark mt-1">N/A</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-restroom text-xl text-blue-400 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">ওয়াশরুম</p>
+                        <p id="ev-washroom" class="text-sm font-black text-white lm-text-dark mt-1">N/A</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-utensils text-xl text-yellow-400 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">খাবার প্ল্যান</p>
+                        <p id="ev-food" class="text-sm font-black text-white lm-text-dark mt-1">N/A</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-heart-pulse text-xl text-campfire mb-2"></i>
+                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase font-bold">ট্যুর ভাইব</p>
+                        <p id="ev-vibe" class="text-sm font-black text-white lm-text-dark mt-1 leading-tight">N/A</p>
                     </div>
                 </div>
 
                 <!-- Description -->
                 <div class="glass-panel p-6 sm:p-8 rounded-3xl" data-aos="fade-up">
-                    <h3 class="text-xl font-black text-white light-mode:text-black mb-4 border-b border-white/10 pb-2">ইভেন্টের বিস্তারিত</h3>
-                    <p id="ev-desc" class="text-gray-300 light-mode:text-gray-700 leading-relaxed text-sm whitespace-pre-wrap">...</p>
+                    <h3 class="text-xl font-black text-white lm-text-dark mb-4 border-b border-white/10 light-mode:border-gray-200 pb-2">ইভেন্টের বিস্তারিত</h3>
+                    <p id="ev-desc" class="text-gray-300 lm-text-muted leading-relaxed text-sm whitespace-pre-wrap font-medium">...</p>
                 </div>
 
                 <!-- Itinerary Accordion -->
                 <div class="glass-panel p-6 sm:p-8 rounded-3xl" data-aos="fade-up">
-                    <h3 class="text-xl font-black text-white light-mode:text-black mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+                    <h3 class="text-xl font-black text-white lm-text-dark mb-4 border-b border-white/10 light-mode:border-gray-200 pb-2 flex items-center gap-2">
                         <i class="fa-solid fa-map-location-dot text-trail"></i> ডাইনামিক ট্যুর প্ল্যান
                     </h3>
                     <div id="itinerary-list" class="space-y-4 mt-6">
@@ -180,37 +210,56 @@
                     </div>
                 </div>
 
-                <!-- Checklists -->
+                <!-- 🟢 UPGRADED: 4 Block Checklists & Warnings -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up">
-                    <div class="glass-panel p-6 rounded-3xl">
-                        <h3 class="font-bold text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</h3>
-                        <ul id="included-list" class="space-y-2 text-sm text-gray-300 light-mode:text-gray-700"></ul>
+                    <div class="glass-panel p-6 rounded-3xl border border-emerald-500/20 light-mode:bg-emerald-50">
+                        <h3 class="font-bold text-emerald-400 light-mode:text-emerald-700 mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</h3>
+                        <ul id="included-list" class="space-y-2 text-sm text-gray-300 lm-text-dark font-medium"></ul>
                     </div>
-                    <div class="glass-panel p-6 rounded-3xl border border-yellow-500/20">
-                        <h3 class="font-bold text-yellow-500 mb-4 flex items-center gap-2"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</h3>
-                        <ul id="gear-list" class="space-y-2 text-sm text-gray-300 light-mode:text-gray-700"></ul>
+                    <div class="glass-panel p-6 rounded-3xl border border-yellow-500/20 light-mode:bg-yellow-50">
+                        <h3 class="font-bold text-yellow-500 light-mode:text-amber-600 mb-4 flex items-center gap-2"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</h3>
+                        <ul id="gear-list" class="space-y-2 text-sm text-gray-300 lm-text-dark font-medium"></ul>
                     </div>
                 </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6" data-aos="fade-up">
+                    <div class="glass-panel p-6 rounded-3xl border border-gray-500/30 light-mode:bg-gray-100">
+                        <h3 class="font-bold text-gray-400 lm-text-muted mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> ইনক্লুডেড নয় (Excluded)</h3>
+                        <ul id="excluded-list" class="space-y-2 text-sm text-gray-400 lm-text-dark font-medium"></ul>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl border border-red-500/30 light-mode:bg-red-50">
+                        <h3 class="font-bold text-red-400 light-mode:text-red-600 mb-4 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> বিশেষ সতর্কতা ও রুলস</h3>
+                        <ul id="warnings-list" class="space-y-2 text-sm text-gray-300 lm-text-dark font-medium"></ul>
+                    </div>
+                </div>
+
             </div>
 
             <!-- RIGHT COLUMN: BOOKING PANEL -->
             <div class="space-y-6">
                 
                 <div class="glass-panel rounded-3xl p-6 sm:p-8 sticky top-24 border border-campfire/30 shadow-[0_0_30px_rgba(231,111,81,0.15)]" data-aos="fade-left">
-                    <div class="text-center mb-6 border-b border-white/10 pb-6">
-                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">বুকিং ফি (জনপ্রতি)</p>
-                        <h2 class="text-4xl font-black text-white light-mode:text-black">৳<span id="ev-fee">0</span></h2>
+                    
+                    <!-- 🟢 UPGRADED: Financial Meta -->
+                    <div class="text-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-6">
+                        <p class="text-xs font-bold text-gray-500 lm-text-muted uppercase tracking-widest mb-1">বুকিং ফি (Advance)</p>
+                        <h2 class="text-4xl font-black text-white lm-text-dark mb-2">৳<span id="ev-booking-fee">0</span></h2>
+                        <p class="text-xs font-black text-gray-400 lm-text-muted">টোটাল ইভেন্ট ফি: ৳<span id="ev-total-fee">0</span></p>
+                        <div class="mt-3 inline-block px-3 py-1 bg-gray-500/10 light-mode:bg-gray-200 border border-gray-500/20 light-mode:border-gray-300 rounded-lg text-[10px] text-gray-400 lm-text-dark font-bold uppercase tracking-widest">
+                            <i class="fa-solid fa-rotate-left"></i> Policy: <span id="ev-refund-policy">...</span>
+                        </div>
                     </div>
 
-                    <div class="flex justify-between items-center mb-6 bg-black/30 light-mode:bg-gray-100 p-4 rounded-xl">
-                        <span class="text-sm font-bold text-gray-400">খালি সিট:</span>
-                        <span id="ev-seats-left" class="text-2xl font-black text-emerald-400">0</span>
+                    <div class="flex justify-between items-center mb-6 bg-black/30 light-mode:bg-gray-100 p-4 rounded-xl border border-white/5 light-mode:border-gray-200">
+                        <span class="text-sm font-bold text-gray-400 lm-text-muted">খালি সিট:</span>
+                        <span id="ev-seats-left" class="text-2xl font-black text-emerald-400 light-mode:text-emerald-600">0</span>
                     </div>
 
-                    <div id="payment-instructions" class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-                        <p class="text-xs font-bold text-blue-400 mb-2"><i class="fa-solid fa-circle-info"></i> পেমেন্ট নির্দেশনা:</p>
-                        <p class="text-sm text-gray-300 light-mode:text-gray-700 mb-2">নিচের নম্বরে সেন্ড মানি করে TrxID ফর্মে দিন:</p>
-                        <p class="text-lg font-black text-white light-mode:text-black tracking-widest text-center bg-black/40 py-2 rounded-lg"><span id="ev-bkash">...</span></p>
+                    <!-- 🟢 UPGRADED: Payment Info -->
+                    <div id="payment-instructions" class="mb-6 p-5 bg-blue-500/10 light-mode:bg-blue-50 border border-blue-500/20 light-mode:border-blue-200 rounded-xl">
+                        <p class="text-xs font-bold text-blue-400 light-mode:text-blue-700 mb-2 uppercase tracking-widest"><i class="fa-solid fa-circle-info"></i> পেমেন্ট মেথড:</p>
+                        <p class="text-sm text-gray-300 lm-text-dark font-bold mb-3">বুকিং মানি নিচের নম্বরে সেন্ড মানি করুন:</p>
+                        <p class="text-sm sm:text-base font-black text-white lm-text-dark tracking-widest text-center bg-black/40 light-mode:bg-white border border-white/10 light-mode:border-gray-200 py-3 rounded-lg"><span id="ev-bkash">...</span></p>
                     </div>
 
                     <form id="booking-form" class="space-y-4">
@@ -219,13 +268,13 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">ট্রানজেকশন আইডি (TrxID) *</label>
+                            <label class="block text-xs font-bold text-gray-400 lm-text-muted mb-1.5 uppercase">ট্রানজেকশন আইডি (TrxID) *</label>
                             <input type="text" id="trxId" required placeholder="e.g. 9F3R2K..." class="glass-input w-full p-3.5 rounded-xl uppercase font-bold tracking-widest text-center disabled:opacity-50">
                         </div>
 
-                        <label class="flex items-start gap-3 mt-4 cursor-pointer">
-                            <input type="checkbox" id="agreeRules" required class="mt-1 w-4 h-4 rounded border-gray-600 bg-black/50 text-campfire focus:ring-campfire focus:ring-offset-0 disabled:opacity-50">
-                            <span class="text-[10px] text-gray-400 leading-tight">আমি ঘোষণা করছি যে, ইভেন্টের সকল নিয়মকানুন ও রিস্ক সম্পর্কে আমি অবগত এবং আমার পেমেন্ট ইনফরমেশন সঠিক।</span>
+                        <label class="flex items-start gap-3 mt-4 cursor-pointer group">
+                            <input type="checkbox" id="agreeRules" required class="mt-1 w-4 h-4 rounded border-gray-600 bg-black/50 text-campfire focus:ring-campfire focus:ring-offset-0 disabled:opacity-50 cursor-pointer">
+                            <span class="text-[10px] text-gray-400 lm-text-muted leading-tight font-medium group-hover:text-white light-mode:group-hover:text-black transition-colors">আমি ঘোষণা করছি যে, ইভেন্টের রিফান্ড পলিসি, রুলস ও রিস্ক সম্পর্কে আমি অবগত এবং আমার পেমেন্ট ইনফরমেশন সঠিক।</span>
                         </label>
 
                         <button type="submit" id="book-btn" class="w-full mt-4 bg-campfire hover:bg-orange-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-glow hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none">
@@ -255,7 +304,8 @@
         if (localStorage.getItem('theme') === 'light') {
             htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode');
             document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
-            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40');
+            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-100');
+            document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100');
         }
 
         // Accordion Logic Helper
@@ -288,7 +338,6 @@
         let dbUserInfo = null;
         let eventDataRaw = null;
 
-        // Verify ID
         if(!eventId) {
             alert("কোনো ইভেন্ট আইডি পাওয়া যায়নি!");
             window.location.href = "events.html";
@@ -346,74 +395,103 @@
             
             eventDataRaw = doc.data();
             
-            // Render Hero
+            // Render Hero (Including New Subtitle)
             document.getElementById('ev-cover').src = eventDataRaw.coverPhoto;
             document.getElementById('ev-category').innerText = eventDataRaw.category;
             document.getElementById('ev-title').innerText = eventDataRaw.title;
             document.getElementById('ev-destination').innerText = eventDataRaw.destination;
 
-            // Render Meta
+            if(eventDataRaw.subtitle) {
+                const subEl = document.getElementById('ev-subtitle');
+                subEl.innerText = eventDataRaw.subtitle;
+                subEl.classList.remove('hidden');
+            }
+
+            // Render Quick Meta
             document.getElementById('ev-start-date').innerText = formatDateTime(eventDataRaw.startDate);
             document.getElementById('ev-difficulty').innerText = eventDataRaw.difficulty;
+            document.getElementById('ev-deadline').innerText = formatDateTime(eventDataRaw.deadline);
             
-            // 🟢 NEW: SMART SEARCH LOGIC FOR TEAM LEADER
+            // 🟢 UPGRADED: Smart Leader Data + Contact Sync
             const leaderEl = document.getElementById('ev-leader');
-            const leaderName = eventDataRaw.teamLeader;
-            leaderEl.innerText = leaderName; // Default setup
+            const leaderName = eventDataRaw.teamLeader || 'N/A';
+            
+            let contactIcons = '';
+            if(eventDataRaw.leaderPhone) contactIcons += `<a href="tel:${eventDataRaw.leaderPhone}" class="text-blue-400 hover:text-blue-300 transition-colors bg-blue-500/10 p-1.5 rounded-full" title="Call"><i class="fa-solid fa-phone"></i></a>`;
+            if(eventDataRaw.leaderWhatsapp) contactIcons += `<a href="https://wa.me/88${eventDataRaw.leaderWhatsapp}" target="_blank" class="text-green-500 hover:text-green-400 transition-colors bg-green-500/10 p-1.5 rounded-full" title="WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>`;
+            
+            leaderEl.innerHTML = `<span class="truncate w-full block">${leaderName}</span> <div class="mt-1 flex items-center justify-center gap-2">${contactIcons}</div>`;
 
-            if(leaderName) {
+            if(leaderName !== 'N/A') {
                 db.collection("users").where("fullName", "==", leaderName).limit(1).get()
                 .then(snapshot => {
                     if(!snapshot.empty) {
                         const leaderId = snapshot.docs[0].id;
-                        // Replace text with a clickable link if user exists
-                        leaderEl.innerHTML = `<a href="public-profile.html?uid=${leaderId}" class="text-campfire hover:text-orange-500 hover:underline transition-colors tracking-wide" title="লিডারের প্রোফাইল দেখুন">${leaderName} <i class="fa-solid fa-link text-[10px] ml-1"></i></a>`;
+                        leaderEl.innerHTML = `<a href="public-profile.html?uid=${leaderId}" class="text-campfire hover:text-orange-500 hover:underline transition-colors tracking-wide truncate w-full block" title="লিডারের প্রোফাইল দেখুন">${leaderName} <i class="fa-solid fa-link text-[10px] ml-1"></i></a> <div class="mt-1 flex items-center justify-center gap-2">${contactIcons}</div>`;
                     }
                 }).catch(e => console.error("Leader search failed:", e));
             }
 
-            document.getElementById('ev-deadline').innerText = formatDateTime(eventDataRaw.deadline);
+            // 🟢 NEW: Render Logistics & Vibe
+            document.getElementById('ev-stay').innerText = eventDataRaw.stayType || 'N/A';
+            document.getElementById('ev-washroom').innerText = eventDataRaw.washroom || 'N/A';
+            document.getElementById('ev-food').innerText = eventDataRaw.foodPlan || 'N/A';
             
-            // Description & Price
+            let vibeText = eventDataRaw.tourVibe || 'N/A';
+            if(eventDataRaw.fitnessLevel) vibeText += ` (Fit: ${eventDataRaw.fitnessLevel}/10)`;
+            document.getElementById('ev-vibe').innerText = vibeText;
+
+            // Render Financial & Booking Info
             document.getElementById('ev-desc').innerText = eventDataRaw.description;
-            document.getElementById('ev-fee').innerText = eventDataRaw.tourFee;
-            document.getElementById('ev-bkash').innerText = eventDataRaw.bkashNo;
+            
+            // Advanced Booking Amounts Logic
+            document.getElementById('ev-booking-fee').innerText = eventDataRaw.bookingFee || eventDataRaw.tourFee;
+            document.getElementById('ev-total-fee').innerText = eventDataRaw.tourFee;
+            document.getElementById('ev-refund-policy').innerText = eventDataRaw.refundPolicy || 'Non-Refundable';
+            document.getElementById('ev-bkash').innerText = eventDataRaw.paymentMethods || eventDataRaw.bkashNo || 'Not Provided';
 
             // Seats Math
             const seatsLeft = eventDataRaw.totalSeats - (eventDataRaw.bookedSeats || 0);
             const seatsEl = document.getElementById('ev-seats-left');
             seatsEl.innerText = seatsLeft;
             if(seatsLeft <= 5) {
-                seatsEl.classList.remove('text-emerald-400');
+                seatsEl.classList.remove('text-emerald-400', 'light-mode:text-emerald-600');
                 seatsEl.classList.add('text-red-500', 'animate-pulse');
             }
 
-            // Render Included
+            // 🟢 UPGRADED: Render Checklists (4 Types)
+            const listClasses = "fa-solid mr-2";
+            
             const incList = document.getElementById('included-list');
-            if(eventDataRaw.included && eventDataRaw.included.length > 0) {
-                incList.innerHTML = eventDataRaw.included.map(i => `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> ${i}</li>`).join('');
-            } else incList.innerHTML = "<li>N/A</li>";
+            if(eventDataRaw.included && eventDataRaw.included.length > 0) incList.innerHTML = eventDataRaw.included.map(i => `<li><i class="${listClasses} fa-check text-emerald-500"></i> ${i}</li>`).join('');
+            else incList.innerHTML = "<li>N/A</li>";
 
-            // Render Gear
             const gearList = document.getElementById('gear-list');
-            if(eventDataRaw.requiredGear && eventDataRaw.requiredGear.length > 0) {
-                gearList.innerHTML = eventDataRaw.requiredGear.map(i => `<li><i class="fa-solid fa-chevron-right text-yellow-500 mr-2"></i> ${i}</li>`).join('');
-            } else gearList.innerHTML = "<li>N/A</li>";
+            if(eventDataRaw.requiredGear && eventDataRaw.requiredGear.length > 0) gearList.innerHTML = eventDataRaw.requiredGear.map(i => `<li><i class="${listClasses} fa-chevron-right text-yellow-500"></i> ${i}</li>`).join('');
+            else gearList.innerHTML = "<li>N/A</li>";
+
+            const excList = document.getElementById('excluded-list');
+            if(eventDataRaw.excluded && eventDataRaw.excluded.length > 0) excList.innerHTML = eventDataRaw.excluded.map(i => `<li><i class="${listClasses} fa-xmark text-gray-400"></i> ${i}</li>`).join('');
+            else excList.innerHTML = "<li>N/A</li>";
+
+            const warnList = document.getElementById('warnings-list');
+            if(eventDataRaw.warnings && eventDataRaw.warnings.length > 0) warnList.innerHTML = eventDataRaw.warnings.map(i => `<li><i class="${listClasses} fa-triangle-exclamation text-red-400"></i> ${i}</li>`).join('');
+            else warnList.innerHTML = "<li>N/A</li>";
 
             // Render Dynamic Itinerary
             const itinContainer = document.getElementById('itinerary-list');
             if(eventDataRaw.itinerary && eventDataRaw.itinerary.length > 0) {
                 itinContainer.innerHTML = eventDataRaw.itinerary.map(day => `
                     <div class="border border-white/10 light-mode:border-gray-300 rounded-xl overflow-hidden bg-black/20 light-mode:bg-white/50">
-                        <div class="p-4 cursor-pointer flex justify-between items-center hover:bg-white/5 transition-colors" onclick="toggleAccordion(this)">
-                            <h4 class="font-bold text-white light-mode:text-black text-sm flex items-center gap-2">
-                                <span class="bg-trail/20 text-trail px-2 py-1 rounded text-[10px] tracking-widest uppercase">Day ${day.day}</span>
+                        <div class="p-4 cursor-pointer flex justify-between items-center hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors" onclick="toggleAccordion(this)">
+                            <h4 class="font-bold text-white lm-text-dark text-sm flex items-center gap-2">
+                                <span class="bg-trail/20 light-mode:bg-trail/10 text-trail px-2 py-1 rounded text-[10px] tracking-widest uppercase">Day ${day.day}</span>
                                 ${day.title}
                             </h4>
                             <i class="fa-solid fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                         </div>
-                        <div class="accordion-content bg-black/40 light-mode:bg-gray-100">
-                            <p class="p-4 text-xs text-gray-300 light-mode:text-gray-600 leading-relaxed border-t border-white/5 light-mode:border-gray-200">
+                        <div class="accordion-content bg-black/40 light-mode:bg-gray-50">
+                            <p class="p-4 text-xs text-gray-300 lm-text-muted leading-relaxed border-t border-white/5 light-mode:border-gray-200 font-medium">
                                 ${day.desc}
                             </p>
                         </div>
@@ -437,7 +515,7 @@
                         db.collection('bookings').where("eventId", "==", eventId).where("userId", "==", user.uid).get().then(snapshot => {
                             if(!snapshot.empty) {
                                 disableBooking("আপনি অলরেডি বুক করেছেন");
-                                document.getElementById('status-message').innerHTML = `আপনার বুকিং রিকোয়েস্ট অ্যাডমিনের কাছে <span class="text-yellow-500">পেন্ডিং</span> আছে।`;
+                                document.getElementById('status-message').innerHTML = `আপনার বুকিং রিকোয়েস্ট অ্যাডমিনের কাছে <span class="text-yellow-500 font-black">পেন্ডিং</span> আছে।`;
                                 document.getElementById('status-message').classList.remove('hidden');
                                 document.getElementById('status-message').classList.add('border-yellow-500/30', 'bg-yellow-500/10', 'text-yellow-500');
                             }
