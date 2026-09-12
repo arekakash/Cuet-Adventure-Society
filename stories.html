@@ -164,6 +164,12 @@
                 <div class="w-8 h-8 rounded-lg bg-trail flex items-center justify-center text-white shadow-glow-trail"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
+            
+            <!-- LEADERBOARD LINK IN SIDEBAR -->
+            <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-black transition-colors shadow-glow-gold"><i class="fa-solid fa-trophy"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_leaderboard">লিডারবোর্ড</span>
+            </a>
         </div>
     </div>
 
@@ -263,8 +269,9 @@
             "nav_logout": { bn: "লগ-আউট", en: "Logout" },
             "nav_home": { bn: "হোমপেজ", en: "Homepage" },
             "sidebar_activities": { bn: "আমাদের কার্যক্রম", en: "OUR ACTIVITIES" },
-            "menu_stories": { bn: "অ্যাডভেঞ্চারের গল্প", en: "Adventure Stories" },
             "menu_upcoming": { bn: "আপকামিং ইভেন্ট", en: "Upcoming Events" },
+            "menu_stories": { bn: "অ্যাডভেঞ্চারের গল্প", en: "Adventure Stories" },
+            "menu_leaderboard": { bn: "লিডারবোর্ড", en: "Leaderboard" },
             "modal_settings": { bn: "সেটিংস", en: "Settings" },
             "modal_theme": { bn: "থিম (Theme)", en: "Theme" },
             "modal_theme_desc": { bn: "ডার্ক ফরেস্ট বা মিস্ট মোড", en: "Dark Forest or Mist Mode" },
@@ -431,14 +438,15 @@
             window.location.href = `write-blog.html?edit=${id}`;
         }
         
-        // 🟢 NEW: REDIRECT TO AUTHOR PUBLIC PROFILE
+        // 🟢 FIX: ROBUST REDIRECT TO AUTHOR PUBLIC PROFILE
         window.openAuthorProfile = function(event, authorId) {
             event.preventDefault(); 
             event.stopPropagation(); 
-            if(authorId) {
+            // Check if authorId is valid and not literally the string "undefined"
+            if(authorId && authorId.trim() !== '' && authorId !== 'undefined' && authorId !== 'null') {
                 window.location.href = `public-profile.html?uid=${authorId}`;
             } else {
-                alert("লেখকের প্রোফাইল লিংক পাওয়া যায়নি।");
+                alert("দুঃখিত! এই লেখকের প্রোফাইল ডেটাবেসে আপডেট করা নেই (এটি সম্ভবত পুরোনো পোস্ট)।");
             }
         }
 
@@ -471,7 +479,7 @@
                     </div>
                 ` : '';
 
-                // 🟢 UPDATED: Author Block (Clickable to Public Profile)
+                // 🟢 UPDATED: Handled undefined author ID gracefully
                 const cardHTML = `
                     <a href="story-reader.html?id=${story.id}" data-aos="fade-up" data-aos-delay="${delay}" class="relative glass-panel block rounded-[2rem] overflow-hidden hover:-translate-y-2 transition-transform duration-300 shadow-xl group border border-white/5 light-mode:border-gray-200">
                         ${adminActions}
@@ -488,7 +496,7 @@
                             <p class="text-sm text-gray-400 light-mode:text-gray-600 mb-6 line-clamp-3 leading-relaxed">${story.excerpt}</p>
                             
                             <!-- CLICKABLE AUTHOR BLOCK -->
-                            <div onclick="openAuthorProfile(event, '${story.authorId}')" class="flex items-center gap-3 pt-5 border-t border-white/10 light-mode:border-gray-200 hover:bg-white/5 light-mode:hover:bg-gray-100 p-2 -mx-2 rounded-xl transition-colors cursor-pointer" title="View Profile">
+                            <div onclick="openAuthorProfile(event, '${story.authorId || ''}')" class="flex items-center gap-3 pt-5 border-t border-white/10 light-mode:border-gray-200 hover:bg-white/5 light-mode:hover:bg-gray-100 p-2 -mx-2 rounded-xl transition-colors cursor-pointer" title="View Profile">
                                 <img src="${story.authorPhoto || 'https://ui-avatars.com/api/?name='+encodeURIComponent(story.authorName)+'&background=0a1c13&color=fff'}" class="w-10 h-10 rounded-full border-2 border-trail object-cover">
                                 <div>
                                     <p class="text-sm font-bold text-gray-300 light-mode:text-gray-800 leading-tight group-hover:text-trail transition-colors">${story.authorName}</p>
