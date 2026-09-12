@@ -49,20 +49,42 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .light-mode .glass-dark {
-            background: rgba(248, 250, 252, 0.85);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
         .glass-panel {
             background: rgba(10, 28, 19, 0.6);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* 🟢 BULLETPROOF LIGHT MODE 🟢 */
         .light-mode .glass-panel {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06) !important;
         }
+        .light-mode .lm-text-dark { color: #0f172a !important; text-shadow: none !important; }
+        .light-mode .lm-text-muted { color: #475569 !important; }
+        .light-mode .glass-dark {
+            background: rgba(248, 250, 252, 0.95) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Sidebar & Dropdown overrides for light mode */
+        .light-mode #sidebar, .light-mode #profile-dropdown {
+            background-color: #ffffff !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .light-mode #sidebar .border-white\/5, .light-mode #profile-dropdown .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
+        .light-mode #sidebar .bg-white\/5 { background-color: #f1f5f9 !important; }
+        .light-mode #sidebar .text-white, .light-mode #profile-dropdown .text-white { color: #0f172a !important; }
+        .light-mode #sidebar .text-gray-300, .light-mode #profile-dropdown .text-gray-300 { color: #334155 !important; }
+        .light-mode #sidebar .text-gray-400, .light-mode #sidebar .text-gray-500 { color: #64748b !important; }
+        .light-mode #sidebar a:hover, .light-mode #sidebar button:hover, .light-mode #profile-dropdown a:hover, .light-mode #profile-dropdown button:hover { background-color: #f8fafc !important; }
+        
+        .light-mode #sidebar .text-campfire, .light-mode #profile-dropdown .text-campfire { color: #e76f51 !important; }
+        .light-mode #sidebar .text-red-400, .light-mode #sidebar .text-red-500, .light-mode #profile-dropdown .text-red-500 { color: #ef4444 !important; }
+        .light-mode #sidebar .text-blue-400, .light-mode #profile-dropdown .text-blue-500 { color: #3b82f6 !important; }
+        .light-mode #sidebar .text-yellow-500 { color: #eab308 !important; }
+        .light-mode #sidebar .text-emerald-400 { color: #10b981 !important; }
 
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
@@ -78,33 +100,32 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased selection:bg-campfire selection:text-white overflow-x-hidden relative transition-colors duration-500" id="body-content">
 
-    <!-- DYNAMIC BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-30 filter brightness-75 contrast-125 transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&q=80&w=1920" alt="Dense Misty Forest" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Light Forest" class="absolute w-full h-full object-cover opacity-0 filter grayscale-[20%] transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/95 to-mistBg/95 opacity-0 backdrop-blur-[4px] transition-opacity duration-1000"></div>
     </div>
 
     <!-- NAVIGATION BAR -->
     <nav class="fixed w-full z-40 glass-dark transition-all duration-300 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
             <div class="flex items-center gap-4 sm:gap-6">
-                <button id="sidebar-open-btn" class="text-white light-mode:text-gray-800 text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
+                <button id="sidebar-open-btn" class="text-white lm-text-dark text-xl sm:text-2xl hover:text-campfire transition-colors focus:outline-none">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
                 <a href="index.html" class="flex items-center gap-2 sm:gap-3 group">
                     <i class="fa-solid fa-compass text-campfire text-2xl sm:text-3xl group-hover:rotate-45 transition-transform duration-500"></i>
-                    <span class="font-black text-lg sm:text-xl tracking-widest text-white light-mode:text-gray-900 drop-shadow-md hidden sm:block" data-i18n="nav_title">CUET AS</span>
+                    <span class="font-black text-lg sm:text-xl tracking-widest text-white lm-text-dark drop-shadow-md hidden sm:block" data-i18n="nav_title">CUET AS</span>
                 </a>
             </div>
 
             <div class="flex items-center gap-4 relative">
                 <!-- State 1: Logged Out -->
                 <div id="nav-auth-wrap" class="flex items-center gap-4">
-                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 light-mode:text-gray-800 hover:text-white light-mode:hover:text-black transition-colors" data-i18n="nav_login">লগইন</a>
-                    <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire hover:bg-orange-600 text-white px-4 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm shadow-glow transition-all">
+                    <a href="login.html" class="hidden sm:block text-sm font-bold text-gray-300 lm-text-dark hover:text-white transition-colors" data-i18n="nav_login">লগইন</a>
+                    <a href="signup.html" class="inline-flex items-center gap-2 bg-campfire hover:bg-orange-600 text-white px-4 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm shadow-glow transition-all hover:scale-105">
                         <i class="fa-solid fa-fire"></i> <span data-i18n="nav_create_acc">অ্যাকাউন্ট খুলুন</span>
                     </a>
                 </div>
@@ -112,7 +133,7 @@
                 <!-- State 2: Logged In -->
                 <div id="nav-user-profile" class="hidden flex items-center gap-3 sm:gap-4">
                     <div class="text-right hidden md:block pr-4 border-r border-white/10 light-mode:border-gray-400">
-                        <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-gray-900">Loading...</p>
+                        <p id="nav-user-name" class="text-xs font-bold text-gray-200 lm-text-dark">Loading...</p>
                         <p class="text-[10px] text-campfire uppercase tracking-widest">Explorer</p>
                     </div>
                     
@@ -121,15 +142,15 @@
                             <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                         </button>
 
-                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-2xl shadow-2xl py-2 transform transition-all z-50">
-                            <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-300 light-mode:text-gray-700">
+                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss light-mode:!bg-white border border-white/10 light-mode:border-gray-200 rounded-xl shadow-2xl py-2 transform transition-all z-50 text-gray-300 lm-text-dark">
+                            <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:!bg-gray-100 transition-colors flex items-center gap-3">
                                 <i class="fa-solid fa-user w-5 text-trail"></i> <span data-i18n="nav_profile">আমার প্রোফাইল</span>
                             </a>
-                            <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-300 light-mode:text-gray-700">
-                                <i class="fa-solid fa-gear w-5 text-blue-400"></i> <span data-i18n="nav_settings">সেটিংস</span>
+                            <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:!bg-gray-100 transition-colors flex items-center gap-3">
+                                <i class="fa-solid fa-gear w-5 text-blue-500"></i> <span data-i18n="nav_settings">সেটিংস</span>
                             </button>
                             <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
-                            <a href="#" id="logout-btn" class="block px-4 py-3 text-sm text-red-400 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
+                            <a href="#" id="logout-btn" class="block px-4 py-3 text-sm text-red-500 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
                                 <i class="fa-solid fa-right-from-bracket w-5"></i> <span data-i18n="nav_logout">লগ-আউট</span>
                             </a>
                         </div>
@@ -142,32 +163,29 @@
     <!-- SIDEBAR -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
     
-    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 z-50 w-72 sm:w-80 bg-moss light-mode:bg-white border-r border-white/5 light-mode:border-gray-200 flex flex-col h-full">
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 z-50 w-72 sm:w-80 bg-moss light-mode:!bg-white border-r border-white/5 light-mode:border-gray-200 flex flex-col h-full">
         <div class="p-6 flex justify-between items-center border-b border-white/5 light-mode:border-gray-200">
-            <span class="font-black text-xl tracking-widest text-white light-mode:text-black">CUET AS</span>
-            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white light-mode:hover:text-black text-2xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <span class="font-black text-xl tracking-widest text-white lm-text-dark">CUET AS</span>
+            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white lm-text-dark text-2xl transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <div class="px-6 py-8 flex-grow space-y-2 text-gray-300 light-mode:text-gray-700">
-            <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4" data-i18n="sidebar_activities">আমাদের কার্যক্রম</p>
-            <a href="index.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 transition-all flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400"><i class="fa-solid fa-house"></i></div>
+            <p class="text-[10px] font-black tracking-widest text-gray-500 lm-text-muted uppercase mb-4" data-i18n="sidebar_activities">আমাদের কার্যক্রম</p>
+            <a href="index.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-gray-400"><i class="fa-solid fa-house"></i></div>
                 <span class="font-bold text-sm" data-i18n="nav_home">হোমপেজ</span>
             </a>
-            <a href="events.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 transition-all flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-campfire"><i class="fa-solid fa-calendar-day"></i></div>
+            <a href="events.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-campfire"><i class="fa-solid fa-calendar-day"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_upcoming">আপকামিং ইভেন্ট</span>
             </a>
-            <a href="stories.html" class="block py-3 px-4 rounded-xl bg-white/5 light-mode:bg-gray-100 text-white light-mode:text-black transition-all flex items-center gap-4 border border-white/10 light-mode:border-gray-300 shadow-sm">
+            <a href="stories.html" class="block py-3 px-4 rounded-xl bg-white/5 light-mode:!bg-gray-100 text-white lm-text-dark transition-all flex items-center gap-4 border border-white/10 light-mode:border-gray-300 shadow-sm">
                 <div class="w-8 h-8 rounded-lg bg-trail flex items-center justify-center text-white shadow-glow-trail"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
             
-            <!-- LEADERBOARD LINK IN SIDEBAR -->
-            <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
-                <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-black transition-colors shadow-glow-gold"><i class="fa-solid fa-trophy"></i></div>
+            <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 shadow-glow-gold"><i class="fa-solid fa-trophy"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_leaderboard">লিডারবোর্ড</span>
             </a>
         </div>
@@ -176,18 +194,16 @@
     <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
-        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+        <div class="bg-moss light-mode:!bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
-                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
-                </h3>
-                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="text-xl font-black text-white lm-text-dark flex items-center gap-2"><i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span></h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white lm-text-dark transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_theme">থিম</p>
-                        <p class="text-xs text-gray-500">ডার্ক বা মিস্ট মোড</p>
+                        <p class="font-bold text-white lm-text-dark text-sm" data-i18n="modal_theme">থিম</p>
+                        <p class="text-xs text-gray-500 lm-text-muted">ডার্ক বা মিস্ট মোড</p>
                     </div>
                     <div class="relative inline-block w-12 mr-2 align-middle select-none">
                         <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
@@ -196,8 +212,8 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_lang">ভাষা</p>
-                        <p class="text-xs text-gray-500">বাংলা / English</p>
+                        <p class="font-bold text-white lm-text-dark text-sm" data-i18n="modal_lang">ভাষা</p>
+                        <p class="text-xs text-gray-500 lm-text-muted">বাংলা / English</p>
                     </div>
                     <div class="relative inline-block w-12 mr-2 align-middle select-none">
                         <input type="checkbox" id="lang-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
@@ -206,7 +222,7 @@
                 </div>
             </div>
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">সম্পন্ন</button>
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:!bg-gray-100 hover:bg-white/10 text-white lm-text-dark font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">সম্পন্ন</button>
             </div>
         </div>
     </div>
@@ -220,8 +236,8 @@
                 <div class="inline-block px-4 py-1.5 rounded-full border border-trail/30 bg-trail/10 text-trail font-bold text-xs sm:text-sm mb-4 tracking-widest backdrop-blur-md">
                     <i class="fa-solid fa-feather-pointed mr-2"></i> <span data-i18n="stories_badge">কমিউনিটি ব্লগ</span>
                 </div>
-                <h1 class="text-4xl sm:text-5xl font-black text-white light-mode:text-black mb-4 tracking-tight" data-i18n="stories_title">অ্যাডভেঞ্চারের গল্প</h1>
-                <p class="text-gray-400 light-mode:text-gray-600 max-w-2xl mx-auto mb-8" data-i18n="stories_subtitle">ক্যাম্পাসের এক্সপ্লোরারদের নিজস্ব অভিজ্ঞতা, অজানা ট্রেইলের সন্ধান এবং রোমাঞ্চকর স্মৃতির ভাণ্ডার।</p>
+                <h1 class="text-4xl sm:text-5xl font-black text-white lm-text-dark mb-4 tracking-tight" data-i18n="stories_title">অ্যাডভেঞ্চারের গল্প</h1>
+                <p class="text-gray-400 lm-text-muted max-w-2xl mx-auto mb-8" data-i18n="stories_subtitle">ক্যাম্পাসের এক্সপ্লোরারদের নিজস্ব অভিজ্ঞতা, অজানা ট্রেইলের সন্ধান এবং রোমাঞ্চকর স্মৃতির ভাণ্ডার।</p>
                 
                 <a href="write-blog.html" class="inline-flex items-center gap-2 bg-campfire hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-glow transition-all hover:-translate-y-1">
                     <i class="fa-solid fa-pen-nib"></i> <span data-i18n="btn_write_story">নতুন স্টোরি লিখুন</span>
@@ -231,14 +247,14 @@
             <!-- Loader -->
             <div id="stories-loader" class="flex flex-col items-center justify-center py-20">
                 <i class="fa-solid fa-compass text-5xl text-campfire animate-spin mb-4 shadow-glow rounded-full"></i>
-                <p class="text-gray-400 font-bold tracking-widest animate-pulse" data-i18n="stories_loading">গল্প লোড হচ্ছে...</p>
+                <p class="text-gray-400 lm-text-muted font-bold tracking-widest animate-pulse" data-i18n="stories_loading">গল্প লোড হচ্ছে...</p>
             </div>
 
             <!-- Empty State -->
             <div id="stories-empty" class="hidden flex-col items-center justify-center py-20 text-center glass-panel rounded-3xl">
                 <i class="fa-solid fa-book-open text-6xl text-gray-600 light-mode:text-gray-400 mb-6"></i>
-                <h3 class="text-2xl font-black text-white light-mode:text-black mb-2" data-i18n="stories_empty_title">খাতা এখনো শূন্য!</h3>
-                <p class="text-gray-400 light-mode:text-gray-500 mb-6" data-i18n="stories_empty_desc">অ্যাডমিন এখনো কোনো গল্প অ্যাপ্রুভ করেনি। খুব শিঘ্রই নতুন গল্প আসছে।</p>
+                <h3 class="text-2xl font-black text-white lm-text-dark mb-2" data-i18n="stories_empty_title">খাতা এখনো শূন্য!</h3>
+                <p class="text-gray-400 lm-text-muted mb-6" data-i18n="stories_empty_desc">অ্যাডমিন এখনো কোনো গল্প অ্যাপ্রুভ করেনি। খুব শিঘ্রই নতুন গল্প আসছে।</p>
             </div>
 
             <!-- Grid Container -->
@@ -320,17 +336,17 @@
 
         function enableLightMode() {
             htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); 
-            document.getElementById('bg-dark-img').classList.replace('opacity-30', 'opacity-0');
+            document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
             document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0');
-            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40');
+            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-100');
             document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100');
         }
 
         function enableDarkMode() {
             htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode');
-            document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0');
+            document.getElementById('bg-light-img').classList.replace('opacity-100', 'opacity-0');
             document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0');
-            document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-30');
+            document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20');
             document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100');
         }
 
@@ -366,10 +382,7 @@
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
-            projectId: "cuet-as",
-            storageBucket: "cuet-as.firebasestorage.app",
-            messagingSenderId: "869959746091",
-            appId: "1:869959746091:web:fa2c086441fc429a14606e"
+            projectId: "cuet-as"
         };
 
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
@@ -442,6 +455,7 @@
         window.openAuthorProfile = function(event, authorId) {
             event.preventDefault(); 
             event.stopPropagation(); 
+            
             // Check if authorId is valid and not literally the string "undefined"
             if(authorId && authorId.trim() !== '' && authorId !== 'undefined' && authorId !== 'null') {
                 window.location.href = `public-profile.html?uid=${authorId}`;
@@ -479,32 +493,35 @@
                     </div>
                 ` : '';
 
-                // 🟢 UPDATED: Handled undefined author ID gracefully
+                // 🟢 FIX: Extract correct user ID (Checks multiple possible field names used historically)
+                const actualAuthorId = story.authorId || story.userId || story.uid || '';
+
+                // 🟢 FIX: Changed entire card structure to a <div> with onclick routing to prevent HTML nesting conflicts
                 const cardHTML = `
-                    <a href="story-reader.html?id=${story.id}" data-aos="fade-up" data-aos-delay="${delay}" class="relative glass-panel block rounded-[2rem] overflow-hidden hover:-translate-y-2 transition-transform duration-300 shadow-xl group border border-white/5 light-mode:border-gray-200">
+                    <div onclick="window.location.href='story-reader.html?id=${story.id}'" data-aos="fade-up" data-aos-delay="${delay}" class="relative glass-panel block rounded-[2rem] overflow-hidden hover:-translate-y-2 transition-transform duration-300 shadow-xl group border border-white/5 light-mode:border-gray-200 cursor-pointer">
                         ${adminActions}
                         <div class="h-56 overflow-hidden relative">
                             <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300 z-10 pointer-events-none"></div>
                             <img src="${story.coverPhoto || 'https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&q=80&w=800'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Cover">
                         </div>
-                        <div class="p-6 sm:p-8">
+                        <div class="p-6 sm:p-8 relative z-20">
                             <div class="flex justify-between items-center text-xs text-campfire font-bold mb-4 tracking-wider uppercase">
                                 <span><i class="fa-solid fa-calendar-day mr-1"></i> ${formatDate(story.createdAt)}</span>
                                 <span class="bg-campfire/10 px-2 py-1 rounded text-[10px]"><i class="fa-solid fa-clock mr-1"></i> ${story.readTime || 5} ${minReadText}</span>
                             </div>
-                            <h3 class="text-xl sm:text-2xl font-black text-white light-mode:text-black mb-3 leading-tight group-hover:text-trail transition-colors">${story.title}</h3>
-                            <p class="text-sm text-gray-400 light-mode:text-gray-600 mb-6 line-clamp-3 leading-relaxed">${story.excerpt}</p>
+                            <h3 class="text-xl sm:text-2xl font-black text-white lm-text-dark mb-3 leading-tight group-hover:text-trail transition-colors">${story.title}</h3>
+                            <p class="text-sm text-gray-400 lm-text-muted mb-6 line-clamp-3 leading-relaxed">${story.excerpt}</p>
                             
                             <!-- CLICKABLE AUTHOR BLOCK -->
-                            <div onclick="openAuthorProfile(event, '${story.authorId || ''}')" class="flex items-center gap-3 pt-5 border-t border-white/10 light-mode:border-gray-200 hover:bg-white/5 light-mode:hover:bg-gray-100 p-2 -mx-2 rounded-xl transition-colors cursor-pointer" title="View Profile">
+                            <div onclick="openAuthorProfile(event, '${actualAuthorId}')" class="flex items-center gap-3 pt-5 border-t border-white/10 light-mode:border-gray-200 hover:bg-white/5 light-mode:hover:bg-gray-100 p-2 -mx-2 rounded-xl transition-colors cursor-pointer" title="View Profile">
                                 <img src="${story.authorPhoto || 'https://ui-avatars.com/api/?name='+encodeURIComponent(story.authorName)+'&background=0a1c13&color=fff'}" class="w-10 h-10 rounded-full border-2 border-trail object-cover">
                                 <div>
-                                    <p class="text-sm font-bold text-gray-300 light-mode:text-gray-800 leading-tight group-hover:text-trail transition-colors">${story.authorName}</p>
-                                    <p class="text-[10px] text-gray-500 uppercase tracking-widest">${story.authorBatch || 'Explorer'}</p>
+                                    <p class="text-sm font-bold text-gray-300 lm-text-dark leading-tight group-hover:text-trail transition-colors">${story.authorName}</p>
+                                    <p class="text-[10px] text-gray-500 lm-text-muted uppercase tracking-widest">${story.authorBatch || 'Explorer'}</p>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 `;
                 storiesGrid.insertAdjacentHTML('beforeend', cardHTML);
             });
