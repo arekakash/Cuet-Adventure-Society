@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51', 
+                        mistBg: '#e2e8f0', 
+                    }
+                }
+            },
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f3f4f6; 
+            transition: all 0.4s;
+        }
+        .glass-input:focus {
+            background: rgba(10, 28, 19, 0.8);
+            border-color: #e76f51;
+            box-shadow: 0 0 15px rgba(231, 111, 81, 0.3);
+            outline: none;
+        }
+        .light-mode .glass-input {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+        }
+        .light-mode .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #e76f51;
+        }
+
+        /* Accordion Smooth Transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Arbitrary large number */
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
+
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <a href="events.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 px-4 py-2 rounded-full border border-white/10">
+                <i class="fa-solid fa-arrow-left"></i> ইভেন্ট লিস্ট
+            </a>
+            <div id="nav-user-profile" class="hidden flex items-center gap-3">
+                <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-gray-900 hidden sm:block">Explorer</p>
+                <a href="dashboard.html" class="w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 hover:border-white transition-colors">
+                    <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=U" alt="Profile" class="w-full h-full rounded-full object-cover">
+                </a>
+            </div>
+            <div id="nav-auth-wrap" class="flex items-center gap-4">
+                <a href="login.html" class="bg-campfire hover:bg-orange-600 text-white px-5 py-2 rounded-full font-bold text-xs sm:text-sm shadow-glow transition-all">লগইন করুন</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- LOADER -->
+    <div id="page-loader" class="fixed inset-0 z-50 bg-darkForest flex flex-col items-center justify-center">
+        <i class="fa-solid fa-compass text-5xl text-campfire animate-spin mb-4 shadow-glow rounded-full"></i>
+        <p class="text-gray-400 font-bold tracking-widest animate-pulse">লোড হচ্ছে...</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <section id="event-content" class="relative z-10 pt-20 pb-20 hidden opacity-0 transition-opacity duration-1000">
+        
+        <!-- HERO BANNER -->
+        <div class="relative w-full h-[40vh] sm:h-[50vh] overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkForest light-mode:from-mistBg to-transparent z-10"></div>
+            <img id="ev-cover" src="" class="w-full h-full object-cover parallax-img" alt="Event Cover">
+            <div class="absolute bottom-0 left-0 w-full z-20 px-4 sm:px-6 lg:px-8 pb-8 max-w-7xl mx-auto flex flex-col justify-end h-full">
+                <div data-aos="fade-up">
+                    <span id="ev-category" class="inline-block px-3 py-1 bg-campfire/20 text-campfire border border-campfire/30 rounded-md text-xs font-bold uppercase tracking-widest mb-3 backdrop-blur-md">Category</span>
+                    <h1 id="ev-title" class="text-3xl sm:text-5xl lg:text-6xl font-black text-white drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)] mb-2 leading-tight">Event Title</h1>
+                    <p class="text-lg sm:text-xl text-gray-200 font-medium flex items-center gap-2 drop-shadow-md">
+                        <i class="fa-solid fa-location-dot text-campfire"></i> <span id="ev-destination">Destination</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- LEFT COLUMN: DETAILS -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Quick Meta Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" data-aos="fade-up">
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-regular fa-calendar-check text-2xl text-blue-400 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">যাত্রা শুরু</p>
+                        <p id="ev-start-date" class="text-sm font-black text-white light-mode:text-black">...</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-fire-flame-curved text-2xl text-orange-500 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">ডিফিকাল্টি</p>
+                        <p id="ev-difficulty" class="text-sm font-black text-white light-mode:text-black">...</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <i class="fa-solid fa-users text-2xl text-emerald-400 mb-2"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">টিম লিডার</p>
+                        <p id="ev-leader" class="text-sm font-black text-white light-mode:text-black">...</p>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center border border-red-500/20 bg-red-500/5">
+                        <i class="fa-solid fa-hourglass-end text-2xl text-red-500 mb-2 animate-pulse"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">ডেডলাইন</p>
+                        <p id="ev-deadline" class="text-sm font-black text-red-400">...</p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl" data-aos="fade-up">
+                    <h3 class="text-xl font-black text-white light-mode:text-black mb-4 border-b border-white/10 pb-2">ইভেন্টের বিস্তারিত</h3>
+                    <p id="ev-desc" class="text-gray-300 light-mode:text-gray-700 leading-relaxed text-sm whitespace-pre-wrap">...</p>
+                </div>
+
+                <!-- Itinerary Accordion -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl" data-aos="fade-up">
+                    <h3 class="text-xl font-black text-white light-mode:text-black mb-4 border-b border-white/10 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-trail"></i> ডাইনামিক ট্যুর প্ল্যান
+                    </h3>
+                    <div id="itinerary-list" class="space-y-4 mt-6">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Checklists -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up">
+                    <div class="glass-panel p-6 rounded-3xl">
+                        <h3 class="font-bold text-emerald-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</h3>
+                        <ul id="included-list" class="space-y-2 text-sm text-gray-300 light-mode:text-gray-700"></ul>
+                    </div>
+                    <div class="glass-panel p-6 rounded-3xl border border-yellow-500/20">
+                        <h3 class="font-bold text-yellow-500 mb-4 flex items-center gap-2"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</h3>
+                        <ul id="gear-list" class="space-y-2 text-sm text-gray-300 light-mode:text-gray-700"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: BOOKING PANEL -->
+            <div class="space-y-6">
+                
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 sticky top-24 border border-campfire/30 shadow-[0_0_30px_rgba(231,111,81,0.15)]" data-aos="fade-left">
+                    <div class="text-center mb-6 border-b border-white/10 pb-6">
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">বুকিং ফি (জনপ্রতি)</p>
+                        <h2 class="text-4xl font-black text-white light-mode:text-black">৳<span id="ev-fee">0</span></h2>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-6 bg-black/30 light-mode:bg-gray-100 p-4 rounded-xl">
+                        <span class="text-sm font-bold text-gray-400">খালি সিট:</span>
+                        <span id="ev-seats-left" class="text-2xl font-black text-emerald-400">0</span>
+                    </div>
+
+                    <div id="payment-instructions" class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                        <p class="text-xs font-bold text-blue-400 mb-2"><i class="fa-solid fa-circle-info"></i> পেমেন্ট নির্দেশনা:</p>
+                        <p class="text-sm text-gray-300 light-mode:text-gray-700 mb-2">নিচের নম্বরে সেন্ড মানি করে TrxID ফর্মে দিন:</p>
+                        <p class="text-lg font-black text-white light-mode:text-black tracking-widest text-center bg-black/40 py-2 rounded-lg"><span id="ev-bkash">017XXXXXXX</span></p>
+                    </div>
+
+                    <form id="booking-form" class="space-y-4">
+                        <div id="auth-warning" class="hidden p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-bold text-center">
+                            বুকিং করতে আপনাকে আগে লগ-ইন করতে হবে।
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-1.5 uppercase">ট্রানজেকশন আইডি (TrxID) *</label>
+                            <input type="text" id="trxId" required placeholder="e.g. 9F3R2K..." class="glass-input w-full p-3.5 rounded-xl uppercase font-bold tracking-widest text-center disabled:opacity-50">
+                        </div>
+
+                        <label class="flex items-start gap-3 mt-4 cursor-pointer">
+                            <input type="checkbox" id="agreeRules" required class="mt-1 w-4 h-4 rounded border-gray-600 bg-black/50 text-campfire focus:ring-campfire focus:ring-offset-0 disabled:opacity-50">
+                            <span class="text-[10px] text-gray-400 leading-tight">আমি ঘোষণা করছি যে, ইভেন্টের সকল নিয়মকানুন ও রিস্ক সম্পর্কে আমি অবগত এবং আমার পেমেন্ট ইনফরমেশন সঠিক।</span>
+                        </label>
+
+                        <button type="submit" id="book-btn" class="w-full mt-4 bg-campfire hover:bg-orange-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-glow hover:-translate-y-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none">
+                            <i id="book-icon" class="fa-solid fa-ticket"></i> <span id="book-text">বুকিং কনফার্ম করুন</span>
+                        </button>
+                    </form>
+
+                    <div id="status-message" class="hidden mt-4 p-3 rounded-xl text-xs font-bold text-center border"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // Theme Setup
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        if (localStorage.getItem('theme') === 'light') {
+            htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode');
+            document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
+            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40');
+        }
+
+        // Accordion Logic Helper
+        window.toggleAccordion = function(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.fa-chevron-down');
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        };
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Globals
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        let currentUser = null;
+        let dbUserInfo = null;
+        let eventDataRaw = null;
+
+        // Verify ID
+        if(!eventId) {
+            alert("কোনো ইভেন্ট আইডি পাওয়া যায়নি!");
+            window.location.href = "events.html";
+        }
+
+        // Setup Auth
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('nav-auth-wrap').classList.add('hidden');
+                document.getElementById('nav-user-profile').classList.remove('hidden');
+                document.getElementById('auth-warning').classList.add('hidden');
+                
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        dbUserInfo = doc.data();
+                        document.getElementById('nav-user-name').innerText = dbUserInfo.fullName.split(" ")[0];
+                        const avatar = dbUserInfo.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(dbUserInfo.fullName)}&background=e76f51&color=fff`;
+                        document.getElementById('nav-profile-img').src = avatar;
+                    }
+                });
+            } else {
+                document.getElementById('nav-auth-wrap').classList.remove('hidden');
+                document.getElementById('nav-user-profile').classList.add('hidden');
+                document.getElementById('auth-warning').classList.remove('hidden');
+                disableBooking("লগ-ইন আবশ্যক");
+            }
+        });
+
+        // Helpers
+        function formatDateTime(dateStr) {
+            if(!dateStr) return "N/A";
+            return new Date(dateStr).toLocaleString('en-US', { day: 'numeric', month: 'short', hour: '2-digit', minute:'2-digit' });
+        }
+
+        function disableBooking(reason) {
+            const btn = document.getElementById('book-btn');
+            const trxInput = document.getElementById('trxId');
+            const checkbox = document.getElementById('agreeRules');
+            btn.disabled = true;
+            trxInput.disabled = true;
+            checkbox.disabled = true;
+            document.getElementById('book-text').innerText = reason;
+            btn.classList.replace('bg-campfire', 'bg-gray-600');
+            btn.classList.remove('hover:-translate-y-1', 'shadow-glow');
+        }
+
+        // Fetch Event Data
+        db.collection("events").doc(eventId).get().then((doc) => {
+            if (!doc.exists) {
+                alert("ইভেন্টটি ডেটাবেসে পাওয়া যায়নি!");
+                window.location.href = "events.html";
+                return;
+            }
+            
+            eventDataRaw = doc.data();
+            
+            // Render Hero
+            document.getElementById('ev-cover').src = eventDataRaw.coverPhoto;
+            document.getElementById('ev-category').innerText = eventDataRaw.category;
+            document.getElementById('ev-title').innerText = eventDataRaw.title;
+            document.getElementById('ev-destination').innerText = eventDataRaw.destination;
+
+            // Render Meta
+            document.getElementById('ev-start-date').innerText = formatDateTime(eventDataRaw.startDate);
+            document.getElementById('ev-difficulty').innerText = eventDataRaw.difficulty;
+            document.getElementById('ev-leader').innerText = eventDataRaw.teamLeader;
+            document.getElementById('ev-deadline').innerText = formatDateTime(eventDataRaw.deadline);
+            
+            // Description & Price
+            document.getElementById('ev-desc').innerText = eventDataRaw.description;
+            document.getElementById('ev-fee').innerText = eventDataRaw.tourFee;
+            document.getElementById('ev-bkash').innerText = eventDataRaw.bkashNo;
+
+            // Seats Math
+            const seatsLeft = eventDataRaw.totalSeats - (eventDataRaw.bookedSeats || 0);
+            const seatsEl = document.getElementById('ev-seats-left');
+            seatsEl.innerText = seatsLeft;
+            if(seatsLeft <= 5) {
+                seatsEl.classList.remove('text-emerald-400');
+                seatsEl.classList.add('text-red-500', 'animate-pulse');
+            }
+
+            // Render Included
+            const incList = document.getElementById('included-list');
+            if(eventDataRaw.included && eventDataRaw.included.length > 0) {
+                incList.innerHTML = eventDataRaw.included.map(i => `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> ${i}</li>`).join('');
+            } else incList.innerHTML = "<li>N/A</li>";
+
+            // Render Gear
+            const gearList = document.getElementById('gear-list');
+            if(eventDataRaw.requiredGear && eventDataRaw.requiredGear.length > 0) {
+                gearList.innerHTML = eventDataRaw.requiredGear.map(i => `<li><i class="fa-solid fa-chevron-right text-yellow-500 mr-2"></i> ${i}</li>`).join('');
+            } else gearList.innerHTML = "<li>N/A</li>";
+
+            // Render Dynamic Itinerary
+            const itinContainer = document.getElementById('itinerary-list');
+            if(eventDataRaw.itinerary && eventDataRaw.itinerary.length > 0) {
+                itinContainer.innerHTML = eventDataRaw.itinerary.map(day => `
+                    <div class="border border-white/10 light-mode:border-gray-300 rounded-xl overflow-hidden bg-black/20 light-mode:bg-white/50">
+                        <div class="p-4 cursor-pointer flex justify-between items-center hover:bg-white/5 transition-colors" onclick="toggleAccordion(this)">
+                            <h4 class="font-bold text-white light-mode:text-black text-sm flex items-center gap-2">
+                                <span class="bg-trail/20 text-trail px-2 py-1 rounded text-[10px] tracking-widest uppercase">Day ${day.day}</span>
+                                ${day.title}
+                            </h4>
+                            <i class="fa-solid fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                        </div>
+                        <div class="accordion-content bg-black/40 light-mode:bg-gray-100">
+                            <p class="p-4 text-xs text-gray-300 light-mode:text-gray-600 leading-relaxed border-t border-white/5 light-mode:border-gray-200">
+                                ${day.desc}
+                            </p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                itinContainer.innerHTML = "<p class="text-sm text-gray-500">কোনো প্ল্যান আপডেট করা হয়নি।</p>";
+            }
+
+            // Booking Validations
+            const now = new Date();
+            const deadline = new Date(eventDataRaw.deadline);
+            
+            if (eventDataRaw.status !== 'upcoming') disableBooking("ইভেন্টটি ক্লোজড");
+            else if (now > deadline) disableBooking("ডেডলাইন শেষ");
+            else if (seatsLeft <= 0) disableBooking("সিট ফুল!");
+            else {
+                // Check if already booked
+                auth.onAuthStateChanged(user => {
+                    if(user) {
+                        db.collection('bookings').where("eventId", "==", eventId).where("userId", "==", user.uid).get().then(snapshot => {
+                            if(!snapshot.empty) {
+                                disableBooking("আপনি অলরেডি বুক করেছেন");
+                                document.getElementById('status-message').innerHTML = `আপনার বুকিং রিকোয়েস্ট অ্যাডমিনের কাছে <span class="text-yellow-500">পেন্ডিং</span> আছে।`;
+                                document.getElementById('status-message').classList.remove('hidden');
+                                document.getElementById('status-message').classList.add('border-yellow-500/30', 'bg-yellow-500/10', 'text-yellow-500');
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Reveal Page
+            document.getElementById('page-loader').classList.add('hidden');
+            const content = document.getElementById('event-content');
+            content.classList.remove('hidden');
+            setTimeout(() => content.classList.remove('opacity-0'), 50);
+
+        }).catch(err => {
+            console.error(err);
+            alert("Error fetching event data.");
+        });
+
+        // Submit Booking
+        document.getElementById('booking-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!currentUser || !dbUserInfo) {
+                alert("Please log in first!"); return;
+            }
+
+            const trxId = document.getElementById('trxId').value.trim();
+            const btn = document.getElementById('book-btn');
+            const btnText = document.getElementById('book-text');
+            const icon = document.getElementById('book-icon');
+
+            icon.className = 'fa-solid fa-circle-notch fa-spin';
+            btnText.innerText = "প্রসেসিং...";
+            btn.disabled = true;
+
+            try {
+                // Double check seats (Race condition prevention)
+                const eventRef = db.collection("events").doc(eventId);
+                
+                await db.runTransaction(async (transaction) => {
+                    const evDoc = await transaction.get(eventRef);
+                    if (!evDoc.exists) throw "Event does not exist!";
+                    
+                    const currentSeatsBooked = evDoc.data().bookedSeats || 0;
+                    const totalSeats = evDoc.data().totalSeats;
+                    
+                    if (currentSeatsBooked >= totalSeats) throw "দুঃখিত, মাত্রই সবগুলো সিট বুক হয়ে গেছে!";
+
+                    // Create Booking Record
+                    const bookingRef = db.collection("bookings").doc();
+                    transaction.set(bookingRef, {
+                        eventId: eventId,
+                        eventTitle: eventDataRaw.title,
+                        userId: currentUser.uid,
+                        userName: dbUserInfo.fullName,
+                        userPhone: dbUserInfo.phone,
+                        userBlood: dbUserInfo.bloodGroup,
+                        userEmergency: dbUserInfo.emergencyContact,
+                        trxId: trxId,
+                        paymentStatus: "pending",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Increment Booked Seats
+                    transaction.update(eventRef, { bookedSeats: currentSeatsBooked + 1 });
+                });
+
+                alert("বুকিং রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! অ্যাডমিন কনফার্ম করলে ড্যাশবোর্ডে দেখতে পাবেন।");
+                window.location.reload();
+
+            } catch(error) {
+                console.error(error);
+                alert("Error: " + (typeof error === 'string' ? error : error.message));
+                icon.className = 'fa-solid fa-ticket';
+                btnText.innerText = "বুকিং কনফার্ম করুন";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
