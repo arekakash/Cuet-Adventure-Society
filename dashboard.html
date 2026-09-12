@@ -105,24 +105,46 @@
         </div>
         <div class="px-6 py-8 flex-grow space-y-2 text-gray-300 light-mode:text-gray-700">
             <p class="text-[10px] font-black tracking-widest text-gray-500 uppercase mb-4" data-i18n="sidebar_activities">আমাদের কার্যক্রম</p>
+            
             <a href="events.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-campfire group-hover:scale-110 transition-transform"><i class="fa-solid fa-calendar-day"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_upcoming">আপকামিং ইভেন্ট</span>
             </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:text-white group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_past">পূর্ববর্তী ইভেন্ট</span>
+            </a>
+            
             <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
             </a>
+
             <!-- 🟢 LEADERBOARD LINK IN SIDEBAR -->
             <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
                 <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-black transition-colors shadow-glow-gold"><i class="fa-solid fa-trophy"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_leaderboard">লিডারবোর্ড</span>
             </a>
+            
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_guide">বিগিনার গাইড</span>
+            </a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_crew">নেপথ্যে যারা</span>
+            </a>
+            
             <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
             <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-gray-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-gear"></i></div>
                 <span class="font-bold text-sm" data-i18n="nav_settings">সেটিংস</span>
             </button>
+
             <a href="admin.html" id="sidebar-admin-link" class="hidden py-3 px-4 rounded-xl hover:bg-red-500/10 border border-transparent hover:border-red-500/30 text-red-400 transition-all group flex items-center gap-4 mt-2">
                 <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-shield-halved"></i></div>
                 <span class="font-bold text-sm uppercase tracking-widest">Admin Panel</span>
