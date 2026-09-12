@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <!-- TAB NAVIGATION (Updated) -->
+            <!-- TAB NAVIGATION -->
             <div class="flex gap-4 border-b border-white/10 light-mode:border-gray-200 pb-4 overflow-x-auto whitespace-nowrap" data-aos="fade-up" data-aos-delay="50">
                 <button onclick="switchTab('blogTab')" id="btn-blogTab" class="tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent">
                     <i class="fa-solid fa-book-open"></i> গল্প রিভিউ <span id="pending-count-badge" class="bg-yellow-500/20 text-yellow-500 px-2 py-0.5 rounded-md text-[10px]">0</span>
@@ -152,7 +152,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- TAB 1: PENDING STORIES SECTION (INTACT) -->
+            <!-- TAB 1: PENDING STORIES SECTION -->
             <!-- ========================================== -->
             <div id="section-blogTab" class="block glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
@@ -168,7 +168,7 @@
             </div>
             
             <!-- ========================================== -->
-            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION (INTACT) -->
+            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION -->
             <!-- ========================================== -->
             <div id="section-eventTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-6">
@@ -262,7 +262,7 @@
                     </div>
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">সংক্ষিপ্ত ডেসক্রিপশন *</label>
-                        <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল আকর্ষণগুলো संক্ষেপে লিখুন..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
+                        <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল আকর্ষণগুলো সংক্ষেপে লিখুন..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 bg-black/20 light-mode:bg-white/50 p-6 rounded-2xl">
@@ -325,7 +325,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- 🔵 TAB 3: BOOKING MANAGEMENT (NEW) -->
+            <!-- 🔵 TAB 3: BOOKING MANAGEMENT -->
             <!-- ========================================== -->
             <div id="section-bookingTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
@@ -342,7 +342,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- 🟣 TAB 4: ACTIVE EVENTS & GAMIFICATION (NEW) -->
+            <!-- 🟣 TAB 4: ACTIVE EVENTS & GAMIFICATION -->
             <!-- ========================================== -->
             <div id="section-activeEventsTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
@@ -417,7 +417,7 @@
             applyTheme();
         });
 
-        // TAB SWITCHING LOGIC (UPDATED FOR 4 TABS)
+        // TAB SWITCHING LOGIC
         function switchTab(tabId) {
             const tabs = ['blogTab', 'eventTab', 'bookingTab', 'activeEventsTab'];
             tabs.forEach(t => {
@@ -478,7 +478,7 @@
         }
 
         // ==========================================
-        // 1. PENDING STORIES LOGIC (INTACT)
+        // 1. PENDING STORIES LOGIC (UPDATED WITH CLICKABLE AUTHOR)
         // ==========================================
         function loadPendingStories() {
             db.collection("stories").where("status", "==", "pending").get().then((querySnapshot) => {
@@ -502,7 +502,8 @@
                             <img src="${story.coverPhoto}" class="w-full sm:w-32 h-24 object-cover rounded-xl" alt="Cover">
                             <div class="flex-grow">
                                 <h3 class="text-lg font-bold text-white light-mode:text-black mb-1">${story.title}</h3>
-                                <p class="text-xs text-gray-400 mb-2">লেখক: <span class="font-bold text-gray-300 light-mode:text-gray-700">${story.authorName}</span></p>
+                                <!-- 🟢 MODIFIED: Clickable Author Name -->
+                                <p class="text-xs text-gray-400 mb-2">লেখক: <a href="public-profile.html?uid=${story.authorId || ''}" target="_blank" class="font-bold text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors underline decoration-campfire/50 underline-offset-4">${story.authorName}</a></p>
                                 <a href="story-reader.html?id=${doc.id}" target="_blank" class="text-xs text-blue-400 hover:underline"><i class="fa-solid fa-eye"></i> রিভিউ করুন</a>
                             </div>
                             <div class="flex sm:flex-col gap-2 w-full sm:w-auto">
@@ -520,7 +521,7 @@
 
 
         // ==========================================
-        // 2. BOOKING MANAGEMENT LOGIC (NEW)
+        // 2. BOOKING MANAGEMENT LOGIC (UPDATED WITH CLICKABLE AUTHOR)
         // ==========================================
         function loadPendingBookings() {
             db.collection("bookings").where("paymentStatus", "==", "pending").get().then((querySnapshot) => {
@@ -543,7 +544,8 @@
                         <div class="bg-black/40 light-mode:bg-white/60 border border-blue-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
                             <div class="flex-grow">
                                 <h3 class="text-sm font-bold text-white light-mode:text-black mb-1"><i class="fa-solid fa-map-location-dot text-campfire"></i> ${bData.eventTitle}</h3>
-                                <p class="text-xs text-gray-400 mb-1">User: <span class="font-bold text-gray-300 light-mode:text-gray-700">${bData.userName}</span> | Phone: ${bData.userPhone}</p>
+                                <!-- 🟢 MODIFIED: Clickable User Name -->
+                                <p class="text-xs text-gray-400 mb-1">User: <a href="public-profile.html?uid=${bData.userId}" target="_blank" class="font-bold text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors underline decoration-campfire/50 underline-offset-4">${bData.userName}</a> | Phone: ${bData.userPhone}</p>
                                 <p class="text-xs text-gray-400 mb-1">Blood: ${bData.userBlood} | Emg: ${bData.userEmergency}</p>
                                 <div class="mt-2 inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-400 font-bold tracking-widest uppercase text-[10px]">
                                     TrxID: ${bData.trxId}
@@ -589,7 +591,7 @@
 
 
         // ==========================================
-        // 3. ACTIVE EVENTS & MAGIC SYNC (NEW)
+        // 3. ACTIVE EVENTS & MAGIC SYNC
         // ==========================================
         function loadActiveEvents() {
             db.collection("events").where("status", "==", "upcoming").get().then((querySnapshot) => {
@@ -626,21 +628,16 @@
             if(!confirm("সতর্কতা! এটি মার্ক করলে ট্যুরে অংশ নেওয়া সবার ড্যাশবোর্ডে স্ট্যাটস যোগ হয়ে যাবে। আপনি কি নিশ্চিত?")) return;
             
             try {
-                // 1. Get Event Data for Meta Stats
                 const evDoc = await db.collection("events").doc(eventId).get();
                 const meta = evDoc.data().statsMeta;
                 
-                // 2. Find all Approved Bookings for this event
                 const bookingsSnap = await db.collection("bookings")
                     .where("eventId", "==", eventId)
                     .where("paymentStatus", "==", "approved").get();
                 
                 const batch = db.batch();
-                
-                // 3. Mark Event as Completed
                 batch.update(evDoc.ref, { status: "completed" });
                 
-                // 4. THE MAGIC: Update All Verified Users' Profiles!
                 for (let bDoc of bookingsSnap.docs) {
                     const userId = bDoc.data().userId;
                     const userRef = db.collection("users").doc(userId);
@@ -660,7 +657,7 @@
         };
 
         // ==========================================
-        // CROPPER & EVENT CREATION LOGIC (INTACT)
+        // CROPPER & EVENT CREATION LOGIC
         // ==========================================
         let cropper;
         let croppedBase64 = null; 
