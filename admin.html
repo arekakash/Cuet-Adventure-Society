@@ -86,6 +86,17 @@
         }
 
         .tab-active { background: rgba(231, 111, 81, 0.2); border-color: rgba(231, 111, 81, 0.5); color: #e76f51; }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex; justify-content: center; items-center; z-index: 50;
+        }
+        .modal-content {
+            background-color: white; padding: 2rem; border-radius: 0.5rem; max-width: 500px; width: 100%;
+        }
     </style>
 </head>
 
@@ -363,7 +374,7 @@
         </div>
     </div>
 
-    <!-- CROPPER MODAL (INTACT) -->
+    <!-- CROPPER MODAL -->
     <div id="cropper-modal" class="fixed inset-0 z-[60] hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-moss light-mode:bg-white rounded-3xl p-6 w-full max-w-3xl shadow-2xl border border-white/10">
             <div class="flex justify-between items-center mb-4">
@@ -378,6 +389,49 @@
                     <i class="fa-solid fa-check"></i> Crop & Save
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- 🟢 NEW: EDIT EVENT MODAL -->
+    <div id="edit-event-modal" class="fixed inset-0 z-50 hidden bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto pt-20">
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-400"></i> ইভেন্ট এডিট করুন</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <form id="edit-event-form" class="space-y-4">
+                <input type="hidden" id="editEvId">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">শিরোনাম</label>
+                    <input type="text" id="editEvTitle" required class="glass-input w-full p-3 rounded-xl font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">ট্যুর ফি (টাকা)</label>
+                        <input type="number" id="editEvFee" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">মোট সিট</label>
+                        <input type="number" id="editEvSeats" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-red-400 mb-1 uppercase">ডেডলাইন</label>
+                        <input type="datetime-local" id="editEvDeadline" required class="glass-input w-full p-3 rounded-xl border-red-500/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">টিম লিডার</label>
+                        <input type="text" id="editEvLeader" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white/10 text-right">
+                    <button type="submit" id="edit-submit-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+                        <i id="edit-submit-icon" class="fa-solid fa-save"></i> <span id="edit-submit-text">আপডেট করুন</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -455,7 +509,6 @@
                         authLoader.classList.add('hidden');
                         adminContent.classList.remove('hidden');
                         
-                        // Load All Admin Data
                         loadPendingStories();
                         loadPendingBookings();
                         loadActiveEvents();
@@ -472,14 +525,7 @@
             }
         });
 
-        function formatDate(timestamp) {
-            if(!timestamp) return "N/A";
-            return timestamp.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        }
-
-        // ==========================================
-        // 1. PENDING STORIES LOGIC (UPDATED WITH CLICKABLE AUTHOR)
-        // ==========================================
+        // 1. PENDING STORIES LOGIC
         function loadPendingStories() {
             db.collection("stories").where("status", "==", "pending").get().then((querySnapshot) => {
                 const pendingList = document.getElementById('pending-stories-list');
@@ -502,7 +548,6 @@
                             <img src="${story.coverPhoto}" class="w-full sm:w-32 h-24 object-cover rounded-xl" alt="Cover">
                             <div class="flex-grow">
                                 <h3 class="text-lg font-bold text-white light-mode:text-black mb-1">${story.title}</h3>
-                                <!-- 🟢 MODIFIED: Clickable Author Name -->
                                 <p class="text-xs text-gray-400 mb-2">লেখক: <a href="public-profile.html?uid=${story.authorId || ''}" target="_blank" class="font-bold text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors underline decoration-campfire/50 underline-offset-4">${story.authorName}</a></p>
                                 <a href="story-reader.html?id=${doc.id}" target="_blank" class="text-xs text-blue-400 hover:underline"><i class="fa-solid fa-eye"></i> রিভিউ করুন</a>
                             </div>
@@ -519,10 +564,7 @@
         window.approveStory = function(id) { if(confirm("পাবলিশ করবেন?")) { db.collection("stories").doc(id).update({ status: "approved" }).then(() => loadPendingStories()); } };
         window.rejectStory = function(id) { if(confirm("ডিলিট করবেন?")) { db.collection("stories").doc(id).delete().then(() => loadPendingStories()); } };
 
-
-        // ==========================================
-        // 2. BOOKING MANAGEMENT LOGIC (UPDATED WITH CLICKABLE AUTHOR)
-        // ==========================================
+        // 2. BOOKING MANAGEMENT LOGIC
         function loadPendingBookings() {
             db.collection("bookings").where("paymentStatus", "==", "pending").get().then((querySnapshot) => {
                 const bookingList = document.getElementById('pending-bookings-list');
@@ -544,12 +586,9 @@
                         <div class="bg-black/40 light-mode:bg-white/60 border border-blue-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
                             <div class="flex-grow">
                                 <h3 class="text-sm font-bold text-white light-mode:text-black mb-1"><i class="fa-solid fa-map-location-dot text-campfire"></i> ${bData.eventTitle}</h3>
-                                <!-- 🟢 MODIFIED: Clickable User Name -->
                                 <p class="text-xs text-gray-400 mb-1">User: <a href="public-profile.html?uid=${bData.userId}" target="_blank" class="font-bold text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors underline decoration-campfire/50 underline-offset-4">${bData.userName}</a> | Phone: ${bData.userPhone}</p>
                                 <p class="text-xs text-gray-400 mb-1">Blood: ${bData.userBlood} | Emg: ${bData.userEmergency}</p>
-                                <div class="mt-2 inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-400 font-bold tracking-widest uppercase text-[10px]">
-                                    TrxID: ${bData.trxId}
-                                </div>
+                                <div class="mt-2 inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-400 font-bold tracking-widest uppercase text-[10px]">TrxID: ${bData.trxId}</div>
                             </div>
                             <div class="flex sm:flex-col gap-2 w-full sm:w-auto mt-3 sm:mt-0">
                                 <button onclick="approveBooking('${doc.id}')" class="flex-1 sm:flex-none bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
@@ -580,19 +619,14 @@
             if(confirm("বুকিং বাতিল করলে ইভেন্টে সিট ফাঁকা হয়ে যাবে। নিশ্চিত?")) {
                 try {
                     await db.collection("bookings").doc(bookingId).delete();
-                    await db.collection("events").doc(eventId).update({
-                        bookedSeats: firebase.firestore.FieldValue.increment(-1)
-                    });
+                    await db.collection("events").doc(eventId).update({ bookedSeats: firebase.firestore.FieldValue.increment(-1) });
                     alert("বুকিং বাতিল করা হয়েছে।");
                     loadPendingBookings();
                 } catch(e) { console.error(e); alert("Error"); }
             }
         };
 
-
-        // ==========================================
         // 3. ACTIVE EVENTS & MAGIC SYNC
-        // ==========================================
         function loadActiveEvents() {
             db.collection("events").where("status", "==", "upcoming").get().then((querySnapshot) => {
                 const activeList = document.getElementById('active-events-list');
@@ -609,20 +643,73 @@
                     const ev = doc.data();
                     const card = `
                         <div class="bg-black/40 light-mode:bg-white/60 border border-yellow-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 justify-between items-center">
-                            <div>
+                            <div class="flex-grow">
                                 <h3 class="text-base font-bold text-white light-mode:text-black mb-1">${ev.title}</h3>
                                 <p class="text-xs text-gray-400">Booked Seats: <span class="font-bold text-emerald-400">${ev.bookedSeats || 0} / ${ev.totalSeats}</span></p>
                                 <p class="text-[10px] text-gray-500 mt-1">Reward: ${ev.statsMeta.treks} Treks, ${ev.statsMeta.distance}km</p>
                             </div>
-                            <button onclick="completeEvent('${doc.id}')" class="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2.5 rounded-xl text-sm font-black shadow-glow transition-all">
-                                <i class="fa-solid fa-flag-checkered"></i> Mark Completed
-                            </button>
+                            <div class="flex flex-col gap-2 w-full sm:w-auto shrink-0">
+                                <button onclick='openEditModal(${JSON.stringify({id: doc.id, ...ev}).replace(/'/g, "&apos;")})' class="w-full sm:w-auto bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Event
+                                </button>
+                                <button onclick="completeEvent('${doc.id}')" class="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2.5 rounded-xl text-sm font-black shadow-glow transition-all">
+                                    <i class="fa-solid fa-flag-checkered"></i> Mark Completed
+                                </button>
+                            </div>
                         </div>
                     `;
                     activeList.insertAdjacentHTML('beforeend', card);
                 });
             });
         }
+
+        // 🟢 NEW: EDIT EVENT MODAL LOGIC
+        const editModal = document.getElementById('edit-event-modal');
+        window.openEditModal = function(ev) {
+            document.getElementById('editEvId').value = ev.id;
+            document.getElementById('editEvTitle').value = ev.title || '';
+            document.getElementById('editEvFee').value = ev.tourFee || '';
+            document.getElementById('editEvSeats').value = ev.totalSeats || '';
+            document.getElementById('editEvDeadline').value = ev.deadline || '';
+            document.getElementById('editEvLeader').value = ev.teamLeader || '';
+            
+            editModal.classList.remove('hidden');
+        };
+
+        window.closeEditModal = function() {
+            editModal.classList.add('hidden');
+        };
+
+        document.getElementById('edit-event-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editEvId').value;
+            const updates = {
+                title: document.getElementById('editEvTitle').value,
+                tourFee: parseInt(document.getElementById('editEvFee').value),
+                totalSeats: parseInt(document.getElementById('editEvSeats').value),
+                deadline: document.getElementById('editEvDeadline').value,
+                teamLeader: document.getElementById('editEvLeader').value
+            };
+
+            try {
+                const btnText = document.getElementById('edit-submit-text');
+                const btnIcon = document.getElementById('edit-submit-icon');
+                btnIcon.className = 'fa-solid fa-circle-notch fa-spin';
+                btnText.innerText = "আপডেট হচ্ছে...";
+                
+                await db.collection("events").doc(id).update(updates);
+                
+                alert("ইভেন্ট সফলভাবে আপডেট করা হয়েছে!");
+                closeEditModal();
+                loadActiveEvents(); // Refresh list silently
+            } catch (err) {
+                console.error(err);
+                alert("Error updating event.");
+            } finally {
+                document.getElementById('edit-submit-icon').className = 'fa-solid fa-save';
+                document.getElementById('edit-submit-text').innerText = "আপডেট করুন";
+            }
+        });
 
         window.completeEvent = async function(eventId) {
             if(!confirm("সতর্কতা! এটি মার্ক করলে ট্যুরে অংশ নেওয়া সবার ড্যাশবোর্ডে স্ট্যাটস যোগ হয়ে যাবে। আপনি কি নিশ্চিত?")) return;
@@ -631,9 +718,7 @@
                 const evDoc = await db.collection("events").doc(eventId).get();
                 const meta = evDoc.data().statsMeta;
                 
-                const bookingsSnap = await db.collection("bookings")
-                    .where("eventId", "==", eventId)
-                    .where("paymentStatus", "==", "approved").get();
+                const bookingsSnap = await db.collection("bookings").where("eventId", "==", eventId).where("paymentStatus", "==", "approved").get();
                 
                 const batch = db.batch();
                 batch.update(evDoc.ref, { status: "completed" });
@@ -656,11 +741,8 @@
             } catch(e) { console.error(e); alert("Error completing event."); }
         };
 
-        // ==========================================
         // CROPPER & EVENT CREATION LOGIC
-        // ==========================================
-        let cropper;
-        let croppedBase64 = null; 
+        let cropper; let croppedBase64 = null; 
         const evCoverInput = document.getElementById('evCoverInput');
         const cropperModal = document.getElementById('cropper-modal');
         const cropperImage = document.getElementById('cropper-image');
@@ -682,10 +764,7 @@
             }
         });
 
-        document.getElementById('close-cropper').addEventListener('click', () => {
-            cropperModal.classList.add('hidden');
-            if(cropper) cropper.destroy();
-        });
+        document.getElementById('close-cropper').addEventListener('click', () => { cropperModal.classList.add('hidden'); if(cropper) cropper.destroy(); });
 
         document.getElementById('crop-btn').addEventListener('click', () => {
             const canvas = cropper.getCroppedCanvas({ width: 1280, height: 720 });
