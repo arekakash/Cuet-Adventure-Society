@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer Profile - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51', 
+                        facebook: '#0866FF',
+                        mistBg: '#e2e8f0', 
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
+                        'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
+                    }
+                }
+            },
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+        
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
+
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/95 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <button onclick="history.back()" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-campfire transition-colors font-bold text-sm bg-white/5 light-mode:bg-gray-100 px-4 py-2 rounded-full border border-white/10 light-mode:border-gray-300">
+                <i class="fa-solid fa-arrow-left"></i> <span>ফিরে যান</span>
+            </button>
+            <div class="flex items-center gap-4">
+                <button onclick="openSettingsModal()" class="text-gray-400 light-mode:text-gray-600 hover:text-blue-400 transition-colors bg-white/5 light-mode:bg-gray-100 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 light-mode:border-gray-300">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2"><i class="fa-solid fa-sliders text-campfire"></i> সেটিংস</h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white light-mode:hover:text-black transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div><p class="font-bold text-white light-mode:text-black text-sm">থিম</p><p class="text-xs text-gray-500">ডার্ক বা মিস্ট মোড</p></div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none">
+                        <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform"/>
+                        <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all">সম্পন্ন</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="relative z-10 pt-24 pb-20 min-h-screen max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div id="loader" class="flex flex-col items-center justify-center py-32">
+            <i class="fa-solid fa-compass text-5xl text-campfire animate-spin mb-4 shadow-[0_0_15px_rgba(231,111,81,0.5)] rounded-full"></i>
+            <p class="text-gray-400 font-bold tracking-widest animate-pulse">প্রোফাইল স্ক্যান করা হচ্ছে...</p>
+        </div>
+
+        <div id="error-state" class="hidden flex-col items-center justify-center py-32 text-center">
+            <i class="fa-solid fa-user-xmark text-6xl text-red-500 mb-6"></i>
+            <h2 class="text-2xl font-black text-white light-mode:text-black mb-2">প্রোফাইলটি পাওয়া যায়নি!</h2>
+            <p class="text-gray-400 light-mode:text-gray-600 mb-6">লিংকটি হয়তো ভুল অথবা ইউজার অ্যাকাউন্টটি ডিলিট করেছেন।</p>
+            <button onclick="history.back()" class="bg-trail text-white px-6 py-3 rounded-xl font-bold hover:bg-mountain transition-colors">ফিরে যান</button>
+        </div>
+
+        <div id="profile-content" class="hidden opacity-0 transition-opacity duration-1000">
+            
+            <!-- PROFILE HEADER -->
+            <div class="glass-panel rounded-[2rem] p-8 md:p-12 mb-8 relative overflow-hidden" data-aos="fade-up">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-campfire/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8 relative z-10">
+                    <!-- Avatar -->
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-darkForest light-mode:border-white shadow-xl overflow-hidden shrink-0 bg-moss">
+                        <img id="pub-avatar" src="" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Info -->
+                    <div class="text-center md:text-left flex-grow">
+                        <h1 id="pub-name" class="text-3xl sm:text-4xl font-black text-white light-mode:text-black mb-2 drop-shadow-md">...</h1>
+                        <p id="pub-dept-batch" class="text-lg font-bold text-trail mb-4">...</p>
+                        
+                        <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6" id="pub-badges">
+                            <!-- Experience Badge will be injected here -->
+                        </div>
+                        
+                        <div class="flex justify-center md:justify-start gap-4" id="pub-socials">
+                            <!-- Social Links will be injected here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAMIFICATION STATS -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+                <div class="glass-panel p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-full bg-trail/20 text-trail flex items-center justify-center text-xl mb-3 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
+                    <p class="text-4xl font-black text-white light-mode:text-black drop-shadow-md" id="stat-treks">0</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Total Treks</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-full bg-campfire/20 text-campfire flex items-center justify-center text-xl mb-3 group-hover:shadow-glow transition-shadow"><i class="fa-solid fa-fire"></i></div>
+                    <p class="text-4xl font-black text-white light-mode:text-black drop-shadow-md" id="stat-nights">0</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Nights Camped</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-3 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
+                    <p class="text-4xl font-black text-white light-mode:text-black drop-shadow-md"><span id="stat-distance">0</span><span class="text-sm font-medium text-gray-500">km</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">Distance</p>
+                </div>
+            </div>
+
+            <!-- USER'S STORIES SECTION -->
+            <div data-aos="fade-up" data-aos-delay="400">
+                <div class="flex items-center gap-3 mb-8 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                    <i class="fa-solid fa-book-open text-campfire text-2xl"></i>
+                    <h2 class="text-2xl font-black text-white light-mode:text-black">প্রকাশিত গল্পসমূহ</h2>
+                </div>
+                
+                <div id="pub-stories-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Stories will be injected here -->
+                </div>
+                
+                <div id="pub-stories-empty" class="hidden text-center py-12 glass-panel rounded-3xl">
+                    <i class="fa-solid fa-feather-pointed text-4xl text-gray-600 light-mode:text-gray-400 mb-4"></i>
+                    <p class="text-gray-400 light-mode:text-gray-500 font-bold">এই এক্সপ্লোরার এখনো কোনো গল্প শেয়ার করেননি।</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script> AOS.init({ once: true, offset: 50 }); </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Theme Engine
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'light') { enableLightMode(); themeToggle.checked = true; }
+        
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) { enableLightMode(); localStorage.setItem('theme', 'light'); } 
+            else { enableDarkMode(); localStorage.setItem('theme', 'dark'); }
+        });
+
+        function enableLightMode() {
+            htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); 
+            document.getElementById('bg-dark-img').classList.replace('opacity-10', 'opacity-0');
+            document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40');
+            document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100');
+        }
+        function enableDarkMode() {
+            htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode');
+            document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0');
+            document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-10');
+            document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100');
+        }
+
+        // Modal Logic
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsContent = document.getElementById('settings-content');
+        function openSettingsModal() { settingsModal.classList.remove('hidden'); setTimeout(() => { settingsContent.classList.remove('scale-95'); settingsContent.classList.add('scale-100'); }, 10); }
+        function closeSettingsModal() { settingsContent.classList.remove('scale-100'); settingsContent.classList.add('scale-95'); setTimeout(() => { settingsModal.classList.add('hidden'); }, 300); }
+
+        // ==========================================
+        // FIREBASE LOGIC
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Get UID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUid = urlParams.get('uid');
+
+        const loader = document.getElementById('loader');
+        const errorState = document.getElementById('error-state');
+        const profileContent = document.getElementById('profile-content');
+
+        if (!targetUid) {
+            loader.classList.add('hidden');
+            errorState.classList.remove('hidden');
+            errorState.classList.add('flex');
+        } else {
+            // 1. Fetch User Data
+            db.collection("users").doc(targetUid).get().then((doc) => {
+                loader.classList.add('hidden');
+                
+                if (doc.exists) {
+                    const uData = doc.data();
+                    
+                    // Profile Info
+                    document.getElementById('pub-name').innerText = uData.fullName;
+                    document.getElementById('pub-avatar').src = uData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(uData.fullName)}&background=0a1c13&color=fff&size=256&bold=true`;
+                    
+                    const dept = uData.department || '';
+                    const batch = uData.batch || '';
+                    document.getElementById('pub-dept-batch').innerText = (dept && batch) ? `${dept} '${String(batch).slice(-2)}` : "CUET Explorer";
+                    
+                    // Gamification Stats
+                    document.getElementById('stat-treks').innerText = uData.totalTreks || 0;
+                    document.getElementById('stat-nights').innerText = uData.totalNights || 0;
+                    document.getElementById('stat-distance').innerText = uData.totalDistance || 0;
+
+                    // Badges
+                    const badgesContainer = document.getElementById('pub-badges');
+                    if (uData.experienceLevel) {
+                        badgesContainer.innerHTML += `<span class="bg-purple-500/10 text-purple-400 border border-purple-500/30 px-4 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase"><i class="fa-solid fa-award mr-1"></i> ${uData.experienceLevel}</span>`;
+                    }
+                    if (uData.role === 'admin') {
+                        badgesContainer.innerHTML += `<span class="bg-red-500/10 text-red-500 border border-red-500/30 px-4 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Admin</span>`;
+                    }
+
+                    // Social Links
+                    const socials = document.getElementById('pub-socials');
+                    if (uData.fbLink) {
+                        socials.innerHTML += `<a href="${uData.fbLink.startsWith('http') ? uData.fbLink : 'https://'+uData.fbLink}" target="_blank" class="w-12 h-12 rounded-full bg-facebook/10 text-facebook flex items-center justify-center hover:bg-facebook hover:text-white transition-all shadow-[0_0_15px_rgba(8,102,255,0.2)] text-xl"><i class="fa-brands fa-facebook-f"></i></a>`;
+                    }
+                    if (uData.instaLink) {
+                        socials.innerHTML += `<a href="${uData.instaLink.startsWith('http') ? uData.instaLink : 'https://'+uData.instaLink}" target="_blank" class="w-12 h-12 rounded-full bg-pink-600/10 text-pink-500 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all shadow-[0_0_15px_rgba(219,39,119,0.2)] text-xl"><i class="fa-brands fa-instagram"></i></a>`;
+                    }
+
+                    // Reveal Content
+                    profileContent.classList.remove('hidden');
+                    setTimeout(() => { profileContent.classList.remove('opacity-0'); }, 50);
+
+                    // 2. Fetch User's Stories
+                    fetchUserStories(targetUid);
+
+                } else {
+                    errorState.classList.remove('hidden');
+                    errorState.classList.add('flex');
+                }
+            }).catch((error) => {
+                console.error("Error fetching user:", error);
+                loader.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                errorState.classList.add('flex');
+            });
+        }
+
+        function fetchUserStories(uid) {
+            db.collection("stories")
+              .where("authorId", "==", uid)
+              .where("status", "==", "approved")
+              .get()
+              .then((snapshot) => {
+                  const grid = document.getElementById('pub-stories-grid');
+                  const empty = document.getElementById('pub-stories-empty');
+                  
+                  if(snapshot.empty) {
+                      empty.classList.remove('hidden');
+                  } else {
+                      empty.classList.add('hidden');
+                      snapshot.forEach(doc => {
+                          const s = doc.data();
+                          const date = s.createdAt ? s.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+                          
+                          const card = `
+                            <a href="story-reader.html?id=${doc.id}" class="block glass-panel rounded-2xl p-4 flex gap-4 hover:-translate-y-1 transition-transform group border border-white/5 light-mode:border-gray-200">
+                                <img src="${s.coverPhoto}" class="w-24 h-24 rounded-xl object-cover shrink-0">
+                                <div class="flex flex-col justify-center">
+                                    <h3 class="text-white light-mode:text-black font-bold text-lg mb-1 leading-tight group-hover:text-campfire transition-colors line-clamp-2">${s.title}</h3>
+                                    <p class="text-xs text-gray-400 light-mode:text-gray-500">${date} • ${s.readTime || 5} min read</p>
+                                </div>
+                            </a>
+                          `;
+                          grid.insertAdjacentHTML('beforeend', card);
+                      });
+                  }
+              });
+        }
+    </script>
+</body>
+</html>
