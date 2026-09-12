@@ -24,6 +24,7 @@
                         'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
                         'glow-sm': '0 0 10px rgba(231, 111, 81, 0.2)',
                         'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
+                        'glow-gold': '0 0 15px rgba(255, 215, 0, 0.4)'
                     }
                 }
             }
@@ -39,6 +40,7 @@
         ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
 
+        /* Performance Optimized Glass Panel */
         .glass-panel {
             background: rgba(10, 28, 19, 0.6);
             backdrop-filter: blur(16px);
@@ -84,12 +86,11 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
 
-    <!-- BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90 transition-opacity duration-1000"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
         
         <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[120px]"></div>
@@ -111,6 +112,11 @@
             <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:bg-gray-100 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_stories">অ্যাডভেঞ্চারের গল্প</span>
+            </a>
+            <!-- 🟢 LEADERBOARD LINK IN SIDEBAR -->
+            <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-black transition-colors shadow-glow-gold"><i class="fa-solid fa-trophy"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_leaderboard">লিডারবোর্ড</span>
             </a>
             <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
             <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-all group flex items-center gap-4">
@@ -237,23 +243,28 @@
         <!-- RIGHT COLUMN: Stats & Bookings -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- 🟢 GAMIFICATION STATS (WITH PROPER IDs) -->
+            <!-- 🟢 GAMIFICATION STATS (WITH CURRENT RANK) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                
+                <!-- NEW: CURRENT RANK CARD -->
+                <div onclick="window.location.href='leaderboard.html'" class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-yellow-500/30" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-500 flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-gold transition-shadow"><i class="fa-solid fa-crown"></i></div>
+                    <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md">#<span id="stat-rank">-</span></p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat_rank">Current Rank</p>
+                </div>
+
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
                     <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
                     <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md" id="stat-treks">0</p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat1">Total Treks</p>
                 </div>
-                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="w-10 h-10 rounded-full bg-campfire/20 text-campfire flex items-center justify-center text-lg mb-2 group-hover:shadow-glow transition-shadow"><i class="fa-solid fa-fire"></i></div>
-                    <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md" id="stat-nights">0</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat2">Nights Camped</p>
-                </div>
+                
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
                     <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
                     <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md"><span id="stat-distance">0</span><span class="text-sm font-medium text-gray-500">km</span></p>
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat3">Distance</p>
                 </div>
+
                 <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
                     <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-shadow"><i class="fa-solid fa-shield-halved"></i></div>
                     <p class="text-xl sm:text-2xl font-black text-emerald-400 mt-1">100%</p>
@@ -261,7 +272,6 @@
                 </div>
             </div>
 
-            <!-- 🟢 MY BOOKINGS SECTION (WITH PROPER IDs) -->
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="450">
                 <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/50">
                     <h3 class="text-sm font-bold text-white light-mode:text-black tracking-widest uppercase flex items-center gap-2">
@@ -350,6 +360,7 @@
             "menu_upcoming": { bn: "আপকামিং ইভেন্ট", en: "Upcoming Events" },
             "menu_past": { bn: "পূর্ববর্তী ইভেন্ট", en: "Past Events" },
             "menu_stories": { bn: "অ্যাডভেঞ্চারের গল্প", en: "Adventure Stories" },
+            "menu_leaderboard": { bn: "লিডারবোর্ড", en: "Leaderboard" },
             "menu_store": { bn: "অ্যাডভেঞ্চার স্টোর", en: "Adventure Store" },
             "menu_guide": { bn: "বিগিনার গাইড", en: "Beginner's Guide" },
             "menu_crew": { bn: "নেপথ্যে যারা", en: "Behind the Scenes" },
@@ -369,6 +380,7 @@
             "dash_swimming": { bn: "Swimming", en: "Swimming" },
             "dash_bicycle": { bn: "Bicycle", en: "Bicycle" },
             "dash_exp": { bn: "Experience", en: "Experience" },
+            "dash_stat_rank": { bn: "Current Rank", en: "Current Rank" },
             "dash_stat1": { bn: "Total Treks", en: "Total Treks" },
             "dash_stat2": { bn: "Nights Camped", en: "Nights Camped" },
             "dash_stat3": { bn: "Distance", en: "Distance" },
@@ -489,7 +501,6 @@
 
                         // Gamification Stats
                         safeSetText('stat-treks', userData.totalTreks || 0);
-                        safeSetText('stat-nights', userData.totalNights || 0);
                         safeSetText('stat-distance', userData.totalDistance || 0);
 
                         // Admin Check
@@ -501,6 +512,26 @@
                         // Theme/Lang Sync
                         if(userData.theme) { localStorage.setItem('theme', userData.theme); if(userData.theme === 'light') { enableLightMode(); themeToggle.checked = true; } else { enableDarkMode(); themeToggle.checked = false; } }
                         if(userData.lang) { localStorage.setItem('lang', userData.lang); currentLang = userData.lang; langToggle.checked = (userData.lang === 'en'); applyTranslations(currentLang); }
+
+                        // 🟢 NEW: CALCULATE LIVE RANK
+                        if(userData.totalTreks > 0) {
+                            db.collection("users").where("totalTreks", ">", 0).get().then(snapshot => {
+                                let users = [];
+                                snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));
+                                
+                                users.sort((a, b) => {
+                                    const treksA = a.totalTreks || 0; const treksB = b.totalTreks || 0;
+                                    if (treksB !== treksA) return treksB - treksA;
+                                    const distA = a.totalDistance || 0; const distB = b.totalDistance || 0;
+                                    return distB - distA;
+                                });
+                                
+                                const rankIndex = users.findIndex(u => u.id === user.uid);
+                                if(rankIndex !== -1) {
+                                    document.getElementById('stat-rank').innerText = rankIndex + 1;
+                                }
+                            });
+                        }
                     } else {
                         window.location.href = "signup.html";
                     }
