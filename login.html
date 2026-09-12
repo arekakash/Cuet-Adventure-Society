@@ -57,12 +57,6 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        /* 🟢 LIGHT MODE PANEL FIX */
-        .light-mode .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
 
         /* Glass Input Styling */
         .glass-input {
@@ -79,34 +73,65 @@
             transform: translateY(-3px) scale(1.01);
         }
 
-        /* 🟢 LIGHT MODE INPUT FIX */
+        /* ========================================== */
+        /* 🟢 BULLETPROOF LIGHT MODE OVERRIDES 🟢 */
+        /* ========================================== */
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08) !important;
+        }
+        .light-mode .hero-panel {
+            background: rgba(248, 250, 252, 0.8) !important;
+        }
+        .light-mode .lm-bg-white {
+            background: #ffffff !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .light-mode .lm-bg-button {
+            background: #f1f5f9 !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        .light-mode .lm-bg-button:hover {
+            background: #e2e8f0 !important;
+        }
+        
+        /* Light Mode Text Visibility Fixes */
+        .light-mode .lm-text-dark {
+            color: #0f172a !important; /* Very Dark Slate */
+            text-shadow: none !important;
+        }
+        .light-mode .lm-text-muted {
+            color: #475569 !important; /* Medium Gray/Slate */
+            text-shadow: none !important;
+        }
+        .light-mode .lm-border-light {
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Light Mode Input Fixes */
         .light-mode .glass-input {
-            background: rgba(241, 245, 249, 0.8); /* Slate-100 equivalent */
-            border-color: rgba(0, 0, 0, 0.15);
-            color: #0f172a; /* Very dark text */
+            background: #f8fafc !important;
+            border: 1px solid rgba(0, 0, 0, 0.15) !important;
+            color: #0f172a !important;
+            font-weight: 600 !important;
         }
         .light-mode .glass-input::placeholder {
-            color: #94a3b8; /* Slate-400 equivalent */
+            color: #94a3b8 !important;
+            font-weight: 500 !important;
         }
         .light-mode .glass-input:focus {
-            background: #ffffff;
-            border-color: #e76f51;
-            box-shadow: 0 0 15px rgba(231, 111, 81, 0.15);
+            background: #ffffff !important;
+            border-color: #e76f51 !important;
+            box-shadow: 0 0 15px rgba(231, 111, 81, 0.15) !important;
         }
 
-        /* Modal specific styling */
-        .modal-overlay {
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
+        /* Modals */
+        .modal-overlay { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
 
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
-        input:-webkit-autofill:active{
+        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px transparent inset !important;
             transition: background-color 5000s ease-in-out 0s;
         }
@@ -125,7 +150,7 @@
         
         <!-- Light Background -->
         <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/95 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
 
         <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-campfire/10 rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_5s_ease-in-out_infinite]"></div>
         <div class="absolute bottom-1/4 left-1/4 w-80 h-80 bg-trail/10 rounded-full mix-blend-screen filter blur-[80px] animate-[pulse_7s_ease-in-out_infinite]"></div>
@@ -134,10 +159,10 @@
     <!-- ========================================== -->
     <!-- MAIN CONTAINER                             -->
     <!-- ========================================== -->
-    <div class="max-w-5xl w-full glass-panel rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10" data-aos="zoom-in" data-aos-duration="1000">
+    <div class="max-w-5xl w-full glass-panel rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/10 lm-border-light" data-aos="zoom-in" data-aos-duration="1000">
         
         <!-- Left Side: Hero / Vibe -->
-        <div class="w-full md:w-5/12 bg-black/40 light-mode:bg-gray-100/50 flex flex-col justify-between relative overflow-hidden group p-10 lg:p-14">
+        <div class="w-full md:w-5/12 bg-black/40 hero-panel flex flex-col justify-between relative overflow-hidden group p-10 lg:p-14">
             
             <!-- WATERMARK LOGO BACKGROUND -->
             <div class="absolute -bottom-20 -left-20 w-[150%] opacity-[0.07] light-mode:opacity-[0.04] pointer-events-none transform -rotate-12 mix-blend-screen light-mode:mix-blend-multiply">
@@ -147,10 +172,10 @@
             <div class="relative z-10 flex flex-col h-full justify-between">
                 <div data-aos="fade-right" data-aos-delay="200">
                     <div class="flex items-center gap-3 mb-12">
-                        <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 light-mode:text-gray-600 hover:text-campfire light-mode:hover:text-campfire transition-colors backdrop-blur-sm bg-white/5 light-mode:bg-white/50 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10 light-mode:border-gray-300 hover:border-campfire/50">
+                        <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 lm-text-dark hover:text-campfire transition-colors backdrop-blur-sm bg-white/5 lm-bg-button px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-white/10 lm-border-light hover:border-campfire/50">
                             <i class="fa-solid fa-arrow-left"></i> <span data-i18n="login_back">হোমপেজে ফিরে যান</span>
                         </a>
-                        <button onclick="openSettingsModal()" class="inline-flex items-center gap-2 text-gray-400 light-mode:text-gray-600 hover:text-blue-400 transition-colors backdrop-blur-sm bg-white/5 light-mode:bg-white/50 px-4 py-2 rounded-full text-xs font-bold uppercase border border-white/10 light-mode:border-gray-300">
+                        <button onclick="openSettingsModal()" class="inline-flex items-center gap-2 text-gray-400 lm-text-dark hover:text-blue-500 transition-colors backdrop-blur-sm bg-white/5 lm-bg-button px-4 py-2 rounded-full text-xs font-bold uppercase border border-white/10 lm-border-light">
                             <i class="fa-solid fa-gear"></i>
                         </button>
                     </div>
@@ -160,11 +185,10 @@
                         <img src="https://i.ibb.co.com/RTsXRhrL/FB-IMG-1788798212734.jpg" alt="CUET AS Logo" class="h-24 sm:h-28 w-auto object-contain mix-blend-screen light-mode:mix-blend-multiply drop-shadow-2xl">
                     </div>
                     
-                    <!-- 🟢 TEXT COLOR FIX FOR LIGHT MODE -->
-                    <h2 class="text-4xl lg:text-5xl font-black leading-tight mb-5 tracking-tight text-white light-mode:text-slate-900 drop-shadow-lg light-mode:drop-shadow-none" data-i18n="login_hero_title">
+                    <h2 class="text-4xl lg:text-5xl font-black leading-tight mb-5 tracking-tight text-white lm-text-dark drop-shadow-lg" data-i18n="login_hero_title">
                         ফিরে আসার <br><span class="text-campfire">রোমাঞ্চ</span>
                     </h2>
-                    <p class="text-gray-400 light-mode:text-slate-700 text-sm sm:text-base leading-relaxed border-l-2 border-campfire pl-4" data-i18n="login_hero_desc">
+                    <p class="text-gray-400 lm-text-muted text-sm sm:text-base leading-relaxed border-l-2 border-campfire pl-4" data-i18n="login_hero_desc">
                         আপনার পরবর্তী অ্যাডভেঞ্চার অপেক্ষা করছে। ক্লাবের ইভেন্ট বুকিং ও ড্যাশবোর্ড অ্যাক্সেস করতে লগইন করুন।
                     </p>
                 </div>
@@ -180,19 +204,18 @@
 
             <div class="relative z-10">
                 <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 text-center sm:text-left" data-aos="fade-down" data-aos-delay="300">
-                    <div class="p-4 bg-white/5 light-mode:bg-gray-100 rounded-2xl border border-white/10 light-mode:border-gray-300 shadow-sm backdrop-blur-md text-campfire text-3xl">
+                    <div class="p-4 bg-white/5 lm-bg-button rounded-2xl border border-white/10 lm-border-light shadow-sm backdrop-blur-md text-campfire text-3xl">
                         <i class="fa-solid fa-right-to-bracket"></i>
                     </div>
                     <div class="mt-1">
-                        <!-- 🟢 TEXT COLOR FIX FOR LIGHT MODE -->
-                        <h3 class="text-2xl lg:text-3xl font-black text-white light-mode:text-slate-900 mb-1 tracking-tight" data-i18n="login_title">ড্যাশবোর্ডে লগইন করুন</h3>
-                        <p class="text-sm text-gray-400 light-mode:text-slate-600 font-medium" data-i18n="login_subtitle">নিরাপদে আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+                        <h3 class="text-2xl lg:text-3xl font-black text-white lm-text-dark mb-1 tracking-tight" data-i18n="login_title">ড্যাশবোর্ডে লগইন করুন</h3>
+                        <p class="text-sm text-gray-400 lm-text-muted font-medium" data-i18n="login_subtitle">নিরাপদে আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
                     </div>
                 </div>
 
                 <!-- Google Login -->
                 <div data-aos="fade-up" data-aos-delay="400">
-                    <button id="google-login-btn" type="button" class="w-full flex items-center justify-center gap-3 bg-white/5 light-mode:bg-white/80 border border-white/10 light-mode:border-gray-300 text-gray-200 light-mode:text-slate-800 hover:bg-white/10 light-mode:hover:bg-gray-50 hover:border-campfire/50 font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group backdrop-blur-sm shadow-sm">
+                    <button id="google-login-btn" type="button" class="w-full flex items-center justify-center gap-3 bg-white/5 lm-bg-button border border-white/10 lm-border-light text-gray-200 lm-text-dark hover:border-campfire/50 hover:shadow-glow-sm font-bold py-3.5 px-4 rounded-xl transition-all mb-6 relative overflow-hidden group backdrop-blur-sm shadow-sm">
                         <svg class="w-5 h-5 relative z-10" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.58c2.08-1.92 3.27-4.74 3.27-8.09z"/>
                             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.58-2.77c-.98.66-2.23 1.06-3.7 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -204,25 +227,24 @@
                 </div>
 
                 <div class="relative flex items-center py-2 mb-6" data-aos="fade-up" data-aos-delay="450">
-                    <div class="flex-grow border-t border-white/10 light-mode:border-gray-300"></div>
-                    <!-- 🟢 TEXT COLOR FIX FOR LIGHT MODE -->
-                    <span class="flex-shrink-0 mx-4 text-gray-500 light-mode:text-slate-500 text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-transparent px-2" data-i18n="login_or">অথবা ইমেইল দিয়ে</span>
-                    <div class="flex-grow border-t border-white/10 light-mode:border-gray-300"></div>
+                    <div class="flex-grow border-t border-white/10 lm-border-light"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-500 lm-text-muted text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-transparent px-2" data-i18n="login_or">অথবা ইমেইল দিয়ে</span>
+                    <div class="flex-grow border-t border-white/10 lm-border-light"></div>
                 </div>
 
                 <!-- Manual Login Form -->
                 <form id="login-form" class="space-y-5">
                     <div data-aos="fade-up" data-aos-delay="500">
-                        <label class="block text-[11px] font-bold text-gray-400 light-mode:text-slate-600 mb-1.5 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস</label>
+                        <label class="block text-[11px] font-bold text-gray-400 lm-text-muted mb-1.5 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস</label>
                         <input type="email" id="email" required placeholder="example@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-3.5 outline-none">
                     </div>
 
                     <div data-aos="fade-up" data-aos-delay="550">
                         <div class="flex justify-between items-center mb-1.5">
-                            <label class="block text-[11px] font-bold text-gray-400 light-mode:text-slate-600 uppercase tracking-wider" data-i18n="lbl_pass">পাসওয়ার্ড</label>
+                            <label class="block text-[11px] font-bold text-gray-400 lm-text-muted uppercase tracking-wider" data-i18n="lbl_pass">পাসওয়ার্ড</label>
                             
                             <!-- 🟢 ACCOUNT RECOVERY TRIGGER BUTTON -->
-                            <button type="button" onclick="openRecoveryModal()" class="text-[10px] text-campfire hover:text-white light-mode:hover:text-black transition-colors font-bold tracking-wide" data-i18n="login_forgot">
+                            <button type="button" onclick="openRecoveryModal()" class="text-[10px] text-campfire hover:text-white transition-colors font-bold tracking-wide" data-i18n="login_forgot">
                                 পাসওয়ার্ড ভুলে গেছেন?
                             </button>
                         </div>
@@ -238,9 +260,9 @@
 
                 <!-- Sign Up Link -->
                 <div class="mt-8 text-center" data-aos="fade-up" data-aos-delay="700">
-                    <p class="text-sm text-gray-400 light-mode:text-slate-600">
+                    <p class="text-sm text-gray-400 lm-text-muted">
                         <span data-i18n="login_no_acc">অ্যাকাউন্ট নেই?</span> 
-                        <a href="signup.html" class="text-campfire font-bold hover:text-white light-mode:hover:text-black transition-colors border-b border-transparent hover:border-white light-mode:hover:border-black pb-0.5" data-i18n="login_create">নতুন অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</a>
+                        <a href="signup.html" class="text-campfire font-bold hover:text-white lm-text-dark transition-colors border-b border-transparent hover:border-white lm-border-light pb-0.5" data-i18n="login_create">নতুন অ্যাডভেঞ্চার অ্যাকাউন্ট তৈরি করুন</a>
                     </p>
                 </div>
             </div>
@@ -253,23 +275,23 @@
     <div id="recovery-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
         <div class="absolute inset-0 bg-black/70 light-mode:bg-black/40 backdrop-blur-md" onclick="closeRecoveryModal()"></div>
         
-        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-[2rem] p-8 sm:p-10 max-w-md w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="recovery-content">
+        <div class="bg-moss lm-bg-white border border-white/10 lm-border-light rounded-[2rem] p-8 sm:p-10 max-w-md w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="recovery-content">
             
             <div class="text-center mb-8 relative">
-                <div class="w-16 h-16 bg-blue-500/10 light-mode:bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-blue-500/20 shadow-glow-sm">
+                <div class="w-16 h-16 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-blue-500/20 shadow-glow-sm">
                     <i class="fa-solid fa-unlock-keyhole"></i>
                 </div>
-                <h3 class="text-2xl font-black text-white light-mode:text-slate-900 mb-2" data-i18n="rec_title">অ্যাকাউন্ট রিকভারি</h3>
-                <p class="text-sm text-gray-400 light-mode:text-slate-600 font-medium" data-i18n="rec_desc">আপনার রেজিস্টার্ড ইমেইলটি দিন। আমরা একটি সিকিউর পাসওয়ার্ড রিসেট লিংক পাঠিয়ে দেব।</p>
+                <h3 class="text-2xl font-black text-white lm-text-dark mb-2" data-i18n="rec_title">অ্যাকাউন্ট রিকভারি</h3>
+                <p class="text-sm text-gray-400 lm-text-muted font-medium" data-i18n="rec_desc">আপনার রেজিস্টার্ড ইমেইলটি দিন। আমরা একটি সিকিউর পাসওয়ার্ড রিসেট লিংক পাঠিয়ে দেব।</p>
                 
-                <button type="button" onclick="closeRecoveryModal()" class="absolute -top-4 -right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 light-mode:bg-gray-100 text-gray-400 hover:text-red-500 hover:bg-red-500/10 transition-colors">
+                <button type="button" onclick="closeRecoveryModal()" class="absolute -top-4 -right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 lm-bg-button text-gray-400 lm-text-muted hover:text-red-500 transition-colors">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <form id="recovery-form" class="space-y-6">
                 <div>
-                    <label class="block text-xs font-bold text-gray-400 light-mode:text-slate-600 mb-2 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস</label>
+                    <label class="block text-xs font-bold text-gray-400 lm-text-muted mb-2 uppercase tracking-wider" data-i18n="lbl_email">ইমেইল অ্যাড্রেস</label>
                     <input type="email" id="recovery-email" required placeholder="user@cuet.ac.bd" class="glass-input w-full text-sm rounded-xl block p-4 outline-none text-center tracking-wide font-medium">
                 </div>
                 
@@ -291,13 +313,13 @@
     <div id="settings-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden modal-overlay">
         <div class="absolute inset-0 bg-black/70 light-mode:bg-black/40 backdrop-blur-md" onclick="closeSettingsModal()"></div>
         
-        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+        <div class="bg-moss lm-bg-white border border-white/10 lm-border-light rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
             
-            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
-                <h3 class="text-xl font-black text-white light-mode:text-slate-900 flex items-center gap-2">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 lm-border-light pb-4">
+                <h3 class="text-xl font-black text-white lm-text-dark flex items-center gap-2">
                     <i class="fa-solid fa-sliders text-campfire"></i> <span data-i18n="modal_settings">সেটিংস</span>
                 </h3>
-                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-red-500 transition-colors">
+                <button onclick="closeSettingsModal()" class="text-gray-400 lm-text-muted hover:text-red-500 transition-colors">
                     <i class="fa-solid fa-xmark text-xl"></i>
                 </button>
             </div>
@@ -306,8 +328,8 @@
                 <!-- Theme Toggle -->
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="font-bold text-white light-mode:text-slate-900 text-sm" data-i18n="modal_theme">থিম (Theme)</p>
-                        <p class="text-xs text-gray-500 light-mode:text-slate-500" data-i18n="modal_theme_desc">ডার্ক ফরেস্ট বা মিস্ট মোড</p>
+                        <p class="font-bold text-white lm-text-dark text-sm" data-i18n="modal_theme">থিম (Theme)</p>
+                        <p class="text-xs text-gray-500 lm-text-muted" data-i18n="modal_theme_desc">ডার্ক ফরেস্ট বা মিস্ট মোড</p>
                     </div>
                     <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
                         <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
@@ -318,8 +340,8 @@
                 <!-- Language Toggle -->
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="font-bold text-white light-mode:text-slate-900 text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
-                        <p class="text-xs text-gray-500 light-mode:text-slate-500" data-i18n="modal_lang_desc">বাংলা অথবা English</p>
+                        <p class="font-bold text-white lm-text-dark text-sm" data-i18n="modal_lang">ভাষা (Language)</p>
+                        <p class="text-xs text-gray-500 lm-text-muted" data-i18n="modal_lang_desc">বাংলা অথবা English</p>
                     </div>
                     <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
                         <input type="checkbox" id="lang-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
@@ -329,7 +351,7 @@
             </div>
 
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-slate-900 font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 lm-bg-button border border-white/10 lm-border-light text-white lm-text-dark font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">
                     সম্পন্ন
                 </button>
             </div>
