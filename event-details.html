@@ -77,7 +77,7 @@
             opacity: 0;
         }
         .accordion-content.open {
-            max-height: 500px; /* Arbitrary large number */
+            max-height: 500px; 
             opacity: 1;
         }
     </style>
@@ -210,7 +210,7 @@
                     <div id="payment-instructions" class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                         <p class="text-xs font-bold text-blue-400 mb-2"><i class="fa-solid fa-circle-info"></i> পেমেন্ট নির্দেশনা:</p>
                         <p class="text-sm text-gray-300 light-mode:text-gray-700 mb-2">নিচের নম্বরে সেন্ড মানি করে TrxID ফর্মে দিন:</p>
-                        <p class="text-lg font-black text-white light-mode:text-black tracking-widest text-center bg-black/40 py-2 rounded-lg"><span id="ev-bkash">017XXXXXXX</span></p>
+                        <p class="text-lg font-black text-white light-mode:text-black tracking-widest text-center bg-black/40 py-2 rounded-lg"><span id="ev-bkash">...</span></p>
                     </div>
 
                     <form id="booking-form" class="space-y-4">
@@ -404,7 +404,8 @@
                     </div>
                 `).join('');
             } else {
-                itinContainer.innerHTML = "<p class="text-sm text-gray-500">কোনো প্ল্যান আপডেট করা হয়নি।</p>";
+                // BUG FIXED HERE: Replaced double quotes inside double quotes with single quotes.
+                itinContainer.innerHTML = '<p class="text-sm text-gray-500">কোনো প্ল্যান আপডেট করা হয়নি।</p>';
             }
 
             // Booking Validations
@@ -458,7 +459,6 @@
             btn.disabled = true;
 
             try {
-                // Double check seats (Race condition prevention)
                 const eventRef = db.collection("events").doc(eventId);
                 
                 await db.runTransaction(async (transaction) => {
