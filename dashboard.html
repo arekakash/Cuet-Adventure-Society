@@ -361,7 +361,7 @@
         <!-- RIGHT COLUMN: Stats & Bookings -->
         <div class="lg:col-span-2 space-y-6">
             
-            <!-- 🟢 GAMIFICATION STATS (WITH CURRENT RANK) -->
+            <!-- 🟢 GAMIFICATION STATS -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 
                 <!-- CURRENT RANK CARD -->
@@ -655,35 +655,59 @@
                     }
                 }).catch(console.error);
 
-                // Fetch My Bookings
-                db.collection("bookings").where("userId", "==", user.uid).get().then((querySnapshot) => {
+                // 🟢 UPDATED: FETCH MY BOOKINGS WITH AUTO-CLEANING (SELF-HEALING) LOGIC 
+                db.collection("bookings").where("userId", "==", user.uid).get().then(async (querySnapshot) => {
                     const bookingsContainer = document.getElementById('bookings-container');
                     const emptyState = document.getElementById('bookings-empty');
                     
                     if(querySnapshot.empty) {
                         if(emptyState) emptyState.classList.remove('hidden');
                     } else {
-                        if(emptyState) emptyState.classList.add('hidden');
-                        if(bookingsContainer) {
-                            bookingsContainer.innerHTML = '';
-                            querySnapshot.forEach(doc => {
-                                const bData = doc.data();
-                                const isApproved = bData.paymentStatus === 'approved';
-                                const statusBadge = isApproved 
-                                    ? `<span class="bg-emerald-500/20 light-mode:bg-emerald-500/10 text-emerald-400 light-mode:!text-emerald-700 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"><i class="fa-solid fa-check mr-1"></i> Confirmed</span>`
-                                    : `<span class="bg-yellow-500/20 light-mode:bg-yellow-500/10 text-yellow-500 light-mode:!text-amber-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest animate-pulse"><i class="fa-solid fa-clock mr-1"></i> Pending</span>`;
+                        if(bookingsContainer) bookingsContainer.innerHTML = '';
+                        let validBookingsCount = 0;
+
+                        // Loop through all bookings the user has made
+                        for (let bDoc of querySnapshot.docs) {
+                            const bData = bDoc.data();
+                            
+                            // 🚀 MAGIC LOGIC: Check if the event still exists in the database
+                            try {
+                                const eventCheck = await db.collection("events").doc(bData.eventId).get();
                                 
-                                const card = `
-                                    <div class="bg-black/30 light-mode:!bg-white border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-200'} p-4 rounded-xl flex justify-between items-center transition-all duration-300 hover:bg-black/50 light-mode:hover:!bg-gray-50 hover:-translate-y-1 hover:shadow-lg">
-                                        <div>
-                                            <h4 class="font-bold text-white lm-text-dark text-sm mb-1">${bData.eventTitle}</h4>
-                                            <p class="text-[10px] text-gray-500 lm-text-muted uppercase tracking-widest">TrxID: ${bData.trxId}</p>
-                                        </div>
-                                        <div>${statusBadge}</div>
+                                // If the event DOES NOT exist (deleted by admin), auto-delete this orphaned booking
+                                if (!eventCheck.exists) {
+                                    await db.collection("bookings").doc(bDoc.id).delete();
+                                    continue; // Skip rendering this card
+                                }
+                            } catch(err) {
+                                console.error("Error verifying event existence: ", err);
+                            }
+
+                            // If we reach here, the event is valid!
+                            validBookingsCount++;
+                            
+                            const isApproved = bData.paymentStatus === 'approved';
+                            const statusBadge = isApproved 
+                                ? `<span class="bg-emerald-500/20 light-mode:bg-emerald-500/10 text-emerald-400 light-mode:!text-emerald-700 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"><i class="fa-solid fa-check mr-1"></i> Confirmed</span>`
+                                : `<span class="bg-yellow-500/20 light-mode:bg-yellow-500/10 text-yellow-500 light-mode:!text-amber-600 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest animate-pulse"><i class="fa-solid fa-clock mr-1"></i> Pending</span>`;
+                            
+                            const card = `
+                                <div class="bg-black/30 light-mode:!bg-white border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-200'} p-4 rounded-xl flex justify-between items-center transition-all duration-300 hover:bg-black/50 light-mode:hover:!bg-gray-50 hover:-translate-y-1 hover:shadow-lg">
+                                    <div>
+                                        <h4 class="font-bold text-white lm-text-dark text-sm mb-1">${bData.eventTitle}</h4>
+                                        <p class="text-[10px] text-gray-500 lm-text-muted uppercase tracking-widest">TrxID: ${bData.trxId}</p>
                                     </div>
-                                `;
-                                bookingsContainer.insertAdjacentHTML('beforeend', card);
-                            });
+                                    <div>${statusBadge}</div>
+                                </div>
+                            `;
+                            if(bookingsContainer) bookingsContainer.insertAdjacentHTML('beforeend', card);
+                        }
+
+                        // Check if we have any valid bookings left after cleaning
+                        if(validBookingsCount === 0) {
+                            if(emptyState) emptyState.classList.remove('hidden');
+                        } else {
+                            if(emptyState) emptyState.classList.add('hidden');
                         }
                     }
                 });
@@ -694,7 +718,5 @@
         document.getElementById('logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.href = "index.html"; }); });
         document.getElementById('mobile-logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.href = "index.html"; }); });
     </script>
-</body>
-</html>
 </body>
 </html>
