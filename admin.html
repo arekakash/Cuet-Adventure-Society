@@ -95,7 +95,6 @@
             background-color: white; padding: 2rem; border-radius: 0.5rem; max-width: 500px; width: 100%;
         }
         
-        /* Dynamic Tag Badges */
         .tag-badge {
             display: inline-flex; align-items: center; gap: 0.5rem;
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
@@ -111,7 +110,6 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
 
-    <!-- BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
@@ -119,7 +117,6 @@
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
 
-    <!-- HEADER -->
     <div class="fixed top-0 w-full z-40 bg-black/60 light-mode:bg-white/80 backdrop-blur-xl border-b border-white/10 light-mode:border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 text-red-500">
@@ -139,7 +136,6 @@
 
     <div class="relative z-10 pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6">
         
-        <!-- LOADER -->
         <div id="auth-loader" class="flex flex-col items-center justify-center py-32">
             <i class="fa-solid fa-shield text-5xl text-blue-500 animate-pulse mb-4"></i>
             <p class="text-gray-400 font-bold tracking-widest uppercase">Verifying Admin Access...</p>
@@ -147,7 +143,6 @@
 
         <div id="admin-content" class="hidden space-y-8">
             
-            <!-- ADMIN WELCOME BOX -->
             <div class="glass-panel rounded-3xl p-6 sm:p-8 flex justify-between items-center" data-aos="fade-up">
                 <div>
                     <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black">স্বাগতম, <span id="admin-name" class="text-campfire">Admin</span>!</h1>
@@ -155,7 +150,6 @@
                 </div>
             </div>
 
-            <!-- TAB NAVIGATION -->
             <div class="flex gap-4 border-b border-white/10 light-mode:border-gray-200 pb-4 overflow-x-auto whitespace-nowrap" data-aos="fade-up" data-aos-delay="50">
                 <button onclick="switchTab('blogTab')" id="btn-blogTab" class="tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent">
                     <i class="fa-solid fa-book-open"></i> গল্প রিভিউ <span id="pending-count-badge" class="bg-yellow-500/20 text-yellow-500 px-2 py-0.5 rounded-md text-[10px]">0</span>
@@ -171,9 +165,6 @@
                 </button>
             </div>
 
-            <!-- ========================================== -->
-            <!-- TAB 1: PENDING STORIES -->
-            <!-- ========================================== -->
             <div id="section-blogTab" class="block glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                     <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
@@ -187,9 +178,6 @@
                 </div>
             </div>
             
-            <!-- ========================================== -->
-            <!-- 🚀 TAB 2: DYNAMIC EVENT LAUNCH (UPGRADED) -->
-            <!-- ========================================== -->
             <div id="section-eventTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-6">
                     <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black tracking-tight mb-2">স্মার্ট ইভেন্ট লঞ্চিং ইঞ্জিন</h1>
@@ -197,7 +185,6 @@
                 </div>
 
                 <form id="event-form">
-                    <!-- SECTION 1: CORE INFO -->
                     <h3 class="font-bold text-campfire mb-4 text-lg flex items-center gap-2 border-b border-campfire/20 pb-2"><i class="fa-solid fa-compass"></i> ১. বেসিক ইনফরমেশন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -237,7 +224,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 2: SCHEDULE -->
                     <h3 class="font-bold text-blue-400 mb-4 text-lg flex items-center gap-2 border-b border-blue-400/20 pb-2"><i class="fa-solid fa-clock"></i> ২. সময়সূচী ও ডেডলাইন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -258,7 +244,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 3: ADVANCED FINANCIALS -->
                     <h3 class="font-bold text-emerald-400 mb-4 text-lg flex items-center gap-2 border-b border-emerald-400/20 pb-2"><i class="fa-solid fa-wallet"></i> ৩. ফিন্যান্সিয়াল ইঞ্জিন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
@@ -287,7 +272,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 4: LOGISTICS -->
                     <h3 class="font-bold text-cyan-400 mb-4 text-lg flex items-center gap-2 border-b border-cyan-400/20 pb-2"><i class="fa-solid fa-tent"></i> ৪. লজিস্টিকস ও অ্যাকোমোডেশন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
@@ -315,7 +299,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 5: VIBE & LEADERSHIP -->
                     <h3 class="font-bold text-yellow-500 mb-4 text-lg flex items-center gap-2 border-b border-yellow-500/20 pb-2"><i class="fa-solid fa-fire-flame-curved"></i> ৫. ভাইব ও কন্টাক্ট ইনফো</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
@@ -341,7 +324,6 @@
                             <input type="number" id="evFitnessLevel" min="1" max="10" placeholder="e.g. 7" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                         
-                        <!-- Contact Hub -->
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টিম লিডার (নাম ও ব্যাচ) *</label>
                             <input type="text" id="evLeader" required placeholder="যেমন: RAFI SWIM (BME '22)" class="glass-input w-full p-3.5 rounded-xl border-blue-500/30">
@@ -361,12 +343,10 @@
                         <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল বিবরণ, পাহাড়ি ট্রেকিং, নৌযাত্রা ইত্যাদির সংক্ষিপ্ত রূপরেখা..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
                     </div>
 
-                    <!-- SECTION 6: DYNAMIC CHECKLISTS & RULES -->
                     <h3 class="font-bold text-purple-400 mb-4 text-lg flex items-center gap-2 border-b border-purple-400/20 pb-2"><i class="fa-solid fa-list-check"></i> ৬. ডাইনামিক রুলস ও চেকলিস্ট</h3>
                     <p class="text-xs text-gray-400 mb-6 border-l-2 border-purple-500 pl-3">প্রতিটি আইটেম লিখে 'Add' বাটনে ক্লিক করুন।</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <!-- Included -->
                         <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-emerald-500/20">
                             <label class="block text-xs font-bold text-emerald-400 mb-3 uppercase"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</label>
                             <div class="flex gap-2 mb-3">
@@ -376,7 +356,6 @@
                             <div id="tags-included" class="flex flex-wrap gap-2"></div>
                         </div>
 
-                        <!-- Required Gear -->
                         <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-yellow-500/20">
                             <label class="block text-xs font-bold text-yellow-500 mb-3 uppercase"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</label>
                             <div class="flex gap-2 mb-3">
@@ -386,7 +365,6 @@
                             <div id="tags-gear" class="flex flex-wrap gap-2"></div>
                         </div>
 
-                        <!-- Excluded -->
                         <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-gray-500/30">
                             <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-600 mb-3 uppercase"><i class="fa-solid fa-circle-xmark"></i> যা ইনক্লুডেড নয় (Excluded)</label>
                             <div class="flex gap-2 mb-3">
@@ -396,7 +374,6 @@
                             <div id="tags-excluded" class="flex flex-wrap gap-2"></div>
                         </div>
 
-                        <!-- Special Warnings -->
                         <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-red-500/30">
                             <label class="block text-xs font-bold text-red-400 mb-3 uppercase"><i class="fa-solid fa-triangle-exclamation"></i> বিশেষ সতর্কতা ও রুলস</label>
                             <div class="flex gap-2 mb-3">
@@ -407,7 +384,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 7: ITINERARY -->
                     <div class="mb-8 border border-trail/30 p-6 rounded-2xl bg-trail/5">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                             <div>
@@ -421,7 +397,6 @@
                         <div id="itinerary-container" class="space-y-4"></div>
                     </div>
 
-                    <!-- SECTION 8: META STATS -->
                     <h3 class="font-bold text-amber-500 mb-4 text-lg flex items-center gap-2 border-b border-amber-500/20 pb-2"><i class="fa-solid fa-chart-line"></i> ৮. গ্যামিফিকেশন স্ট্যাটস</h3>
                     <p class="text-xs text-gray-400 light-mode:text-gray-600 mb-4">ট্যুর সম্পন্ন হলে ইউজারদের প্রোফাইলে এই পয়েন্টগুলো অটোমেটিক যোগ হবে।</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -439,7 +414,6 @@
                         </div>
                     </div>
 
-                    <!-- SUBMIT BUTTON -->
                     <div class="pt-6 mt-4 border-t border-white/10">
                         <button type="submit" id="ev-submit-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] flex items-center justify-center gap-3">
                             <i id="ev-submit-icon" class="fa-solid fa-rocket"></i> <span id="ev-submit-text">মাস্টারপিস ইভেন্ট লঞ্চ করুন</span>
@@ -448,9 +422,6 @@
                 </form>
             </div>
 
-            <!-- ========================================== -->
-            <!-- 🔵 TAB 3: BOOKING MANAGEMENT -->
-            <!-- ========================================== -->
             <div id="section-bookingTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                     <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
@@ -465,9 +436,6 @@
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- 🟣 TAB 4: ACTIVE EVENTS & GAMIFICATION -->
-            <!-- ========================================== -->
             <div id="section-activeEventsTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                     <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
@@ -505,46 +473,113 @@
         </div>
     </div>
 
-    <!-- EDIT EVENT MODAL -->
-    <div id="edit-event-modal" class="fixed inset-0 z-50 hidden bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto pt-20">
-        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative shadow-2xl">
+    <!-- 🟢 UPGRADED: FULL-SCALE EDIT EVENT MODAL WITH 3-STEP DELETE LOGIC -->
+    <div id="edit-event-modal" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-md overflow-y-auto pt-24 pb-10">
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-6 sm:p-8 w-full max-w-4xl relative shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
-                <h3 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-400"></i> ইভেন্ট এডিট করুন</h3>
-                <button onclick="closeEditModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <h3 class="text-2xl font-black text-white light-mode:text-black flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-blue-400"></i> কমপ্লিট ইভেন্ট এডিটর</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-2xl"></i></button>
             </div>
             
-            <form id="edit-event-form" class="space-y-4">
+            <!-- Edit Form -->
+            <form id="edit-event-form" class="space-y-6">
                 <input type="hidden" id="editEvId">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">শিরোনাম</label>
-                    <input type="text" id="editEvTitle" required class="glass-input w-full p-3 rounded-xl font-bold">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">টোটাল ফি (টাকা)</label>
-                        <input type="number" id="editEvFee" required class="glass-input w-full p-3 rounded-xl">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">শিরোনাম *</label>
+                        <input type="text" id="editEvTitle" required class="glass-input w-full p-3 rounded-xl font-bold">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">মোট সিট</label>
-                        <input type="number" id="editEvSeats" required class="glass-input w-full p-3 rounded-xl">
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">সাবটাইটেল</label>
+                        <input type="text" id="editEvSubtitle" class="glass-input w-full p-3 rounded-xl">
                     </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-red-400 mb-1 uppercase">ডেডলাইন</label>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">গন্তব্য (Destination) *</label>
+                        <input type="text" id="editEvDestination" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-blue-400 mb-1 uppercase">যাত্রা শুরু *</label>
+                        <input type="datetime-local" id="editEvStart" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-red-400 mb-1 uppercase">রেজিস্ট্রেশন ডেডলাইন *</label>
                         <input type="datetime-local" id="editEvDeadline" required class="glass-input w-full p-3 rounded-xl border-red-500/50">
                     </div>
+
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">টিম লিডার</label>
+                        <label class="block text-xs font-bold text-emerald-400 mb-1 uppercase">বুকিং ফি (Advance) *</label>
+                        <input type="number" id="editEvBookingFee" required class="glass-input w-full p-3 rounded-xl border-emerald-500/30">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-emerald-400 mb-1 uppercase">টোটাল ফি (টাকা) *</label>
+                        <input type="number" id="editEvTotalFee" required class="glass-input w-full p-3 rounded-xl border-emerald-500/30">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">মোট সিট *</label>
+                        <input type="number" id="editEvSeats" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">ডিফিকাল্টি *</label>
+                        <select id="editEvDifficulty" required class="glass-input w-full p-3 rounded-xl">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Hard">Hard</option>
+                            <option value="Extreme">Extreme</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">টিম লিডার (নাম) *</label>
                         <input type="text" id="editEvLeader" required class="glass-input w-full p-3 rounded-xl">
                     </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">পেমেন্ট মেথড (বিকাশ/নগদ) *</label>
+                        <input type="text" id="editEvPaymentMethods" required class="glass-input w-full p-3 rounded-xl">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">সংক্ষিপ্ত বিবরণ *</label>
+                        <textarea id="editEvDesc" required rows="3" class="glass-input w-full p-3 rounded-xl text-sm resize-none"></textarea>
+                    </div>
                 </div>
-                <div class="mt-6 pt-4 border-t border-white/10 text-right">
-                    <button type="submit" id="edit-submit-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
-                        <i id="edit-submit-icon" class="fa-solid fa-save"></i> <span id="edit-submit-text">আপডেট করুন</span>
+
+                <div class="pt-6 border-t border-white/10 flex justify-end">
+                    <button type="submit" id="edit-submit-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-glow flex items-center gap-2 w-full sm:w-auto justify-center">
+                        <i id="edit-submit-icon" class="fa-solid fa-save"></i> <span id="edit-submit-text">ইভেন্ট আপডেট করুন</span>
                     </button>
                 </div>
             </form>
+
+            <!-- 🔴 DANGER ZONE: 3-STEP DELETE LOGIC -->
+            <div class="mt-12 pt-6 border-t border-red-500/30">
+                <h3 class="text-red-500 font-black mb-4 flex items-center gap-2 uppercase tracking-widest"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone (ডিলিট সেকশন)</h3>
+                <div class="bg-red-500/10 border border-red-500/30 p-6 rounded-2xl">
+                    <p class="text-sm text-gray-300 light-mode:text-gray-700 mb-4">এই ইভেন্টটি ডিলিট করলে সম্পূর্ণ ডেটাবেস থেকে এটি চিরতরে মুছে যাবে। দয়া করে নিচের সতর্কতাগুলো পড়ে কনফার্ম করুন:</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" id="delCheck1" class="mt-1 w-5 h-5 rounded border-red-500/50 bg-black/50 text-red-500 focus:ring-red-500 cursor-pointer" onchange="checkDeleteLogic()">
+                            <span class="text-xs sm:text-sm text-red-300 group-hover:text-red-400 transition-colors">১. আমি বুঝতে পারছি যে, এই ইভেন্টটি ডিলিট করলে <b>সকল ইউজারের পেন্ডিং ও কনফার্মড বুকিং বাতিল হয়ে যাবে</b>।</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" id="delCheck2" class="mt-1 w-5 h-5 rounded border-red-500/50 bg-black/50 text-red-500 focus:ring-red-500 cursor-pointer" onchange="checkDeleteLogic()">
+                            <span class="text-xs sm:text-sm text-red-300 group-hover:text-red-400 transition-colors">২. আমি বুঝতে পারছি যে, এই ইভেন্টটি ডিলিট করলে <b>ইউজারদের গ্যামিফিকেশন স্ট্যাটসে সমস্যা হতে পারে</b>।</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer group">
+                            <input type="checkbox" id="delCheck3" class="mt-1 w-5 h-5 rounded border-red-500/50 bg-black/50 text-red-500 focus:ring-red-500 cursor-pointer" onchange="checkDeleteLogic()">
+                            <span class="text-xs sm:text-sm text-red-300 group-hover:text-red-400 transition-colors">৩. আমি সম্পূর্ণ সজ্ঞানে এবং নিশ্চিত হয়ে এই ইভেন্টটি <b>চিরতরে মুছে ফেলতে চাই</b>।</span>
+                        </label>
+                    </div>
+                    
+                    <button type="button" id="final-delete-btn" disabled onclick="deleteEventFinal()" class="w-full bg-gray-600 text-gray-400 px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-not-allowed">
+                        <i class="fa-solid fa-trash-can"></i> ইভেন্টটি ডিলিট করুন
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -557,7 +592,6 @@
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        // THEME ENGINE 
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -584,7 +618,6 @@
             applyTheme();
         });
 
-        // TAB SWITCHING LOGIC
         function switchTab(tabId) {
             const tabs = ['blogTab', 'eventTab', 'bookingTab', 'activeEventsTab'];
             tabs.forEach(t => {
@@ -600,7 +633,6 @@
             });
         }
 
-        // FIREBASE SETUP 
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
             authDomain: "cuet-as.firebaseapp.com",
@@ -613,7 +645,6 @@
         const authLoader = document.getElementById('auth-loader');
         const adminContent = document.getElementById('admin-content');
 
-        // ADMIN ACCESS CHECK 
         auth.onAuthStateChanged((user) => {
             if (user) {
                 db.collection("users").doc(user.uid).get().then((doc) => {
@@ -638,7 +669,6 @@
             }
         });
 
-        // 1. PENDING STORIES LOGIC
         function loadPendingStories() {
             db.collection("stories").where("status", "==", "pending").get().then((querySnapshot) => {
                 const pendingList = document.getElementById('pending-stories-list');
@@ -677,7 +707,6 @@
         window.approveStory = function(id) { if(confirm("পাবলিশ করবেন?")) { db.collection("stories").doc(id).update({ status: "approved" }).then(() => loadPendingStories()); } };
         window.rejectStory = function(id) { if(confirm("ডিলিট করবেন?")) { db.collection("stories").doc(id).delete().then(() => loadPendingStories()); } };
 
-        // 2. BOOKING MANAGEMENT LOGIC
         function loadPendingBookings() {
             db.collection("bookings").where("paymentStatus", "==", "pending").get().then((querySnapshot) => {
                 const bookingList = document.getElementById('pending-bookings-list');
@@ -739,7 +768,6 @@
             }
         };
 
-        // 3. ACTIVE EVENTS & MAGIC SYNC
         function loadActiveEvents() {
             db.collection("events").where("status", "==", "upcoming").get().then((querySnapshot) => {
                 const activeList = document.getElementById('active-events-list');
@@ -762,8 +790,8 @@
                                 <p class="text-[10px] text-gray-500 mt-1">Reward: ${ev.statsMeta.treks} Treks, ${ev.statsMeta.distance}km</p>
                             </div>
                             <div class="flex flex-col gap-2 w-full sm:w-auto shrink-0">
-                                <button onclick='openEditModal(${JSON.stringify({id: doc.id, ...ev}).replace(/'/g, "&apos;")})' class="w-full sm:w-auto bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all">
-                                    <i class="fa-solid fa-pen-to-square"></i> Edit Event
+                                <button onclick='openEditModal(${JSON.stringify({id: doc.id, ...ev}).replace(/'/g, "&apos;")})' class="w-full sm:w-auto bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-sm">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Setup
                                 </button>
                                 <button onclick="completeEvent('${doc.id}')" class="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2.5 rounded-xl text-sm font-black shadow-glow transition-all">
                                     <i class="fa-solid fa-flag-checkered"></i> Mark Completed
@@ -776,32 +804,57 @@
             });
         }
 
-        // EDIT EVENT MODAL LOGIC
+        // 🟢 FULL-SCALE EDIT EVENT LOGIC
         const editModal = document.getElementById('edit-event-modal');
+        
         window.openEditModal = function(ev) {
+            // Reset delete checkboxes every time modal opens
+            document.getElementById('delCheck1').checked = false;
+            document.getElementById('delCheck2').checked = false;
+            document.getElementById('delCheck3').checked = false;
+            checkDeleteLogic();
+
             document.getElementById('editEvId').value = ev.id;
             document.getElementById('editEvTitle').value = ev.title || '';
-            document.getElementById('editEvFee').value = ev.tourFee || '';
-            document.getElementById('editEvSeats').value = ev.totalSeats || '';
+            document.getElementById('editEvSubtitle').value = ev.subtitle || '';
+            document.getElementById('editEvDestination').value = ev.destination || '';
+            document.getElementById('editEvStart').value = ev.startDate || '';
             document.getElementById('editEvDeadline').value = ev.deadline || '';
+            document.getElementById('editEvBookingFee').value = ev.bookingFee || ev.tourFee || ''; // Fallback for old data
+            document.getElementById('editEvTotalFee').value = ev.tourFee || ev.totalFee || ''; 
+            document.getElementById('editEvSeats').value = ev.totalSeats || '';
+            document.getElementById('editEvDifficulty').value = ev.difficulty || 'Moderate';
             document.getElementById('editEvLeader').value = ev.teamLeader || '';
+            document.getElementById('editEvPaymentMethods').value = ev.paymentMethods || ev.bkashNo || ''; // Fallback
+            document.getElementById('editEvDesc').value = ev.description || '';
             
             editModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
         };
 
         window.closeEditModal = function() {
             editModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
         };
 
         document.getElementById('edit-event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('editEvId').value;
+            
+            // Collect all updated fields
             const updates = {
                 title: document.getElementById('editEvTitle').value,
-                tourFee: parseInt(document.getElementById('editEvFee').value),
-                totalSeats: parseInt(document.getElementById('editEvSeats').value),
+                subtitle: document.getElementById('editEvSubtitle').value,
+                destination: document.getElementById('editEvDestination').value,
+                startDate: document.getElementById('editEvStart').value,
                 deadline: document.getElementById('editEvDeadline').value,
-                teamLeader: document.getElementById('editEvLeader').value
+                bookingFee: parseInt(document.getElementById('editEvBookingFee').value),
+                tourFee: parseInt(document.getElementById('editEvTotalFee').value), // Keeping both for safety
+                totalSeats: parseInt(document.getElementById('editEvSeats').value),
+                difficulty: document.getElementById('editEvDifficulty').value,
+                teamLeader: document.getElementById('editEvLeader').value,
+                paymentMethods: document.getElementById('editEvPaymentMethods').value,
+                description: document.getElementById('editEvDesc').value
             };
 
             try {
@@ -812,7 +865,7 @@
                 
                 await db.collection("events").doc(id).update(updates);
                 
-                alert("ইভেন্ট সফলভাবে আপডেট করা হয়েছে!");
+                alert("ইভেন্টের এ টু জেড সফলভাবে আপডেট করা হয়েছে!");
                 closeEditModal();
                 loadActiveEvents(); 
             } catch (err) {
@@ -820,9 +873,54 @@
                 alert("Error updating event.");
             } finally {
                 document.getElementById('edit-submit-icon').className = 'fa-solid fa-save';
-                document.getElementById('edit-submit-text').innerText = "আপডেট করুন";
+                document.getElementById('edit-submit-text').innerText = "ইভেন্ট আপডেট করুন";
             }
         });
+
+        // 🟢 3-STEP DELETE LOGIC
+        window.checkDeleteLogic = function() {
+            const c1 = document.getElementById('delCheck1').checked;
+            const c2 = document.getElementById('delCheck2').checked;
+            const c3 = document.getElementById('delCheck3').checked;
+            const delBtn = document.getElementById('final-delete-btn');
+
+            if(c1 && c2 && c3) {
+                delBtn.disabled = false;
+                delBtn.classList.replace('bg-gray-600', 'bg-red-600');
+                delBtn.classList.replace('text-gray-400', 'text-white');
+                delBtn.classList.add('hover:bg-red-700', 'shadow-[0_0_20px_rgba(220,38,38,0.6)]');
+                delBtn.classList.remove('cursor-not-allowed');
+            } else {
+                delBtn.disabled = true;
+                delBtn.classList.replace('bg-red-600', 'bg-gray-600');
+                delBtn.classList.replace('text-white', 'text-gray-400');
+                delBtn.classList.remove('hover:bg-red-700', 'shadow-[0_0_20px_rgba(220,38,38,0.6)]');
+                delBtn.classList.add('cursor-not-allowed');
+            }
+        }
+
+        window.deleteEventFinal = async function() {
+            const id = document.getElementById('editEvId').value;
+            
+            // Final Confirm prompt just to be extra sure
+            if(prompt("ডিলিট কনফার্ম করতে বক্সে 'DELETE' টাইপ করুন:") === "DELETE") {
+                try {
+                    const delBtn = document.getElementById('final-delete-btn');
+                    delBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ডিলিট হচ্ছে...';
+                    
+                    await db.collection("events").doc(id).delete();
+                    
+                    alert("ইভেন্টটি ডেটাবেস থেকে চিরতরে মুছে ফেলা হয়েছে।");
+                    closeEditModal();
+                    loadActiveEvents();
+                } catch(err) {
+                    console.error(err);
+                    alert("Error deleting event.");
+                }
+            } else {
+                alert("ভুল টাইপ করেছেন। ডিলিট বাতিল করা হলো।");
+            }
+        }
 
         window.completeEvent = async function(eventId) {
             if(!confirm("সতর্কতা! এটি মার্ক করলে ট্যুরে অংশ নেওয়া সবার ড্যাশবোর্ডে স্ট্যাটস যোগ হয়ে যাবে। আপনি কি নিশ্চিত?")) return;
@@ -854,14 +952,8 @@
             } catch(e) { console.error(e); alert("Error completing event."); }
         };
 
-        // 🟢 NEW: DYNAMIC TAG SYSTEM LOGIC
-        const dynamicTags = {
-            included: [],
-            gear: [],
-            excluded: [],
-            warnings: []
-        };
-
+        // DYNAMIC TAG SYSTEM LOGIC
+        const dynamicTags = { included: [], gear: [], excluded: [], warnings: [] };
         window.addTag = function(category) {
             const inputEl = document.getElementById(`input-${category}`);
             const val = inputEl.value.trim();
@@ -871,12 +963,7 @@
                 renderTags(category);
             }
         };
-
-        window.removeTag = function(category, index) {
-            dynamicTags[category].splice(index, 1);
-            renderTags(category);
-        };
-
+        window.removeTag = function(category, index) { dynamicTags[category].splice(index, 1); renderTags(category); };
         function renderTags(category) {
             const container = document.getElementById(`tags-${category}`);
             container.innerHTML = '';
@@ -889,16 +976,7 @@
                 `;
             });
         }
-        
-        // Setup Enter key listener for tag inputs
-        ['included', 'gear', 'excluded', 'warnings'].forEach(cat => {
-            document.getElementById(`input-${cat}`).addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addTag(cat);
-                }
-            });
-        });
+        ['included', 'gear', 'excluded', 'warnings'].forEach(cat => { document.getElementById(`input-${cat}`).addEventListener('keypress', function (e) { if (e.key === 'Enter') { e.preventDefault(); addTag(cat); } }); });
 
         // CROPPER LOGIC
         let cropper; let croppedBase64 = null; 
@@ -924,7 +1002,6 @@
         });
 
         document.getElementById('close-cropper').addEventListener('click', () => { cropperModal.classList.add('hidden'); if(cropper) cropper.destroy(); });
-
         document.getElementById('crop-btn').addEventListener('click', () => {
             const canvas = cropper.getCroppedCanvas({ width: 1280, height: 720 });
             croppedBase64 = canvas.toDataURL('image/jpeg', 0.8);
@@ -935,7 +1012,6 @@
             cropper.destroy();
         });
 
-        // ITINERARY GENERATOR
         const daysInput = document.getElementById('evTotalDays');
         const itineraryContainer = document.getElementById('itinerary-container');
 
@@ -957,7 +1033,6 @@
         generateItineraryFields(1); 
         daysInput.addEventListener('input', (e) => { let val = parseInt(e.target.value); if(val > 0 && val <= 20) generateItineraryFields(val); });
 
-        // 🚀 SMART EVENT SUBMISSION
         document.getElementById('event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!croppedBase64) { alert("কভার ছবি আপলোড ও ক্রপ করুন!"); return; }
@@ -971,7 +1046,6 @@
             submitBtn.disabled = true;
 
             try {
-                // Upload Image via API
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -984,7 +1058,6 @@
                 const finalCoverPhotoUrl = imgbbData.data.url;
                 submitText.innerText = "ডেটাবেস সিঙ্ক হচ্ছে...";
 
-                // Build Itinerary Array
                 const totalDays = parseInt(daysInput.value);
                 const itineraryArray = [];
                 for(let i=1; i<=totalDays; i++) {
@@ -995,51 +1068,37 @@
                     });
                 }
 
-                // Construct The Advanced Event Object
                 const newEvent = {
                     title: document.getElementById('evTitle').value,
-                    subtitle: document.getElementById('evSubtitle').value, // NEW
+                    subtitle: document.getElementById('evSubtitle').value,
                     category: document.getElementById('evCategory').value,
                     destination: document.getElementById('evDestination').value,
                     coverPhoto: finalCoverPhotoUrl, 
-                    
-                    // Schedule
                     startDate: document.getElementById('evStart').value,
                     endDate: document.getElementById('evEnd').value,
                     reportingPlace: document.getElementById('evReporting').value,
                     deadline: document.getElementById('evDeadline').value,
-                    
-                    // Advanced Financials
                     totalSeats: parseInt(document.getElementById('evSeats').value),
                     bookedSeats: 0, 
                     tourFee: parseInt(document.getElementById('evTotalFee').value),
-                    bookingFee: parseInt(document.getElementById('evBookingFee').value), // NEW
-                    refundPolicy: document.getElementById('evRefundPolicy').value, // NEW
-                    paymentMethods: document.getElementById('evPaymentMethods').value, // UPDATED
-                    bkashNo: document.getElementById('evPaymentMethods').value, // Legacy compatibility
-                    
-                    // Logistics
-                    stayType: document.getElementById('evStayType').value, // NEW
-                    washroom: document.getElementById('evWashroom').value, // NEW
-                    foodPlan: document.getElementById('evFoodPlan').value, // NEW
-                    
-                    // Vibe & Contact
+                    bookingFee: parseInt(document.getElementById('evBookingFee').value),
+                    refundPolicy: document.getElementById('evRefundPolicy').value,
+                    paymentMethods: document.getElementById('evPaymentMethods').value,
+                    stayType: document.getElementById('evStayType').value,
+                    washroom: document.getElementById('evWashroom').value,
+                    foodPlan: document.getElementById('evFoodPlan').value,
                     difficulty: document.getElementById('evDifficulty').value,
-                    tourVibe: document.getElementById('evTourVibe').value, // NEW
-                    fitnessLevel: parseInt(document.getElementById('evFitnessLevel').value) || 0, // NEW
+                    tourVibe: document.getElementById('evTourVibe').value,
+                    fitnessLevel: parseInt(document.getElementById('evFitnessLevel').value) || 0,
                     teamLeader: document.getElementById('evLeader').value,
-                    leaderPhone: document.getElementById('evLeaderPhone').value, // NEW
-                    leaderWhatsapp: document.getElementById('evLeaderWhatsapp').value, // NEW
-                    
-                    // Details & Rules
+                    leaderPhone: document.getElementById('evLeaderPhone').value,
+                    leaderWhatsapp: document.getElementById('evLeaderWhatsapp').value,
                     description: document.getElementById('evDesc').value,
-                    included: dynamicTags.included, // DYNAMIC
-                    requiredGear: dynamicTags.gear, // DYNAMIC
-                    excluded: dynamicTags.excluded, // DYNAMIC
-                    warnings: dynamicTags.warnings, // DYNAMIC
-                    
+                    included: dynamicTags.included,
+                    requiredGear: dynamicTags.gear,
+                    excluded: dynamicTags.excluded,
+                    warnings: dynamicTags.warnings,
                     itinerary: itineraryArray, 
-                    
                     statsMeta: {
                         treks: parseInt(document.getElementById('metaTreks').value),
                         distance: parseInt(document.getElementById('metaDistance').value),
