@@ -24,7 +24,8 @@
                         'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
                         'glow-sm': '0 0 10px rgba(231, 111, 81, 0.2)',
                         'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
-                        'glow-gold': '0 0 15px rgba(255, 215, 0, 0.4)'
+                        'glow-gold': '0 0 15px rgba(255, 215, 0, 0.4)',
+                        'soft-light': '0 10px 40px rgba(0, 0, 0, 0.08)'
                     }
                 }
             }
@@ -40,6 +41,25 @@
         ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
 
+        /* Premium Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .animate-float-fast {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-bg-pan {
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+
         /* Performance Optimized Glass Panel */
         .glass-panel {
             background: rgba(10, 28, 19, 0.6);
@@ -51,9 +71,11 @@
             backface-visibility: hidden;
             will-change: transform;
         }
+        /* Light Mode Glass Panels (Improved Readability) */
         .light-mode .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.88); /* Higher opacity for clear text */
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06); /* Soft shadow for depth */
         }
         
         .glass-dark {
@@ -66,17 +88,29 @@
             backface-visibility: hidden;
         }
         .light-mode .glass-dark {
-            background: rgba(248, 250, 252, 0.7);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(248, 250, 252, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
         
         .data-box {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .light-mode .data-box {
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* Interactive Data Box Hover */
+        .data-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .light-mode .data-box:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
         }
 
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
@@ -87,13 +121,16 @@
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
 
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <!-- Dark Mode Background -->
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Dark Forest" class="absolute w-full h-full object-cover opacity-10 filter brightness-50 contrast-125 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/90 transition-opacity duration-1000"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/80 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
+        <!-- Light Mode Background (Same Image, Adjusted Filters & Frosted Overlay for Brightness) -->
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" alt="Misty Forest" class="absolute w-full h-full object-cover opacity-0 scale-105 filter grayscale-[20%] transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/90 to-mistBg/95 opacity-0 backdrop-blur-[2px] transition-opacity duration-1000"></div>
         
-        <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 rounded-full mix-blend-screen filter blur-[120px]"></div>
+        <!-- Subtle Animated Glow -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-trail/10 light-mode:bg-trail/20 rounded-full mix-blend-screen light-mode:mix-blend-multiply filter blur-[120px] animate-bg-pan"></div>
     </div>
 
     <!-- SIDEBAR -->
@@ -151,7 +188,7 @@
             </a>
         </div>
         <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark space-y-3">
-            <a href="index.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all">
+            <a href="index.html" class="w-full flex items-center justify-center gap-2 bg-trail hover:bg-mountain text-white py-3 rounded-xl font-bold transition-all hover:scale-[1.02]">
                 <i class="fa-solid fa-house"></i> <span data-i18n="sidebar_home">হোমপেজে ফিরে যান</span>
             </a>
             <a href="#" id="mobile-logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
@@ -161,22 +198,22 @@
     </div>
 
     <!-- NAVBAR -->
-    <nav class="sticky top-0 z-40 glass-dark text-white shadow-lg">
+    <nav class="sticky top-0 z-40 glass-dark text-white shadow-lg transition-all duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center relative z-10">
             <div class="flex items-center gap-4">
                 <button id="sidebar-open-btn" class="text-white light-mode:text-mistText text-xl hover:text-campfire transition-colors focus:outline-none"><i class="fa-solid fa-bars-staggered"></i></button>
                 <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity group">
                     <i class="fa-solid fa-compass text-campfire text-2xl group-hover:rotate-45 transition-transform duration-500"></i>
-                    <span class="font-black text-lg tracking-wider hidden sm:block text-gray-100 light-mode:text-mistText">COMMAND CENTER</span>
+                    <span class="font-black text-lg tracking-wider hidden sm:block text-gray-100 light-mode:text-gray-900">COMMAND CENTER</span>
                 </a>
             </div>
             <div class="flex items-center gap-4 relative">
                 <div class="text-right hidden sm:block pr-3 border-r border-white/10 light-mode:border-gray-300">
-                    <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-mistText">Loading...</p>
+                    <p id="nav-user-name" class="text-xs font-bold text-gray-200 light-mode:text-gray-900">Loading...</p>
                     <p class="text-[10px] text-campfire uppercase tracking-widest animate-pulse">Active Explorer</p>
                 </div>
                 <div class="relative">
-                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow-sm">
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow-sm hover:scale-105">
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-xl shadow-2xl py-2 transform transition-all z-50 text-gray-300 light-mode:text-gray-700">
@@ -184,8 +221,8 @@
                             <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
                             <p class="text-[10px] text-campfire uppercase tracking-widest mt-0.5">Active Explorer</p>
                         </div>
-                        <a href="edit-profile.html" class="block px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-2"><i class="fa-solid fa-user-pen w-4 text-center"></i> <span data-i18n="dash_edit">এডিট করুন</span></a>
-                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 transition-colors flex items-center gap-2"><i class="fa-solid fa-gear w-4 text-center text-blue-400"></i> <span data-i18n="nav_settings">সেটিংস</span></button>
+                        <a href="edit-profile.html" class="block px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-2"><i class="fa-solid fa-user-pen w-4 text-center"></i> <span data-i18n="dash_edit">এডিট করুন</span></a>
+                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-2"><i class="fa-solid fa-gear w-4 text-center text-blue-400"></i> <span data-i18n="nav_settings">সেটিংস</span></button>
                         <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
                         <a href="#" id="logout-btn" class="block px-4 py-2.5 text-sm text-red-500 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-2"><i class="fa-solid fa-power-off w-4 text-center"></i> <span data-i18n="nav_logout">লগ-আউট</span></a>
                     </div>
@@ -200,13 +237,15 @@
         <!-- LEFT COLUMN: Profile Info -->
         <div class="space-y-6">
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden relative" data-aos="fade-right" data-aos-delay="100">
-                <div class="h-24 bg-gradient-to-r from-moss via-trail/40 to-moss light-mode:from-gray-200 light-mode:via-trail/20 light-mode:to-gray-200 border-b border-white/5 light-mode:border-gray-200"></div>
+                <!-- Animated Background Pan for Banner -->
+                <div class="h-24 bg-gradient-to-r from-moss via-trail/40 to-moss light-mode:from-emerald-50 light-mode:via-trail/20 light-mode:to-emerald-50 border-b border-white/5 light-mode:border-gray-200 animate-bg-pan"></div>
                 <div class="px-6 pb-6 relative pt-12"> 
-                    <div class="w-20 h-20 rounded-2xl border-2 border-darkForest light-mode:border-white shadow-glow overflow-hidden bg-moss absolute -top-10 left-6">
+                    <!-- Floating Profile Avatar -->
+                    <div class="w-20 h-20 rounded-2xl border-2 border-darkForest light-mode:border-white shadow-glow light-mode:shadow-lg overflow-hidden bg-moss absolute -top-10 left-6 animate-float-fast">
                         <img id="dash-profile-img" src="https://ui-avatars.com/api/?name=User&background=0a1c13&color=fff&size=128" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div class="mt-4">
-                        <h2 id="display-name" class="text-2xl font-black text-white light-mode:text-black drop-shadow-md leading-tight">Loading...</h2>
+                        <h2 id="display-name" class="text-2xl font-black text-white light-mode:text-black drop-shadow-md leading-tight transition-colors">Loading...</h2>
                         <div class="flex flex-wrap items-center gap-2 mt-2">
                             <span id="display-dept-batch" class="text-xs font-bold text-trail bg-trail/10 px-2.5 py-1 rounded-lg border border-trail/20">...</span>
                             <div id="social-links-container" class="flex items-center gap-2"></div>
@@ -215,10 +254,10 @@
                             <i class="fa-solid fa-building-user text-trail"></i> <span id="display-hall">Loading...</span>
                         </div>
                         <div class="flex items-center gap-2 mt-1 text-sm text-gray-400 light-mode:text-gray-600 font-medium">
-                            <i class="fa-solid fa-fingerprint text-trail"></i> ID: <span id="display-id" class="text-gray-300 light-mode:text-gray-800 font-bold tracking-widest">...</span>
+                            <i class="fa-solid fa-fingerprint text-trail"></i> ID: <span id="display-id" class="text-gray-300 light-mode:text-gray-900 font-bold tracking-widest">...</span>
                         </div>
                         <div class="mt-5 pt-4 border-t border-white/10 light-mode:border-gray-200 flex gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] light-mode:shadow-[0_4px_10px_rgba(16,185,129,0.15)] transition-all">
                                 <i class="fa-solid fa-shield-check"></i> <span data-i18n="dash_verified">Identity Verified</span>
                             </span>
                         </div>
@@ -234,29 +273,29 @@
                     <a href="edit-profile.html" class="text-xs font-bold text-trail hover:text-white light-mode:hover:text-black transition-colors" data-i18n="dash_edit">এডিট করুন</a>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="p-3 data-box rounded-xl hover:border-campfire/30 transition-colors">
+                    <div class="p-3 data-box rounded-xl hover:border-red-500/30">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_blood">Blood Group</p>
                         <p class="font-black text-red-500 text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"><i class="fa-solid fa-droplet"></i> <span id="display-blood">...</span></p>
                     </div>
-                    <div class="p-3 data-box rounded-xl hover:border-trail/50 transition-colors">
+                    <div class="p-3 data-box rounded-xl hover:border-trail/50">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_gear">Combat Gear</p>
                         <p class="font-black text-trail text-lg flex items-center gap-2 drop-shadow-[0_0_8px_rgba(45,106,79,0.5)]"><i class="fa-solid fa-shirt"></i> <span id="display-tshirt">...</span></p>
                     </div>
-                    <div class="p-3 data-box rounded-xl hover:border-blue-500/30 transition-colors">
+                    <div class="p-3 data-box rounded-xl hover:border-blue-500/30">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_swimming">Swimming</p>
                         <p class="font-black text-blue-400 text-base flex items-center gap-2"><i class="fa-solid fa-person-swimming"></i> <span id="display-swimming">...</span></p>
                     </div>
-                    <div class="p-3 data-box rounded-xl hover:border-yellow-500/30 transition-colors">
+                    <div class="p-3 data-box rounded-xl hover:border-yellow-500/30">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_bicycle">Bicycle</p>
                         <p class="font-black text-yellow-500 text-base flex items-center gap-2"><i class="fa-solid fa-bicycle"></i> <span id="display-bicycle">...</span></p>
                     </div>
-                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-purple-500/30 transition-colors">
+                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-purple-500/30">
                         <p class="text-[10px] uppercase font-bold text-gray-500 mb-1" data-i18n="dash_exp">Experience</p>
                         <p class="font-black text-purple-400 text-base flex items-center gap-2"><i class="fa-solid fa-award"></i> <span id="display-experience">...</span></p>
                     </div>
-                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-white/20 light-mode:hover:border-gray-300 transition-colors">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 light-mode:text-gray-500 mb-1" data-i18n="dash_sos">SOS Contact</p>
-                        <p class="font-black text-gray-300 light-mode:text-gray-800 tracking-wider flex items-center gap-2"><i class="fa-solid fa-satellite-dish text-blue-400 animate-pulse"></i> <span id="display-emergency">...</span></p>
+                    <div class="p-3 data-box rounded-xl col-span-2 hover:border-white/20 light-mode:hover:border-gray-400">
+                        <p class="text-[10px] uppercase font-bold text-gray-500 light-mode:text-gray-600 mb-1" data-i18n="dash_sos">SOS Contact</p>
+                        <p class="font-black text-gray-300 light-mode:text-gray-900 tracking-wider flex items-center gap-2"><i class="fa-solid fa-satellite-dish text-blue-400 animate-pulse"></i> <span id="display-emergency">...</span></p>
                     </div>
                 </div>
             </div>
@@ -268,34 +307,33 @@
             <!-- 🟢 GAMIFICATION STATS (WITH CURRENT RANK) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 
-                <!-- NEW: CURRENT RANK CARD -->
-                <div onclick="window.location.href='leaderboard.html'" class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300 cursor-pointer border border-yellow-500/30" data-aos="zoom-in" data-aos-delay="50">
-                    <div class="w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-500 flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-gold transition-shadow"><i class="fa-solid fa-crown"></i></div>
+                <div onclick="window.location.href='leaderboard.html'" class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 cursor-pointer border border-yellow-500/30 light-mode:border-yellow-500/50" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="w-10 h-10 rounded-full bg-yellow-500/20 text-yellow-500 flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-gold group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-crown"></i></div>
                     <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md">#<span id="stat-rank">-</span></p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat_rank">Current Rank</p>
+                    <p class="text-[10px] font-bold text-gray-500 light-mode:text-gray-600 uppercase tracking-widest mt-1" data-i18n="dash_stat_rank">Current Rank</p>
                 </div>
 
-                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail transition-shadow"><i class="fa-solid fa-route"></i></div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-10 h-10 rounded-full bg-trail/20 text-trail flex items-center justify-center text-lg mb-2 group-hover:shadow-glow-trail group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-route"></i></div>
                     <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md" id="stat-treks">0</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat1">Total Treks</p>
+                    <p class="text-[10px] font-bold text-gray-500 light-mode:text-gray-600 uppercase tracking-widest mt-1" data-i18n="dash_stat1">Total Treks</p>
                 </div>
                 
-                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-shadow"><i class="fa-solid fa-shoe-prints"></i></div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(96,165,250,0.5)] group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-shoe-prints"></i></div>
                     <p class="text-3xl font-black text-white light-mode:text-black drop-shadow-md"><span id="stat-distance">0</span><span class="text-sm font-medium text-gray-500">km</span></p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat3">Distance</p>
+                    <p class="text-[10px] font-bold text-gray-500 light-mode:text-gray-600 uppercase tracking-widest mt-1" data-i18n="dash_stat3">Distance</p>
                 </div>
 
-                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-1 transition-all duration-300" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] transition-shadow"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-2xl transition-all duration-500" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-shield-halved"></i></div>
                     <p class="text-xl sm:text-2xl font-black text-emerald-400 mt-1">100%</p>
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1" data-i18n="dash_stat4">Safety Index</p>
+                    <p class="text-[10px] font-bold text-gray-500 light-mode:text-gray-600 uppercase tracking-widest mt-1" data-i18n="dash_stat4">Safety Index</p>
                 </div>
             </div>
 
             <div class="glass-panel rounded-2xl shadow-xl overflow-hidden" data-aos="fade-up" data-aos-delay="450">
-                <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/50">
+                <div class="p-6 border-b border-white/10 light-mode:border-gray-200 flex justify-between items-center bg-black/20 light-mode:bg-white/70">
                     <h3 class="text-sm font-bold text-white light-mode:text-black tracking-widest uppercase flex items-center gap-2">
                         <i class="fa-solid fa-ticket text-campfire"></i> <span>আমার বুকিংস</span>
                     </h3>
@@ -306,8 +344,8 @@
                 </div>
 
                 <div id="bookings-empty" class="hidden p-10 text-center flex flex-col items-center justify-center">
-                    <i class="fa-solid fa-ticket text-4xl text-gray-600 light-mode:text-gray-400 mb-4"></i>
-                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-500">আপনার কোনো রানিং বুকিং নেই।</p>
+                    <i class="fa-solid fa-ticket text-4xl text-gray-600 light-mode:text-gray-400 mb-4 animate-float-fast"></i>
+                    <p class="text-sm font-medium text-gray-400 light-mode:text-gray-600">আপনার কোনো রানিং বুকিং নেই।</p>
                     <a href="events.html" class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-campfire hover:text-orange-600 transition-colors">
                         নতুন ট্রেইল খুঁজুন <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -320,7 +358,7 @@
                         <h3 class="font-black text-white light-mode:text-black text-xl mb-1" data-i18n="dash_blog_title">আপনার অ্যাডভেঞ্চার শেয়ার করুন!</h3>
                         <p class="text-sm text-gray-400 light-mode:text-gray-600" data-i18n="dash_blog_desc">ক্যাম্পাস বা ট্যুরের কোনো দারুণ অভিজ্ঞতা আছে? লিখে ফেলুন আমাদের কমিউনিটি ব্লগে।</p>
                     </div>
-                    <a href="write-blog.html" class="w-full sm:w-auto text-center bg-campfire hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-glow hover:-translate-y-1 transition-transform whitespace-nowrap">
+                    <a href="write-blog.html" class="w-full sm:w-auto text-center bg-campfire hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold shadow-glow hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 whitespace-nowrap">
                         <i class="fa-solid fa-pen-nib mr-2"></i> <span data-i18n="dash_blog_btn">গল্প লিখুন</span>
                     </a>
                 </div>
@@ -360,7 +398,7 @@
                 </div>
             </div>
             <div class="mt-8">
-                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all" data-i18n="modal_done">সম্পন্ন</button>
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 hover:bg-white/10 light-mode:hover:bg-gray-200 border border-white/10 light-mode:border-gray-300 text-white light-mode:text-black font-bold py-3 rounded-xl transition-all hover:-translate-y-1" data-i18n="modal_done">সম্পন্ন</button>
             </div>
         </div>
     </div>
@@ -435,8 +473,8 @@
         const bodyContent = document.getElementById('body-content');
         const themeToggle = document.getElementById('theme-toggle');
         
-        function enableLightMode() { htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); document.getElementById('bg-dark-img').classList.replace('opacity-10', 'opacity-0'); document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-40'); document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100'); }
-        function enableDarkMode() { htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode'); document.getElementById('bg-light-img').classList.replace('opacity-40', 'opacity-0'); document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-10'); document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100'); }
+        function enableLightMode() { htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode'); document.getElementById('bg-dark-img').classList.replace('opacity-10', 'opacity-0'); document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-100'); document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100'); }
+        function enableDarkMode() { htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode'); document.getElementById('bg-light-img').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0'); document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-10'); document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100'); }
 
         themeToggle.addEventListener('change', function() {
             const newTheme = this.checked ? 'light' : 'dark';
@@ -510,8 +548,8 @@
                         const socialContainer = document.getElementById('social-links-container');
                         if(socialContainer) {
                             socialContainer.innerHTML = '';
-                            if(userData.fbLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.fbLink.startsWith('http') ? userData.fbLink : 'https://' + userData.fbLink}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-facebook-f"></i></a>`);
-                            if(userData.instaLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.instaLink.startsWith('http') ? userData.instaLink : 'https://' + userData.instaLink}" target="_blank" class="w-7 h-7 rounded-full bg-pink-600/20 text-pink-400 hover:bg-pink-600 hover:text-white flex items-center justify-center text-xs transition-colors"><i class="fa-brands fa-instagram"></i></a>`);
+                            if(userData.fbLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.fbLink.startsWith('http') ? userData.fbLink : 'https://' + userData.fbLink}" target="_blank" class="w-7 h-7 rounded-full bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white flex items-center justify-center text-xs transition-all hover:scale-110"><i class="fa-brands fa-facebook-f"></i></a>`);
+                            if(userData.instaLink) socialContainer.insertAdjacentHTML('beforeend', `<a href="${userData.instaLink.startsWith('http') ? userData.instaLink : 'https://' + userData.instaLink}" target="_blank" class="w-7 h-7 rounded-full bg-pink-600/20 text-pink-400 hover:bg-pink-600 hover:text-white flex items-center justify-center text-xs transition-all hover:scale-110"><i class="fa-brands fa-instagram"></i></a>`);
                         }
 
                         // Avatars
@@ -578,7 +616,7 @@
                                     : `<span class="bg-yellow-500/20 text-yellow-500 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest animate-pulse"><i class="fa-solid fa-clock mr-1"></i> Pending</span>`;
                                 
                                 const card = `
-                                    <div class="bg-black/30 light-mode:bg-white/60 border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-300'} p-4 rounded-xl flex justify-between items-center transition-all hover:bg-black/50">
+                                    <div class="bg-black/30 light-mode:bg-white/90 border ${isApproved ? 'border-emerald-500/30' : 'border-white/10 light-mode:border-gray-300'} p-4 rounded-xl flex justify-between items-center transition-all duration-300 hover:bg-black/50 light-mode:hover:bg-white hover:-translate-y-1 hover:shadow-lg">
                                         <div>
                                             <h4 class="font-bold text-white light-mode:text-black text-sm mb-1">${bData.eventTitle}</h4>
                                             <p class="text-[10px] text-gray-500 uppercase tracking-widest">TrxID: ${bData.trxId}</p>
