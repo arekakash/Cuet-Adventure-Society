@@ -355,7 +355,23 @@
             // Render Meta
             document.getElementById('ev-start-date').innerText = formatDateTime(eventDataRaw.startDate);
             document.getElementById('ev-difficulty').innerText = eventDataRaw.difficulty;
-            document.getElementById('ev-leader').innerText = eventDataRaw.teamLeader;
+            
+            // 🟢 NEW: SMART SEARCH LOGIC FOR TEAM LEADER
+            const leaderEl = document.getElementById('ev-leader');
+            const leaderName = eventDataRaw.teamLeader;
+            leaderEl.innerText = leaderName; // Default setup
+
+            if(leaderName) {
+                db.collection("users").where("fullName", "==", leaderName).limit(1).get()
+                .then(snapshot => {
+                    if(!snapshot.empty) {
+                        const leaderId = snapshot.docs[0].id;
+                        // Replace text with a clickable link if user exists
+                        leaderEl.innerHTML = `<a href="public-profile.html?uid=${leaderId}" class="text-campfire hover:text-orange-500 hover:underline transition-colors tracking-wide" title="লিডারের প্রোফাইল দেখুন">${leaderName} <i class="fa-solid fa-link text-[10px] ml-1"></i></a>`;
+                    }
+                }).catch(e => console.error("Leader search failed:", e));
+            }
+
             document.getElementById('ev-deadline').innerText = formatDateTime(eventDataRaw.deadline);
             
             // Description & Price
@@ -404,7 +420,6 @@
                     </div>
                 `).join('');
             } else {
-                // BUG FIXED HERE: Replaced double quotes inside double quotes with single quotes.
                 itinContainer.innerHTML = '<p class="text-sm text-gray-500">কোনো প্ল্যান আপডেট করা হয়নি।</p>';
             }
 
