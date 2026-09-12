@@ -136,7 +136,7 @@
                         <p id="pub-dept-batch" class="text-lg font-bold text-trail mb-4">...</p>
                         
                         <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-6" id="pub-badges">
-                            <!-- Experience Badge will be injected here -->
+                            <!-- Experience Badge & Rank will be injected here -->
                         </div>
                         
                         <div class="flex justify-center md:justify-start gap-4" id="pub-socials">
@@ -270,13 +270,42 @@
                     document.getElementById('stat-nights').innerText = uData.totalNights || 0;
                     document.getElementById('stat-distance').innerText = uData.totalDistance || 0;
 
-                    // Badges
+                    // Badges Container
                     const badgesContainer = document.getElementById('pub-badges');
+                    
                     if (uData.experienceLevel) {
                         badgesContainer.innerHTML += `<span class="bg-purple-500/10 text-purple-400 border border-purple-500/30 px-4 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase"><i class="fa-solid fa-award mr-1"></i> ${uData.experienceLevel}</span>`;
                     }
                     if (uData.role === 'admin') {
                         badgesContainer.innerHTML += `<span class="bg-red-500/10 text-red-500 border border-red-500/30 px-4 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Admin</span>`;
+                    }
+
+                    // 🟢 NEW: LIVE RANKING BADGE LOGIC
+                    if(uData.totalTreks && uData.totalTreks > 0) {
+                        db.collection("users").where("totalTreks", ">", 0).get().then(snapshot => {
+                            let usersList = [];
+                            snapshot.forEach(d => usersList.push({ id: d.id, ...d.data() }));
+                            
+                            usersList.sort((a, b) => {
+                                const treksA = a.totalTreks || 0; const treksB = b.totalTreks || 0;
+                                if (treksB !== treksA) return treksB - treksA;
+                                const distA = a.totalDistance || 0; const distB = b.totalDistance || 0;
+                                return distB - distA;
+                            });
+                            
+                            const rankIndex = usersList.findIndex(u => u.id === targetUid);
+                            if(rankIndex !== -1) {
+                                const rank = rankIndex + 1;
+                                let rankClass = "bg-yellow-500/10 text-yellow-500 border-yellow-500/30";
+                                let icon = "fa-medal";
+                                
+                                if(rank === 1) { rankClass = "bg-[#FFD700]/10 text-[#FFD700] border-[#FFD700]/50 shadow-[0_0_10px_rgba(255,215,0,0.5)]"; icon = "fa-crown"; }
+                                else if(rank === 2) { rankClass = "bg-[#C0C0C0]/10 text-[#C0C0C0] border-[#C0C0C0]/50 shadow-[0_0_10px_rgba(192,192,192,0.5)]"; icon = "fa-medal"; }
+                                else if(rank === 3) { rankClass = "bg-[#CD7F32]/10 text-[#CD7F32] border-[#CD7F32]/50 shadow-[0_0_10px_rgba(205,127,50,0.5)]"; icon = "fa-award"; }
+                                
+                                badgesContainer.innerHTML += `<span class="${rankClass} border px-4 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase"><i class="fa-solid ${icon} mr-1"></i> Rank #${rank}</span>`;
+                            }
+                        }).catch(console.error);
                     }
 
                     // Social Links
