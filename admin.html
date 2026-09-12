@@ -30,8 +30,6 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Cropper.js CSS for 16:9 Image Cropping -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
     <style>
@@ -93,10 +91,10 @@
 
 <body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
 
+    <!-- BACKGROUND -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
         <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 transition-opacity duration-1000">
         <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
-
         <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 filter transition-opacity duration-1000">
         <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/90 to-mistBg/95 opacity-0 transition-opacity duration-1000"></div>
     </div>
@@ -106,7 +104,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 text-red-500">
                 <i class="fa-solid fa-shield-halved text-2xl"></i>
-                <span class="font-black text-xl tracking-widest uppercase">Admin Panel</span>
+                <span class="font-black text-xl tracking-widest uppercase hidden sm:block">Admin Panel</span>
             </div>
             <div class="flex gap-4">
                 <a href="dashboard.html" class="inline-flex items-center gap-2 text-gray-300 light-mode:text-gray-700 hover:text-white transition-colors font-bold text-sm bg-white/5 px-4 py-2 rounded-xl">
@@ -137,34 +135,41 @@
                 </div>
             </div>
 
-            <!-- TAB NAVIGATION -->
-            <div class="flex gap-4 border-b border-white/10 light-mode:border-gray-200 pb-4" data-aos="fade-up" data-aos-delay="50">
+            <!-- TAB NAVIGATION (Updated) -->
+            <div class="flex gap-4 border-b border-white/10 light-mode:border-gray-200 pb-4 overflow-x-auto whitespace-nowrap" data-aos="fade-up" data-aos-delay="50">
                 <button onclick="switchTab('blogTab')" id="btn-blogTab" class="tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent">
-                    <i class="fa-solid fa-book-open"></i> গল্প রিভিউ
+                    <i class="fa-solid fa-book-open"></i> গল্প রিভিউ <span id="pending-count-badge" class="bg-yellow-500/20 text-yellow-500 px-2 py-0.5 rounded-md text-[10px]">0</span>
                 </button>
                 <button onclick="switchTab('eventTab')" id="btn-eventTab" class="text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5">
                     <i class="fa-solid fa-calendar-plus"></i> নতুন ইভেন্ট
                 </button>
+                <button onclick="switchTab('bookingTab')" id="btn-bookingTab" class="text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5">
+                    <i class="fa-solid fa-ticket"></i> বুকিং রিকোয়েস্ট <span id="booking-count-badge" class="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-md text-[10px]">0</span>
+                </button>
+                <button onclick="switchTab('activeEventsTab')" id="btn-activeEventsTab" class="text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5">
+                    <i class="fa-solid fa-bolt"></i> অ্যাক্টিভ ইভেন্ট
+                </button>
             </div>
 
-            <!-- TAB 1: PENDING STORIES SECTION -->
+            <!-- ========================================== -->
+            <!-- TAB 1: PENDING STORIES SECTION (INTACT) -->
+            <!-- ========================================== -->
             <div id="section-blogTab" class="block glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                     <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
                         <i class="fa-solid fa-hourglass-half text-yellow-500"></i> পেন্ডিং গল্পসমূহ
                     </h2>
-                    <span id="pending-count" class="bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded-full text-xs font-bold">0</span>
                 </div>
-
                 <div id="pending-stories-list" class="space-y-4"></div>
-                
                 <div id="no-pending-msg" class="hidden text-center py-10">
                     <i class="fa-solid fa-check-circle text-4xl text-emerald-500 mb-3 opacity-50"></i>
                     <p class="text-gray-400 font-bold">অ্যাপ্রুভ করার মতো কোনো নতুন গল্প নেই!</p>
                 </div>
             </div>
             
-            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION -->
+            <!-- ========================================== -->
+            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION (INTACT) -->
+            <!-- ========================================== -->
             <div id="section-eventTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-6">
                     <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black tracking-tight mb-2">নতুন ইভেন্ট লঞ্চ করুন</h1>
@@ -172,15 +177,12 @@
                 </div>
 
                 <form id="event-form">
-                    <!-- SECTION 1: BASIC INFO -->
                     <h3 class="font-bold text-campfire mb-4 text-lg flex items-center gap-2 border-b border-campfire/20 pb-2"><i class="fa-solid fa-circle-info"></i> ১. বেসিক ইনফরমেশন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="md:col-span-2">
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্টের শিরোনাম *</label>
                             <input type="text" id="evTitle" required placeholder="যেমন: কেওক্রাডং এক্সপেডিশন" class="glass-input w-full p-4 rounded-xl text-lg font-bold">
                         </div>
-                        
-                        <!-- 🟢 MODIFIED: DIRECT UPLOAD & CROP (16:9) -->
                         <div class="md:col-span-2">
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">কভার ছবি (16:9 Ratio) *</label>
                             <div class="relative w-full h-48 sm:h-64 rounded-2xl border-2 border-dashed border-gray-600 light-mode:border-gray-400 overflow-hidden group hover:border-campfire transition-colors cursor-pointer bg-black/20 light-mode:bg-white/50 flex items-center justify-center">
@@ -192,7 +194,6 @@
                                 <input type="file" id="evCoverInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্ট ক্যাটাগরি *</label>
                             <select id="evCategory" required class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
@@ -213,7 +214,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 2: TIMING & LOGISTICS -->
                     <h3 class="font-bold text-blue-400 mb-4 text-lg flex items-center gap-2 border-b border-blue-400/20 pb-2"><i class="fa-solid fa-clock"></i> ২. সময়সূচী ও ডেডলাইন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -234,7 +234,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 3: CAPACITY & FINANCE -->
                     <h3 class="font-bold text-emerald-400 mb-4 text-lg flex items-center gap-2 border-b border-emerald-400/20 pb-2"><i class="fa-solid fa-wallet"></i> ৩. ক্যাপাসিটি ও পেমেন্ট</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
@@ -251,7 +250,6 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 4: DETAILS -->
                     <h3 class="font-bold text-purple-400 mb-4 text-lg flex items-center gap-2 border-b border-purple-400/20 pb-2"><i class="fa-solid fa-layer-group"></i> ৪. ডিটেইলস ও প্ল্যান</h3>
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ডিফিকাল্টি লেভেল *</label>
@@ -267,7 +265,6 @@
                         <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল আকর্ষণগুলো संক্ষেপে লিখুন..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
                     </div>
 
-                    <!-- Checklists -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 bg-black/20 light-mode:bg-white/50 p-6 rounded-2xl">
                         <div>
                             <label class="block text-xs font-bold text-emerald-400 mb-4 uppercase"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</label>
@@ -289,7 +286,6 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Itinerary -->
                     <div class="mb-8 border border-trail/30 p-6 rounded-2xl bg-trail/5">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                             <div>
@@ -303,7 +299,6 @@
                         <div id="itinerary-container" class="space-y-4"></div>
                     </div>
 
-                    <!-- SECTION 5: STATS META -->
                     <h3 class="font-bold text-yellow-500 mb-4 text-lg flex items-center gap-2 border-b border-yellow-500/20 pb-2"><i class="fa-solid fa-chart-line"></i> ৫. স্ট্যাটস মেটা</h3>
                     <p class="text-xs text-gray-400 light-mode:text-gray-600 mb-4">ট্যুর শেষে এই ডেটাগুলো অটোমেটিকভাবে ইউজারদের ড্যাশবোর্ডে যোগ হবে।</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -329,10 +324,46 @@
                 </form>
             </div>
 
+            <!-- ========================================== -->
+            <!-- 🔵 TAB 3: BOOKING MANAGEMENT (NEW) -->
+            <!-- ========================================== -->
+            <div id="section-bookingTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
+                        <i class="fa-solid fa-ticket text-blue-400"></i> পেন্ডিং বুকিং রিকোয়েস্ট
+                    </h2>
+                </div>
+                <div id="pending-bookings-list" class="space-y-4"></div>
+                
+                <div id="no-bookings-msg" class="hidden text-center py-10">
+                    <i class="fa-solid fa-check-circle text-4xl text-emerald-500 mb-3 opacity-50"></i>
+                    <p class="text-gray-400 font-bold">নতুন কোনো বুকিং রিকোয়েস্ট নেই!</p>
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- 🟣 TAB 4: ACTIVE EVENTS & GAMIFICATION (NEW) -->
+            <!-- ========================================== -->
+            <div id="section-activeEventsTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                    <h2 class="text-xl font-black text-white light-mode:text-black flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-yellow-500"></i> অ্যাক্টিভ ইভেন্টসমূহ
+                    </h2>
+                </div>
+                <p class="text-xs text-gray-400 mb-6 border-l-2 border-yellow-500 pl-3">সতর্কতা: কোনো ইভেন্ট 'Completed' মার্ক করলে অংশগ্রহণকারী সকল ইউজারের ড্যাশবোর্ডে স্ট্যাটস (ট্রেক, দূরত্ব) যোগ হয়ে যাবে।</p>
+                
+                <div id="active-events-list" class="space-y-4"></div>
+
+                <div id="no-active-events-msg" class="hidden text-center py-10">
+                    <i class="fa-solid fa-campground text-4xl text-gray-500 mb-3 opacity-50"></i>
+                    <p class="text-gray-400 font-bold">বর্তমানে কোনো রানিং ইভেন্ট নেই!</p>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- 🟢 CROPPER MODAL (NEW) -->
+    <!-- CROPPER MODAL (INTACT) -->
     <div id="cropper-modal" class="fixed inset-0 z-[60] hidden bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-moss light-mode:bg-white rounded-3xl p-6 w-full max-w-3xl shadow-2xl border border-white/10">
             <div class="flex justify-between items-center mb-4">
@@ -351,7 +382,6 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Cropper.js Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
@@ -387,13 +417,20 @@
             applyTheme();
         });
 
-        // TAB SWITCHING LOGIC 
+        // TAB SWITCHING LOGIC (UPDATED FOR 4 TABS)
         function switchTab(tabId) {
-            document.getElementById('btn-blogTab').className = tabId === 'blogTab' ? 'tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent' : 'text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5';
-            document.getElementById('btn-eventTab').className = tabId === 'eventTab' ? 'tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent' : 'text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5';
-            
-            document.getElementById('section-blogTab').style.display = tabId === 'blogTab' ? 'block' : 'none';
-            document.getElementById('section-eventTab').style.display = tabId === 'eventTab' ? 'block' : 'none';
+            const tabs = ['blogTab', 'eventTab', 'bookingTab', 'activeEventsTab'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                const section = document.getElementById(`section-${t}`);
+                if(t === tabId) {
+                    btn.className = 'tab-active px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent';
+                    section.style.display = 'block';
+                } else {
+                    btn.className = 'text-gray-400 hover:text-white light-mode:text-gray-600 light-mode:hover:text-black px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 border border-transparent hover:bg-white/5';
+                    section.style.display = 'none';
+                }
+            });
         }
 
         // FIREBASE SETUP 
@@ -408,9 +445,6 @@
 
         const authLoader = document.getElementById('auth-loader');
         const adminContent = document.getElementById('admin-content');
-        const pendingList = document.getElementById('pending-stories-list');
-        const noPendingMsg = document.getElementById('no-pending-msg');
-        const pendingCount = document.getElementById('pending-count');
 
         // ADMIN ACCESS CHECK 
         auth.onAuthStateChanged((user) => {
@@ -420,7 +454,11 @@
                         document.getElementById('admin-name').innerText = doc.data().fullName.split(" ")[0];
                         authLoader.classList.add('hidden');
                         adminContent.classList.remove('hidden');
+                        
+                        // Load All Admin Data
                         loadPendingStories();
+                        loadPendingBookings();
+                        loadActiveEvents();
                     } else {
                         alert("Access Denied! You are not an admin.");
                         window.location.href = "index.html";
@@ -439,69 +477,193 @@
             return timestamp.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        // LOAD PENDING STORIES 
+        // ==========================================
+        // 1. PENDING STORIES LOGIC (INTACT)
+        // ==========================================
         function loadPendingStories() {
-            db.collection("stories").where("status", "==", "pending")
-                .get()
-                .then((querySnapshot) => {
-                    pendingList.innerHTML = '';
-                    if (querySnapshot.empty) {
-                        noPendingMsg.classList.remove('hidden');
-                        pendingCount.innerText = "0";
-                        return;
-                    }
-                    noPendingMsg.classList.add('hidden');
-                    pendingCount.innerText = querySnapshot.size;
+            db.collection("stories").where("status", "==", "pending").get().then((querySnapshot) => {
+                const pendingList = document.getElementById('pending-stories-list');
+                const noPendingMsg = document.getElementById('no-pending-msg');
+                const badge = document.getElementById('pending-count-badge');
+                
+                pendingList.innerHTML = '';
+                if (querySnapshot.empty) {
+                    noPendingMsg.classList.remove('hidden');
+                    badge.innerText = "0";
+                    return;
+                }
+                noPendingMsg.classList.add('hidden');
+                badge.innerText = querySnapshot.size;
 
-                    querySnapshot.forEach((doc) => {
-                        const story = doc.data();
-                        const storyId = doc.id;
-                        
-                        const card = `
-                            <div class="bg-black/40 light-mode:bg-white/60 border border-white/5 light-mode:border-gray-200 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
-                                <img src="${story.coverPhoto}" class="w-full sm:w-32 h-24 object-cover rounded-xl" alt="Cover">
-                                <div class="flex-grow">
-                                    <h3 class="text-lg font-bold text-white light-mode:text-black mb-1">${story.title}</h3>
-                                    <p class="text-xs text-gray-400 mb-2">লেখক: <span class="font-bold text-gray-300 light-mode:text-gray-700">${story.authorName}</span> | Date: ${formatDate(story.createdAt)}</p>
-                                    <a href="story-reader.html?id=${storyId}" target="_blank" class="text-xs text-blue-400 hover:underline"><i class="fa-solid fa-eye"></i> রিভিউ করুন</a>
-                                </div>
-                                <div class="flex sm:flex-col gap-2 w-full sm:w-auto">
-                                    <button onclick="approveStory('${storyId}')" class="flex-1 sm:flex-none bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
-                                        <i class="fa-solid fa-check"></i> Approve
-                                    </button>
-                                    <button onclick="rejectStory('${storyId}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
-                                        <i class="fa-solid fa-trash"></i> Reject
-                                    </button>
+                querySnapshot.forEach((doc) => {
+                    const story = doc.data();
+                    const card = `
+                        <div class="bg-black/40 light-mode:bg-white/60 border border-white/5 light-mode:border-gray-200 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+                            <img src="${story.coverPhoto}" class="w-full sm:w-32 h-24 object-cover rounded-xl" alt="Cover">
+                            <div class="flex-grow">
+                                <h3 class="text-lg font-bold text-white light-mode:text-black mb-1">${story.title}</h3>
+                                <p class="text-xs text-gray-400 mb-2">লেখক: <span class="font-bold text-gray-300 light-mode:text-gray-700">${story.authorName}</span></p>
+                                <a href="story-reader.html?id=${doc.id}" target="_blank" class="text-xs text-blue-400 hover:underline"><i class="fa-solid fa-eye"></i> রিভিউ করুন</a>
+                            </div>
+                            <div class="flex sm:flex-col gap-2 w-full sm:w-auto">
+                                <button onclick="approveStory('${doc.id}')" class="flex-1 sm:flex-none bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">Approve</button>
+                                <button onclick="rejectStory('${doc.id}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">Reject</button>
+                            </div>
+                        </div>
+                    `;
+                    pendingList.insertAdjacentHTML('beforeend', card);
+                });
+            });
+        }
+        window.approveStory = function(id) { if(confirm("পাবলিশ করবেন?")) { db.collection("stories").doc(id).update({ status: "approved" }).then(() => loadPendingStories()); } };
+        window.rejectStory = function(id) { if(confirm("ডিলিট করবেন?")) { db.collection("stories").doc(id).delete().then(() => loadPendingStories()); } };
+
+
+        // ==========================================
+        // 2. BOOKING MANAGEMENT LOGIC (NEW)
+        // ==========================================
+        function loadPendingBookings() {
+            db.collection("bookings").where("paymentStatus", "==", "pending").get().then((querySnapshot) => {
+                const bookingList = document.getElementById('pending-bookings-list');
+                const noBookingMsg = document.getElementById('no-bookings-msg');
+                const badge = document.getElementById('booking-count-badge');
+                
+                bookingList.innerHTML = '';
+                if (querySnapshot.empty) {
+                    noBookingMsg.classList.remove('hidden');
+                    badge.innerText = "0";
+                    return;
+                }
+                noBookingMsg.classList.add('hidden');
+                badge.innerText = querySnapshot.size;
+
+                querySnapshot.forEach((doc) => {
+                    const bData = doc.data();
+                    const card = `
+                        <div class="bg-black/40 light-mode:bg-white/60 border border-blue-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+                            <div class="flex-grow">
+                                <h3 class="text-sm font-bold text-white light-mode:text-black mb-1"><i class="fa-solid fa-map-location-dot text-campfire"></i> ${bData.eventTitle}</h3>
+                                <p class="text-xs text-gray-400 mb-1">User: <span class="font-bold text-gray-300 light-mode:text-gray-700">${bData.userName}</span> | Phone: ${bData.userPhone}</p>
+                                <p class="text-xs text-gray-400 mb-1">Blood: ${bData.userBlood} | Emg: ${bData.userEmergency}</p>
+                                <div class="mt-2 inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-400 font-bold tracking-widest uppercase text-[10px]">
+                                    TrxID: ${bData.trxId}
                                 </div>
                             </div>
-                        `;
-                        pendingList.insertAdjacentHTML('beforeend', card);
-                    });
-                })
-                .catch((error) => console.error("Error loading pending stories: ", error));
+                            <div class="flex sm:flex-col gap-2 w-full sm:w-auto mt-3 sm:mt-0">
+                                <button onclick="approveBooking('${doc.id}')" class="flex-1 sm:flex-none bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                                    <i class="fa-solid fa-check"></i> Approve
+                                </button>
+                                <button onclick="rejectBooking('${doc.id}', '${bData.eventId}')" class="flex-1 sm:flex-none bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                                    <i class="fa-solid fa-xmark"></i> Reject
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    bookingList.insertAdjacentHTML('beforeend', card);
+                });
+            });
         }
 
-        window.approveStory = function(id) {
-            if(confirm("আপনি কি নিশ্চিত এই লেখাটি পাবলিশ করতে চান?")) {
-                db.collection("stories").doc(id).update({ status: "approved" })
-                .then(() => { alert("Success! গল্পটি পাবলিক ব্লগে লাইভ হয়ে গেছে।"); loadPendingStories(); })
-                .catch(err => console.error("Error approving: ", err));
+        window.approveBooking = async function(bookingId) {
+            if(confirm("পেমেন্ট সঠিক হলে অ্যাপ্রুভ করুন। নিশ্চিত?")) {
+                try {
+                    await db.collection("bookings").doc(bookingId).update({ paymentStatus: "approved" });
+                    alert("বুকিং কনফার্ম করা হয়েছে!");
+                    loadPendingBookings();
+                } catch(e) { console.error(e); alert("Error"); }
             }
         };
 
-        window.rejectStory = function(id) {
-            if(confirm("সতর্কতা: এটি ডিলিট করলে লেখাটি চিরতরে মুছে যাবে। আপনি কি নিশ্চিত?")) {
-                db.collection("stories").doc(id).delete()
-                .then(() => { alert("গল্পটি মুছে ফেলা হয়েছে।"); loadPendingStories(); })
-                .catch(err => console.error("Error deleting: ", err));
+        window.rejectBooking = async function(bookingId, eventId) {
+            if(confirm("বুকিং বাতিল করলে ইভেন্টে সিট ফাঁকা হয়ে যাবে। নিশ্চিত?")) {
+                try {
+                    await db.collection("bookings").doc(bookingId).delete();
+                    await db.collection("events").doc(eventId).update({
+                        bookedSeats: firebase.firestore.FieldValue.increment(-1)
+                    });
+                    alert("বুকিং বাতিল করা হয়েছে।");
+                    loadPendingBookings();
+                } catch(e) { console.error(e); alert("Error"); }
             }
+        };
+
+
+        // ==========================================
+        // 3. ACTIVE EVENTS & MAGIC SYNC (NEW)
+        // ==========================================
+        function loadActiveEvents() {
+            db.collection("events").where("status", "==", "upcoming").get().then((querySnapshot) => {
+                const activeList = document.getElementById('active-events-list');
+                const noActiveMsg = document.getElementById('no-active-events-msg');
+                
+                activeList.innerHTML = '';
+                if (querySnapshot.empty) {
+                    noActiveMsg.classList.remove('hidden');
+                    return;
+                }
+                noActiveMsg.classList.add('hidden');
+
+                querySnapshot.forEach((doc) => {
+                    const ev = doc.data();
+                    const card = `
+                        <div class="bg-black/40 light-mode:bg-white/60 border border-yellow-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-5 justify-between items-center">
+                            <div>
+                                <h3 class="text-base font-bold text-white light-mode:text-black mb-1">${ev.title}</h3>
+                                <p class="text-xs text-gray-400">Booked Seats: <span class="font-bold text-emerald-400">${ev.bookedSeats || 0} / ${ev.totalSeats}</span></p>
+                                <p class="text-[10px] text-gray-500 mt-1">Reward: ${ev.statsMeta.treks} Treks, ${ev.statsMeta.distance}km</p>
+                            </div>
+                            <button onclick="completeEvent('${doc.id}')" class="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black px-5 py-2.5 rounded-xl text-sm font-black shadow-glow transition-all">
+                                <i class="fa-solid fa-flag-checkered"></i> Mark Completed
+                            </button>
+                        </div>
+                    `;
+                    activeList.insertAdjacentHTML('beforeend', card);
+                });
+            });
+        }
+
+        window.completeEvent = async function(eventId) {
+            if(!confirm("সতর্কতা! এটি মার্ক করলে ট্যুরে অংশ নেওয়া সবার ড্যাশবোর্ডে স্ট্যাটস যোগ হয়ে যাবে। আপনি কি নিশ্চিত?")) return;
+            
+            try {
+                // 1. Get Event Data for Meta Stats
+                const evDoc = await db.collection("events").doc(eventId).get();
+                const meta = evDoc.data().statsMeta;
+                
+                // 2. Find all Approved Bookings for this event
+                const bookingsSnap = await db.collection("bookings")
+                    .where("eventId", "==", eventId)
+                    .where("paymentStatus", "==", "approved").get();
+                
+                const batch = db.batch();
+                
+                // 3. Mark Event as Completed
+                batch.update(evDoc.ref, { status: "completed" });
+                
+                // 4. THE MAGIC: Update All Verified Users' Profiles!
+                for (let bDoc of bookingsSnap.docs) {
+                    const userId = bDoc.data().userId;
+                    const userRef = db.collection("users").doc(userId);
+                    
+                    batch.update(userRef, {
+                        totalTreks: firebase.firestore.FieldValue.increment(meta.treks || 0),
+                        totalDistance: firebase.firestore.FieldValue.increment(meta.distance || 0),
+                        totalNights: firebase.firestore.FieldValue.increment(meta.nights || 0)
+                    });
+                }
+                
+                await batch.commit();
+                alert("ম্যাজিক সফল! ইভেন্ট সম্পন্ন হয়েছে এবং সবার স্ট্যাটাস অটোমেটিক আপডেট হয়ে গেছে!");
+                loadActiveEvents();
+
+            } catch(e) { console.error(e); alert("Error completing event."); }
         };
 
         // ==========================================
-        // 🟢 CROPPER.JS LOGIC FOR 16:9 IMAGE
+        // CROPPER & EVENT CREATION LOGIC (INTACT)
         // ==========================================
         let cropper;
-        let croppedBase64 = null; // Store final Base64 image
+        let croppedBase64 = null; 
         const evCoverInput = document.getElementById('evCoverInput');
         const cropperModal = document.getElementById('cropper-modal');
         const cropperImage = document.getElementById('cropper-image');
@@ -516,16 +678,10 @@
                     cropperImage.src = event.target.result;
                     cropperModal.classList.remove('hidden');
                     if(cropper) cropper.destroy();
-                    
-                    // Initialize Cropper strictly at 16:9
-                    cropper = new Cropper(cropperImage, {
-                        aspectRatio: 16 / 9,
-                        viewMode: 2, // Restrict crop box to not exceed the canvas
-                        autoCropArea: 1,
-                    });
+                    cropper = new Cropper(cropperImage, { aspectRatio: 16 / 9, viewMode: 2, autoCropArea: 1 });
                 };
                 reader.readAsDataURL(file);
-                evCoverInput.value = ''; // Reset input to allow re-selection of same file if needed
+                evCoverInput.value = ''; 
             }
         });
 
@@ -535,27 +691,15 @@
         });
 
         document.getElementById('crop-btn').addEventListener('click', () => {
-            // Get cropped image data
-            const canvas = cropper.getCroppedCanvas({ 
-                width: 1280, // High Res width
-                height: 720  // 16:9 Height
-            });
+            const canvas = cropper.getCroppedCanvas({ width: 1280, height: 720 });
             croppedBase64 = canvas.toDataURL('image/jpeg', 0.8);
-            
-            // Show in preview
             evCoverPreview.src = croppedBase64;
             evCoverPreview.classList.remove('hidden');
             evCoverPlaceholder.classList.add('hidden');
-            
-            // Close modal
             cropperModal.classList.add('hidden');
             cropper.destroy();
         });
 
-
-        // ==========================================
-        // EVENT CREATION LOGIC 
-        // ==========================================
         const daysInput = document.getElementById('evTotalDays');
         const itineraryContainer = document.getElementById('itinerary-container');
 
@@ -566,8 +710,8 @@
                     <div class="p-4 bg-black/30 light-mode:bg-white/60 rounded-xl border border-white/5 light-mode:border-gray-200">
                         <h4 class="font-bold text-campfire mb-3 uppercase tracking-widest"><i class="fa-regular fa-calendar"></i> Day ${i}</h4>
                         <div class="space-y-3">
-                            <input type="text" id="dayTitle_${i}" required placeholder="দিনের টাইটেল (যেমন: বগালেক থেকে কেওক্রাডং)" class="glass-input w-full p-3 rounded-lg text-sm font-bold">
-                            <textarea id="dayDesc_${i}" required rows="2" placeholder="এই দিনের কার্যক্রম বিস্তারিত লিখুন..." class="glass-input w-full p-3 rounded-lg text-sm resize-none"></textarea>
+                            <input type="text" id="dayTitle_${i}" required placeholder="দিনের টাইটেল" class="glass-input w-full p-3 rounded-lg text-sm font-bold">
+                            <textarea id="dayDesc_${i}" required rows="2" placeholder="বিস্তারিত..." class="glass-input w-full p-3 rounded-lg text-sm resize-none"></textarea>
                         </div>
                     </div>
                 `;
@@ -575,31 +719,21 @@
             }
         }
         generateItineraryFields(1); 
-        
-        daysInput.addEventListener('input', (e) => {
-            let val = parseInt(e.target.value);
-            if(val > 0 && val <= 20) generateItineraryFields(val);
-        });
+        daysInput.addEventListener('input', (e) => { let val = parseInt(e.target.value); if(val > 0 && val <= 20) generateItineraryFields(val); });
 
-        // Submit Event to Firestore with Direct Server Upload
         document.getElementById('event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            if (!croppedBase64) {
-                alert("দয়া করে ইভেন্টের কভার ছবি আপলোড ও ক্রপ করুন!");
-                return;
-            }
+            if (!croppedBase64) { alert("কভার ছবি আপলোড ও ক্রপ করুন!"); return; }
 
             const submitBtn = document.getElementById('ev-submit-btn');
             const submitText = document.getElementById('ev-submit-text');
             const submitIcon = document.getElementById('ev-submit-icon');
 
             submitIcon.className = 'fa-solid fa-circle-notch fa-spin';
-            submitText.innerText = "ছবি সার্ভারে আপলোড হচ্ছে...";
+            submitText.innerText = "সার্ভারে আপলোড হচ্ছে...";
             submitBtn.disabled = true;
 
             try {
-                // 1. UPLOAD IMAGE TO SERVER FIRST
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -607,14 +741,11 @@
                 });
                 
                 const imgbbData = await response.json();
-                if (!imgbbData.success) {
-                    throw new Error("ইমেজ আপলোড ফেইল করেছে!");
-                }
+                if (!imgbbData.success) throw new Error("ইমেজ আপলোড ফেইল করেছে!");
+                
                 const finalCoverPhotoUrl = imgbbData.data.url;
-
                 submitText.innerText = "ডেটাবেস সিঙ্ক হচ্ছে...";
 
-                // 2. Fetch Arrays
                 const includedItems = Array.from(document.querySelectorAll('#includedChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
                 const gearItems = Array.from(document.querySelectorAll('#gearChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
 
@@ -622,54 +753,43 @@
                 const itineraryArray = [];
                 for(let i=1; i<=totalDays; i++) {
                     itineraryArray.push({
-                        day: i,
-                        title: document.getElementById(`dayTitle_${i}`).value,
-                        desc: document.getElementById(`dayDesc_${i}`).value
+                        day: i, title: document.getElementById(`dayTitle_${i}`).value, desc: document.getElementById(`dayDesc_${i}`).value
                     });
                 }
 
-                // 3. Compile Master Event Object
                 const newEvent = {
                     title: document.getElementById('evTitle').value,
                     category: document.getElementById('evCategory').value,
                     destination: document.getElementById('evDestination').value,
                     teamLeader: document.getElementById('evLeader').value,
-                    coverPhoto: finalCoverPhotoUrl, // 🟢 Uploaded Server URL
-                    
+                    coverPhoto: finalCoverPhotoUrl, 
                     startDate: document.getElementById('evStart').value,
                     endDate: document.getElementById('evEnd').value,
                     reportingPlace: document.getElementById('evReporting').value,
                     deadline: document.getElementById('evDeadline').value,
-                    
                     totalSeats: parseInt(document.getElementById('evSeats').value),
                     bookedSeats: 0, 
                     tourFee: parseInt(document.getElementById('evFee').value),
                     bkashNo: document.getElementById('evBkash').value,
-                    
                     difficulty: document.getElementById('evDifficulty').value,
                     description: document.getElementById('evDesc').value,
                     included: includedItems,
                     requiredGear: gearItems,
                     itinerary: itineraryArray, 
-                    
                     statsMeta: {
                         treks: parseInt(document.getElementById('metaTreks').value),
                         distance: parseInt(document.getElementById('metaDistance').value),
                         nights: parseInt(document.getElementById('metaNights').value)
                     },
-                    
                     status: "upcoming", 
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
-                // 4. Save to Firestore
                 await db.collection("events").add(newEvent);
-
                 alert("মাস্টারপিস ইভেন্ট সফলভাবে লঞ্চ করা হয়েছে!");
                 window.location.reload(); 
 
             } catch (error) {
-                console.error("Error creating event: ", error);
                 alert("এরর: " + error.message);
                 submitIcon.className = 'fa-solid fa-rocket';
                 submitText.innerText = "সিস্টেমে ইভেন্ট লঞ্চ করুন";
