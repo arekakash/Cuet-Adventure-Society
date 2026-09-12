@@ -87,16 +87,25 @@
 
         .tab-active { background: rgba(231, 111, 81, 0.2); border-color: rgba(231, 111, 81, 0.5); color: #e76f51; }
         
-        /* Modal Styles */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; items-center; z-index: 50;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 50;
         }
         .modal-content {
             background-color: white; padding: 2rem; border-radius: 0.5rem; max-width: 500px; width: 100%;
         }
+        
+        /* Dynamic Tag Badges */
+        .tag-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: bold;
+        }
+        .light-mode .tag-badge {
+            background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #1e293b;
+        }
+        .tag-remove { cursor: pointer; color: #e76f51; transition: transform 0.2s; }
+        .tag-remove:hover { transform: scale(1.2); }
     </style>
 </head>
 
@@ -163,7 +172,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- TAB 1: PENDING STORIES SECTION -->
+            <!-- TAB 1: PENDING STORIES -->
             <!-- ========================================== -->
             <div id="section-blogTab" class="block glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
@@ -179,21 +188,27 @@
             </div>
             
             <!-- ========================================== -->
-            <!-- TAB 2: DYNAMIC EVENT LAUNCH SECTION -->
+            <!-- 🚀 TAB 2: DYNAMIC EVENT LAUNCH (UPGRADED) -->
             <!-- ========================================== -->
             <div id="section-eventTab" class="hidden glass-panel rounded-3xl p-6 sm:p-8" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-6">
-                    <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black tracking-tight mb-2">নতুন ইভেন্ট লঞ্চ করুন</h1>
-                    <p class="text-sm text-gray-400 light-mode:text-gray-600">ডাইনামিক ফর্ম ব্যবহার করে ইভেন্টের এ টু জেড সেটআপ করুন।</p>
+                    <h1 class="text-2xl sm:text-3xl font-black text-white light-mode:text-black tracking-tight mb-2">স্মার্ট ইভেন্ট লঞ্চিং ইঞ্জিন</h1>
+                    <p class="text-sm text-gray-400 light-mode:text-gray-600">ট্রেকিং, ক্যাম্পিং, ক্রুজ বা হাওর—যেকোনো ইভেন্টের এ টু জেড কাস্টমাইজ করুন।</p>
                 </div>
 
                 <form id="event-form">
-                    <h3 class="font-bold text-campfire mb-4 text-lg flex items-center gap-2 border-b border-campfire/20 pb-2"><i class="fa-solid fa-circle-info"></i> ১. বেসিক ইনফরমেশন</h3>
+                    <!-- SECTION 1: CORE INFO -->
+                    <h3 class="font-bold text-campfire mb-4 text-lg flex items-center gap-2 border-b border-campfire/20 pb-2"><i class="fa-solid fa-compass"></i> ১. বেসিক ইনফরমেশন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="md:col-span-2">
+                        <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্টের শিরোনাম *</label>
-                            <input type="text" id="evTitle" required placeholder="যেমন: কেওক্রাডং এক্সপেডিশন" class="glass-input w-full p-4 rounded-xl text-lg font-bold">
+                            <input type="text" id="evTitle" required placeholder="যেমন: ধুপপানি–ন কাটা–মুপ্পোছড়ার দেশে" class="glass-input w-full p-4 rounded-xl text-lg font-bold">
                         </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">আকর্ষণীয় সাবটাইটেল / ট্যাগলাইন</label>
+                            <input type="text" id="evSubtitle" placeholder="যেমন: ২ দিনের ট্রেকিং অ্যাডভেঞ্চার" class="glass-input w-full p-4 rounded-xl text-sm font-medium">
+                        </div>
+                        
                         <div class="md:col-span-2">
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">কভার ছবি (16:9 Ratio) *</label>
                             <div class="relative w-full h-48 sm:h-64 rounded-2xl border-2 border-dashed border-gray-600 light-mode:border-gray-400 overflow-hidden group hover:border-campfire transition-colors cursor-pointer bg-black/20 light-mode:bg-white/50 flex items-center justify-center">
@@ -205,26 +220,24 @@
                                 <input type="file" id="evCoverInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                             </div>
                         </div>
+
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ইভেন্ট ক্যাটাগরি *</label>
                             <select id="evCategory" required class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
                                 <option value="Trekking">ট্রেকিং (Trekking)</option>
                                 <option value="Camping">ক্যাম্পিং (Camping)</option>
+                                <option value="Houseboat/Cruise">হাউসবোট / ক্রুজ (Houseboat)</option>
                                 <option value="Cycling">সাইক্লিং (Cycling)</option>
                                 <option value="Day Tour">ডে ট্যুর (Day Tour)</option>
-                                <option value="Water/Boat">নৌ-ভ্রমণ/কায়াকিং</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">মূল গন্তব্য (Destination) *</label>
-                            <input type="text" id="evDestination" required placeholder="যেমন: বান্দরবান" class="glass-input w-full p-3.5 rounded-xl">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টিম লিডার *</label>
-                            <input type="text" id="evLeader" required placeholder="লিডারের নাম ও ব্যাচ" class="glass-input w-full p-3.5 rounded-xl">
+                            <input type="text" id="evDestination" required placeholder="যেমন: বিলাইছড়ি, রাঙামাটি" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                     </div>
 
+                    <!-- SECTION 2: SCHEDULE -->
                     <h3 class="font-bold text-blue-400 mb-4 text-lg flex items-center gap-2 border-b border-blue-400/20 pb-2"><i class="fa-solid fa-clock"></i> ২. সময়সূচী ও ডেডলাইন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -237,7 +250,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">রিপোর্টিং প্লেস *</label>
-                            <input type="text" id="evReporting" required placeholder="যেমন: চুয়েট গোলচত্বর" class="glass-input w-full p-3.5 rounded-xl">
+                            <input type="text" id="evReporting" required placeholder="যেমন: CUET Main Gate" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-red-400 mb-2 uppercase">রেজিস্ট্রেশন ডেডলাইন *</label>
@@ -245,62 +258,160 @@
                         </div>
                     </div>
 
-                    <h3 class="font-bold text-emerald-400 mb-4 text-lg flex items-center gap-2 border-b border-emerald-400/20 pb-2"><i class="fa-solid fa-wallet"></i> ৩. ক্যাপাসিটি ও পেমেন্ট</h3>
+                    <!-- SECTION 3: ADVANCED FINANCIALS -->
+                    <h3 class="font-bold text-emerald-400 mb-4 text-lg flex items-center gap-2 border-b border-emerald-400/20 pb-2"><i class="fa-solid fa-wallet"></i> ৩. ফিন্যান্সিয়াল ইঞ্জিন</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
+                            <label class="block text-xs font-bold text-emerald-400 mb-2 uppercase">বুকিং ফি (Advance) *</label>
+                            <input type="number" id="evBookingFee" required placeholder="e.g. 2040" class="glass-input w-full p-3.5 rounded-xl border-emerald-500/30">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টোটাল ইভেন্ট ফি *</label>
+                            <input type="number" id="evTotalFee" required placeholder="e.g. 3099" class="glass-input w-full p-3.5 rounded-xl">
+                        </div>
+                        <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টোটাল সিট *</label>
-                            <input type="number" id="evSeats" required placeholder="e.g. 40" class="glass-input w-full p-3.5 rounded-xl">
+                            <input type="number" id="evSeats" required placeholder="e.g. 11" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ট্যুর ফি (টাকা) *</label>
-                            <input type="number" id="evFee" required placeholder="e.g. 3500" class="glass-input w-full p-3.5 rounded-xl">
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">রিফান্ড পলিসি *</label>
+                            <select id="evRefundPolicy" required class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
+                                <option value="Non-Refundable">Non-Refundable (অফেরতযোগ্য)</option>
+                                <option value="Refundable">Refundable (সম্পূর্ণ ফেরতযোগ্য)</option>
+                                <option value="Conditional">Conditional (শর্তসাপেক্ষ)</option>
+                            </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">বিকাশ/নগদ নম্বর *</label>
-                            <input type="text" id="evBkash" required placeholder="e.g. 017XXXX (Personal)" class="glass-input w-full p-3.5 rounded-xl">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">পেমেন্ট মেথড ও নাম্বার (বিকাশ/নগদ) *</label>
+                            <input type="text" id="evPaymentMethods" required placeholder="যেমন: 01766312889 (bKash & Nagad - Send Money)" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                     </div>
 
-                    <h3 class="font-bold text-purple-400 mb-4 text-lg flex items-center gap-2 border-b border-purple-400/20 pb-2"><i class="fa-solid fa-layer-group"></i> ৪. ডিটেইলস ও প্ল্যান</h3>
-                    <div class="mb-6">
-                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ডিফিকাল্টি লেভেল *</label>
-                        <select id="evDifficulty" required class="glass-input w-full md:w-1/2 p-3.5 rounded-xl cursor-pointer">
-                            <option value="Beginner">বিগিনার (সহজ, সবার জন্য)</option>
-                            <option value="Moderate">মডারেট (মাঝারি পরিশ্রম)</option>
-                            <option value="Hard">হার্ড (শারীরিক ফিটনেস জরুরি)</option>
-                            <option value="Extreme">এক্সট্রিম (শুধুমাত্র প্রো ট্রেকারদের জন্য)</option>
-                        </select>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">সংক্ষিপ্ত ডেসক্রিপশন *</label>
-                        <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল আকর্ষণগুলো সংক্ষেপে লিখুন..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
+                    <!-- SECTION 4: LOGISTICS -->
+                    <h3 class="font-bold text-cyan-400 mb-4 text-lg flex items-center gap-2 border-b border-cyan-400/20 pb-2"><i class="fa-solid fa-tent"></i> ৪. লজিস্টিকস ও অ্যাকোমোডেশন</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">থাকার ব্যবস্থা (Stay Type)</label>
+                            <select id="evStayType" class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
+                                <option value="Resort/Hotel Shared">রিসোর্ট / হোটেল (শেয়ার্ড)</option>
+                                <option value="Camping Tents">ক্যাম্পিং (তাঁবু)</option>
+                                <option value="Tribal Cottage">উপজাতীয় মাচাং ঘর</option>
+                                <option value="Houseboat Cabin">হাউসবোট কেবিন</option>
+                                <option value="None">প্রযোজ্য নয় (ডে ট্যুর)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ওয়াশরুম সুবিধা</label>
+                            <select id="evWashroom" class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
+                                <option value="Attached & Shared">অ্যাটাচড ও শেয়ার্ড (মোটামুটি মানের)</option>
+                                <option value="Well Equipped">অত্যাধুনিক (রিসোর্ট)</option>
+                                <option value="Natural / Open">প্রাকৃতিক (পাহাড়/জঙ্গল)</option>
+                                <option value="Boat Washroom">নৌকার শেয়ার্ড ওয়াশরুম</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">খাবার (Food Plan)</label>
+                            <input type="text" id="evFoodPlan" placeholder="যেমন: ২ দিনে মোট ৫ বেলা খাবার" class="glass-input w-full p-3.5 rounded-xl">
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 bg-black/20 light-mode:bg-white/50 p-6 rounded-2xl">
+                    <!-- SECTION 5: VIBE & LEADERSHIP -->
+                    <h3 class="font-bold text-yellow-500 mb-4 text-lg flex items-center gap-2 border-b border-yellow-500/20 pb-2"><i class="fa-solid fa-fire-flame-curved"></i> ৫. ভাইব ও কন্টাক্ট ইনফো</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
-                            <label class="block text-xs font-bold text-emerald-400 mb-4 uppercase"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</label>
-                            <div class="grid grid-cols-2 gap-3" id="includedChecklist">
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Transport (Up & Down)" class="cyber-checkbox"> যাতায়াত (আপ-ডাউন)</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="All Meals" class="cyber-checkbox"> প্রতিদিন ৩ বেলা খাবার</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Accommodation/Tent" class="cyber-checkbox"> তাঁবু / কটেজ</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Guide Fee" class="cyber-checkbox"> গাইড ফি</label>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ডিফিকাল্টি লেভেল *</label>
+                            <select id="evDifficulty" required class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
+                                <option value="Beginner">বিগিনার (সহজ)</option>
+                                <option value="Moderate">মডারেট (মাঝারি পরিশ্রম)</option>
+                                <option value="Hard">হার্ড (শারীরিক ফিটনেস জরুরি)</option>
+                                <option value="Extreme">এক্সট্রিম (প্রো লেভেল)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ট্যুর ভাইব (Tour Vibe)</label>
+                            <select id="evTourVibe" class="glass-input w-full p-3.5 rounded-xl cursor-pointer">
+                                <option value="Hardcore Trekking">Hardcore Trekking (কষ্টকর)</option>
+                                <option value="Relax & Chill">Relax & Chill (রিল্যাক্সিং)</option>
+                                <option value="Adventure Survival">Adventure Survival</option>
+                                <option value="Cruise / Boat Vibe">Cruise / Water Vibe</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">শারীরিক ফিটনেস (১-১০)</label>
+                            <input type="number" id="evFitnessLevel" min="1" max="10" placeholder="e.g. 7" class="glass-input w-full p-3.5 rounded-xl">
+                        </div>
+                        
+                        <!-- Contact Hub -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">টিম লিডার (নাম ও ব্যাচ) *</label>
+                            <input type="text" id="evLeader" required placeholder="যেমন: RAFI SWIM (BME '22)" class="glass-input w-full p-3.5 rounded-xl border-blue-500/30">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">লিডারের ফোন নাম্বার *</label>
+                            <input type="text" id="evLeaderPhone" required placeholder="e.g. 01766312889" class="glass-input w-full p-3.5 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">লিডারের WhatsApp নাম্বার</label>
+                            <input type="text" id="evLeaderWhatsapp" placeholder="e.g. 01609766304" class="glass-input w-full p-3.5 rounded-xl">
+                        </div>
+                    </div>
+
+                    <div class="mb-8 border-t border-white/10 pt-6">
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">সংক্ষিপ্ত বিবরণ (Description) *</label>
+                        <textarea id="evDesc" required rows="3" placeholder="ট্যুরের মূল বিবরণ, পাহাড়ি ট্রেকিং, নৌযাত্রা ইত্যাদির সংক্ষিপ্ত রূপরেখা..." class="glass-input w-full p-4 rounded-xl text-sm resize-none"></textarea>
+                    </div>
+
+                    <!-- SECTION 6: DYNAMIC CHECKLISTS & RULES -->
+                    <h3 class="font-bold text-purple-400 mb-4 text-lg flex items-center gap-2 border-b border-purple-400/20 pb-2"><i class="fa-solid fa-list-check"></i> ৬. ডাইনামিক রুলস ও চেকলিস্ট</h3>
+                    <p class="text-xs text-gray-400 mb-6 border-l-2 border-purple-500 pl-3">প্রতিটি আইটেম লিখে 'Add' বাটনে ক্লিক করুন।</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <!-- Included -->
+                        <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-emerald-500/20">
+                            <label class="block text-xs font-bold text-emerald-400 mb-3 uppercase"><i class="fa-solid fa-circle-check"></i> যা যা ইনক্লুডেড</label>
+                            <div class="flex gap-2 mb-3">
+                                <input type="text" id="input-included" placeholder="e.g. গাইড খরচ" class="glass-input flex-grow p-2 rounded-lg text-sm">
+                                <button type="button" onclick="addTag('included')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">Add</button>
                             </div>
+                            <div id="tags-included" class="flex flex-wrap gap-2"></div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-yellow-500 mb-4 uppercase"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</label>
-                            <div class="grid grid-cols-2 gap-3" id="gearChecklist">
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Trekking Shoes" class="cyber-checkbox"> ট্রেকিং বুট / স্যান্ডেল</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Raincoat/Umbrella" class="cyber-checkbox"> রেইনকোট / ছাতা</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="Headlamp/Torch" class="cyber-checkbox"> টর্চলাইট</label>
-                                <label class="flex items-center gap-2 text-sm text-gray-300 light-mode:text-gray-700 cursor-pointer hover:text-white"><input type="checkbox" value="NID Copy" class="cyber-checkbox"> আইডি কার্ড</label>
+
+                        <!-- Required Gear -->
+                        <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-yellow-500/20">
+                            <label class="block text-xs font-bold text-yellow-500 mb-3 uppercase"><i class="fa-solid fa-backpack"></i> যা সাথে নিতে হবে</label>
+                            <div class="flex gap-2 mb-3">
+                                <input type="text" id="input-gear" placeholder="e.g. পরিচয়পত্রের ৫ কপি ফটোকপি" class="glass-input flex-grow p-2 rounded-lg text-sm">
+                                <button type="button" onclick="addTag('gear')" class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg text-sm font-bold transition-colors">Add</button>
                             </div>
+                            <div id="tags-gear" class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <!-- Excluded -->
+                        <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-gray-500/30">
+                            <label class="block text-xs font-bold text-gray-400 light-mode:text-gray-600 mb-3 uppercase"><i class="fa-solid fa-circle-xmark"></i> যা ইনক্লুডেড নয় (Excluded)</label>
+                            <div class="flex gap-2 mb-3">
+                                <input type="text" id="input-excluded" placeholder="e.g. ব্যক্তিগত ঔষধ" class="glass-input flex-grow p-2 rounded-lg text-sm">
+                                <button type="button" onclick="addTag('excluded')" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">Add</button>
+                            </div>
+                            <div id="tags-excluded" class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <!-- Special Warnings -->
+                        <div class="bg-black/20 light-mode:bg-white/50 p-5 rounded-2xl border border-red-500/30">
+                            <label class="block text-xs font-bold text-red-400 mb-3 uppercase"><i class="fa-solid fa-triangle-exclamation"></i> বিশেষ সতর্কতা ও রুলস</label>
+                            <div class="flex gap-2 mb-3">
+                                <input type="text" id="input-warnings" placeholder="e.g. এটি কোনো রিল্যাক্স ট্যুর নয়" class="glass-input flex-grow p-2 rounded-lg text-sm">
+                                <button type="button" onclick="addTag('warnings')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">Add</button>
+                            </div>
+                            <div id="tags-warnings" class="flex flex-wrap gap-2"></div>
                         </div>
                     </div>
 
+                    <!-- SECTION 7: ITINERARY -->
                     <div class="mb-8 border border-trail/30 p-6 rounded-2xl bg-trail/5">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                             <div>
-                                <label class="block text-sm font-black text-trail mb-1 uppercase tracking-widest"><i class="fa-solid fa-map-location-dot"></i> ডে-টু-ডে প্ল্যানার</label>
+                                <h3 class="font-bold text-trail text-lg flex items-center gap-2 uppercase tracking-widest"><i class="fa-solid fa-map-location-dot"></i> ৭. ডে-টু-ডে প্ল্যানার</h3>
                             </div>
                             <div class="mt-3 sm:mt-0 flex items-center gap-3">
                                 <label class="text-xs font-bold text-gray-300 light-mode:text-gray-700">মোট দিন (Days):</label>
@@ -310,8 +421,9 @@
                         <div id="itinerary-container" class="space-y-4"></div>
                     </div>
 
-                    <h3 class="font-bold text-yellow-500 mb-4 text-lg flex items-center gap-2 border-b border-yellow-500/20 pb-2"><i class="fa-solid fa-chart-line"></i> ৫. স্ট্যাটস মেটা</h3>
-                    <p class="text-xs text-gray-400 light-mode:text-gray-600 mb-4">ট্যুর শেষে এই ডেটাগুলো অটোমেটিকভাবে ইউজারদের ড্যাশবোর্ডে যোগ হবে।</p>
+                    <!-- SECTION 8: META STATS -->
+                    <h3 class="font-bold text-amber-500 mb-4 text-lg flex items-center gap-2 border-b border-amber-500/20 pb-2"><i class="fa-solid fa-chart-line"></i> ৮. গ্যামিফিকেশন স্ট্যাটস</h3>
+                    <p class="text-xs text-gray-400 light-mode:text-gray-600 mb-4">ট্যুর সম্পন্ন হলে ইউজারদের প্রোফাইলে এই পয়েন্টগুলো অটোমেটিক যোগ হবে।</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div>
                             <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ট্রেকের সংখ্যা</label>
@@ -322,14 +434,15 @@
                             <input type="number" id="metaDistance" required placeholder="e.g. 25" min="0" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">তাঁবুতে থাকার রাত</label>
+                            <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">ক্যাম্পিং রাত (Nights)</label>
                             <input type="number" id="metaNights" required placeholder="e.g. 2" min="0" class="glass-input w-full p-3.5 rounded-xl">
                         </div>
                     </div>
 
+                    <!-- SUBMIT BUTTON -->
                     <div class="pt-6 mt-4 border-t border-white/10">
                         <button type="submit" id="ev-submit-btn" class="w-full bg-red-500 hover:bg-red-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] flex items-center justify-center gap-3">
-                            <i id="ev-submit-icon" class="fa-solid fa-rocket"></i> <span id="ev-submit-text">সিস্টেমে ইভেন্ট লঞ্চ করুন</span>
+                            <i id="ev-submit-icon" class="fa-solid fa-rocket"></i> <span id="ev-submit-text">মাস্টারপিস ইভেন্ট লঞ্চ করুন</span>
                         </button>
                     </div>
                 </form>
@@ -392,7 +505,7 @@
         </div>
     </div>
 
-    <!-- 🟢 NEW: EDIT EVENT MODAL -->
+    <!-- EDIT EVENT MODAL -->
     <div id="edit-event-modal" class="fixed inset-0 z-50 hidden bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm overflow-y-auto pt-20">
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
@@ -408,7 +521,7 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">ট্যুর ফি (টাকা)</label>
+                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">টোটাল ফি (টাকা)</label>
                         <input type="number" id="editEvFee" required class="glass-input w-full p-3 rounded-xl">
                     </div>
                     <div>
@@ -663,7 +776,7 @@
             });
         }
 
-        // 🟢 NEW: EDIT EVENT MODAL LOGIC
+        // EDIT EVENT MODAL LOGIC
         const editModal = document.getElementById('edit-event-modal');
         window.openEditModal = function(ev) {
             document.getElementById('editEvId').value = ev.id;
@@ -701,7 +814,7 @@
                 
                 alert("ইভেন্ট সফলভাবে আপডেট করা হয়েছে!");
                 closeEditModal();
-                loadActiveEvents(); // Refresh list silently
+                loadActiveEvents(); 
             } catch (err) {
                 console.error(err);
                 alert("Error updating event.");
@@ -741,7 +854,53 @@
             } catch(e) { console.error(e); alert("Error completing event."); }
         };
 
-        // CROPPER & EVENT CREATION LOGIC
+        // 🟢 NEW: DYNAMIC TAG SYSTEM LOGIC
+        const dynamicTags = {
+            included: [],
+            gear: [],
+            excluded: [],
+            warnings: []
+        };
+
+        window.addTag = function(category) {
+            const inputEl = document.getElementById(`input-${category}`);
+            const val = inputEl.value.trim();
+            if(val !== '') {
+                dynamicTags[category].push(val);
+                inputEl.value = '';
+                renderTags(category);
+            }
+        };
+
+        window.removeTag = function(category, index) {
+            dynamicTags[category].splice(index, 1);
+            renderTags(category);
+        };
+
+        function renderTags(category) {
+            const container = document.getElementById(`tags-${category}`);
+            container.innerHTML = '';
+            dynamicTags[category].forEach((tag, index) => {
+                container.innerHTML += `
+                    <div class="tag-badge">
+                        <span>${tag}</span>
+                        <i class="fa-solid fa-xmark tag-remove" onclick="removeTag('${category}', ${index})"></i>
+                    </div>
+                `;
+            });
+        }
+        
+        // Setup Enter key listener for tag inputs
+        ['included', 'gear', 'excluded', 'warnings'].forEach(cat => {
+            document.getElementById(`input-${cat}`).addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addTag(cat);
+                }
+            });
+        });
+
+        // CROPPER LOGIC
         let cropper; let croppedBase64 = null; 
         const evCoverInput = document.getElementById('evCoverInput');
         const cropperModal = document.getElementById('cropper-modal');
@@ -776,6 +935,7 @@
             cropper.destroy();
         });
 
+        // ITINERARY GENERATOR
         const daysInput = document.getElementById('evTotalDays');
         const itineraryContainer = document.getElementById('itinerary-container');
 
@@ -797,6 +957,7 @@
         generateItineraryFields(1); 
         daysInput.addEventListener('input', (e) => { let val = parseInt(e.target.value); if(val > 0 && val <= 20) generateItineraryFields(val); });
 
+        // 🚀 SMART EVENT SUBMISSION
         document.getElementById('event-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!croppedBase64) { alert("কভার ছবি আপলোড ও ক্রপ করুন!"); return; }
@@ -810,6 +971,7 @@
             submitBtn.disabled = true;
 
             try {
+                // Upload Image via API
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -822,36 +984,62 @@
                 const finalCoverPhotoUrl = imgbbData.data.url;
                 submitText.innerText = "ডেটাবেস সিঙ্ক হচ্ছে...";
 
-                const includedItems = Array.from(document.querySelectorAll('#includedChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
-                const gearItems = Array.from(document.querySelectorAll('#gearChecklist input[type="checkbox"]:checked')).map(cb => cb.value);
-
+                // Build Itinerary Array
                 const totalDays = parseInt(daysInput.value);
                 const itineraryArray = [];
                 for(let i=1; i<=totalDays; i++) {
                     itineraryArray.push({
-                        day: i, title: document.getElementById(`dayTitle_${i}`).value, desc: document.getElementById(`dayDesc_${i}`).value
+                        day: i, 
+                        title: document.getElementById(`dayTitle_${i}`).value, 
+                        desc: document.getElementById(`dayDesc_${i}`).value
                     });
                 }
 
+                // Construct The Advanced Event Object
                 const newEvent = {
                     title: document.getElementById('evTitle').value,
+                    subtitle: document.getElementById('evSubtitle').value, // NEW
                     category: document.getElementById('evCategory').value,
                     destination: document.getElementById('evDestination').value,
-                    teamLeader: document.getElementById('evLeader').value,
                     coverPhoto: finalCoverPhotoUrl, 
+                    
+                    // Schedule
                     startDate: document.getElementById('evStart').value,
                     endDate: document.getElementById('evEnd').value,
                     reportingPlace: document.getElementById('evReporting').value,
                     deadline: document.getElementById('evDeadline').value,
+                    
+                    // Advanced Financials
                     totalSeats: parseInt(document.getElementById('evSeats').value),
                     bookedSeats: 0, 
-                    tourFee: parseInt(document.getElementById('evFee').value),
-                    bkashNo: document.getElementById('evBkash').value,
+                    tourFee: parseInt(document.getElementById('evTotalFee').value),
+                    bookingFee: parseInt(document.getElementById('evBookingFee').value), // NEW
+                    refundPolicy: document.getElementById('evRefundPolicy').value, // NEW
+                    paymentMethods: document.getElementById('evPaymentMethods').value, // UPDATED
+                    bkashNo: document.getElementById('evPaymentMethods').value, // Legacy compatibility
+                    
+                    // Logistics
+                    stayType: document.getElementById('evStayType').value, // NEW
+                    washroom: document.getElementById('evWashroom').value, // NEW
+                    foodPlan: document.getElementById('evFoodPlan').value, // NEW
+                    
+                    // Vibe & Contact
                     difficulty: document.getElementById('evDifficulty').value,
+                    tourVibe: document.getElementById('evTourVibe').value, // NEW
+                    fitnessLevel: parseInt(document.getElementById('evFitnessLevel').value) || 0, // NEW
+                    teamLeader: document.getElementById('evLeader').value,
+                    leaderPhone: document.getElementById('evLeaderPhone').value, // NEW
+                    leaderWhatsapp: document.getElementById('evLeaderWhatsapp').value, // NEW
+                    
+                    // Details & Rules
                     description: document.getElementById('evDesc').value,
-                    included: includedItems,
-                    requiredGear: gearItems,
+                    included: dynamicTags.included, // DYNAMIC
+                    requiredGear: dynamicTags.gear, // DYNAMIC
+                    excluded: dynamicTags.excluded, // DYNAMIC
+                    warnings: dynamicTags.warnings, // DYNAMIC
+                    
                     itinerary: itineraryArray, 
+                    
                     statsMeta: {
                         treks: parseInt(document.getElementById('metaTreks').value),
                         distance: parseInt(document.getElementById('metaDistance').value),
@@ -868,7 +1056,7 @@
             } catch (error) {
                 alert("এরর: " + error.message);
                 submitIcon.className = 'fa-solid fa-rocket';
-                submitText.innerText = "সিস্টেমে ইভেন্ট লঞ্চ করুন";
+                submitText.innerText = "মাস্টারপিস ইভেন্ট লঞ্চ করুন";
                 submitBtn.disabled = false;
             }
         });
