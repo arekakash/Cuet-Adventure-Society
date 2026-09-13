@@ -208,15 +208,16 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- LESSON READING MODAL (FULL SCREEN)         -->
+    <!-- 🟢 FIXED: LESSON READING MODAL 🟢          -->
     <!-- ========================================== -->
-    <div id="lesson-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/95 light-mode:bg-white/95 backdrop-blur-xl overflow-y-auto">
-        <div class="w-full max-w-4xl min-h-screen py-10 px-4 sm:px-6 lg:px-8 relative">
+    <div id="lesson-modal" class="fixed inset-0 z-50 hidden bg-black/95 light-mode:bg-white/95 backdrop-blur-xl overflow-y-auto">
+        <!-- 🟢 ADDED: justify-center and items-start to force top alignment -->
+        <div class="min-h-screen w-full flex justify-center items-start py-10 px-4 sm:px-6 lg:px-8 relative">
             <button onclick="closeLessonModal()" class="fixed top-6 right-6 sm:top-10 sm:right-10 w-12 h-12 bg-white/10 light-mode:bg-gray-100 border border-white/20 light-mode:border-gray-300 rounded-full flex items-center justify-center text-white lm-text-dark hover:bg-red-500 hover:text-white hover:border-red-500 transition-all z-50">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             
-            <div class="glass-panel rounded-3xl p-8 sm:p-12 mb-10 mt-12 sm:mt-0">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 mb-10 w-full max-w-4xl mt-12 sm:mt-0">
                 <div class="flex items-center gap-3 mb-6">
                     <span id="modal-module-tag" class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-lg text-xs font-bold tracking-widest uppercase border border-blue-500/30">Module 1</span>
                     <span id="modal-read-time" class="text-gray-400 text-xs font-bold"><i class="fa-solid fa-clock"></i> 5 Min Read</span>
@@ -338,7 +339,7 @@
 
                             <div class="qa-box">
                                 <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> পাহাড়ে হাঁপিয়ে উঠলে মেন্টাল স্ট্যামিনা কীভাবে ধরে রাখব?</div>
-                                <div>কখনোই পাহাড়ের চূড়ার দিকে তাকিয়ে ভাববেন না "আর কতদূর!"। এটি আপনাকে মানসিকভাবে দুর্বল করে দেবে। আপনার দৃষ্টি থাকবে শুধু সামনের ১০ কদমের ওপর। "শুধু এই ১০ কদম পার হবো"—এই মানসিকতা নিয়ে এগোলে আপনি এভারেস্টও জয় করতে পারবেন।</div>
+                                <div>কখনোই পাহাড়ের চূড়ার দিকে তাকিয়ে ভাববেন ঘন "আর কতদূর!"। এটি আপনাকে মানসিকভাবে দুর্বল করে দেবে। আপনার দৃষ্টি থাকবে শুধু সামনের ১০ কদমের ওপর। "শুধু এই ১০ কদম পার হবো"—এই মানসিকতা নিয়ে এগোলে আপনি এভারেস্টও জয় করতে পারবেন।</div>
                             </div>
 
                             <h3>২. হাঁটার বিজ্ঞান (Pacing and Breathing)</h3>
@@ -429,12 +430,12 @@
 
                             <div class="qa-box">
                                 <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> স্লিপিং ব্যাগ কোথায় রাখতে হয়?</div>
-                                <div>স্লিপিং ব্যাগ সাধারণত ট্রেইলে হাঁটার সময় লাগে না, এটি শুধু রাতে ক্যাম্পে লাগে। এটি ওজনে হালকা কিন্তু আকারে বড়। তাই স্লিপিং ব্যাগ সবসময় ব্যাকপ্যাকের একদম নিচে (Bottom compartment) রাখতে হয়। এটি নিচে একটি কুশন বা শকার হিসেবেও কাজ করে।</div>
+                                <div>স্লিপিং ব্যাগ সাধারণত ট্রেইলে হাঁটার সময় লাগে না, এটি গভীরে রাতে ক্যাম্পে লাগে। এটি ওজনে হালকা কিন্তু আকারে বড়। তাই স্লিপিং ব্যাগ সবসময় ব্যাকপ্যাকের একদম নিচে (Bottom compartment) রাখতে হয়। এটি নিচে একটি কুশন বা শকার হিসেবেও কাজ করে।</div>
                             </div>
                             
                             <div class="qa-box">
                                 <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> বৃষ্টি থেকে ব্যাগ বাঁচাতে কী করব?</div>
-                                <div>ব্যাকপ্যাকের রেইন কভার কখনোই ১০০% ওয়াটারপ্রুফ হয় না। ভারী বৃষ্টিতে পানি পিঠের দিক দিয়ে বা চেইন দিয়ে ভেতরে ঢুকবেই। তাই ব্যাগের ভেতরে প্রথমে একটি বড় মোটা পলিথিন (Garbade bag) ঢুকিয়ে তার ভেতর সব জিনিসপত্র প্যাক করবেন। একে বলা হয় 'পলিথিন লাইনিং'। এছাড়া ইলেকট্রনিক্স জিনিস অবশ্যই জিপলক ব্যাগে রাখবেন।</div>
+                                <div>ব্যাকপ্যাকের রেইন কভার কখনোই ১০০% ওয়াটারপ্রুফ হয় না। ভারী বৃষ্টিতে পানি পিঠের দিক দিয়ে বা চেইন দিয়ে ভেতরে ঢুকবেই। তাই ব্যাগের ভেতরে প্রথমে একটি বড় মোটা পলিথিন (Garbage bag) ঢুকিয়ে তার ভেতর সব জিনিসপত্র প্যাক করবেন। একে বলা হয় 'পলিথিন লাইনিং'। এছাড়া ইলেকট্রনিক্স জিনিস অবশ্যই জিপলক ব্যাগে রাখবেন।</div>
                             </div>
                         `,
                         quiz: [
@@ -484,7 +485,7 @@
                         quiz: [
                             { q: "শরীরে জোঁক ধরলে ছাড়ানোর সঠিক উপায় কী?", options: ["জোরে টেনে ছিঁড়ে ফেলা", "লবণ, গুল বা স্যানিটাইজার স্প্রে করা", "আগুন দিয়ে পোড়ানো", "পানি দিয়ে ধোয়া"], ans: 1 },
                             { q: "মাসল ক্র্যাম্প (পেশিতে টান) হওয়ার মূল কারণ কী?", options: ["বেশি বিশ্রাম নেওয়া", "শরীরে পানি ও ইলেকট্রোলাইটের অভাব", "বেশি খাওয়া দাওয়া করা", "জুতো টাইট হওয়া"], ans: 1 },
-                            { q: "ঝিরির পানি হুট করে ঘোলা হয়ে গেলে এবং পাতা ভেসে আসলে কীসের সংকেত দেয়?", options: ["পুকুরে মাছ লাফাচ্ছে", "ঝিরিতে নতুন পানি আসছে, খুশি হওয়ার বিষয়", "ফ্ল্যাশ ফ্লাড বা পাহাড়ি ঢল আসার সংকেত", "স্থানীয়রা গোসল করছে"], ans: 2 }
+                            { q: "ঝিরির পানি হুট করে ঘোলা হয়ে গেলে এবং পাতা ভেসে আসলে কীসের সংকেত দেয়?", options: ["পুকুরে মাছ লাফাচ্ছে", "ঝিরিতে নতুন পানি আসছে, খুশি হওয়ার বিষয়", "ফ্ল্যাশ ফ্লাড বা পাহাড়ি ঢল আসার সংকেত", "স্থানীয়রা গোসল করছে"], ans: 2 }
                         ]
                     }
                 ]
@@ -686,7 +687,7 @@
         }
 
         // ==========================================
-        // LESSON MODAL LOGIC
+        // 🟢 FIXED: LESSON MODAL LOGIC 🟢
         // ==========================================
         const lessonModal = document.getElementById('lesson-modal');
         
@@ -713,7 +714,11 @@
 
             document.body.style.overflow = 'hidden';
             lessonModal.classList.remove('hidden');
-            lessonModal.scrollTop = 0; // Reset scroll
+            
+            // 🟢 FORCE MODAL TO SCROLL TO VERY TOP 🟢
+            setTimeout(() => {
+                lessonModal.scrollTop = 0;
+            }, 10);
         }
 
         window.closeLessonModal = function() {
