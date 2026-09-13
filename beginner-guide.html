@@ -23,7 +23,6 @@
                         'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
                         'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
                         'glow-blue': '0 0 15px rgba(59, 130, 246, 0.5)',
-                        'glow-red': '0 0 15px rgba(239, 68, 68, 0.5)',
                     }
                 }
             }
@@ -76,10 +75,11 @@
         
         .radio-custom:checked + div { border-color: #e76f51; background: rgba(231, 111, 81, 0.1); }
         .light-mode .radio-custom:checked + div { background: rgba(231, 111, 81, 0.05); }
+        
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
         
-        /* Module Locked Styling */
+        /* 🟢 NEW: Module Locked Styling 🟢 */
         .module-locked { filter: grayscale(100%) opacity(60%); pointer-events: none; }
     </style>
 </head>
@@ -243,7 +243,7 @@
 
                 <div class="mt-16 pt-10 border-t border-white/10 light-mode:border-gray-300 text-center">
                     <h3 class="text-2xl font-black text-white lm-text-dark mb-4">পড়া শেষ? এবার পরীক্ষা দেওয়ার পালা!</h3>
-                    <p class="text-gray-400 lm-text-muted mb-8">কুইজে ১০০% সঠিক উত্তর দিলে আপনার প্রোফাইলে ১০০ Survival IQ পয়েন্ট যুক্ত হবে। <br><strong class="text-red-500">সাবধান! কুইজের জন্য সময় পাবেন মাত্র ৩ মিনিট।</strong></p>
+                    <p class="text-gray-400 lm-text-muted mb-8">কুইজে ১০০% সঠিক উত্তর দিলে আপনার প্রোফাইলে পয়েন্ট যুক্ত হবে। <br><strong class="text-red-500">সাবধান! কুইজের জন্য সময় পাবেন মাত্র ৩ মিনিট।</strong></p>
                     
                     <button id="btn-start-quiz" class="bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:-translate-y-1 hover:scale-105 flex items-center justify-center mx-auto gap-3">
                         <i class="fa-solid fa-brain"></i> টেক কুইজ & আর্ন পয়েন্ট!
@@ -324,8 +324,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
-    <!-- 🟢 IMPORT MEGA CURRICULUM DATA 🟢 -->
-    <script src="curriculum-data.js"></script>
+    <!-- 🟢 IMPORT MEGA CURRICULUM DATA FROM FOLDER 🟢 -->
+    <script>
+        // Create an empty array first
+        const megaCurriculum = [];
+    </script>
+    
+    <!-- Load files dynamically -->
+    <script src="curriculum/part-1.js"></script>
+    <script src="curriculum/part-2.js"></script>
 
     <script>
         // ==========================================
@@ -366,7 +373,7 @@
         let userData = { survivalIQ: 0, completedLessons: [] };
         let activeLessonId = null;
 
-        // NEW RANKING SYSTEM (0 to 4000 IQ)
+        // Level Engine (Max 4000 IQ)
         function getLevelName(iq) {
             if(iq < 400) return "Tenderfoot (Beginner)";
             if(iq < 1000) return "Trail Seeker";
@@ -422,7 +429,11 @@
                         document.getElementById('nav-profile-img').src = finalAvatarUrl;
                         
                         updateIQDisplay();
-                        renderModules();
+                        
+                        // Delay render slightly to ensure external JS files are loaded
+                        setTimeout(() => {
+                            renderModules();
+                        }, 200);
                     }
                 });
             } else {
@@ -437,16 +448,14 @@
             const container = document.getElementById('modules-container');
             container.innerHTML = '';
 
-            // Guard against undefined megaCurriculum (if js file failed to load)
-            if (typeof megaCurriculum === 'undefined') {
-                container.innerHTML = '<p class="text-red-500 font-bold text-center">Error: Curriculum Data not loaded. Please ensure curriculum-data.js exists.</p>';
+            if (typeof megaCurriculum === 'undefined' || megaCurriculum.length === 0) {
+                container.innerHTML = '<p class="text-red-500 font-bold text-center">Error: Curriculum Data not loaded. Please ensure curriculum files are correct.</p>';
                 return;
             }
 
             megaCurriculum.forEach((module, mIndex) => {
                 let lessonsHTML = '';
                 
-                // Lock Logic: Module N unlocks only if all lessons in Module N-1 are completed.
                 let isModuleLocked = false;
                 if (mIndex > 0) {
                     const prevModule = megaCurriculum[mIndex - 1];
@@ -653,7 +662,7 @@
                 clearInterval(quizTimerInterval);
                 document.getElementById('btn-submit-quiz').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> প্রসেসিং...';
                 
-                let pointsToEarn = 100; // Updated points mapping
+                let pointsToEarn = 100;
                 for(let m of megaCurriculum) {
                     let l = m.lessons.find(x => x.id === activeLessonId);
                     if(l) { pointsToEarn = l.points; break; }
