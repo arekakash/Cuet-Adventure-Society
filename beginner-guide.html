@@ -23,9 +23,16 @@
                         'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
                         'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
                         'glow-blue': '0 0 15px rgba(59, 130, 246, 0.5)',
+                        'glow-red': '0 0 15px rgba(239, 68, 68, 0.5)',
                     }
                 }
-            }
+            },
+            // 🟢 FIXED: Missing plugin for light-mode variant 🟢
+            plugins: [
+                tailwind.plugin(function({ addVariant }) {
+                    addVariant('light-mode', '.light-mode &');
+                })
+            ]
         }
     </script>
     
@@ -38,23 +45,25 @@
         ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
 
-        .glass-panel { background: rgba(10, 28, 19, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); transform: translateZ(0); }
-        .glass-dark { background: rgba(5, 11, 8, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transform: translateZ(0); }
+        /* 🟢 FIXED: Reduced heavy blur and removed hardware acceleration bugs that cause flickering 🟢 */
+        .glass-panel { background: rgba(10, 28, 19, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass-dark { background: rgba(5, 11, 8, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         
-        .light-mode .glass-panel { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important; }
-        .light-mode .glass-dark { background: rgba(248, 250, 252, 0.98) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important; }
+        .light-mode .glass-panel { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid rgba(0, 0, 0, 0.1) !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important; }
+        .light-mode .glass-dark { background: rgba(248, 250, 252, 0.98) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important; }
         .light-mode .lm-text-dark { color: #0f172a !important; text-shadow: none !important; }
         .light-mode .lm-text-muted { color: #475569 !important; }
         
         .light-mode #sidebar, .light-mode #profile-dropdown { background-color: #ffffff !important; border-color: rgba(0, 0, 0, 0.1) !important; }
-        .light-mode #sidebar .border-white\/5, .light-mode #profile-dropdown .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
+        .light-mode #sidebar .border-white\/5, .light-mode #profile-dropdown .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
         .light-mode #sidebar .bg-white\/5 { background-color: #f1f5f9 !important; }
         .light-mode #sidebar .text-white, .light-mode #profile-dropdown .text-white { color: #0f172a !important; }
         .light-mode #sidebar .text-gray-300, .light-mode #profile-dropdown .text-gray-300 { color: #334155 !important; }
         .light-mode #sidebar a:hover, .light-mode #sidebar button:hover, .light-mode #profile-dropdown a:hover, .light-mode #profile-dropdown button:hover { background-color: #f8fafc !important; }
         .light-mode #sidebar .glass-dark { background-color: #f8fafc !important; }
 
-        .modal-overlay { backdrop-filter: blur(8px); }
+        .modal-overlay { backdrop-filter: blur(4px); background: rgba(0,0,0,0.6); }
+        .light-mode .modal-overlay { background: rgba(255,255,255,0.7); }
         
         /* Rich Text Formatting for Lesson Content */
         .lesson-content h3 { font-size: 1.5rem; font-weight: 900; color: #e76f51; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(231, 111, 81, 0.3); padding-bottom: 0.5rem; }
@@ -68,31 +77,30 @@
         .lesson-content li { margin-bottom: 0.5rem; line-height: 1.6; }
         .lesson-content strong { color: #fff; }
         .light-mode .lesson-content strong { color: #0f172a; }
-        .lesson-content .qa-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-left: 4px solid #2d6a4f; border-radius: 0.5rem; margin: 1.5rem 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .light-mode .lesson-content .qa-box { background: #f8fafc; border-color: #10b981; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .lesson-content .qa-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-left: 4px solid #2d6a4f; border-radius: 0.5rem; margin: 1.5rem 0; }
+        .light-mode .lesson-content .qa-box { background: #f8fafc; border-color: #10b981; border-left: 4px solid #10b981; }
         .lesson-content .qa-q { font-weight: bold; color: #fff; margin-bottom: 0.5rem; font-size: 1.1rem; }
         .light-mode .lesson-content .qa-q { color: #0f172a; }
         
         .radio-custom:checked + div { border-color: #e76f51; background: rgba(231, 111, 81, 0.1); }
-        .light-mode .radio-custom:checked + div { background: rgba(231, 111, 81, 0.05); }
+        .light-mode .radio-custom:checked + div { background: rgba(231, 111, 81, 0.05); border-color: #d94626; }
         
         .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
         .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
         
-        /* 🟢 NEW: Module Locked Styling 🟢 */
         .module-locked { filter: grayscale(100%) opacity(60%); pointer-events: none; }
     </style>
 </head>
 
-<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
+<body class="bg-darkForest light-mode:bg-mistBg text-gray-300 light-mode:text-gray-800 font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
 
-    <!-- DYNAMIC BACKGROUND -->
-    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
-        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 contrast-125 transition-opacity duration-1000">
-        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+    <!-- 🟢 FIXED: Smooth & Lightweight Background (No Flickering) 🟢 -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-30 transition-opacity duration-500">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-500"></div>
 
-        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 scale-105 filter grayscale-[20%] transition-opacity duration-1000">
-        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/95 to-[#f1f5f9] opacity-0 backdrop-blur-[6px] transition-opacity duration-1000"></div>
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 transition-opacity duration-500">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/95 to-[#f1f5f9] opacity-0 transition-opacity duration-500"></div>
     </div>
 
     <!-- SIDEBAR -->
@@ -152,27 +160,29 @@
             <div class="flex items-center gap-4 relative">
                 <div class="text-right hidden sm:block pr-3 border-r border-white/10 light-mode:border-gray-300">
                     <p id="nav-user-name" class="text-xs font-bold text-gray-200 lm-text-dark">Loading...</p>
-                    <p class="text-[10px] text-emerald-400 uppercase tracking-widest font-bold">Survival IQ: <span id="nav-iq-score">0</span></p>
+                    <p class="text-[10px] text-emerald-400 light-mode:text-emerald-600 uppercase tracking-widest font-bold">Survival IQ: <span id="nav-iq-score">0</span></p>
                 </div>
                 
                 <div class="relative">
-                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-emerald-400 p-0.5 overflow-hidden bg-white/5 hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.3)] focus:outline-none">
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-emerald-400 light-mode:border-emerald-500 p-0.5 overflow-hidden bg-white/5 hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.3)] focus:outline-none">
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
 
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300 light-mode:text-gray-700">
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss light-mode:!bg-white border border-white/10 light-mode:border-gray-200 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300 light-mode:text-gray-700">
                         <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 sm:hidden">
                             <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
-                            <p class="text-[10px] text-emerald-400 uppercase tracking-widest mt-0.5 font-bold">Survival IQ: <span id="dropdown-iq-score">0</span></p>
+                            <p class="text-[10px] text-emerald-400 light-mode:text-emerald-600 uppercase tracking-widest mt-0.5 font-bold">Survival IQ: <span id="dropdown-iq-score">0</span></p>
                         </div>
-                        <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
+                        <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white light-mode:hover:!text-black transition-colors flex items-center gap-3">
                             <i class="fa-solid fa-user w-5 text-center text-trail"></i> <span>আমার প্রোফাইল</span>
                         </a>
-                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
+                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white light-mode:hover:!text-black transition-colors flex items-center gap-3">
                             <i class="fa-solid fa-gear w-5 text-center text-blue-400"></i> <span>সেটিংস</span>
                         </button>
+                        
                         <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
-                        <a href="#" id="dropdown-logout-btn" class="block px-4 py-3 text-sm text-red-400 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
+                        
+                        <a href="#" id="dropdown-logout-btn" class="block px-4 py-3 text-sm text-red-400 light-mode:text-red-500 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
                             <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> <span>লগ-আউট</span>
                         </a>
                     </div>
@@ -189,21 +199,21 @@
             <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
-            <div class="inline-block px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 light-mode:text-emerald-700 font-bold text-xs sm:text-sm mb-4 tracking-widest">
+            <div class="inline-block px-4 py-1.5 rounded-full border border-emerald-500/30 light-mode:border-emerald-500/50 bg-emerald-500/10 text-emerald-400 light-mode:text-emerald-700 font-bold text-xs sm:text-sm mb-4 tracking-widest">
                 <i class="fa-solid fa-graduation-cap mr-2"></i> অ্যাডভেঞ্চার মাস্টারক্লাস একাডেমি
             </div>
             <h1 class="text-3xl sm:text-5xl font-black text-white lm-text-dark mb-4 tracking-tight">সারভাইভাল গাইড ও নলেজ বেস</h1>
-            <p class="text-gray-400 lm-text-muted max-w-2xl mx-auto mb-10 text-sm sm:text-base leading-relaxed">ডে-ট্যুর থেকে শুরু করে আল্পাইন এক্সপিডিশন—একজন কমপ্লিট ট্রাভেলারের যা যা জানা প্রয়োজন। লেসনগুলো পড়ুন, কুইজ দিন এবং আপনার <strong class="text-emerald-400">Survival IQ</strong> বাড়িয়ে তুলুন!</p>
+            <p class="text-gray-400 lm-text-muted max-w-2xl mx-auto mb-10 text-sm sm:text-base leading-relaxed">ডে-ট্যুর থেকে শুরু করে আল্পাইন এক্সপিডিশন—একজন কমপ্লিট ট্রাভেলারের যা যা জানা প্রয়োজন। লেসনগুলো পড়ুন, কুইজ দিন এবং আপনার <strong class="text-emerald-400 light-mode:text-emerald-600">Survival IQ</strong> বাড়িয়ে তুলুন!</p>
             
             <!-- IQ Progress Engine -->
-            <div class="max-w-xl mx-auto bg-black/40 light-mode:bg-white/50 p-6 rounded-2xl border border-white/5 light-mode:border-gray-200 shadow-inner">
+            <div class="max-w-xl mx-auto bg-black/40 light-mode:bg-white/70 p-6 rounded-2xl border border-white/5 light-mode:border-gray-200 shadow-inner">
                 <div class="flex justify-between items-end mb-3">
                     <div class="text-left">
-                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Current Rank</p>
-                        <p id="iq-level-name" class="text-xl font-black text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]">Novice Explorer</p>
+                        <p class="text-[10px] text-gray-500 light-mode:text-gray-600 uppercase tracking-widest font-bold mb-1">Current Rank</p>
+                        <p id="iq-level-name" class="text-xl font-black text-emerald-400 light-mode:text-emerald-600 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)] light-mode:drop-shadow-none">Novice Explorer</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Total Points</p>
+                        <p class="text-[10px] text-gray-500 light-mode:text-gray-600 uppercase tracking-widest font-bold mb-1">Total Points</p>
                         <p class="text-2xl font-black text-white lm-text-dark"><span id="iq-score-display">0</span> <span class="text-sm text-gray-500">IQ</span></p>
                     </div>
                 </div>
@@ -212,7 +222,7 @@
                         <div class="absolute top-0 right-0 bottom-0 left-0 bg-white/20 animate-pulse"></div>
                     </div>
                 </div>
-                <p class="text-[10px] text-gray-400 text-right mt-2" id="iq-next-level-msg">Complete modules to reach Max Level (4000 IQ)!</p>
+                <p class="text-[10px] text-gray-400 light-mode:text-gray-500 text-right mt-2" id="iq-next-level-msg">Complete modules to reach Max Level (4000 IQ)!</p>
             </div>
         </div>
 
@@ -224,7 +234,7 @@
     </div>
 
     <!-- LESSON READING MODAL -->
-    <div id="lesson-modal" class="fixed inset-0 z-50 hidden bg-black/95 light-mode:bg-white/95 backdrop-blur-xl overflow-y-auto">
+    <div id="lesson-modal" class="fixed inset-0 z-50 hidden modal-overlay overflow-y-auto">
         <div class="min-h-screen w-full flex justify-center items-start py-10 px-4 sm:px-6 lg:px-8 relative">
             <button onclick="closeLessonModal()" class="fixed top-6 right-6 sm:top-10 sm:right-10 w-12 h-12 bg-white/10 light-mode:bg-gray-100 border border-white/20 light-mode:border-gray-300 rounded-full flex items-center justify-center text-white lm-text-dark hover:bg-red-500 hover:text-white hover:border-red-500 transition-all z-50">
                 <i class="fa-solid fa-xmark text-xl"></i>
@@ -232,8 +242,8 @@
             
             <div class="glass-panel rounded-3xl p-8 sm:p-14 mb-10 w-full max-w-4xl mt-12 sm:mt-0">
                 <div class="flex items-center gap-3 mb-6">
-                    <span id="modal-module-tag" class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-lg text-xs font-bold tracking-widest uppercase border border-blue-500/30">Module</span>
-                    <span id="modal-read-time" class="text-gray-400 text-xs font-bold"><i class="fa-solid fa-clock"></i> 10 Min Read</span>
+                    <span id="modal-module-tag" class="bg-blue-500/20 light-mode:bg-blue-100 text-blue-400 light-mode:text-blue-700 px-3 py-1 rounded-lg text-xs font-bold tracking-widest uppercase border border-blue-500/30 light-mode:border-blue-300">Module</span>
+                    <span id="modal-read-time" class="text-gray-400 light-mode:text-gray-600 text-xs font-bold"><i class="fa-solid fa-clock"></i> 10 Min Read</span>
                 </div>
                 <h2 id="modal-lesson-title" class="text-3xl sm:text-5xl font-black text-white lm-text-dark leading-tight mb-8">Title</h2>
                 
@@ -257,7 +267,7 @@
     <div id="quiz-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden modal-overlay">
         <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-[2rem] p-6 sm:p-10 max-w-3xl w-full mx-4 relative shadow-2xl overflow-y-auto max-h-[90vh]">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4 sticky top-0 bg-moss light-mode:bg-white z-10">
-                <h3 class="text-xl sm:text-2xl font-black text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-stopwatch"></i> নলেজ টেস্ট</h3>
+                <h3 class="text-xl sm:text-2xl font-black text-emerald-400 light-mode:text-emerald-600 flex items-center gap-2"><i class="fa-solid fa-stopwatch"></i> নলেজ টেস্ট</h3>
                 <div id="quiz-timer-display" class="text-2xl font-black text-red-500 animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">03:00</div>
                 <button onclick="closeQuizModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-2xl"></i></button>
             </div>
@@ -276,15 +286,15 @@
 
     <!-- QUIZ RESULT SUCCESS MODAL -->
     <div id="success-modal" class="fixed inset-0 z-[70] flex items-center justify-center hidden modal-overlay">
-        <div class="bg-moss light-mode:bg-white border border-emerald-500/50 rounded-[2rem] p-10 text-center max-w-sm w-full mx-4 relative shadow-[0_0_40px_rgba(52,211,153,0.3)] transform scale-95 transition-transform duration-300" id="success-content">
-            <div class="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-5xl mx-auto mb-6 shadow-inner border border-emerald-500/30 animate-bounce">
+        <div class="bg-moss light-mode:bg-white border border-emerald-500/50 light-mode:border-emerald-400 rounded-[2rem] p-10 text-center max-w-sm w-full mx-4 relative shadow-[0_0_40px_rgba(52,211,153,0.3)] transform scale-95 transition-transform duration-300" id="success-content">
+            <div class="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 light-mode:text-emerald-600 text-5xl mx-auto mb-6 shadow-inner border border-emerald-500/30 animate-bounce">
                 <i class="fa-solid fa-check"></i>
             </div>
             <h3 class="text-3xl font-black text-white lm-text-dark mb-2">অভিনন্দন!</h3>
             <p class="text-gray-400 lm-text-muted mb-6">আপনি সফলভাবে লেসনটি সম্পন্ন করেছেন।</p>
-            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-8">
-                <p class="text-emerald-400 font-black text-3xl">+<span id="earned-points">100</span></p>
-                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Survival IQ Added</p>
+            <div class="bg-emerald-500/10 light-mode:bg-emerald-50 border border-emerald-500/30 light-mode:border-emerald-200 rounded-xl p-4 mb-8">
+                <p class="text-emerald-400 light-mode:text-emerald-600 font-black text-3xl">+<span id="earned-points">100</span></p>
+                <p class="text-[10px] text-gray-500 light-mode:text-gray-600 uppercase tracking-widest font-bold">Survival IQ Added</p>
             </div>
             <button onclick="closeSuccessModal()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(52,211,153,0.4)]">
                 কন্টিনিউ করুন
@@ -295,7 +305,7 @@
     <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
         <div class="absolute inset-0" onclick="closeSettingsModal()"></div>
-        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+        <div class="bg-moss light-mode:!bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
                 <h3 class="text-xl font-black text-white lm-text-dark flex items-center gap-2"><i class="fa-solid fa-sliders text-campfire"></i> সেটিংস</h3>
                 <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -330,9 +340,12 @@
         const megaCurriculum = [];
     </script>
     
-    <!-- Load files dynamically -->
+    <!-- 🟢 FIXED: ALL 5 FILES ARE NOW LOADED DYNAMICALLY 🟢 -->
     <script src="curriculum/part-1.js"></script>
     <script src="curriculum/part-2.js"></script>
+    <script src="curriculum/part-3.js"></script>
+    <script src="curriculum/part-4.js"></script>
+    <script src="curriculum/part-5.js"></script>
 
     <script>
         // ==========================================
@@ -340,24 +353,49 @@
         // ==========================================
         AOS.init({ once: true, offset: 50 });
 
-        // Theme Engine
+        // 🟢 FIXED: Theme Engine with proper Toggle Logic 🟢
         const htmlRoot = document.documentElement;
         const bodyContent = document.getElementById('body-content');
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        let isLight = localStorage.getItem('theme') === 'light';
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        let currentTheme = localStorage.getItem('theme') || 'dark';
 
-        function applyTheme() {
-            if (isLight) {
-                htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode');
-                document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
-                document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-10');
-            } else {
-                htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode');
-                document.getElementById('bg-light-img').classList.replace('opacity-10', 'opacity-0');
-                document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20');
-            }
+        function enableLightMode() {
+            htmlRoot.classList.add('light'); 
+            bodyContent.classList.add('light-mode'); 
+            document.getElementById('bg-dark-img').classList.replace('opacity-30', 'opacity-0');
+            document.getElementById('bg-dark-overlay').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-30');
+            document.getElementById('bg-light-overlay').classList.replace('opacity-0', 'opacity-100');
+            if(themeToggle) themeToggle.checked = true;
         }
-        applyTheme();
+
+        function enableDarkMode() {
+            htmlRoot.classList.remove('light');
+            bodyContent.classList.remove('light-mode');
+            document.getElementById('bg-light-img').classList.replace('opacity-30', 'opacity-0');
+            document.getElementById('bg-light-overlay').classList.replace('opacity-100', 'opacity-0');
+            document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-30');
+            document.getElementById('bg-dark-overlay').classList.replace('opacity-0', 'opacity-100');
+            if(themeToggle) themeToggle.checked = false;
+        }
+
+        if (currentTheme === 'light') {
+            enableLightMode();
+        } else {
+            enableDarkMode();
+        }
+
+        if(themeToggle) {
+            themeToggle.addEventListener('change', function() {
+                const newTheme = this.checked ? 'light' : 'dark';
+                if (this.checked) enableLightMode(); else enableDarkMode();
+                localStorage.setItem('theme', newTheme);
+                if (currentUser && currentUser.uid) {
+                    db.collection("users").doc(currentUser.uid).update({ theme: newTheme }).catch(console.error);
+                }
+            });
+        }
 
         // Firebase Init
         const firebaseConfig = {
@@ -433,7 +471,7 @@
                         // Delay render slightly to ensure external JS files are loaded
                         setTimeout(() => {
                             renderModules();
-                        }, 200);
+                        }, 300);
                     }
                 });
             } else {
@@ -489,7 +527,7 @@
                             <h4 class="text-lg font-black text-white light-mode:text-slate-900 mb-2 leading-tight group-hover:text-blue-400 transition-colors">${lesson.title}</h4>
                             <div class="flex justify-between items-center mt-4 pt-4 border-t border-white/5 light-mode:border-gray-200">
                                 <span class="text-xs text-gray-400 light-mode:text-slate-500 font-bold"><i class="fa-solid fa-clock mr-1"></i> ${lesson.readTime}</span>
-                                <span class="text-xs text-emerald-400 font-black tracking-widest">+${lesson.points} IQ</span>
+                                <span class="text-xs text-emerald-400 light-mode:text-emerald-600 font-black tracking-widest">+${lesson.points} IQ</span>
                             </div>
                         </div>
                     `;
