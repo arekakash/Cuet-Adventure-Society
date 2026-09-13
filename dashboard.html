@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', 
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -108,7 +108,7 @@
     </style>
 </head>
 
-<body class="bg-darkForest text-gray-300 dark:bg-darkForest dark:text-gray-300 font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen selection:bg-campfire selection:text-white overflow-x-hidden transition-colors duration-500" id="body-content">
 
     <!-- DYNAMIC BACKGROUND SYSTEM -->
     <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
@@ -151,13 +151,15 @@
                 <span class="font-bold text-sm" data-i18n="menu_leaderboard">লিডারবোর্ড</span>
             </a>
             
+            <!-- 🟢 BEGINNER'S GUIDE LINK ENABLED -->
+            <a href="beginner-guide.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all group flex items-center gap-4 border border-white/5 light-mode:border-gray-200">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-black transition-colors shadow-[0_0_15px_rgba(52,211,153,0.3)]"><i class="fa-solid fa-map"></i></div>
+                <span class="font-bold text-sm" data-i18n="menu_guide">বিগিনার্স গাইড</span>
+            </a>
+            
             <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-store"></i></div>
                 <span class="font-bold text-sm" data-i18n="menu_store">অ্যাডভেঞ্চার স্টোর</span>
-            </a>
-            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all group flex items-center gap-4">
-                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-map"></i></div>
-                <span class="font-bold text-sm" data-i18n="menu_guide">বিগিনার গাইড</span>
             </a>
             <a href="#" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all group flex items-center gap-4">
                 <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users-viewfinder"></i></div>
@@ -204,7 +206,7 @@
                     <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-campfire p-0.5 overflow-hidden bg-white/5 focus:outline-none hover:border-white transition-colors shadow-glow-sm hover:scale-105">
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=e76f51&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
-                    <!-- DROPDOWN WITH FIXED LIGHT MODE BACKGROUND -->
+                    <!-- DROPDOWN -->
                     <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-moss light-mode:!bg-white border border-white/10 light-mode:border-gray-200 rounded-xl shadow-2xl py-2 transform transition-all z-50 text-gray-300 lm-text-dark">
                         <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 sm:hidden">
                             <p id="dropdown-user-name" class="text-sm font-bold text-white lm-text-dark truncate">Loading...</p>
@@ -315,10 +317,11 @@
                     <p class="text-[10px] font-bold text-gray-500 lm-text-muted uppercase tracking-widest mt-1" data-i18n="dash_stat3">Distance</p>
                 </div>
 
-                <div class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(52,211,153,0.2)] transition-all duration-500" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-shield-halved"></i></div>
-                    <p class="text-xl sm:text-2xl font-black text-emerald-400 light-mode:!text-emerald-700 mt-1 lm-text-dark">100%</p>
-                    <p class="text-[10px] font-bold text-gray-500 lm-text-muted uppercase tracking-widest mt-1" data-i18n="dash_stat4">Safety Index</p>
+                <!-- 🟢 NEW: SURVIVAL IQ CARD 🟢 -->
+                <div onclick="window.location.href='beginner-guide.html'" class="glass-panel p-5 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center group hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(52,211,153,0.2)] transition-all duration-500 cursor-pointer border border-emerald-500/30" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:shadow-[0_0_15px_rgba(52,211,153,0.5)] group-hover:scale-110 transition-all duration-500"><i class="fa-solid fa-brain"></i></div>
+                    <p class="text-3xl font-black text-emerald-400 light-mode:!text-emerald-700 mt-1 lm-text-dark drop-shadow-md" id="stat-iq">0</p>
+                    <p class="text-[10px] font-bold text-gray-500 lm-text-muted uppercase tracking-widest mt-1" data-i18n="dash_stat4">Survival IQ</p>
                 </div>
             </div>
 
@@ -411,8 +414,8 @@
             "menu_past": { bn: "পূর্ববর্তী ইভেন্ট", en: "Past Events" },
             "menu_stories": { bn: "অ্যাডভেঞ্চারের গল্প", en: "Adventure Stories" },
             "menu_leaderboard": { bn: "লিডারবোর্ড", en: "Leaderboard" },
+            "menu_guide": { bn: "বিগিনার্স গাইড", en: "Beginner's Guide" },
             "menu_store": { bn: "অ্যাডভেঞ্চার স্টোর", en: "Adventure Store" },
-            "menu_guide": { bn: "বিগিনার গাইড", en: "Beginner's Guide" },
             "menu_crew": { bn: "নেপথ্যে যারা", en: "Behind the Scenes" },
             "modal_settings": { bn: "সেটিংস", en: "Settings" },
             "modal_theme": { bn: "থিম (Theme)", en: "Theme" },
@@ -434,7 +437,7 @@
             "dash_stat1": { bn: "Total Treks", en: "Total Treks" },
             "dash_stat2": { bn: "Nights Camped", en: "Nights Camped" },
             "dash_stat3": { bn: "Distance", en: "Distance" },
-            "dash_stat4": { bn: "Safety Index", en: "Safety Index" },
+            "dash_stat4": { bn: "Survival IQ", en: "Survival IQ" },
             "dash_explore": { bn: "এক্সপ্লোর আপকামিং ইভেন্ট", en: "Explore Upcoming Events" },
             "dash_blog_title": { bn: "আপনার অ্যাডভেঞ্চার শেয়ার করুন!", en: "Share Your Adventure!" },
             "dash_blog_desc": { bn: "ক্যাম্পাস বা ট্যুরের কোনো দারুণ অভিজ্ঞতা আছে? লিখে ফেলুন আমাদের কমিউনিটি ব্লগে।", en: "Have a great campus or tour experience? Write it on our community blog." },
@@ -552,6 +555,7 @@
                         // Gamification Stats
                         safeSetText('stat-treks', userData.totalTreks || 0);
                         safeSetText('stat-distance', userData.totalDistance || 0);
+                        safeSetText('stat-iq', userData.survivalIQ || 0); 
 
                         // Admin Check
                         if(userData.role === 'admin') {
