@@ -57,7 +57,7 @@
         .light-mode #sidebar .bg-white\/5 { background-color: #f1f5f9 !important; }
         .light-mode #sidebar .text-white, .light-mode #profile-dropdown .text-white { color: #0f172a !important; }
         .light-mode #sidebar .text-gray-300, .light-mode #profile-dropdown .text-gray-300 { color: #334155 !important; }
-        .light-mode #sidebar a:hover, .light-mode #sidebar button:hover { background-color: #f8fafc !important; }
+        .light-mode #sidebar a:hover, .light-mode #sidebar button:hover, .light-mode #profile-dropdown a:hover, .light-mode #profile-dropdown button:hover { background-color: #f8fafc !important; }
         .light-mode #sidebar .glass-dark { background-color: #f8fafc !important; }
 
         .modal-overlay { backdrop-filter: blur(8px); }
@@ -126,7 +126,7 @@
             <!-- CURRENT PAGE -->
             <a href="beginner-guide.html" class="block py-3 px-4 rounded-xl bg-white/5 light-mode:!bg-gray-100 text-white lm-text-dark transition-all flex items-center gap-4 border border-white/10 light-mode:border-gray-300">
                 <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.3)]"><i class="fa-solid fa-map"></i></div>
-                <span class="font-bold text-sm">অ্যাডভেঞ্চার গাইড</span>
+                <span class="font-bold text-sm">বিগিনার্স গাইড</span>
             </a>
             <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
             <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
@@ -151,16 +151,45 @@
                     <span class="font-black text-lg tracking-wider hidden sm:block text-white lm-text-dark">CUET AS</span>
                 </a>
             </div>
+            
             <div class="flex items-center gap-4 relative">
                 <div class="text-right hidden sm:block pr-3 border-r border-white/10 light-mode:border-gray-300">
                     <p id="nav-user-name" class="text-xs font-bold text-gray-200 lm-text-dark">Loading...</p>
                     <p class="text-[10px] text-emerald-400 uppercase tracking-widest font-bold">Survival IQ: <span id="nav-iq-score">0</span></p>
                 </div>
+                
+                <!-- 🟢 UPDATED: DROPDOWN MENU IMPLEMENTATION 🟢 -->
                 <div class="relative">
-                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-emerald-400 p-0.5 overflow-hidden bg-white/5 hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-emerald-400 p-0.5 overflow-hidden bg-white/5 hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.3)] focus:outline-none">
                         <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
                     </button>
+
+                    <!-- The Dropdown -->
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-2xl shadow-2xl py-2 transform transition-all duration-200 z-50 origin-top-right text-gray-300 light-mode:text-gray-700">
+                        
+                        <!-- Mobile User Info Header -->
+                        <div class="px-4 py-3 border-b border-white/10 light-mode:border-gray-200 sm:hidden">
+                            <p id="dropdown-user-name" class="text-sm font-bold text-white light-mode:text-black truncate">Loading...</p>
+                            <p class="text-[10px] text-emerald-400 uppercase tracking-widest mt-0.5 font-bold">Survival IQ: <span id="dropdown-iq-score">0</span></p>
+                        </div>
+                        
+                        <!-- Dropdown Links -->
+                        <a href="dashboard.html" class="block px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
+                            <i class="fa-solid fa-user w-5 text-center text-trail"></i> <span>আমার প্রোফাইল</span>
+                        </a>
+                        <button onclick="openSettingsModal()" class="w-full text-left px-4 py-3 text-sm hover:bg-white/5 light-mode:hover:bg-gray-100 hover:text-white light-mode:hover:text-black transition-colors flex items-center gap-3">
+                            <i class="fa-solid fa-gear w-5 text-center text-blue-400"></i> <span>সেটিংস</span>
+                        </button>
+                        
+                        <div class="border-t border-white/10 light-mode:border-gray-200 my-1"></div>
+                        
+                        <a href="#" id="dropdown-logout-btn" class="block px-4 py-3 text-sm text-red-400 font-bold hover:bg-red-500/10 transition-colors flex items-center gap-3">
+                            <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> <span>লগ-আউট</span>
+                        </a>
+                    </div>
                 </div>
+                <!-- End of Dropdown Implementation -->
+
             </div>
         </div>
     </nav>
@@ -307,7 +336,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
-    <!-- 🟢 MEGA CURRICULUM DATA (MASSIVELY EXPANDED) 🟢 -->
+    <!-- 🟢 MEGA CURRICULUM DATA (INJECTED VIA JS) 🟢 -->
     <script>
         const megaCurriculum = [
             // ================= MODULE 1 =================
@@ -377,7 +406,7 @@
                             <h3>২. ফায়ার উড ও ক্যাম্প ফায়ার ইথিকস</h3>
                             <p>শীতকালে ক্যাম্প ফায়ার আবশ্যক। তবে এর কিছু নিয়ম আছে:</p>
                             <ul>
-                                <li>কখনোই কোনো জীবিত গাছ কাটবেন না বা ডাল ভাঙবেন না। শুধুমাত্র মাটিতে পড়ে থাকা মরা ডাল (Dead woods) সংগ্রহ করবেন।</li>
+                                <li>কখনোই কোনো জীবিত গাছ কাটবেন বা ডাল ভাঙবেন না। শুধুমাত্র মাটিতে পড়ে থাকা মরা ডাল (Dead woods) সংগ্রহ করবেন।</li>
                                 <li>ক্যাম্পিং শেষে আগুন ভালোভাবে নিভিয়ে (পানি বা বালি দিয়ে) তারপরই স্থান ত্যাগ করবেন। একটু স্ফুলিঙ্গ থেকে পুরো পাহাড়ে আগুন লেগে যেতে পারে।</li>
                             </ul>
                         `,
@@ -666,6 +695,7 @@
         function updateIQDisplay() {
             const iq = userData.survivalIQ || 0;
             document.getElementById('nav-iq-score').innerText = iq;
+            document.getElementById('dropdown-iq-score').innerText = iq;
             
             const displayScore = document.getElementById('iq-score-display');
             if(displayScore) {
@@ -704,6 +734,7 @@
                         userData.completedLessons = dbData.completedLessons || [];
                         
                         document.getElementById('nav-user-name').innerText = dbData.fullName || "Explorer";
+                        document.getElementById('dropdown-user-name').innerText = dbData.fullName || "Explorer";
                         const finalAvatarUrl = dbData.photoURL ? dbData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(dbData.fullName || "User")}&background=10b981&color=fff`;
                         document.getElementById('nav-profile-img').src = finalAvatarUrl;
                         
@@ -769,7 +800,7 @@
         }
 
         // ==========================================
-        // LESSON MODAL LOGIC
+        // 🟢 FIXED: LESSON MODAL LOGIC 🟢
         // ==========================================
         const lessonModal = document.getElementById('lesson-modal');
         
@@ -928,13 +959,25 @@
             setTimeout(() => { successModal.classList.add('hidden'); }, 300);
         }
 
-        // Sidebar Actions
+        // Sidebar & Dropdown Actions
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        if(profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('hidden');
+            });
+        }
+        window.addEventListener('click', () => {
+            if (profileDropdown && !profileDropdown.classList.contains('hidden')) profileDropdown.classList.add('hidden');
+        });
+
         document.getElementById('sidebar-open-btn').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('-translate-x-full'); document.getElementById('sidebar-overlay').classList.remove('hidden'); });
         const closeSidebar = () => { document.getElementById('sidebar').classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); };
         document.getElementById('sidebar-close-btn').addEventListener('click', closeSidebar);
         document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
 
-        document.getElementById('logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.reload(); }); });
+        document.getElementById('dropdown-logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.reload(); }); });
         
         // Settings Modal
         const settingsModal = document.getElementById('settings-modal');
