@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner's Guide & Survival IQ - CUET AS</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkForest: '#050b08',
+                        moss: '#0a1c13',
+                        trail: '#2d6a4f',
+                        campfire: '#e76f51',
+                        mistBg: '#f1f5f9', 
+                        mistPanel: '#ffffff',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(231, 111, 81, 0.4)',
+                        'glow-trail': '0 0 15px rgba(45, 106, 79, 0.5)',
+                        'glow-blue': '0 0 15px rgba(59, 130, 246, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-bg, #050b08); }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e76f51; }
+
+        .glass-panel {
+            background: rgba(10, 28, 19, 0.7); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05); transform: translateZ(0);
+        }
+        .glass-dark {
+            background: rgba(5, 11, 8, 0.85); backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); transform: translateZ(0);
+        }
+        
+        .light-mode .glass-panel { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important; }
+        .light-mode .glass-dark { background: rgba(248, 250, 252, 0.98) !important; border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important; }
+        .light-mode .lm-text-dark { color: #0f172a !important; text-shadow: none !important; }
+        .light-mode .lm-text-muted { color: #475569 !important; }
+        
+        .light-mode #sidebar, .light-mode #profile-dropdown { background-color: #ffffff !important; border-color: rgba(0, 0, 0, 0.1) !important; }
+        .light-mode #sidebar .border-white\/5, .light-mode #profile-dropdown .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
+        .light-mode #sidebar .bg-white\/5 { background-color: #f1f5f9 !important; }
+        .light-mode #sidebar .text-white, .light-mode #profile-dropdown .text-white { color: #0f172a !important; }
+        .light-mode #sidebar .text-gray-300, .light-mode #profile-dropdown .text-gray-300 { color: #334155 !important; }
+        .light-mode #sidebar a:hover, .light-mode #sidebar button:hover { background-color: #f8fafc !important; }
+        .light-mode #sidebar .glass-dark { background-color: #f8fafc !important; }
+
+        .modal-overlay { backdrop-filter: blur(8px); }
+        
+        /* Rich Text Formatting for Lesson Content */
+        .lesson-content h3 { font-size: 1.5rem; font-weight: 900; color: #e76f51; margin-top: 2rem; margin-bottom: 1rem; }
+        .light-mode .lesson-content h3 { color: #d94626; }
+        .lesson-content h4 { font-size: 1.25rem; font-weight: bold; color: #60a5fa; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        .light-mode .lesson-content h4 { color: #2563eb; }
+        .lesson-content p { margin-bottom: 1rem; line-height: 1.8; color: #d1d5db; }
+        .light-mode .lesson-content p { color: #334155; }
+        .lesson-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: #d1d5db; }
+        .light-mode .lesson-content ul { color: #334155; }
+        .lesson-content li { margin-bottom: 0.5rem; }
+        .lesson-content strong { color: #fff; }
+        .light-mode .lesson-content strong { color: #0f172a; }
+        .lesson-content .qa-box { background: rgba(255,255,255,0.05); padding: 1.5rem; border-left: 4px solid #2d6a4f; border-radius: 0.5rem; margin: 1.5rem 0; }
+        .light-mode .lesson-content .qa-box { background: #f8fafc; border-color: #10b981; }
+        .lesson-content .qa-q { font-weight: bold; color: #fff; margin-bottom: 0.5rem; }
+        .light-mode .lesson-content .qa-q { color: #0f172a; }
+        
+        .radio-custom:checked + div { border-color: #e76f51; background: rgba(231, 111, 81, 0.1); }
+        .light-mode .radio-custom:checked + div { background: rgba(231, 111, 81, 0.05); }
+        
+        .toggle-checkbox:checked { right: 0; border-color: #e76f51; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #e76f51; }
+    </style>
+</head>
+
+<body class="bg-darkForest text-gray-300 dark:bg-darkForest font-sans antialiased relative min-h-screen transition-colors duration-500" id="body-content">
+
+    <!-- DYNAMIC BACKGROUND -->
+    <div class="fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000">
+        <img id="bg-dark-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-20 filter brightness-50 contrast-125 transition-opacity duration-1000">
+        <div id="bg-dark-overlay" class="absolute inset-0 bg-gradient-to-b from-darkForest via-darkForest/90 to-moss/95 transition-opacity duration-1000"></div>
+
+        <img id="bg-light-img" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=1920" class="absolute w-full h-full object-cover opacity-0 scale-105 filter grayscale-[20%] transition-opacity duration-1000">
+        <div id="bg-light-overlay" class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/95 to-[#f1f5f9] opacity-0 backdrop-blur-[6px] transition-opacity duration-1000"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full transition-transform duration-500 ease-in-out z-50 w-72 sm:w-80 bg-moss light-mode:!bg-white border-r border-white/5 light-mode:border-gray-200 shadow-2xl flex flex-col h-full overflow-y-auto">
+        <div class="p-6 flex justify-between items-center border-b border-white/5 light-mode:border-gray-200">
+            <span class="font-black text-xl tracking-widest text-white lm-text-dark"><span class="text-campfire">C</span>UET <span class="text-campfire">A</span>S</span>
+            <button id="sidebar-close-btn" class="text-gray-400 hover:text-white light-mode:hover:!text-black text-2xl transition-colors"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="px-6 py-8 flex-grow space-y-2 text-gray-300 light-mode:text-gray-700">
+            <p class="text-[10px] font-black tracking-widest text-gray-500 lm-text-muted uppercase mb-4">আমাদের কার্যক্রম</p>
+            <a href="dashboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-gray-400"><i class="fa-solid fa-house"></i></div>
+                <span class="font-bold text-sm">ড্যাশবোর্ড</span>
+            </a>
+            <a href="events.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-campfire"><i class="fa-solid fa-calendar-day"></i></div>
+                <span class="font-bold text-sm">আপকামিং ইভেন্ট</span>
+            </a>
+            <a href="stories.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-blue-400"><i class="fa-solid fa-book-open-reader"></i></div>
+                <span class="font-bold text-sm">অ্যাডভেঞ্চারের গল্প</span>
+            </a>
+            <a href="leaderboard.html" class="block py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500"><i class="fa-solid fa-trophy"></i></div>
+                <span class="font-bold text-sm">লিডারবোর্ড</span>
+            </a>
+            <!-- CURRENT PAGE -->
+            <a href="beginner-guide.html" class="block py-3 px-4 rounded-xl bg-white/5 light-mode:!bg-gray-100 text-white lm-text-dark transition-all flex items-center gap-4 border border-white/10 light-mode:border-gray-300">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.3)]"><i class="fa-solid fa-map"></i></div>
+                <span class="font-bold text-sm">বিগিনার্স গাইড</span>
+            </a>
+            <div class="border-t border-white/5 light-mode:border-gray-200 my-4"></div>
+            <button onclick="openSettingsModal()" class="w-full text-left py-3 px-4 rounded-xl hover:bg-white/5 light-mode:hover:!bg-gray-100 hover:text-white lm-text-dark transition-all flex items-center gap-4">
+                <div class="w-8 h-8 rounded-lg bg-white/5 light-mode:!bg-gray-100 flex items-center justify-center text-gray-400"><i class="fa-solid fa-gear"></i></div>
+                <span class="font-bold text-sm">সেটিংস</span>
+            </button>
+        </div>
+        <div class="p-6 border-t border-white/5 light-mode:border-gray-200 glass-dark space-y-3">
+            <a href="#" id="logout-btn" class="w-full flex items-center justify-center gap-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-xl font-bold transition-all">
+                <i class="fa-solid fa-right-from-bracket"></i> <span>লগ-আউট</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-40 glass-dark text-white shadow-lg transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center relative z-10">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-open-btn" class="text-white lm-text-dark text-xl hover:text-campfire transition-colors focus:outline-none"><i class="fa-solid fa-bars-staggered"></i></button>
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <i class="fa-solid fa-compass text-campfire text-2xl"></i>
+                    <span class="font-black text-lg tracking-wider hidden sm:block text-white lm-text-dark">CUET AS</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4 relative">
+                <div class="text-right hidden sm:block pr-3 border-r border-white/10 light-mode:border-gray-300">
+                    <p id="nav-user-name" class="text-xs font-bold text-gray-200 lm-text-dark">Loading...</p>
+                    <p class="text-[10px] text-emerald-400 uppercase tracking-widest font-bold">Survival IQ: <span id="nav-iq-score">0</span></p>
+                </div>
+                <div class="relative">
+                    <button id="profile-btn" class="block w-10 h-10 rounded-full border-2 border-emerald-400 p-0.5 overflow-hidden bg-white/5 hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                        <img id="nav-profile-img" src="https://ui-avatars.com/api/?name=User&background=10b981&color=fff" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+        
+        <!-- Header & Progress Bar -->
+        <div class="glass-panel rounded-[2rem] p-8 md:p-12 mb-10 text-center relative overflow-hidden" data-aos="fade-up">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="inline-block px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 light-mode:text-emerald-700 font-bold text-xs sm:text-sm mb-4 tracking-widest">
+                <i class="fa-solid fa-brain mr-2"></i> অ্যাডভেঞ্চার লার্নিং পোর্টাল
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white lm-text-dark mb-4 tracking-tight">সারভাইভাল গাইড ও নলেজ বেস</h1>
+            <p class="text-gray-400 lm-text-muted max-w-2xl mx-auto mb-10 text-sm sm:text-base leading-relaxed">ট্রেকিং, ক্যাম্পিং, সারভাইভাল এবং রেস্পন্সিবল ট্যুরিজমের সম্পূর্ণ মাস্টারক্লাস। প্রতিটি লেসন পড়ুন, কুইজ দিন এবং আপনার <strong class="text-emerald-400">Survival IQ</strong> বাড়িয়ে তুলুন!</p>
+            
+            <!-- IQ Progress Engine -->
+            <div class="max-w-xl mx-auto bg-black/40 light-mode:bg-white/50 p-6 rounded-2xl border border-white/5 light-mode:border-gray-200 shadow-inner">
+                <div class="flex justify-between items-end mb-3">
+                    <div class="text-left">
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Current Level</p>
+                        <p id="iq-level-name" class="text-xl font-black text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]">Novice Explorer</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">Total Points</p>
+                        <p class="text-2xl font-black text-white lm-text-dark"><span id="iq-score-display">0</span> <span class="text-sm text-gray-500">IQ</span></p>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-800 light-mode:bg-gray-200 rounded-full h-3 mb-1 overflow-hidden relative">
+                    <div id="iq-progress-bar" class="bg-gradient-to-r from-emerald-500 to-blue-500 h-3 rounded-full transition-all duration-1000 w-0 relative">
+                        <div class="absolute top-0 right-0 bottom-0 left-0 bg-white/20 animate-pulse"></div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-400 text-right mt-2" id="iq-next-level-msg">Complete lessons to earn points!</p>
+            </div>
+        </div>
+
+        <!-- Dynamic Grid Container -->
+        <div id="modules-container" class="space-y-12">
+            <!-- Rendered by JS -->
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- LESSON READING MODAL (FULL SCREEN)         -->
+    <!-- ========================================== -->
+    <div id="lesson-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/95 light-mode:bg-white/95 backdrop-blur-xl overflow-y-auto">
+        <div class="w-full max-w-4xl min-h-screen py-10 px-4 sm:px-6 lg:px-8 relative">
+            <button onclick="closeLessonModal()" class="fixed top-6 right-6 sm:top-10 sm:right-10 w-12 h-12 bg-white/10 light-mode:bg-gray-100 border border-white/20 light-mode:border-gray-300 rounded-full flex items-center justify-center text-white lm-text-dark hover:bg-red-500 hover:text-white hover:border-red-500 transition-all z-50">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 mb-10 mt-12 sm:mt-0">
+                <div class="flex items-center gap-3 mb-6">
+                    <span id="modal-module-tag" class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-lg text-xs font-bold tracking-widest uppercase border border-blue-500/30">Module 1</span>
+                    <span id="modal-read-time" class="text-gray-400 text-xs font-bold"><i class="fa-solid fa-clock"></i> 5 Min Read</span>
+                </div>
+                <h2 id="modal-lesson-title" class="text-3xl sm:text-5xl font-black text-white lm-text-dark leading-tight mb-8">Title</h2>
+                
+                <!-- RICH HTML CONTENT INJECTED HERE -->
+                <div id="modal-lesson-content" class="lesson-content text-base sm:text-lg">
+                    <!-- Loading... -->
+                </div>
+
+                <div class="mt-16 pt-8 border-t border-white/10 light-mode:border-gray-300 text-center">
+                    <h3 class="text-2xl font-black text-white lm-text-dark mb-4">পড়া শেষ? এবার পরীক্ষা দেওয়ার পালা!</h3>
+                    <p class="text-gray-400 lm-text-muted mb-8">কুইজে সঠিক উত্তর দিয়ে আপনার প্রোফাইলে Survival IQ পয়েন্ট যুক্ত করুন।</p>
+                    
+                    <button id="btn-start-quiz" class="bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:-translate-y-1 hover:scale-105 flex items-center justify-center mx-auto gap-3">
+                        <i class="fa-solid fa-brain"></i> টেক কুইজ & আর্ন পয়েন্ট!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- QUIZ MODAL                                 -->
+    <!-- ========================================== -->
+    <div id="quiz-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden modal-overlay">
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-[2rem] p-6 sm:p-10 max-w-2xl w-full mx-4 relative shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-8 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl sm:text-2xl font-black text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-stopwatch"></i> নলেজ টেস্ট</h3>
+                <button onclick="closeQuizModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            
+            <div id="quiz-container" class="space-y-8">
+                <!-- Questions injected here via JS -->
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/10 light-mode:border-gray-200">
+                <button id="btn-submit-quiz" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-black text-lg py-4 rounded-xl transition-all shadow-glow-blue flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> সাবমিট উত্তর
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUIZ RESULT SUCCESS MODAL -->
+    <div id="success-modal" class="fixed inset-0 z-[70] flex items-center justify-center hidden modal-overlay">
+        <div class="bg-moss light-mode:bg-white border border-emerald-500/50 rounded-[2rem] p-10 text-center max-w-sm w-full mx-4 relative shadow-[0_0_40px_rgba(52,211,153,0.3)] transform scale-95 transition-transform duration-300" id="success-content">
+            <div class="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-5xl mx-auto mb-6 shadow-inner border border-emerald-500/30 animate-bounce">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-3xl font-black text-white lm-text-dark mb-2">অভিনন্দন!</h3>
+            <p class="text-gray-400 lm-text-muted mb-6">আপনি সফলভাবে লেসনটি সম্পন্ন করেছেন।</p>
+            <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-8">
+                <p class="text-emerald-400 font-black text-2xl">+<span id="earned-points">50</span></p>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Survival IQ Added</p>
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(52,211,153,0.4)]">
+                কন্টিনিউ করুন
+            </button>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="absolute inset-0" onclick="closeSettingsModal()"></div>
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-8 max-w-sm w-full mx-4 relative z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="settings-content">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 light-mode:border-gray-200 pb-4">
+                <h3 class="text-xl font-black text-white lm-text-dark flex items-center gap-2"><i class="fa-solid fa-sliders text-campfire"></i> সেটিংস</h3>
+                <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-red-500 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold text-white lm-text-dark text-sm">থিম (Theme)</p>
+                        <p class="text-xs text-gray-500">ডার্ক বা মিস্ট মোড</p>
+                    </div>
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
+                        <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-600 cursor-pointer"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <button onclick="closeSettingsModal()" class="w-full bg-white/5 light-mode:bg-gray-100 text-white lm-text-dark font-bold py-3 rounded-xl transition-all hover:bg-white/10">সম্পন্ন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+
+    <!-- 🟢 MEGA CURRICULUM DATA (INJECTED VIA JS) 🟢 -->
+    <script>
+        const megaCurriculum = [
+            {
+                moduleId: "m1",
+                moduleTitle: "মডিউল ১: ট্রেকিংয়ের হাতেখড়ি (Fundamentals)",
+                moduleDesc: "শারীরিক ফিটনেস, গিয়ার এবং পাহাড়ে হাঁটার বেসিক সায়েন্স।",
+                lessons: [
+                    {
+                        id: "l1_1",
+                        title: "ফিটনেস ও মানসিক প্রস্তুতি",
+                        readTime: "7 Min",
+                        points: 50,
+                        icon: "fa-dumbbell",
+                        content: `
+                            <p>ট্রেকিং কোনো সাধারণ পিকনিক নয়। এটি একটি এক্সট্রিম স্পোর্টস যেখানে আপনার শারীরিক সক্ষমতার চেয়ে মানসিক দৃঢ়তার বেশি পরীক্ষা নেওয়া হয়। আপনি যখন খাগড়াছড়ির তৈদুছড়া বা বান্দরবানের সাকা হাফং এর মতো রুক্ষ ট্রেইলে পা রাখবেন, তখন আপনার একমাত্র ভরসা হবে আপনার নিজের পা দুটি এবং লাং ক্যাপাসিটি।</p>
+                            
+                            <h3>১. কার্ডিও (Cardio) হচ্ছে আপনার আসল অস্ত্র</h3>
+                            <p>পাহাড়ে হাঁটার সময় সবচেয়ে বেশি যে সমস্যাটি হয়, তা হলো— দম ফুরিয়ে যাওয়া। সমতলে হাঁটা আর ৬০ ডিগ্রি খাড়া পাহাড়ে ওঠার মধ্যে আকাশ-পাতাল তফাৎ।</p>
+                            <ul>
+                                <li><strong>প্রস্তুতি:</strong> ট্রেকের অন্তত ১৫ দিন আগে থেকে প্রতিদিন ৩-৪ কি.মি. জগিং বা জোরে হাঁটার অভ্যাস করুন।</li>
+                                <li><strong>সিঁড়ি থেরাপি:</strong> যদি দৌড়ানোর জায়গা না থাকে, তবে লিফট ব্যবহার না করে ব্যাকপ্যাকে ৫-৭ কেজি ওজন নিয়ে প্রতিদিন ৫-৬ তলা সিঁড়ি দিয়ে ওঠানামা করুন। এটি আপনার কাফ মাসল (Calf muscle) এবং থাই (Thigh) কে পাহাড়ের জন্য প্রস্তুত করবে।</li>
+                            </ul>
+
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> পাহাড়ে হাঁপিয়ে উঠলে মেন্টাল স্ট্যামিনা কীভাবে ধরে রাখব?</div>
+                                <div>কখনোই পাহাড়ের চূড়ার দিকে তাকিয়ে ভাববেন না "আর কতদূর!"। এটি আপনাকে মানসিকভাবে দুর্বল করে দেবে। আপনার দৃষ্টি থাকবে শুধু সামনের ১০ কদমের ওপর। "শুধু এই ১০ কদম পার হবো"—এই মানসিকতা নিয়ে এগোলে আপনি এভারেস্টও জয় করতে পারবেন।</div>
+                            </div>
+
+                            <h3>২. হাঁটার বিজ্ঞান (Pacing and Breathing)</h3>
+                            <p>শুরুতেই খুব জোরে হাঁটা শুরু করবেন না। অনেকেই শুরুতে এক্সাইটেড হয়ে দৌড় দেয় এবং ১০ মিনিট পর হাঁপিয়ে বসে পড়ে। আপনার হাঁটার স্পিড এমন হতে হবে যেন আপনি হাঁটতে হাঁটতে পাশের জনের সাথে অনায়াসে কথা বলতে পারেন (Talk Test)।</p>
+                            <ul>
+                                <li><strong>Uphill (ওঠার সময়):</strong> শরীর হালকা সামনের দিকে ঝুঁকিয়ে ছোট ছোট কদমে উঠুন। পুরো পায়ের পাতা মাটিতে ফেলার চেষ্টা করুন।</li>
+                                <li><strong>Downhill (নামার সময়):</strong> নামার সময় হাঁটুর ওপর সবচেয়ে বেশি প্রেসার পড়ে। তাই হাঁটু হালকা বাঁকা (Slightly bent) রেখে নামবেন, সোজা বা লক করে নয়। ট্রেকিং পোল থাকলে নামার সময় সেটি অনেক সাপোর্ট দেয়।</li>
+                            </ul>
+                            
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> হাইড্রেশনের রুল কী?</div>
+                                <div>তৃষ্ণা পাওয়ার জন্য অপেক্ষা করবেন না। প্রতি ২০-৩০ মিনিট পরপর ২-৩ ঢোক (Sip) পানি খাবেন। একসাথে আধা লিটার পানি খেয়ে নিলে পেট ভারী হয়ে যাবে এবং হাঁটতে কষ্ট হবে। ঘামের সাথে প্রচুর সল্ট বের হয়ে যায়, তাই পানির বোতলে একটু টেস্টি স্যালাইন বা গ্লুকোজ মিশিয়ে নিতে পারেন।</div>
+                            </div>
+                        `,
+                        quiz: [
+                            { q: "ট্রেকিংয়ের প্রস্তুতি হিসেবে নিচের কোনটি সবচেয়ে বেশি কার্যকর?", options: ["লিফটে ওঠা", "ব্যাকপ্যাকে ওজন নিয়ে সিঁড়ি দিয়ে ওঠা", "জিমে গিয়ে ভারী ওজন তোলা", "সাঁতার কাটা"], ans: 1 },
+                            { q: "Talk Test বলতে কী বোঝায়?", options: ["হাঁটার সময় ফোনে কথা বলা", "হাঁটার স্পিড এমন রাখা যেন স্বাভাবিকভাবে কথা বলা যায়", "জোরে জোরে চিৎকার করা", "চুপচাপ হাঁটা"], ans: 1 },
+                            { q: "পাহাড়ে নামার সময় (Downhill) হাঁটু কেমন রাখা উচিত?", options: ["একদম সোজা ও লক করা", "হালকা বাঁকা (Slightly bent)", "বুকের সাথে লাগানো", "যেকোনোভাবে রাখলেই হবে"], ans: 1 }
+                        ]
+                    },
+                    {
+                        id: "l1_2",
+                        title: "পোশাক ও জুতোর গোল্ডেন রুলস",
+                        readTime: "6 Min",
+                        points: 50,
+                        icon: "fa-shoe-prints",
+                        content: `
+                            <p>ট্রেইলে আপনার সবচেয়ে বড় শত্রু হতে পারে আপনার ভুল পোশাক এবং ভুল জুতো। অনেকেই না বুঝে জিন্স প্যান্ট এবং দামি স্নিকার্স পরে ট্রেকিংয়ে চলে যায়, আর পুরো ট্রেইলে মারাত্মক কষ্ট ভোগ করে।</p>
+                            
+                            <h3>১. কটন বা সুতি কাপড় হচ্ছে "ডেথ ক্লথ" (Death Cloth)</h3>
+                            <p>সুতির কাপড় ঘাম বা পানি শুষে নেয় কিন্তু দ্রুত শুকাতে পারে না। ভেজা সুতির কাপড় পরে পাহাড়ে বাতাস লাগলে আপনার হাইপোথার্মিয়া (Hypothermia) বা কাঁপুনি দিয়ে জ্বর আসতে পারে।</p>
+                            <ul>
+                                <li><strong>কী পরবেন:</strong> সবসময় সিন্থেটিক, পলিয়েস্টার বা ড্রাই-ফিট (Dry-fit) টি-শার্ট এবং ট্রাউজার পরবেন। এগুলো ঘাম দ্রুত শুষে নিয়ে বাতাসে শুকিয়ে ফেলে।</li>
+                                <li><strong>বর্জন করুন:</strong> জিন্স প্যান্ট সম্পূর্ণ নিষিদ্ধ। এটি ওজনে ভারী, ভিজলে শুকাতে ১ দিন সময় লাগে এবং হাঁটু ভাঁজ করতে মারাত্মক কষ্ট হয়।</li>
+                            </ul>
+
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> স্নিকার্স নাকি ট্রেকিং শু?</div>
+                                <div>আপনার ৫ হাজার টাকা দামের নাইকি স্নিকার্স সমতলে হাঁটার জন্য চমৎকার, কিন্তু পাহাড়ে এটি একদম ইউজলেস। পাহাড়ের কাঁদা, পিচ্ছিল পাথর এবং এবড়োথেবড়ো রাস্তায় হাঁটার জন্য চাই রাবারের বড় বড় গ্রিপ (Lugs) যুক্ত ট্রেকিং শু বা ট্রেইল রানিং শু। বাংলাদেশের পাহাড়ে ট্রেকারদের কাছে রাবারের তৈরি প্লাস্টিক শু বা স্পাইক শু (যাকে অনেকেই 'জেলি জুতো' বলে) খুবই জনপ্রিয় এবং কার্যকরী।</div>
+                            </div>
+
+                            <h3>২. লেয়ারিং সিস্টেম (Layering System)</h3>
+                            <p>পাহাড়ে আবহাওয়ার কোনো ঠিক নেই। সকালে রোদ, দুপুরে বৃষ্টি, রাতে কনকনে শীত। তাই লেয়ারিং বা স্তরে স্তরে কাপড় পরা শিখতে হবে।</p>
+                            <ul>
+                                <li><strong>বেস লেয়ার (Base Layer):</strong> শরীরের সাথে লেগে থাকবে, ড্রাই-ফিট টি-শার্ট।</li>
+                                <li><strong>মিড লেয়ার (Mid Layer):</strong> শীতের জন্য ফ্লিচ জ্যাকেট বা পাতলা সোয়েটার।</li>
+                                <li><strong>আউটার লেয়ার (Outer Layer):</strong> বৃষ্টি বা তীব্র বাতাসের জন্য রেইন জ্যাকেট বা উইন্ডব্রেকার।</li>
+                            </ul>
+                        `,
+                        quiz: [
+                            { q: "ট্রেকিংয়ে কেন জিন্স প্যান্ট পরা নিষিদ্ধ?", options: ["দেখতে খারাপ লাগে", "ওজনে ভারী, ভিজলে শুকায় না এবং নড়াচড়া করতে কষ্ট হয়", "পাহাড়ে জিন্স এলাউড না", "জিন্স ছিঁড়ে যাওয়ার ভয় থাকে"], ans: 1 },
+                            { q: "ট্রেকিংয়ের জন্য বেস্ট ফেব্রিক বা কাপড়ের ম্যাটেরিয়াল কোনটি?", options: ["১০০% সুতি বা কটন", "লিনেন", "ড্রাই-ফিট বা পলিয়েস্টার", "সিল্ক"], ans: 2 },
+                            { q: "বৃষ্টি বা বাতাসের হাত থেকে বাঁচতে কোন লেয়ারের কাপড় পরতে হয়?", options: ["বেস লেয়ার", "মিড লেয়ার", "আউটার লেয়ার (রেইন জ্যাকেট)", "ইনার লেয়ার"], ans: 2 }
+                        ]
+                    }
+                ]
+            },
+            {
+                moduleId: "m2",
+                moduleTitle: "মডিউল ২: প্রো-লেভেল প্যাকিং হ্যাকস",
+                moduleDesc: "ব্যাকপ্যাক ডিস্ট্রিবিউশন এবং এসেনশিয়াল চেকলিস্ট মাস্টারক্লাস।",
+                lessons: [
+                    {
+                        id: "l2_1",
+                        title: "ব্যাকপ্যাক গোছানোর 'ABC' ফর্মুলা",
+                        readTime: "8 Min",
+                        points: 60,
+                        icon: "fa-backpack",
+                        content: `
+                            <p>আপনার ব্যাকপ্যাকটি আপনার ঘরের মতো। এটি যদি অগোছালো হয় এবং ওয়েট ডিস্ট্রিবিউশন (Weight Distribution) ঠিক না থাকে, তবে ৩ কেজির ব্যাগও আপনার কাছে ১০ কেজি মনে হবে এবং ব্যাকপেইনের কারণ হবে। ব্যাকপ্যাক প্যাক করার একটি ইউনিভার্সাল রুল আছে, যাকে বলা হয় ABC রুল।</p>
+
+                            <h3>A = Accessibility (সহজলভ্যতা)</h3>
+                            <p>যে জিনিসগুলো ট্রেইলে হাঁটার সময় বারবার লাগবে, সেগুলো ব্যাগের একদম ওপরে বা সাইড পকেটে রাখতে হবে।</p>
+                            <ul>
+                                <li>পানির বোতল, ট্রেইল মিক্স (বাদাম/চকলেট), হেডল্যাম্প, রেইনকোট এবং ফার্স্ট এইড কিট সবসময় ব্যাগের টপ-লিডে বা বাইরের পকেটে রাখবেন।</li>
+                                <li>রেইনকোট এমন জায়গায় রাখবেন যেন বৃষ্টি শুরু হওয়ার ৩০ সেকেন্ডের মধ্যে আপনি সেটি বের করতে পারেন।</li>
+                            </ul>
+
+                            <h3>B = Balance (ভারসাম্য)</h3>
+                            <p>ব্যাগের ওজন এমনভাবে ছড়াতে হবে যেন ব্যাগের ভর আপনার কাঁধের বদলে হিপ বা কোমরের ওপর পড়ে (যদি ব্যাগে হিপ-বেল্ট থাকে)।</p>
+                            <ul>
+                                <li><strong>সবচেয়ে ভারী জিনিস:</strong> (যেমন: পানি, তাঁবু বা স্টোভ) ব্যাগের ঠিক মাঝখানে এবং আপনার পিঠের একদম কাছাকাছি (Back-hugging) রাখবেন। এতে আপনার সেন্ট্রাল গ্রাভিটি ঠিক থাকবে।</li>
+                                <li><strong>মাঝারি ভারী জিনিস:</strong> (যেমন: কাপড়চোপড়) ব্যাগের ওপরের অংশে এবং ভারী জিনিসের চারপাশে ঠেসে রাখবেন।</li>
+                            </ul>
+
+                            <h3>C = Compression (সংকোচন)</h3>
+                            <p>ব্যাগ যত টাইট থাকবে, হাঁটার সময় তত কম নড়াচড়া করবে। ব্যাগের ভেতরের ফাঁকা জায়গাগুলো ছোট ছোট কাপড় বা মোজা দিয়ে ফিল-আপ করে দিন। প্যাক করা শেষ হলে ব্যাগের বাইরের কমপ্রেশন স্ট্র্যাপগুলো টেনে ব্যাগটিকে একদম নিরেট করে ফেলুন।</p>
+
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> স্লিপিং ব্যাগ কোথায় রাখতে হয়?</div>
+                                <div>স্লিপিং ব্যাগ সাধারণত ট্রেইলে হাঁটার সময় লাগে না, এটি শুধু রাতে ক্যাম্পে লাগে। এটি ওজনে হালকা কিন্তু আকারে বড়। তাই স্লিপিং ব্যাগ সবসময় ব্যাকপ্যাকের একদম নিচে (Bottom compartment) রাখতে হয়। এটি নিচে একটি কুশন বা শকার হিসেবেও কাজ করে।</div>
+                            </div>
+                            
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> বৃষ্টি থেকে ব্যাগ বাঁচাতে কী করব?</div>
+                                <div>ব্যাকপ্যাকের রেইন কভার কখনোই ১০০% ওয়াটারপ্রুফ হয় না। ভারী বৃষ্টিতে পানি পিঠের দিক দিয়ে বা চেইন দিয়ে ভেতরে ঢুকবেই। তাই ব্যাগের ভেতরে প্রথমে একটি বড় মোটা পলিথিন (Garbade bag) ঢুকিয়ে তার ভেতর সব জিনিসপত্র প্যাক করবেন। একে বলা হয় 'পলিথিন লাইনিং'। এছাড়া ইলেকট্রনিক্স জিনিস অবশ্যই জিপলক ব্যাগে রাখবেন।</div>
+                            </div>
+                        `,
+                        quiz: [
+                            { q: "ABC প্যাকিং ফর্মুলার 'B' দিয়ে কী বোঝায়?", options: ["Backpack", "Balance (ভারসাম্য)", "Bottom", "Basic"], ans: 1 },
+                            { q: "ব্যাকপ্যাকের সবচেয়ে ভারী জিনিসগুলো কোথায় রাখা উচিত?", options: ["ব্যাগের একদম নিচে", "ব্যাগের একদম ওপরে", "মাঝখানে এবং পিঠের একদম কাছাকাছি", "বাইরের পকেটে"], ans: 2 },
+                            { q: "ভারী বৃষ্টি থেকে ব্যাগের ভেতরের জিনিসপত্র ১০০% সুরক্ষিত রাখতে কোনটি করা উচিত?", options: ["শুধুমাত্র ব্যাগের রেইন কভার লাগানো", "ছাতা ব্যবহার করা", "ব্যাগের ভেতরে পলিথিন লাইনিং ব্যবহার করা", "ব্যাগ বাসায় রেখে যাওয়া"], ans: 2 }
+                        ]
+                    }
+                ]
+            },
+            {
+                moduleId: "m3",
+                moduleTitle: "মডিউল ৩: সারভাইভাল ও ফার্স্ট এইড",
+                moduleDesc: "পাহাড়ি বিপদ, ইনজুরি এবং সারভাইভাল টেকনিকস।",
+                lessons: [
+                    {
+                        id: "l3_1",
+                        title: "জোঁক, ক্র্যাম্পস এবং ফ্ল্যাশ ফ্লাড",
+                        readTime: "9 Min",
+                        points: 75,
+                        icon: "fa-kit-medical",
+                        content: `
+                            <p>পাহাড়ের সৌন্দর্য যেমন আছে, তেমনি আছে অদৃশ্য বিপদ। বিপদে প্যানিক না করে সঠিক জ্ঞান অ্যাপ্লাই করতে পারাই হলো সারভাইভাল।</p>
+
+                            <h3>১. জোঁকের আক্রমণ</h3>
+                            <p>বর্ষাকালে বান্দরবান বা খাগড়াছড়ির ট্রেইলে জোঁক একটি সাধারণ বিষয়। জোঁক কামড়ালে ব্যথা লাগে না, কারণ তারা একধরনের অ্যানেসথেসিয়া (অবশকারী কেমিক্যাল) রিলিজ করে রক্ত খায়।</p>
+                            <ul>
+                                <li><strong>যা করবেন না:</strong> জোঁক দেখলে ভয় পেয়ে জোরে টেনে ছিঁড়ে ফেলবেন না। এতে জোঁকের দাঁত চামড়ার ভেতর আটকে গিয়ে ইনফেকশন হতে পারে।</li>
+                                <li><strong>ছাড়ানোর উপায়:</strong> জোঁকের গায়ে একটু লবণ, তামাক (গুল) বা স্যানিটাইজার স্প্রে করলেই সে নিজে থেকে মুখ ছেড়ে দেবে।</li>
+                                <li><strong>প্রতিরোধ:</strong> হাঁটার আগে পায়ে এবং জুতোর মোজায় ওডোমোস ক্রিম বা সরিষার তেল ও ডিটারজেন্টের মিশ্রণ লাগিয়ে নিলে জোঁক কম ধরে।</li>
+                            </ul>
+
+                            <h3>২. মাসল ক্র্যাম্প (Muscle Cramp)</h3>
+                            <p>দীর্ঘক্ষণ হাঁটার পর শরীরে পানির অভাব বা ইলেকট্রোলাইট শূন্যতা দেখা দিলে কাফ মাসল বা থাইয়ে হঠাৎ তীব্র ব্যথা দিয়ে পেশি শক্ত হয়ে যায়। একে ক্র্যাম্প বলে।</p>
+                            <ul>
+                                <li><strong>করণীয়:</strong> সাথে সাথে হাঁটা থামিয়ে বসে পড়ুন। যেই মাসলে ক্র্যাম্প করেছে, তার ঠিক উল্টো দিকে মাসলটিকে আস্তে আস্তে স্ট্রেচ করুন। কখনোই জোর করে হাঁটতে যাবেন না।</li>
+                                <li><strong>ট্রিটমেন্ট:</strong> হালকা গরম বা বরফ ম্যাসেজ (যদি থাকে), এবং প্রচুর স্যালাইন বা ডাবের পানি খেতে হবে।</li>
+                            </ul>
+
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> ফ্ল্যাশ ফ্লাড (Flash Flood) বা পাহাড়ি ঢল কী?</div>
+                                <div>ঝিরিপথ বা নদীর পাশ দিয়ে হাঁটার সময় এটি সবচেয়ে ভয়ংকর বিপদ। অনেক সময় আপনি যেখানে আছেন সেখানে বৃষ্টি নেই, কিন্তু পাহাড়ের গভীরে বিশাল বৃষ্টি হওয়ার কারণে হুট করে ঝিরিতে কয়েক ফুট উঁচু পানির স্রোত ধেয়ে আসতে পারে।
+                                <br><br>
+                                <strong>পূর্বাভাস:</strong> হুট করে ঝিরির পানির রং ঘোলা হয়ে গেলে, পানির সাথে প্রচুর মরা পাতা ও ডালপালা ভেসে আসতে থাকলে এবং ওপর থেকে গোঁ গোঁ আওয়াজ আসলে সাথে সাথে পানি থেকে উঠে পাহাড়ে বা কোনো উঁচু জায়গায় আশ্রয় নিন। সেকেন্ডের ভগ্নাংশেও স্রোত সব ভাসিয়ে নিতে পারে।</div>
+                            </div>
+                        `,
+                        quiz: [
+                            { q: "শরীরে জোঁক ধরলে ছাড়ানোর সঠিক উপায় কী?", options: ["জোরে টেনে ছিঁড়ে ফেলা", "লবণ, গুল বা স্যানিটাইজার স্প্রে করা", "আগুন দিয়ে পোড়ানো", "পানি দিয়ে ধোয়া"], ans: 1 },
+                            { q: "মাসল ক্র্যাম্প (পেশিতে টান) হওয়ার মূল কারণ কী?", options: ["বেশি বিশ্রাম নেওয়া", "শরীরে পানি ও ইলেকট্রোলাইটের অভাব", "বেশি খাওয়া দাওয়া করা", "জুতো টাইট হওয়া"], ans: 1 },
+                            { q: "ঝিরির পানি হুট করে ঘোলা হয়ে গেলে এবং পাতা ভেসে আসলে কীসের সংকেত দেয়?", options: ["পুকুরে মাছ লাফাচ্ছে", "ঝিরিতে নতুন পানি আসছে, খুশি হওয়ার বিষয়", "ফ্ল্যাশ ফ্লাড বা পাহাড়ি ঢল আসার সংকেত", "স্থানীয়রা গোসল করছে"], ans: 2 }
+                        ]
+                    }
+                ]
+            },
+            {
+                moduleId: "m4",
+                moduleTitle: "মডিউল ৪: Leave No Trace (LNT) ও ইথিকস",
+                moduleDesc: "রেস্পন্সিবল ট্যুরিজম এবং লোকাল কালচার রেস্পেক্ট।",
+                lessons: [
+                    {
+                        id: "l4_1",
+                        title: "প্রকৃতির রক্ষক (Ethics of a Trekker)",
+                        readTime: "5 Min",
+                        points: 50,
+                        icon: "fa-leaf",
+                        content: `
+                            <p>আমরা পাহাড়ে যাই প্রকৃতির সৌন্দর্য উপভোগ করতে, সেটিকে ধ্বংস করতে নয়। একজন সত্যিকারের এক্সপ্লোরারের মূলনীতি হলো— "শুধুমাত্র পায়ের ছাপ রেখে যান, এবং শুধুমাত্র ছবি নিয়ে ফিরে আসুন।"</p>
+
+                            <h3>১. প্লাস্টিক ও আবর্জনা (Pack It In, Pack It Out)</h3>
+                            <p>পাহাড়ে বা ঝিরিতে আপনি যা কিছু নিয়ে যাবেন, তার খালি প্যাকেটগুলো অবশ্যই নিজের ব্যাগে করে সমতলে ফিরিয়ে আনবেন।</p>
+                            <ul>
+                                <li>চিপসের প্যাকেট, বিস্কুটের খোসা বা পানির বোতল কখনোই ট্রেইলে বা ঝিরিতে ফেলবেন না।</li>
+                                <li>অনেকেই মনে করেন চিপসের প্যাকেট পুড়িয়ে ফেলা বা মাটির নিচে পুঁতে ফেলা ভালো কাজ। এটি সম্পূর্ণ ভুল! প্লাস্টিক পোড়ালে বিষাক্ত গ্যাস বের হয় এবং পুঁতে রাখলে তা শত বছরেও পচে না। আপনার ময়লা আপনাকে ব্যাগেই ফিরিয়ে আনতে হবে।</li>
+                            </ul>
+
+                            <div class="qa-box">
+                                <div class="qa-q"><i class="fa-solid fa-circle-question text-campfire"></i> সাউন্ড পলিউশন কেন ক্ষতিকর?</div>
+                                <div>পাহাড়ে বা জঙ্গলে ব্লুটুথ স্পিকারে জোরে গান বাজানো সম্পূর্ণ অসভ্যতা। জঙ্গলের একটি নিজস্ব ইকোসিস্টেম আছে। আপনার বিকট সাউন্ডের কারণে বন্যপ্রাণীরা ভয় পায়, পাখিরা তাদের বাসা ছেড়ে চলে যায়। প্রকৃতির শব্দ উপভোগ করতে শিখুন। গান শোনার ইচ্ছা থাকলে হেডফোন ব্যবহার করুন।</div>
+                            </div>
+
+                            <h3>২. লোকাল কমিউনিটিকে সম্মান করা</h3>
+                            <p>পার্বত্য চট্টগ্রামের আদিবাসীদের পাড়াগুলো কোনো চিড়িয়াখানা নয়। তারা সেখানে বসবাস করে।</p>
+                            <ul>
+                                <li>পাড়ায় ঢুকে জোরে চিৎকার চেঁচামেচি করবেন না। তাদের প্রাইভেসিকে সম্মান করুন।</li>
+                                <li>আদিবাসী নারী বা শিশুদের ছবি তোলার আগে অবশ্যই তাদের অনুমতি (Permission) নিন। অনুমতি ছাড়া মুখের ওপর ক্যামেরা ধরা চরম অভদ্রতা।</li>
+                            </ul>
+                        `,
+                        quiz: [
+                            { q: "Leave No Trace (LNT) এর মূলনীতি অনুযায়ী ট্রেইলে খাওয়া চিপসের খালি প্যাকেট কী করা উচিত?", options: ["ঝিরিতে ভাসিয়ে দেওয়া", "আগুন দিয়ে পুড়িয়ে ফেলা", "নিজের ব্যাগে করে সমতলে ডাস্টবিনে ফিরিয়ে আনা", "মাটির নিচে পুঁতে ফেলা"], ans: 2 },
+                            { q: "জঙ্গলে ব্লুটুথ স্পিকারে জোরে গান বাজানো কেন নিষেধ?", options: ["স্পিকারের চার্জ শেষ হয়ে যাবে বলে", "বন্যপ্রাণী ভয় পায় এবং প্রকৃতির ইকোসিস্টেম নষ্ট হয়", "অন্যান্য ট্রাভেলারদের নাচতে ইচ্ছা করবে বলে", "গানের কপিরাইট ইস্যু হতে পারে"], ans: 1 },
+                            { q: "আদিবাসী পাড়ায় কোনো ব্যক্তির ছবি তোলার আগে করণীয় কী?", options: ["দূরে লুকিয়ে জুম করে ছবি তোলা", "অবশ্যই তাদের কাছে অনুমতি (Permission) নেওয়া", "টাকা দিয়ে ছবি তোলা", "কিছু না বলেই ছবি তুলে নেওয়া"], ans: 1 }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // ==========================================
+        // SYSTEM INITIALIZATION & UI LOGIC
+        // ==========================================
+        AOS.init({ once: true, offset: 50 });
+
+        // Theme Engine
+        const htmlRoot = document.documentElement;
+        const bodyContent = document.getElementById('body-content');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        let isLight = localStorage.getItem('theme') === 'light';
+
+        function applyTheme() {
+            if (isLight) {
+                htmlRoot.classList.add('light'); bodyContent.classList.add('light-mode');
+                document.getElementById('bg-dark-img').classList.replace('opacity-20', 'opacity-0');
+                document.getElementById('bg-light-img').classList.replace('opacity-0', 'opacity-10');
+            } else {
+                htmlRoot.classList.remove('light'); bodyContent.classList.remove('light-mode');
+                document.getElementById('bg-light-img').classList.replace('opacity-10', 'opacity-0');
+                document.getElementById('bg-dark-img').classList.replace('opacity-0', 'opacity-20');
+            }
+        }
+        applyTheme();
+
+        // Firebase Init
+        const firebaseConfig = {
+            apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
+            authDomain: "cuet-as.firebaseapp.com",
+            projectId: "cuet-as"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUser = null;
+        let userData = { survivalIQ: 0, completedLessons: [] };
+        let activeLessonId = null;
+
+        // Level Engine
+        function getLevelName(iq) {
+            if(iq < 100) return "Novice Explorer";
+            if(iq < 250) return "Trail Seeker";
+            if(iq < 500) return "Camp Ranger";
+            if(iq < 1000) return "Survivalist";
+            return "Master Explorer";
+        }
+
+        function updateIQDisplay() {
+            const iq = userData.survivalIQ || 0;
+            document.getElementById('nav-iq-score').innerText = iq;
+            
+            const displayScore = document.getElementById('iq-score-display');
+            if(displayScore) {
+                // Number counter animation
+                let start = parseInt(displayScore.innerText) || 0;
+                let end = iq;
+                if(start !== end) {
+                    let step = end > start ? 5 : -5;
+                    let timer = setInterval(() => {
+                        start += step;
+                        if((step > 0 && start >= end) || (step < 0 && start <= end)) {
+                            start = end; clearInterval(timer);
+                        }
+                        displayScore.innerText = start;
+                    }, 20);
+                }
+            }
+            
+            const levelName = document.getElementById('iq-level-name');
+            if(levelName) levelName.innerText = getLevelName(iq);
+
+            const progressBar = document.getElementById('iq-progress-bar');
+            if(progressBar) {
+                let percentage = (iq % 250) / 250 * 100; 
+                if(iq >= 1000) percentage = 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+        }
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const dbData = doc.data();
+                        userData.survivalIQ = dbData.survivalIQ || 0;
+                        userData.completedLessons = dbData.completedLessons || [];
+                        
+                        document.getElementById('nav-user-name').innerText = dbData.fullName || "Explorer";
+                        const finalAvatarUrl = dbData.photoURL ? dbData.photoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(dbData.fullName || "User")}&background=10b981&color=fff`;
+                        document.getElementById('nav-profile-img').src = finalAvatarUrl;
+                        
+                        updateIQDisplay();
+                        renderModules();
+                    }
+                });
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // ==========================================
+        // RENDER MODULES & GRID
+        // ==========================================
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            container.innerHTML = '';
+
+            megaCurriculum.forEach((module, mIndex) => {
+                let lessonsHTML = '';
+                
+                module.lessons.forEach((lesson, lIndex) => {
+                    const isCompleted = userData.completedLessons.includes(lesson.id);
+                    const delay = (lIndex * 100);
+                    
+                    const statusBadge = isCompleted 
+                        ? `<span class="absolute -top-3 -right-3 bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center border-4 border-darkForest light-mode:border-white shadow-lg z-10"><i class="fa-solid fa-check"></i></span>`
+                        : ``;
+                        
+                    const cardStyle = isCompleted 
+                        ? `border-emerald-500/30 bg-emerald-500/5 light-mode:bg-emerald-50 opacity-80`
+                        : `border-white/10 light-mode:border-gray-200 hover:border-blue-500/50 light-mode:hover:border-blue-500/50 hover:-translate-y-2 hover:shadow-glow-blue`;
+
+                    lessonsHTML += `
+                        <div onclick="openLesson('${module.moduleId}', '${lesson.id}')" data-aos="zoom-in" data-aos-delay="${delay}" class="relative glass-panel rounded-2xl p-6 cursor-pointer transition-all duration-300 ${cardStyle} group">
+                            ${statusBadge}
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/20 light-mode:bg-blue-100 text-blue-400 light-mode:text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid ${lesson.icon}"></i>
+                            </div>
+                            <h4 class="text-lg font-black text-white light-mode:text-slate-900 mb-2 leading-tight group-hover:text-blue-400 transition-colors">${lesson.title}</h4>
+                            <div class="flex justify-between items-center mt-4 pt-4 border-t border-white/5 light-mode:border-gray-200">
+                                <span class="text-xs text-gray-400 light-mode:text-slate-500 font-bold"><i class="fa-solid fa-clock mr-1"></i> ${lesson.readTime}</span>
+                                <span class="text-xs text-emerald-400 font-black tracking-widest">+${lesson.points} IQ</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const moduleHTML = `
+                    <div data-aos="fade-up">
+                        <div class="mb-6 pl-4 border-l-4 border-campfire">
+                            <h2 class="text-2xl font-black text-white light-mode:text-slate-900">${module.moduleTitle}</h2>
+                            <p class="text-sm text-gray-400 light-mode:text-slate-600 mt-1 font-medium">${module.moduleDesc}</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${lessonsHTML}
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', moduleHTML);
+            });
+        }
+
+        // ==========================================
+        // LESSON MODAL LOGIC
+        // ==========================================
+        const lessonModal = document.getElementById('lesson-modal');
+        
+        window.openLesson = function(moduleId, lessonId) {
+            activeLessonId = lessonId;
+            const module = megaCurriculum.find(m => m.moduleId === moduleId);
+            const lesson = module.lessons.find(l => l.id === lessonId);
+
+            document.getElementById('modal-module-tag').innerText = module.moduleTitle.split(':')[0];
+            document.getElementById('modal-read-time').innerHTML = `<i class="fa-solid fa-clock"></i> ${lesson.readTime}`;
+            document.getElementById('modal-lesson-title').innerText = lesson.title;
+            document.getElementById('modal-lesson-content').innerHTML = lesson.content;
+
+            const btnQuiz = document.getElementById('btn-start-quiz');
+            if (userData.completedLessons.includes(lessonId)) {
+                btnQuiz.innerHTML = `<i class="fa-solid fa-check-circle"></i> কমপ্লিটেড (রিভিশন করুন)`;
+                btnQuiz.className = "bg-gray-600 text-gray-300 px-10 py-5 rounded-2xl font-black text-xl transition-all flex items-center justify-center mx-auto gap-3 cursor-not-allowed opacity-70";
+                btnQuiz.onclick = null;
+            } else {
+                btnQuiz.innerHTML = `<i class="fa-solid fa-brain"></i> টেক কুইজ & আর্ন পয়েন্ট!`;
+                btnQuiz.className = "bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black text-xl transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:-translate-y-1 hover:scale-105 flex items-center justify-center mx-auto gap-3";
+                btnQuiz.onclick = () => openQuiz(moduleId, lessonId);
+            }
+
+            document.body.style.overflow = 'hidden';
+            lessonModal.classList.remove('hidden');
+            lessonModal.scrollTop = 0; // Reset scroll
+        }
+
+        window.closeLessonModal = function() {
+            lessonModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ==========================================
+        // QUIZ LOGIC
+        // ==========================================
+        const quizModal = document.getElementById('quiz-modal');
+        const successModal = document.getElementById('success-modal');
+        let currentQuizData = [];
+
+        window.openQuiz = function(moduleId, lessonId) {
+            const module = megaCurriculum.find(m => m.moduleId === moduleId);
+            const lesson = module.lessons.find(l => l.id === lessonId);
+            currentQuizData = lesson.quiz;
+
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            currentQuizData.forEach((qObj, qIndex) => {
+                let optionsHTML = '';
+                qObj.options.forEach((opt, oIndex) => {
+                    optionsHTML += `
+                        <label class="block relative cursor-pointer group">
+                            <input type="radio" name="q_${qIndex}" value="${oIndex}" class="absolute opacity-0 w-0 h-0 radio-custom">
+                            <div class="border border-white/10 light-mode:border-gray-300 rounded-xl p-4 transition-all duration-200 flex items-center gap-3 group-hover:bg-white/5 light-mode:group-hover:bg-gray-50 text-gray-300 light-mode:text-slate-700 font-medium">
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-500 flex shrink-0 items-center justify-center transition-colors marker-div"></div>
+                                <span>${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="quiz-question-block bg-black/20 light-mode:bg-gray-50 p-6 rounded-2xl border border-white/5 light-mode:border-gray-200">
+                        <h4 class="font-bold text-lg text-white light-mode:text-slate-900 mb-4">${qIndex + 1}. ${qObj.q}</h4>
+                        <div class="space-y-3">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Add listener for custom radio UI
+            setTimeout(() => {
+                document.querySelectorAll('.radio-custom').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const name = this.name;
+                        document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                            const marker = r.nextElementSibling.querySelector('.marker-div');
+                            marker.classList.remove('border-campfire', 'bg-campfire');
+                            marker.classList.add('border-gray-500');
+                        });
+                        if(this.checked) {
+                            const marker = this.nextElementSibling.querySelector('.marker-div');
+                            marker.classList.remove('border-gray-500');
+                            marker.classList.add('border-campfire', 'bg-campfire');
+                            marker.innerHTML = '<div class="w-2 h-2 bg-white rounded-full"></div>';
+                        }
+                    });
+                });
+            }, 100);
+
+            quizModal.classList.remove('hidden');
+        }
+
+        window.closeQuizModal = function() {
+            quizModal.classList.add('hidden');
+        }
+
+        document.getElementById('btn-submit-quiz').addEventListener('click', async () => {
+            let score = 0;
+            let allAnswered = true;
+
+            currentQuizData.forEach((qObj, qIndex) => {
+                const selected = document.querySelector(`input[name="q_${qIndex}"]:checked`);
+                if(!selected) {
+                    allAnswered = false;
+                } else if (parseInt(selected.value) === qObj.ans) {
+                    score++;
+                }
+            });
+
+            if(!allAnswered) {
+                alert("অনুগ্রহ করে সবকটি প্রশ্নের উত্তর দিন!");
+                return;
+            }
+
+            // Must score 100% to pass
+            if(score === currentQuizData.length) {
+                document.getElementById('btn-submit-quiz').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> প্রসেসিং...';
+                
+                // Find Lesson Points
+                let pointsToEarn = 50;
+                for(let m of megaCurriculum) {
+                    let l = m.lessons.find(x => x.id === activeLessonId);
+                    if(l) { pointsToEarn = l.points; break; }
+                }
+
+                try {
+                    // Update Firebase
+                    await db.collection("users").doc(currentUser.uid).update({
+                        survivalIQ: firebase.firestore.FieldValue.increment(pointsToEarn),
+                        completedLessons: firebase.firestore.FieldValue.arrayUnion(activeLessonId)
+                    });
+
+                    // Update Local State
+                    userData.survivalIQ += pointsToEarn;
+                    userData.completedLessons.push(activeLessonId);
+                    
+                    updateIQDisplay();
+                    renderModules();
+
+                    document.getElementById('btn-submit-quiz').innerHTML = '<i class="fa-solid fa-paper-plane"></i> সাবমিট উত্তর';
+                    
+                    closeQuizModal();
+                    closeLessonModal();
+                    
+                    // Show Success
+                    document.getElementById('earned-points').innerText = pointsToEarn;
+                    successModal.classList.remove('hidden');
+                    setTimeout(() => { document.getElementById('success-content').classList.replace('scale-95', 'scale-100'); }, 10);
+
+                } catch(e) {
+                    console.error(e);
+                    alert("সার্ভারে ডাটা সেভ করতে সমস্যা হয়েছে!");
+                    document.getElementById('btn-submit-quiz').innerHTML = '<i class="fa-solid fa-paper-plane"></i> সাবমিট উত্তর';
+                }
+
+            } else {
+                alert("উফফ! কিছু উত্তর ভুল হয়েছে। লেসনটি আরেকবার পড়ে আবার চেষ্টা করুন। (পাস করতে ১০০% সঠিক হতে হবে)");
+            }
+        });
+
+        window.closeSuccessModal = function() {
+            document.getElementById('success-content').classList.replace('scale-100', 'scale-95');
+            setTimeout(() => { successModal.classList.add('hidden'); }, 300);
+        }
+
+        // Sidebar Actions
+        document.getElementById('sidebar-open-btn').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('-translate-x-full'); document.getElementById('sidebar-overlay').classList.remove('hidden'); });
+        const closeSidebar = () => { document.getElementById('sidebar').classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); };
+        document.getElementById('sidebar-close-btn').addEventListener('click', closeSidebar);
+        document.getElementById('sidebar-overlay').addEventListener('click', closeSidebar);
+
+        document.getElementById('logout-btn').addEventListener('click', (e) => { e.preventDefault(); auth.signOut().then(() => { window.location.reload(); }); });
+        
+        // Settings Modal
+        const settingsModal = document.getElementById('settings-modal');
+        function openSettingsModal() { closeSidebar(); settingsModal.classList.remove('hidden'); setTimeout(() => { document.getElementById('settings-content').classList.replace('scale-95', 'scale-100'); }, 10); }
+        function closeSettingsModal() { document.getElementById('settings-content').classList.replace('scale-100', 'scale-95'); setTimeout(() => { settingsModal.classList.add('hidden'); }, 300); }
+    </script>
+</body>
+</html>
