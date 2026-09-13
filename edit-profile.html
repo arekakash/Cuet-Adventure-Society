@@ -31,6 +31,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Cropper.js CDN for 1:1 Cropping -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
     <style>
         ::-webkit-scrollbar { width: 8px; }
@@ -284,6 +286,22 @@
         </div>
     </div>
 
+    <!-- 🟢 CROPPER MODAL (1:1 Aspect Ratio & <30KB Compression) 🟢 -->
+    <div id="cropper-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/80 backdrop-blur-md p-4">
+        <div class="bg-moss light-mode:bg-white border border-white/10 light-mode:border-gray-200 rounded-3xl p-6 max-w-lg w-full shadow-2xl flex flex-col items-center">
+            <h3 class="text-lg font-black text-white light-mode:text-black mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-crop text-campfire"></i> ছবি ক্রপ করুন (১:১ স্কয়ার)
+            </h3>
+            <div class="w-full max-h-[60vh] overflow-hidden bg-black/50 rounded-xl mb-6 flex justify-center items-center">
+                <img id="cropper-image" src="" alt="Source" class="max-w-full block">
+            </div>
+            <div class="flex gap-4 w-full">
+                <button type="button" id="cancel-crop" class="flex-1 bg-white/10 hover:bg-white/20 text-white light-mode:bg-gray-200 light-mode:text-black font-bold py-3 rounded-xl transition-all">বাতিল</button>
+                <button type="button" id="confirm-crop" class="flex-1 bg-campfire hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-glow">ক্রপ ও কনফার্ম</button>
+            </div>
+        </div>
+    </div>
+
     <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="closeSettingsModal()"></div>
@@ -298,7 +316,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="font-bold text-white light-mode:text-black text-sm" data-i18n="modal_theme">থিম (Theme)</p>
-                        <p class="text-xs text-gray-500" data-i18n="modal_theme_desc">ডার্ক ফরেস্ট বা মিস্ট মোড</p>
+                        <p class="text-xs text-gray-500" data-i18n="modal_theme_desc">ডার্ক বা মিস্ট মোড</p>
                     </div>
                     <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
                         <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-300"/>
@@ -325,6 +343,8 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script> AOS.init({ once: true, offset: 50 }); </script>
+    <!-- Cropper.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
@@ -464,7 +484,7 @@
 
 
         // ==========================================
-        // FIREBASE LOGIC (Auto-fill existing data)
+        // FIREBASE LOGIC & CROPPER.JS INTEGRATION
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDX3usovY7xlO4wY8GfJ3bk6pnRClGf1Ag",
@@ -485,11 +505,12 @@
 
         let currentUserUid = null;
         let existingPhotoURL = '';
+        let croppedBase64Image = null; // Stores final optimized base64 image (<30KB)
+        let cropper = null;
 
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUserUid = user.uid;
-                // FETCH USER DATA TO AUTO-FILL FORM
                 db.collection("users").doc(user.uid).get().then((doc) => {
                     loader.classList.add('hidden');
                     if (doc.exists) {
@@ -504,7 +525,6 @@
                         document.getElementById('emergencyContact').value = data.emergencyContact || '';
                         document.getElementById('tshirtSize').value = data.tshirtSize || 'M';
                         
-                        // NEW FIELDS MAPPING
                         document.getElementById('department').value = data.department || '';
                         document.getElementById('batch').value = data.batch || '';
                         document.getElementById('gender').value = data.gender || '';
@@ -515,7 +535,6 @@
                         document.getElementById('fbLink').value = data.fbLink || '';
                         document.getElementById('instaLink').value = data.instaLink || '';
                         
-                        // Photo handling
                         existingPhotoURL = data.photoURL || '';
                         const avatarUrl = existingPhotoURL ? existingPhotoURL : `https://ui-avatars.com/api/?name=${encodeURIComponent(data.fullName || "User")}&background=e76f51&color=fff&size=256&bold=true`;
                         document.getElementById('preview-img').src = avatarUrl;
@@ -532,23 +551,67 @@
             }
         });
 
+        // ==========================================
+        // CROPPER & COMPRESSION LOGIC (<30KB, 1:1)
+        // ==========================================
         const profilePicInput = document.getElementById('profilePic');
-        let selectedFile = null;
+        const cropperModal = document.getElementById('cropper-modal');
+        const cropperImage = document.getElementById('cropper-image');
+        const cancelCropBtn = document.getElementById('cancel-crop');
+        const confirmCropBtn = document.getElementById('confirm-crop');
 
         profilePicInput.addEventListener('change', function(e) {
-            selectedFile = e.target.files[0];
-            if (selectedFile) {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                const file = files[0];
                 const reader = new FileReader();
-                reader.onload = function(event) { document.getElementById('preview-img').src = event.target.result; }
-                reader.readAsDataURL(selectedFile);
+                reader.onload = function(event) {
+                    cropperImage.src = event.target.result;
+                    cropperModal.classList.remove('hidden');
+                    if (cropper) { cropper.destroy(); }
+                    cropper = new Cropper(cropperImage, {
+                        aspectRatio: 1, // 1:1 Square Ratio
+                        viewMode: 1,
+                        autoCropArea: 1,
+                        responsive: true,
+                    });
+                };
+                reader.readAsDataURL(file);
             }
         });
 
-        const toBase64 = file => new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
+        cancelCropBtn.addEventListener('click', function() {
+            cropperModal.classList.add('hidden');
+            if (cropper) { cropper.destroy(); cropper = null; }
+            profilePicInput.value = ''; // Reset input
+        });
+
+        confirmCropBtn.addEventListener('click', function() {
+            if (cropper) {
+                // Get cropped canvas (fixed to 300x300 pixels for avatar efficiency)
+                const canvas = cropper.getCroppedCanvas({
+                    width: 300,
+                    height: 300,
+                });
+
+                // Compress and reduce quality to achieve <30KB target
+                let quality = 0.8;
+                let base64String = canvas.toDataURL('image/jpeg', quality);
+
+                // Iterative reduction to guarantee size is under 30KB (~40,000 characters in base64)
+                while (base64String.length > 40000 && quality > 0.1) {
+                    quality -= 0.1;
+                    base64String = canvas.toDataURL('image/jpeg', quality);
+                }
+
+                croppedBase64Image = base64String;
+                document.getElementById('preview-img').src = croppedBase64Image;
+
+                cropperModal.classList.add('hidden');
+                cropper.destroy();
+                cropper = null;
+                profilePicInput.value = '';
+            }
         });
 
         // FORM SUBMISSION (UPDATE PROFILE)
@@ -568,13 +631,12 @@
             try {
                 let newPhotoURL = existingPhotoURL;
 
-                if (selectedFile) {
+                if (croppedBase64Image) {
                     submitText.innerText = translations["status_uploading"][currentLang];
-                    const base64Image = await toBase64(selectedFile);
                     const response = await fetch('/api/upload', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ imageBase64: base64Image })
+                        body: JSON.stringify({ imageBase64: croppedBase64Image })
                     });
                     
                     const imgbbData = await response.json();
